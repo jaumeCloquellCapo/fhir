@@ -247,3 +247,182 @@ type ValidateTests() =
             Assert.Contains("valueInteger", body)
             Assert.Contains("\"severity\":\"fatal\"", body)
         }
+
+    [<Fact>]
+    member _.``POST /QuestionnaireResponse/$validate enableWhen skips required when disabled``() : Task =
+        task {
+            let! qStatus, _, _ =
+                postJson
+                    client
+                    "/Questionnaire"
+                    """
+                    {
+                      "resourceType": "Questionnaire",
+                      "status": "active",
+                      "url": "http://example.org/Questionnaire/enable-when-q",
+                      "item": [
+                        { "linkId": "pregnant", "type": "boolean", "text": "Pregnant?" },
+                        {
+                          "linkId": "weeks",
+                          "type": "integer",
+                          "required": true,
+                          "text": "Weeks",
+                          "enableWhen": [
+                            { "question": "pregnant", "operator": "=", "answerBoolean": true }
+                          ]
+                        }
+                      ]
+                    }
+                    """
+
+            assertStatus HttpStatusCode.Created qStatus
+
+            // pregnant=false → weeks disabled → required not enforced; no fatals expected from QR rules
+            let! status, body, _ =
+                postJson
+                    client
+                    "/QuestionnaireResponse/$validate"
+                    """
+                    {
+                      "resourceType": "QuestionnaireResponse",
+                      "status": "completed",
+                      "questionnaire": "http://example.org/Questionnaire/enable-when-q",
+                      "item": [
+                        { "linkId": "pregnant", "answer": [{ "valueBoolean": false }] }
+                      ]
+                    }
+                    """
+
+            assertStatus HttpStatusCode.OK status
+            assertResourceType "OperationOutcome" body
+            Assert.DoesNotContain("weeks", body)
+            Assert.DoesNotContain("required but missing", body)
+        }
+
+    [<Fact>]
+    member _.``POST /QuestionnaireResponse/$validate enableWhen rejects answers when disabled``() : Task =
+        task {
+            let! qStatus, _, _ =
+                postJson
+                    client
+                    "/Questionnaire"
+                    """
+                    {
+                      "resourceType": "Questionnaire",
+                      "status": "active",
+                      "url": "http://example.org/Questionnaire/enable-when-disabled-q",
+                      "item": [
+                        { "linkId": "sex", "type": "string", "text": "Sex" },
+                        {
+                          "linkId": "pregnancy",
+                          "type": "boolean",
+                          "enableWhen": [
+                            { "question": "sex", "operator": "=", "answerString": "female" }
+                          ]
+                        }
+                      ]
+                    }
+                    """
+
+            assertStatus HttpStatusCode.Created qStatus
+
+            let! status, body, _ =
+                postJson
+                    client
+                    "/QuestionnaireResponse/$validate"
+                    """
+                    {
+                      "resourceType": "QuestionnaireResponse",
+                      "status": "completed",
+                      "questionnaire": "http://example.org/Questionnaire/enable-when-disabled-q",
+                      "item": [
+                        { "linkId": "sex", "answer": [{ "valueString": "male" }] },
+                        { "linkId": "pregnancy", "answer": [{ "valueBoolean": true }] }
+                      ]
+                    }
+                    """
+
+            assertStatus HttpStatusCode.OK status
+            assertResourceType "OperationOutcome" body
+            Assert.Contains("pregnancy", body)
+            Assert.Contains("disabled by enableWhen", body)
+            Assert.Contains("\"severity\":\"fatal\"", body)
+        }
+
+    [<Fact>]
+    member _.``POST /QuestionnaireResponse/$validate answerValueSet membership``() : Task =
+        task {
+            let! vsStatus, _, _ =
+                postJson
+                    client
+                    "/ValueSet"
+                    """
+                    {
+                      "resourceType": "ValueSet",
+                      "status": "active",
+                      "url": "http://example.org/ValueSet/colors",
+                      "compose": {
+                        "include": [{
+                          "system": "http://example.org/CodeSystem/colors",
+                          "concept": [
+                            { "code": "red" },
+                            { "code": "blue" }
+                          ]
+                        }]
+                      }
+                    }
+                    """
+
+            assertStatus HttpStatusCode.Created vsStatus
+
+            let! qStatus, _, _ =
+                postJson
+                    client
+                    "/Questionnaire"
+                    """
+                    {
+                      "resourceType": "Questionnaire",
+                      "status": "active",
+                      "url": "http://example.org/Questionnaire/choice-q",
+                      "item": [
+                        {
+                          "linkId": "color",
+                          "type": "choice",
+                          "required": true,
+                          "answerValueSet": "http://example.org/ValueSet/colors"
+                        }
+                      ]
+                    }
+                    """
+
+            assertStatus HttpStatusCode.Created qStatus
+
+            let! status, body, _ =
+                postJson
+                    client
+                    "/QuestionnaireResponse/$validate"
+                    """
+                    {
+                      "resourceType": "QuestionnaireResponse",
+                      "status": "completed",
+                      "questionnaire": "http://example.org/Questionnaire/choice-q",
+                      "item": [
+                        {
+                          "linkId": "color",
+                          "answer": [{
+                            "valueCoding": {
+                              "system": "http://example.org/CodeSystem/colors",
+                              "code": "green"
+                            }
+                          }]
+                        }
+                      ]
+                    }
+                    """
+
+            assertStatus HttpStatusCode.OK status
+            assertResourceType "OperationOutcome" body
+            Assert.Contains("green", body)
+            Assert.Contains("answerValueSet", body)
+            Assert.Contains("\"severity\":\"fatal\"", body)
+        }

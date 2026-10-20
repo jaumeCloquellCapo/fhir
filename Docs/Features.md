@@ -137,7 +137,7 @@ Create an active `Subscription` with `channelType.code=rest-hook` and `endpoint`
 - `$validate?profile=` (or `_profile`) forces the same core-profile checks without requiring `meta.profile`.
 - Bindings: **required** → fatal; **extensible** → warning; **preferred** / **example** → information (when the ValueSet is embedded).
 - Relative `Reference.reference` values (`Type/id`) are resolved against the store on `$validate` and on create/update → **warning** if missing (writes are not blocked by dangling refs).
-- **QuestionnaireResponse vs Questionnaire**: resolves `questionnaire` (canonical or `Questionnaire/id`), checks `linkId`, required items when `status` is `completed`/`amended`, and answer `value[x]` vs item `type`. EnableWhen / answerValueSet membership not enforced yet.
+- **QuestionnaireResponse vs Questionnaire**: resolves `questionnaire` (canonical or `Questionnaire/id`), checks `linkId`, required items when `status` is `completed`/`amended`, answer `value[x]` vs item `type`, **enableWhen** / **enableBehavior** (disabled items skip required; answers on disabled items → fatal when completed), and **answerValueSet** / **answerOption** membership (open-choice free text allowed).
 - Custom/external IGs beyond the R5 core package are not packaged by default (run the generator against additional packages to add them).
 
 ## Out of scope (roadmap)
@@ -146,6 +146,6 @@ Create an active `Subscription` with `channelType.code=rest-hook` and `endpoint`
 - Persisting dynamically registered clients across restarts
 - External webhook reliability (retries, signing)
 - Full FHIRPath (incl. `%terminologies`, `select`/`implies`, …) and external terminology server
-- Questionnaire enableWhen / answerValueSet; slicing / fixed / pattern
+- Questionnaire enableWhenExpression / answerValueSet via remote terminology; slicing / fixed / pattern
 - Full FHIRPath search extractors / `_filter` embedded chain & `_has`
 - XML (`application/fhir+xml`) as a first-class format
