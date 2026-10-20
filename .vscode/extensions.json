@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "Ionide.Ionide-fsharp",
+    "anysphere.csharp",
+    "ms-dotnettools.vscode-dotnet-runtime"
+  ]
+}

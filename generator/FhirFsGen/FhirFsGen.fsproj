@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>FhirFsGen</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Zero Firely / Hl7.Fhir.* dependencies — HL7 package JSON only. -->
+  <ItemGroup>
+    <Compile Include="Ir.fs" />
+    <Compile Include="PackageCache.fs" />
+    <Compile Include="StructureLoader.fs" />
+    <Compile Include="SnapshotToIr.fs" />
+    <Compile Include="ValueSetLoader.fs" />
+    <Compile Include="EmitSchemaJson.fs" />
+    <Compile Include="EmitFsharp.fs" />
+    <Compile Include="EmitValidator.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <!-- Copied into out/r5/GeneratedSchemaValidator.fs (not compiled into the generator). -->
+  <ItemGroup>
+    <None Include="ValidatorTemplate.fs" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,91 @@
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# .NET / F#
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Ll]og/
+[Ll]ogs/
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+project.lock.json
+project.fragment.lock.json
+artifacts/
+TestResults/
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.DotSettings.user
+.nuget/
+
+# Publish / build outputs
+publish/
+app.publish/
+*.cache
+!**/packages.lock.json
+
+# ASP.NET
+wwwroot/lib/
+**/appsettings.*.local.json
+
+# SQLite / local data
+data/
+**/data/
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+
+# Docker / compose volumes
+pgdata/
+postgres_data/
+
+# IDEs
+.idea/
+.vs/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Rider / ReSharper
+_ReSharper*/
+*.DotSettings.user
+
+# Local tooling
+.direnv/
+.venv/
+node_modules/
+
+# FHIR package cache + generated schemas (regenerate with make generate)
+generator/cache/
+generator/out/

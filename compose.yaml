@@ -1,0 +1,18 @@
+volumes:
+  postgres_data: {}
+services:
+  postgres:
+    image: docker.io/library/postgres:18
+    ports:
+    - "5432:5432"
+    volumes:
+    - postgres_data:/var/lib/postgresql/18/docker:delegated
+    command:
+    - postgres
+    - -c
+    - shared_preload_libraries=pg_stat_statements
+    environment:
+      POSTGRES_USER: fhir
+      POSTGRES_PORT: '5432'
+      POSTGRES_DB: fhir
+      POSTGRES_PASSWORD: fhir

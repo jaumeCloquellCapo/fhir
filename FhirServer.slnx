@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/FhirServer/FhirServer.fsproj" />
+  </Folder>
+  <Folder Name="/packages/">
+    <Project Path="packages/FhirServer.Schemas/FhirServer.Schemas.fsproj" />
+    <Project Path="packages/FhirServer.Validation/FhirServer.Validation.fsproj" />
+  </Folder>
+  <Folder Name="/generator/">
+    <Project Path="generator/FhirFsGen/FhirFsGen.fsproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/FhirServer.E2E/FhirServer.E2E.fsproj" />
+  </Folder>
+</Solution>
