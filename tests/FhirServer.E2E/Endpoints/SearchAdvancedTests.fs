@@ -31,7 +31,7 @@ type SearchAdvancedTests() =
                     "/Patient"
                     """{"resourceType":"Patient","name":[{"family":"GarciaExacto","given":["Luis"]}]}"""
 
-            let! status, body = get client "/Patient?family:exact=GarciaExact"
+            let! status, body = get client "/Patient?family%3Aexact=GarciaExact"
             assertStatus HttpStatusCode.OK status
             Assert.Contains("GarciaExact", body)
             Assert.DoesNotContain("GarciaExacto", body)
@@ -55,8 +55,7 @@ type SearchAdvancedTests() =
             let withId = propString withGender "id" |> Option.defaultValue ""
             let noId = propString noGender "id" |> Option.defaultValue ""
 
-            let! status, body = get client "/Patient?gender:missing=true"
-            assertStatus HttpStatusCode.OK status
+            let! status, body = get client "/Patient?gender%3Amissing=true"            assertStatus HttpStatusCode.OK status
             Assert.Contains(noId, body)
             Assert.DoesNotContain($"\"id\":\"{withId}\"", body)
         }
