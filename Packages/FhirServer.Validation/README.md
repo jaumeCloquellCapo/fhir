@@ -2,14 +2,14 @@
 
 Firely-free FHIR Schema validator. Compiles the generated engine and loads R5 schemas / value sets from **`FhirServer.Schemas`**.
 
-> Source of truth for schemas and the validator template: [`generator/`](../../generator/README.md). Do not edit `Generated/GeneratedSchemaValidator.fs` by hand — regenerate + `make sync-schemas`.
+> Source of truth for schemas and the validator template: [`Generator/`](../../Generator/README.md). Do not edit `Generated/GeneratedSchemaValidator.fs` by hand — regenerate + `make sync-schemas`.
 
 ## Layout
 
 ```
 FhirServer.Validation/
   SchemaEngine.fs                         # thin entry: load + validateJson
-  Generated/GeneratedSchemaValidator.fs   # copied from generator/out/r5
+  Generated/GeneratedSchemaValidator.fs   # copied from Generator/out/r5
   FhirServer.Validation.fsproj
 
 FhirServer.Schemas/                       # sibling package
@@ -29,7 +29,7 @@ The validator package does **not** run the generator. It **consumes** outputs pr
 
 ```mermaid
 flowchart TB
-  subgraph Generator["generator/FhirFsGen"]
+  subgraph Generator["Generator/FhirFsGen"]
     PKG["hl7.fhir.r5.core@5.0.0<br/>StructureDefinition JSON"]
     IR["SnapshotToIr → ResourceSchema IR"]
     SCH["EmitSchemaJson → *.schema.json"]
@@ -61,7 +61,7 @@ flowchart TB
   GSV --> SE
 ```
 
-Full generation sequence and IR class diagram: [`generator/README.md`](../../generator/README.md#how-generation-works-uml).
+Full generation sequence and IR class diagram: [`Generator/README.md`](../../Generator/README.md#how-generation-works-uml).
 
 ### What each emit step produces
 
@@ -129,7 +129,7 @@ flowchart LR
 ```bash
 make generate          # Patient (+ sync)
 make generate-r5-all   # all R5 resources (+ sync)
-make sync-schemas      # copy generator/out/r5 → packages/ only
+make sync-schemas      # copy Generator/out/r5 → Packages/ only
 ```
 
 ## Public API

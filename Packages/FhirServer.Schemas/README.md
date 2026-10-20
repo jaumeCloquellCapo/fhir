@@ -22,13 +22,13 @@ Schemas are embedded with `LogicalName = filename` so the validator can load `Pa
 ```mermaid
 flowchart LR
   PKG["hl7.fhir.r5.core@5.0.0"] --> GEN["FhirFsGen"]
-  GEN --> OUT["generator/out/r5"]
+  GEN --> OUT["Generator/out/r5"]
   OUT -->|"make sync-schemas"| DATA["Data/ + Generated/"]
   DATA --> ASM["this assembly"]
   ASM --> VAL["FhirServer.Validation<br/>SchemaEngine"]
 ```
 
-Details and IR UML: [`generator/README.md`](../../generator/README.md).  
+Details and IR UML: [`Generator/README.md`](../../Generator/README.md).  
 Runtime load path: [`../FhirServer.Validation/README.md`](../FhirServer.Validation/README.md).
 
 ## Refresh
@@ -36,7 +36,7 @@ Runtime load path: [`../FhirServer.Validation/README.md`](../FhirServer.Validati
 ```bash
 make generate          # Patient (+ sync)
 make generate-r5-all   # all R5 resources (+ sync)
-make sync-schemas      # copy generator/out/r5 → packages/ only
+make sync-schemas      # copy Generator/out/r5 → Packages/ only
 ```
 
 ## Public API

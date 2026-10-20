@@ -47,9 +47,9 @@
 
 * [Validation (writes & `$validate`)](Features.md#validation)
 * [Validation depth & profiles](Features.md#validation-depth)
-* [Schema generator](../generator/README.md)
-* [Schemas package](../packages/FhirServer.Schemas/README.md)
-* [Validation package](../packages/FhirServer.Validation/README.md)
+* [Schema generator](../Generator/README.md)
+* [Schemas package](../Packages/FhirServer.Schemas/README.md)
+* [Validation package](../Packages/FhirServer.Validation/README.md)
 
 ## Configuration & operations
 

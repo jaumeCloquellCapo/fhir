@@ -13,12 +13,12 @@ make run              # or: make watch
 
 ## Tests
 
-In-process E2E tests live under `tests/FhirServer.E2E/` (one file per endpoint area). Each factory creates and drops an isolated Postgres database. Start Postgres first:
+In-process E2E tests live under `Tests/FhirServer.E2E/` (one file per endpoint area). Each factory creates and drops an isolated Postgres database. Start Postgres first:
 
 ```bash
 make db-up
 make test
-# or: dotnet test tests/FhirServer.E2E
+# or: dotnet test Tests/FhirServer.E2E
 ```
 
 Optional override: `FHIR_E2E_ADMIN_CONNECTION` (defaults to local Compose credentials).
@@ -46,15 +46,15 @@ Local tools are declared in [`.config/dotnet-tools.json`](../.config/dotnet-tool
 
 ## Schema generation
 
-Schemas and the validator are generated from the official HL7 R5 package. Details: [generator/README.md](../generator/README.md).
+Schemas and the validator are generated from the official HL7 R5 package. Details: [Generator/README.md](../Generator/README.md).
 
 ```bash
-make generate          # Patient (+ sync into packages/)
+make generate          # Patient (+ sync into Packages/)
 make generate-r5-all   # all resources + sync
-make sync-schemas      # copy generator/out/r5 → packages/ without regenerating
+make sync-schemas      # copy Generator/out/r5 → Packages/ without regenerating
 ```
 
-Commit regenerated `packages/` artifacts when the generator or package version changes so consumers can build without running the generator.
+Commit regenerated `Packages/` artifacts when the generator or package version changes so consumers can build without running the generator.
 
 ## Project layout tips
 

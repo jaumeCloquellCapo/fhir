@@ -5,13 +5,13 @@ Thanks for your interest in contributing. This project is early (MVP); clear, sm
 ## Ways to contribute
 
 - Report bugs and propose features via GitHub Issues
-- Improve documentation under `docs/` and the root `README.md`
-- Fix bugs or add tests in `tests/FhirServer.E2E`
-- Implement roadmap items listed in [docs/Features.md](docs/Features.md) (out of scope section)
+- Improve documentation under `Docs/` and the root `README.md`
+- Fix bugs or add tests in `Tests/FhirServer.E2E`
+- Implement roadmap items listed in [Docs/Features.md](Docs/Features.md) (out of scope section)
 
 ## Development setup
 
-Follow [docs/GettingStarted.md](docs/GettingStarted.md) and [docs/Development.md](docs/Development.md).
+Follow [Docs/GettingStarted.md](Docs/GettingStarted.md) and [Docs/Development.md](Docs/Development.md).
 
 Before opening a PR:
 
@@ -21,7 +21,7 @@ make lint
 make test
 ```
 
-GitHub Actions runs the API E2E suite and a generator smoke build on PRs that touch the relevant paths (see [docs/Development.md](docs/Development.md)).
+GitHub Actions runs the API E2E suite and a generator smoke build on PRs that touch the relevant paths (see [Docs/Development.md](Docs/Development.md)).
 
 ## Pull request guidelines
 
@@ -29,7 +29,7 @@ GitHub Actions runs the API E2E suite and a generator smoke build on PRs that to
 2. **Describe why** — link issues when applicable
 3. **Add or update tests** for behavior changes when practical
 4. **Do not commit secrets** — use user secrets or env vars for credentials
-5. **Match existing style** — Fantomas formatting; clear F# modules; keep FHIR API docs/Swagger in sync when endpoints change
+5. **Match existing style** — Fantomas formatting; clear F# modules; keep FHIR API Docs/Swagger in sync when endpoints change
 
 ## Code of conduct
 

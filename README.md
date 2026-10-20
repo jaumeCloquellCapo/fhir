@@ -26,7 +26,7 @@ Use it to prototype clinical apps, learn FHIR end-to-end, or as a foundation for
 | **Audit (optional)** | BALP-oriented `AuditEvent` for REST operations |
 | **Swagger UI** | Interactive OpenAPI at `/swagger` |
 
-Full interaction matrix: [docs/Features.md](docs/Features.md).
+Full interaction matrix: [Docs/Features.md](Docs/Features.md).
 
 ## Quick start
 
@@ -48,7 +48,7 @@ curl -s -u fhir:change-me -X POST http://localhost:5050/Patient \
   | jq .
 ```
 
-More: [docs/GettingStarted.md](docs/GettingStarted.md) · Swagger: [http://localhost:5050/swagger](http://localhost:5050/swagger)
+More: [Docs/GettingStarted.md](Docs/GettingStarted.md) · Swagger: [http://localhost:5050/swagger](http://localhost:5050/swagger)
 
 ## Platform overview
 
@@ -65,32 +65,32 @@ More: [docs/GettingStarted.md](docs/GettingStarted.md) · Swagger: [http://local
 └──────────────────────────────────────────────────────────────┘
 ```
 
-How storage, validation, and request flow fit together: [docs/Architecture.md](docs/Architecture.md).
+How storage, validation, and request flow fit together: [Docs/Architecture.md](Docs/Architecture.md).
 
-Schemas and the validator are produced offline by [`generator/`](generator/README.md) from `hl7.fhir.r5.core` and synced into `packages/`.
+Schemas and the validator are produced offline by [`Generator/`](Generator/README.md) from `hl7.fhir.r5.core` and synced into `Packages/`.
 
 ## Documentation
 
-**Index:** [docs/SUMMARY.md](docs/SUMMARY.md) — API · Auth · Database · Validation · Config
+**Index:** [Docs/SUMMARY.md](Docs/SUMMARY.md) — API · Auth · Database · Validation · Config
 
 | Topic | Doc |
 |-------|-----|
-| Getting started | [docs/GettingStarted.md](docs/GettingStarted.md) |
-| Features & API | [docs/Features.md](docs/Features.md) |
-| Architecture | [docs/Architecture.md](docs/Architecture.md) |
-| Configuration | [docs/Configuration.md](docs/Configuration.md) |
-| Development | [docs/Development.md](docs/Development.md) |
-| Schema generator | [generator/README.md](generator/README.md) |
-| Schemas / validation packages | [packages/README.md](packages/README.md) |
+| Getting started | [Docs/GettingStarted.md](Docs/GettingStarted.md) |
+| Features & API | [Docs/Features.md](Docs/Features.md) |
+| Architecture | [Docs/Architecture.md](Docs/Architecture.md) |
+| Configuration | [Docs/Configuration.md](Docs/Configuration.md) |
+| Development | [Docs/Development.md](Docs/Development.md) |
+| Schema generator | [Generator/README.md](Generator/README.md) |
+| Schemas / validation packages | [Packages/README.md](Packages/README.md) |
 
 ## Repository layout
 
 ```
 FhirServer/              FHIR API (ASP.NET Core)
-packages/                Embedded R5 schemas + validation engine
-generator/               HL7 package → FHIR Schema + F# validator
-tests/FhirServer.E2E/    In-process end-to-end tests
-docs/                    Product & developer docs
+Packages/                Embedded R5 schemas + validation engine
+Generator/               HL7 package → FHIR Schema + F# validator
+Tests/FhirServer.E2E/    In-process end-to-end tests
+Docs/                    Product & developer docs
 compose.yaml             Postgres for local development
 ```
 
@@ -98,7 +98,7 @@ compose.yaml             Postgres for local development
 
 **MVP** — useful for learning, demos, and as a foundation for a custom FHIR service. Not a certified, production-hardened clinical platform out of the box.
 
-**In scope today:** R5 CRUD + SQL search, terminology ops, SMART authorize + PKCE + `client_credentials` with scopes, multi-client + optional DCR, Subscriptions rest-hook (loopback/`/_hooks` by default), core profile validation from `make generate-r5-all`. Details in [docs/Features.md](docs/Features.md).
+**In scope today:** R5 CRUD + SQL search, terminology ops, SMART authorize + PKCE + `client_credentials` with scopes, multi-client + optional DCR, Subscriptions rest-hook (loopback/`/_hooks` by default), core profile validation from `make generate-r5-all`. Details in [Docs/Features.md](Docs/Features.md).
 
 **Not yet:** EHR `launch` / JWT access tokens; subscription webhook retries/signing; full FHIRPath search extractors; packaging arbitrary external IGs beyond R5 core profiles.
 

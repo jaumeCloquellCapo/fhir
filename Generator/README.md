@@ -19,7 +19,7 @@ Resource index: [hl7.org/fhir/resourcelist.html](https://hl7.org/fhir/resourceli
 ## Layout
 
 ```
-generator/
+Generator/
   README.md
   TODO-R5.md
   FhirFsGen/
@@ -33,7 +33,7 @@ generator/
     GeneratedResourceCatalog.fs
     GeneratedSchemaValidator.fs
 
-packages/
+Packages/
   FhirServer.Schemas/     # embedded *.schema.json + profiles + valuesets + catalog
   FhirServer.Validation/  # GeneratedSchemaValidator + SchemaEngine
 ```
@@ -50,7 +50,7 @@ flowchart TB
     REG["packages.fhir.org<br/>hl7.fhir.r5.core@5.0.0"]
   end
 
-  subgraph Gen["generator/FhirFsGen"]
+  subgraph Gen["Generator/FhirFsGen"]
     PC["PackageCache<br/>download + extract .tgz"]
     SL["StructureLoader<br/>StructureDefinition-*.json"]
     IR["SnapshotToIr<br/>snapshot → nested IR"]
@@ -60,7 +60,7 @@ flowchart TB
     EF["EmitFsharp<br/>catalog + TODO-R5.md"]
   end
 
-  subgraph Out["generator/out/r5"]
+  subgraph Out["Generator/out/r5"]
     SCH["schemas/*.schema.json"]
     VSET["valuesets.json"]
     MAN["manifest.json"]
@@ -68,7 +68,7 @@ flowchart TB
     VAL["GeneratedSchemaValidator.fs"]
   end
 
-  subgraph Pkgs["packages/ via make sync-schemas"]
+  subgraph Pkgs["Packages/ via make sync-schemas"]
     PS["FhirServer.Schemas<br/>Data/ + Generated/"]
     PV["FhirServer.Validation<br/>Generated/"]
   end
@@ -188,7 +188,7 @@ classDiagram
 
 ```mermaid
 flowchart LR
-  OUT["generator/out/r5"]
+  OUT["Generator/out/r5"]
 
   OUT -->|"*.schema.json<br/>valuesets.json<br/>GeneratedResourceCatalog.fs"| S["FhirServer.Schemas"]
   OUT -->|"GeneratedSchemaValidator.fs"| V["FhirServer.Validation"]
@@ -198,7 +198,7 @@ flowchart LR
   ASM --> ENG
 ```
 
-Runtime details: see [`packages/FhirServer.Validation/README.md`](../packages/FhirServer.Validation/README.md).
+Runtime details: see [`Packages/FhirServer.Validation/README.md`](../Packages/FhirServer.Validation/README.md).
 
 ---
 
@@ -216,22 +216,22 @@ packages.fhir.org / hl7.fhir.r5.core@5.0.0
   → GeneratedSearchCatalog.fs               # Supported SearchParameter extractors
 
 make sync-schemas / generate*:
-  → packages/FhirServer.Schemas/Data + Generated/
-  → packages/FhirServer.Validation/Generated/
+  → Packages/FhirServer.Schemas/Data + Generated/
+  → Packages/FhirServer.Validation/Generated/
 ```
 
 ## Usage
 
 ```bash
-make generate          # Patient (+ sync into packages/)
+make generate          # Patient (+ sync into Packages/)
 make generate-r5-all   # all 158 resources + sync
-make sync-schemas      # copy out/r5 → packages/ without regenerating
+make sync-schemas      # copy out/r5 → Packages/ without regenerating
 make generate-todo     # refresh TODO from schemas on disk
 
-dotnet run --project generator/FhirFsGen -- --resource Patient --out generator/out/r5
-dotnet run --project generator/FhirFsGen -- --all --out generator/out/r5
-dotnet run --project generator/FhirFsGen -- --schema-only --resource Observation
-dotnet run --project generator/FhirFsGen -- --search-catalog --out generator/out/r5
+dotnet run --project Generator/FhirFsGen -- --resource Patient --out Generator/out/r5
+dotnet run --project Generator/FhirFsGen -- --all --out Generator/out/r5
+dotnet run --project Generator/FhirFsGen -- --schema-only --resource Observation
+dotnet run --project Generator/FhirFsGen -- --search-catalog --out Generator/out/r5
 ```
 
 ## Schema shape

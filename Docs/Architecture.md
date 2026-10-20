@@ -34,7 +34,7 @@ FhirServer is a **FHIR backend**: resources in, resources out, with PostgreSQL p
 | **Subscriptions** | Rest-hook notifications when matching resources change |
 | **PostgreSQL** | Source of truth: envelope JSON + version history + SQL search indexes |
 
-Offline codegen ([`generator/`](../generator/README.md)) turns `hl7.fhir.r5.core` into embedded schemas, search catalog, and validator source under `packages/`.
+Offline codegen ([`Generator/`](../Generator/README.md)) turns `hl7.fhir.r5.core` into embedded schemas, search catalog, and validator source under `Packages/`.
 
 ## FHIR & FhirServer
 
@@ -116,9 +116,9 @@ Migrations run on startup. Optional **organization / tenant** isolation uses Pos
 
 ## Validation pipeline
 
-1. Official package `hl7.fhir.r5.core` (via [`generator/`](../generator/README.md))
+1. Official package `hl7.fhir.r5.core` (via [`Generator/`](../Generator/README.md))
 2. StructureDefinition snapshot → nested IR → `*.schema.json` + valuesets (+ profile schemas)
-3. `make sync-schemas` copies artifacts into `packages/`
+3. `make sync-schemas` copies artifacts into `Packages/`
 4. At runtime, create/update and `$validate` call the schema engine
 5. Writes return **422** on schema failure; `$validate` returns an `OperationOutcome` (HTTP 200)
 
@@ -153,8 +153,8 @@ sequenceDiagram
 | Resource use cases | `Application/` | create, read, search, Bundle, ops |
 | FHIR domain logic | `Domain/` | catalog, search planning, store contract, validation facade |
 | Persistence | `Infrastructure/Persistence` | Envelope store, SQL dialect, migrations, search SQL |
-| Schemas & validator | `packages/` | Embedded R5 artifacts + `SchemaEngine` |
-| Codegen | `generator/` | HL7 package → schemas + F# sources |
+| Schemas & validator | `Packages/` | Embedded R5 artifacts + `SchemaEngine` |
+| Codegen | `Generator/` | HL7 package → schemas + F# sources |
 
 Prefer extending behavior once in the resource handlers / envelope store rather than duplicating logic per endpoint. API surface checklist: [Features.md](Features.md).
 

@@ -18,4 +18,4 @@ Progress at wave close: **9 / 158** (then finished via `--all`).
 | ActorDefinition | ✅ |
 | AllergyIntolerance | ✅ |
 
-Schemas: `generator/out/r5/schemas/` → synced into `packages/FhirServer.Schemas/Data/`.
+Schemas: `Generator/out/r5/schemas/` → synced into `Packages/FhirServer.Schemas/Data/`.

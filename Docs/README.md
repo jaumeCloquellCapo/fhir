@@ -12,4 +12,4 @@ Product-oriented docs for running and extending FhirServer (FHIR API, storage, a
 | [Configuration.md](Configuration.md) | Connection strings, auth, SMART, audit |
 | [Development.md](Development.md) | Build, test, format, schema generation |
 
-Schema generator: [../generator/README.md](../generator/README.md) · Packages: [../packages/README.md](../packages/README.md) · Overview: [../README.md](../README.md).
+Schema generator: [../Generator/README.md](../Generator/README.md) · Packages: [../Packages/README.md](../Packages/README.md) · Overview: [../README.md](../README.md).

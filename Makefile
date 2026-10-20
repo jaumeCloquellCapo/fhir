@@ -41,7 +41,7 @@ test test-e2e: ## Run E2E tests (requires make db-up)
 	dotnet test $(E2E) --verbosity minimal
 
 format: tools ## Format F# sources with Fantomas
-	dotnet fantomas $(PROJECT) tests/FhirServer.E2E packages
+	dotnet fantomas $(PROJECT) Tests/FhirServer.E2E Packages
 
 format-check: tools ## Check formatting without writing
 	dotnet fantomas check $(PROJECT)
@@ -70,17 +70,17 @@ db-up: ## Start Postgres (compose, port 5432)
 db-down: ## Stop Postgres
 	docker compose down
 
-sync-schemas: ## Copy generator/out/r5 schemas + validator into packages/
+sync-schemas: ## Copy Generator/out/r5 schemas + validator into Packages/
 	@$(SYNC_SCHEMAS)
 	@echo "Synced $$(ls $(PKG_SCHEMAS)/Data/*.schema.json | wc -l | tr -d ' ') schemas → $(PKG_SCHEMAS)/Data/"
 
-generate: ## Generate R5 Patient schema + validator + valuesets; sync into packages/
+generate: ## Generate R5 Patient schema + validator + valuesets; sync into Packages/
 	dotnet run --project $(GEN) -- --out $(GEN_OUT)
 	@$(SYNC_SCHEMAS)
 
-generate-r5-all: ## Generate all R5 resource schemas and sync into packages/
+generate-r5-all: ## Generate all R5 resource schemas and sync into Packages/
 	dotnet run --project $(GEN) -- --all --out $(GEN_OUT)
 	@$(SYNC_SCHEMAS)
 
-generate-todo: ## Rewrite generator/TODO-R5.md checklist from package resources
+generate-todo: ## Rewrite Generator/TODO-R5.md checklist from package resources
 	dotnet run --project $(GEN) -- --todo

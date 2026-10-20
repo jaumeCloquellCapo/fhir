@@ -22,17 +22,17 @@ FhirFsGen — generate FHIR Schema JSON + Firely-free F# validator from R5 Struc
 Source: official package hl7.fhir.r5.core@5.0.0 (packages.fhir.org). No Firely / Hl7.Fhir.* deps.
 
 Usage:
-  dotnet run --project generator/FhirFsGen -- [options]
+  dotnet run --project Generator/FhirFsGen -- [options]
 
 Options:
-  --out <dir>           Output directory (default: generator/out/r5)
-  --cache <dir>         Package cache (default: generator/cache)
+  --out <dir>           Output directory (default: Generator/out/r5)
+  --cache <dir>         Package cache (default: Generator/cache)
   --package-dir <dir>   Use an already-extracted package/ folder
   --resource <Name>     Generate one resource (repeatable). Default: Patient
   --all                 Generate every concrete resource in the package
   --schema-only         Write schemas/<Type>.schema.json only (parallel-safe)
   --search-catalog      Emit GeneratedSearchCatalog.fs only from SearchParameter-*.json
-  --todo                Rewrite generator/TODO-R5.md from existing schemas on disk
+  --todo                Rewrite Generator/TODO-R5.md from existing schemas on disk
   --help                Show this help
 """
 
@@ -63,8 +63,8 @@ Options:
 
         let defaults =
             { PackageDir = None
-              CacheDir = Path.Combine("generator", "cache")
-              OutDir = Path.Combine("generator", "out", "r5")
+              CacheDir = Path.Combine("Generator", "cache")
+              OutDir = Path.Combine("Generator", "out", "r5")
               Resources = []
               All = false
               RefreshTodo = false
