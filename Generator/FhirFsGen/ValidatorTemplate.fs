@@ -649,7 +649,6 @@ module GeneratedSchemaValidator =
 
         let private unsupportedMarkers =
             [| "%"
-               "where("
                "ofType("
                "descendants("
                "trace("
@@ -660,6 +659,28 @@ module GeneratedSchemaValidator =
                "implies"
                "xor"
                "|" |]
+
+        let private renderTokens (tokens: Token list) =
+            tokens
+            |> List.choose (fun t ->
+                match t with
+                | Ident i -> Some i
+                | NumberLit n -> Some(string n)
+                | Dot -> Some "."
+                | LParen -> Some "("
+                | RParen -> Some ")"
+                | And -> Some " and "
+                | Or -> Some " or "
+                | Eq -> Some "="
+                | Ne -> Some "!="
+                | Gt -> Some ">"
+                | Lt -> Some "<"
+                | Gte -> Some ">="
+                | Lte -> Some "<="
+                | Plus -> Some "+"
+                | Minus -> Some "-"
+                | Eof -> None)
+            |> String.concat ""
 
         let private isUnsupportedExpression (expr: string) =
             unsupportedMarkers
@@ -893,7 +914,7 @@ module GeneratedSchemaValidator =
                 | _ -> Unsupported "multi-item collection equality"
             | _ -> Unsupported "comparison operands"
 
-        let evaluate (expr: string) (context: JsonNode) : Result<bool, string> =
+        let rec evaluate (expr: string) (context: JsonNode) : Result<bool, string> =
             if String.IsNullOrWhiteSpace expr then
                 Error "empty expression"
             elif isUnsupportedExpression expr then
@@ -918,7 +939,7 @@ module GeneratedSchemaValidator =
                         match peekTok () with
                         | RParen -> []
                         | _ ->
-                            // Subset functions take no arguments; non-empty arg lists are unsupported.
+                            // Zero-arg helpers; `where` is handled in parsePostfix.
                             [ Unsupported "function arguments" ]
 
                     let rec parseOr () =
@@ -1025,6 +1046,47 @@ module GeneratedSchemaValidator =
                                 nextTok () |> ignore
 
                                 match nextTok () with
+                                | Ident name when
+                                    name.Equals("where", StringComparison.OrdinalIgnoreCase)
+                                    && (match peekTok () with
+                                        | LParen -> true
+                                        | _ -> false)
+                                    ->
+                                    nextTok () |> ignore
+                                    let predStart = pos
+                                    let mutable depth = 1
+
+                                    while depth > 0 && pos < tokens.Length do
+                                        match tokens.[pos] with
+                                        | LParen ->
+                                            depth <- depth + 1
+                                            pos <- pos + 1
+                                        | RParen ->
+                                            depth <- depth - 1
+                                            pos <- pos + 1
+                                        | Eof -> depth <- 0
+                                        | _ -> pos <- pos + 1
+
+                                    let predEnd = pos - 1
+
+                                    let predExpr =
+                                        if predEnd > predStart then
+                                            tokens
+                                            |> List.skip predStart
+                                            |> List.take (predEnd - predStart)
+                                            |> renderTokens
+                                        else
+                                            ""
+
+                                    let filtered =
+                                        asCollection current
+                                        |> List.filter (fun item ->
+                                            match evaluate predExpr item with
+                                            | Ok true -> true
+                                            | _ -> false)
+
+                                    current <- Collection filtered
+                                    loop ()
                                 | Ident name ->
                                     match peekTok () with
                                     | LParen ->

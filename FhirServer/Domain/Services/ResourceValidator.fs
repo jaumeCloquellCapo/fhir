@@ -4,6 +4,7 @@ open System
 open System.Text.Json.Nodes
 open FhirServer.Domain
 open FhirServer.Domain.Types
+open FhirServer.Domain.Ports
 open FhirServer.Validation
 
 /// Thin facade over SchemaEngine (Firely-free schema validation).
@@ -128,8 +129,15 @@ module ResourceValidator =
 
             oo
 
-    let ensureValid (expectedType: string option) (resource: FhirResource) : FhirResult<unit> =
-        let issues = validate expectedType resource
+    /// Schema validation + dangling-reference warnings. Only fatals fail the write.
+    let ensureValid
+        (store: IResourceStore)
+        (expectedType: string option)
+        (resource: FhirResource)
+        : FhirResult<unit> =
+        let issues =
+            validate expectedType resource
+            @ ReferenceValidation.collectIssues store resource
 
         if hasFatal issues then
             Error(ValidationFailed issues)

@@ -27,7 +27,7 @@ module BulkImport =
         elif not (ResourceCatalog.isSupported resourceType) then
             Error(UnsupportedType resourceType)
         else
-            ResourceValidator.ensureValid (Some resourceType) resource
+            ResourceValidator.ensureValid store (Some resourceType) resource
             |> Result.bind (fun () ->
                 let id = FhirJson.id resource
 

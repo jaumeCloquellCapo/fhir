@@ -39,7 +39,7 @@ module ResourceCrud =
             let requestedMode = OrganizationHierarchy.tryResourceMode body
             OrganizationHierarchy.stripTenantExtensions body |> ignore
 
-            ResourceValidator.ensureValid (Some resourceType) body
+            ResourceValidator.ensureValid store (Some resourceType) body
             |> Result.bind (fun () ->
                 match OrganizationHierarchy.resolveCreateStamp body requestedMode with
                 | Error msg -> Error(BadRequest msg)
@@ -70,7 +70,7 @@ module ResourceCrud =
         OrganizationHierarchy.stripTenantExtensions body |> ignore
 
         ResourceHelpers.ensureKnownResourceType resourceType
-        |> Result.bind (fun () -> ResourceValidator.ensureValid (Some resourceType) body)
+        |> Result.bind (fun () -> ResourceValidator.ensureValid store (Some resourceType) body)
         |> Result.bind (fun () ->
             let existing = store.Get(resourceType, id)
 

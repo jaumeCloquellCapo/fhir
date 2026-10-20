@@ -21,7 +21,7 @@ FhirServer.Schemas/                       # sibling package
   SchemaPackage.fs                        # assembly marker
 ```
 
-Runtime also evaluates StructureDefinition `constraint` expressions (error + warning/information) with a FHIRPath subset (`exists` / `empty` / `count` / …); expressions outside the subset surface as **warning** issues (`could not be evaluated`).
+Runtime also evaluates StructureDefinition `constraint` expressions (error + warning/information) with a FHIRPath subset (`exists` / `empty` / `count` / `where` / …); expressions outside the subset surface as **warning** issues (`could not be evaluated`).
 
 Bindings: **required** → fatal; **extensible** → warning; **preferred** / **example** → information (when the ValueSet is embedded). Callers can force core profiles via `validateJsonWithProfiles` (used by `$validate?profile=`).
 
