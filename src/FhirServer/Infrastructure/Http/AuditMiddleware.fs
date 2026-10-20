@@ -97,10 +97,13 @@ module AuditMiddleware =
             | "GET", [| _; "$dump" |] -> None
             | "GET", [| _; "$lastn" |] -> None
             | "GET", [| "Patient"; _; "$everything" |] -> None
+            | "GET", [| "Patient"; _; "$document" |] -> None
             | "GET", [| "$export" |]
             | "POST", [| "$export" |]
             | "GET", [| "$export-status"; _ |]
-            | "GET", [| "$export-files"; _; _ |] -> None
+            | "GET", [| "$export-files"; _; _ |]
+            | "POST", [| "$import" |]
+            | "POST", [| "$load" |] -> None
             | "GET", [| rt; id |] -> baseReq BalpAuditEventBuilder.RestInteraction.Read (Some rt) (Some id) None false
             | "GET", [| rt |] -> baseReq BalpAuditEventBuilder.RestInteraction.Search (Some rt) None None true
             | "POST", [| rt |] ->

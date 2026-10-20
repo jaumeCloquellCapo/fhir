@@ -85,7 +85,10 @@ module AppHost =
                     do! ctx.Response.WriteAsync("FhirServer — GET /metadata | GET /health | GET /swagger")
                 })
         )
-        |> OpenApiDocs.documentText [| OpenApiDocs.TagSystem |] "Root" "Short tip pointing at metadata, health, and Swagger UI."
+        |> OpenApiDocs.documentText
+            [| OpenApiDocs.TagSystem |]
+            "Root"
+            "Short tip pointing at metadata, health, and Swagger UI."
         |> ignore
 
         app.MapGet(
@@ -159,10 +162,7 @@ module AppHost =
         |> ignore
 
         app.MapPost("/$export", Func<HttpContext, Task<unit>>(startExport))
-        |> OpenApiDocs.documentJson
-            [| OpenApiDocs.TagBulk |]
-            "Kick off $export (POST)"
-            "Same as GET /$export."
+        |> OpenApiDocs.documentJson [| OpenApiDocs.TagBulk |] "Kick off $export (POST)" "Same as GET /$export."
         |> ignore
 
         app.MapGet(
@@ -202,6 +202,25 @@ module AppHost =
             [| OpenApiDocs.TagBulk |]
             "Bulk export NDJSON file"
             "Download NDJSON for one resource type from a completed export job."
+        |> ignore
+
+        let importNdjson (ctx: HttpContext) =
+            task {
+                let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
+                let! body = readBody ctx
+                let result = BulkImport.importNdjson store body
+                return! Responses.fromResult result ctx
+            }
+
+        app.MapPost("/$import", Func<HttpContext, Task<unit>>(importNdjson))
+        |> OpenApiDocs.documentFhir
+            [| OpenApiDocs.TagBulk |]
+            "$import"
+            "Synchronous NDJSON import (create/update). Body: application/fhir+ndjson or text lines."
+        |> ignore
+
+        app.MapPost("/$load", Func<HttpContext, Task<unit>>(importNdjson))
+        |> OpenApiDocs.documentFhir [| OpenApiDocs.TagBulk |] "$load" "Alias of /$import — synchronous NDJSON load."
         |> ignore
 
         app.MapGet(
@@ -314,8 +333,7 @@ module AppHost =
                     else
                         let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
 
-                        return!
-                            Responses.fromSearch (ResourceHandlers.observationLastN store (queryMap ctx)) ctx
+                        return! Responses.fromSearch (ResourceHandlers.observationLastN store (queryMap ctx)) ctx
                 })
         )
         |> OpenApiDocs.documentFhir
@@ -339,6 +357,23 @@ module AppHost =
             [| OpenApiDocs.TagOperations |]
             "$everything (Patient)"
             "Patient clinical summary Bundle (Patient only)."
+        |> ignore
+
+        app.MapGet(
+            "/{resourceType}/{id}/$document",
+            Func<HttpContext, string, string, Task<unit>>(fun ctx resourceType id ->
+                task {
+                    if not (resourceType.Equals("Patient", StringComparison.Ordinal)) then
+                        return! Responses.fromError (BadRequest "$document is only supported on Patient.") ctx
+                    else
+                        let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
+                        return! Responses.fromResult (ResourceHandlers.patientDocument store id) ctx
+                })
+        )
+        |> OpenApiDocs.documentFhir
+            [| OpenApiDocs.TagOperations |]
+            "$document (Patient)"
+            "FHIR Document Bundle (Composition + clinical resources) for a Patient."
         |> ignore
 
         app.MapGet(

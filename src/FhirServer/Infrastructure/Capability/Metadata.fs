@@ -62,6 +62,13 @@ module Metadata =
                 ]
             )
 
+            ops.Add(
+                FhirJson.mkObject [
+                    "name", FhirJson.jStr "document"
+                    "definition", FhirJson.jStr "http://hl7.org/fhir/OperationDefinition/Composition-document"
+                ]
+            )
+
         if resourceType = "Observation" then
             ops.Add(
                 FhirJson.mkObject [
@@ -151,6 +158,20 @@ module Metadata =
             FhirJson.mkObject [
                 "name", FhirJson.jStr "export"
                 "definition", FhirJson.jStr "http://hl7.org/fhir/uv/bulkdata/OperationDefinition/export"
+            ]
+        )
+
+        operations.Add(
+            FhirJson.mkObject [
+                "name", FhirJson.jStr "import"
+                "definition", FhirJson.jStr "https://fhirserver.local/OperationDefinition/import"
+            ]
+        )
+
+        operations.Add(
+            FhirJson.mkObject [
+                "name", FhirJson.jStr "load"
+                "definition", FhirJson.jStr "https://fhirserver.local/OperationDefinition/load"
             ]
         )
 

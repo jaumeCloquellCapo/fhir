@@ -13,10 +13,11 @@ The goal is a small, readable codebase that developers can run locally, extend, 
 ## Why FhirServer?
 
 - **FHIR R5** resources and `CapabilityStatement` from a generated catalog
-- **REST API** for CRUD, search (`_include` / `_revinclude` / chaining), history, `$validate`, `$everything`, `$lastn`, `$dump`, `$export`, and Bundle transaction/batch
+- **REST API** for CRUD, search (`_include` / `_revinclude` / chaining), history, `$validate`, `$everything`, `$document`, `$lastn`, `$dump`, `$export` / `$import`, and Bundle transaction/batch
 - **Envelope persistence** — one current + history table per resource type; pluggable SQL dialects
 - **Schema validation** — cardinality, choice types, bindings, and primitives via `FhirServer.Validation` + embedded schemas
 - **Optional BALP audit** — persist `AuditEvent` for REST operations when enabled
+- **Swagger UI** — interactive OpenAPI docs at `/swagger` for every endpoint
 - **Developer-friendly** — Docker Compose for Postgres, Makefile targets, Fantomas + FSharpLint, in-process E2E tests
 
 ## Architecture (layers)
@@ -59,6 +60,7 @@ make db-up
 
 dotnet run --project src/FhirServer
 # → http://localhost:5050
+# → Swagger UI: http://localhost:5050/swagger
 ```
 
 SQLite works out of the box for local experiments (`Store:Provider=sqlite`, default `data/fhir.db`).
@@ -88,7 +90,7 @@ compose.yaml             Postgres for local development
 
 This project is an **MVP**. It is useful for learning, demos, and as a foundation for a custom FHIR service. It is **not** a certified, production-hardened clinical platform out of the box.
 
-**Not yet in scope:** full IG/profile StructureDefinition conformance, SMART on FHIR, `$import`, Subscriptions, `$document`.
+**Not yet in scope:** full IG/profile StructureDefinition conformance, SMART on FHIR, Subscriptions.
 
 Contributions that move those areas forward are welcome—see [CONTRIBUTING.md](CONTRIBUTING.md).
 

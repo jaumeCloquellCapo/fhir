@@ -4,6 +4,13 @@ Supported FHIR HTTP interactions for the current MVP. Content type: **`applicati
 
 Base URL (local default): `http://localhost:5050`
 
+## Interactive docs
+
+| Surface | URL |
+|---------|-----|
+| Swagger UI | `/swagger` |
+| OpenAPI JSON | `/swagger/v1/swagger.json` |
+
 ## System
 
 | Method | Path | Notes |
@@ -41,6 +48,8 @@ Base URL (local default): `http://localhost:5050`
 | GET/POST | `/$export?_type=Patient,Observation` | Bulk export — **202** + `Content-Location` |
 | GET | `/$export-status/{jobId}` | Bulk export status JSON (`output` URLs) |
 | GET | `/$export-files/{jobId}/{type}` | NDJSON file for one type in a job |
+| POST | `/$import` · `/$load` | Sync NDJSON import (create/update) → `Parameters` |
+| GET | `/Patient/{id}/$document` | FHIR Document Bundle (`Composition` + clinical resources) |
 
 ## Search (subset)
 
@@ -67,6 +76,5 @@ When `Audit:Enabled=true`, the server records BALP-oriented `AuditEvent` resourc
 
 - Full IG / profile StructureDefinition conformance
 - SMART on FHIR
-- `$import` / `$document`
 - Subscriptions
 - XML (`application/fhir+xml`) as a first-class format

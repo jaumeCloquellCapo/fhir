@@ -44,6 +44,9 @@ export PATH="/opt/homebrew/opt/dotnet/bin:$PATH"
 
 4. Open **http://localhost:5050** — try `GET /metadata` and `GET /health`.
 
+5. Explore the API in **Swagger UI**: [http://localhost:5050/swagger](http://localhost:5050/swagger)  
+   OpenAPI JSON: `http://localhost:5050/swagger/v1/swagger.json`
+
 ## Option B — SQLite (zero Docker)
 
 Default configuration uses SQLite at `src/FhirServer/data/fhir.db`:

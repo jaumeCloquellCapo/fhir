@@ -383,6 +383,86 @@ module ResourceHandlers =
         ensureKnownResourceType resourceType
         |> Result.map (fun () -> store.ListByType resourceType)
 
+    /// FHIR Document Bundle for a Patient (Composition + clinical resources).
+    let patientDocument (store: IResourceStore) (id: string) : FhirResult<FhirResource> =
+        patientEverything store id
+        |> Result.map (fun everything ->
+            let now = DateTimeOffset.UtcNow.ToString("yyyy-MM-dd'T'HH:mm:ss.fff'Z'")
+
+            let resources =
+                match everything["entry"] with
+                | :? JsonArray as arr ->
+                    arr
+                    |> Seq.choose (fun n ->
+                        match n with
+                        | :? JsonObject as entry ->
+                            match entry["resource"] with
+                            | :? JsonObject as r -> Some r
+                            | _ -> None
+                        | _ -> None)
+                    |> Seq.toList
+                | _ -> []
+
+            let sectionEntries = JsonArray()
+
+            for resource in resources do
+                let rt = FhirJson.resourceType resource
+                let rid = FhirJson.id resource
+
+                sectionEntries.Add(FhirJson.mkObject [ "reference", FhirJson.jStr $"{rt}/{rid}" ])
+
+            let compositionId = Guid.NewGuid().ToString("N")
+
+            let composition =
+                FhirJson.mkObject [
+                    "resourceType", FhirJson.jStr "Composition"
+                    "id", FhirJson.jStr compositionId
+                    "status", FhirJson.jStr "final"
+                    "type",
+                    FhirJson.mkObject [
+                        "coding",
+                        JsonArray(
+                            FhirJson.mkObject [
+                                "system", FhirJson.jStr "http://loinc.org"
+                                "code", FhirJson.jStr "34133-9"
+                                "display", FhirJson.jStr "Summary of episode note"
+                            ]
+                        )
+                    ]
+                    "subject", FhirJson.mkObject [ "reference", FhirJson.jStr $"Patient/{id}" ]
+                    "date", FhirJson.jStr now
+                    "author", JsonArray(FhirJson.mkObject [ "display", FhirJson.jStr "FhirServer" ])
+                    "title", FhirJson.jStr $"Clinical document for Patient/{id}"
+                    "section",
+                    JsonArray(FhirJson.mkObject [ "title", FhirJson.jStr "Patient summary"; "entry", sectionEntries ])
+                ]
+
+            let bundle = FhirJson.emptyBundle "document" (1 + resources.Length)
+            bundle.Remove("total") |> ignore
+
+            ignore (
+                FhirJson.addBundleEntry
+                    bundle
+                    (FhirJson.mkObject [
+                        "fullUrl", FhirJson.jStr $"Composition/{compositionId}"
+                        "resource", composition
+                    ])
+            )
+
+            for resource in resources do
+                let rt = FhirJson.resourceType resource
+
+                ignore (
+                    FhirJson.addBundleEntry
+                        bundle
+                        (FhirJson.mkObject [
+                            "fullUrl", FhirJson.jStr $"{rt}/{FhirJson.id resource}"
+                            "resource", FhirJson.deepClone resource
+                        ])
+                )
+
+            bundle)
+
     let history (store: IResourceStore) (filter: HistoryFilter) : FhirResult<FhirResource> =
         match filter.ResourceType with
         | Some rt ->

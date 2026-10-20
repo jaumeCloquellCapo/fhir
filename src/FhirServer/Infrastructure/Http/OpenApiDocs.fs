@@ -94,5 +94,5 @@ module OpenApiDocs =
 
         options.AddSecurityRequirement(fun document ->
             let requirement = OpenApiSecurityRequirement()
-            requirement.Add(OpenApiSecuritySchemeReference("basic", document), Array.Empty<string>())
+            requirement.Add(OpenApiSecuritySchemeReference("basic", document), ResizeArray<string>())
             requirement)
