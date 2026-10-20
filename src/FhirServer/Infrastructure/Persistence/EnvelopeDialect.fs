@@ -11,8 +11,9 @@ type EnvelopeRow = {
     Ts: DateTimeOffset
     Status: string
     BodyJson: string
-    /// ORGBAC owner Organization id; empty when written unrestricted.
+    /// ORGBAC owner Organization id; empty when written unrestricted / system-shared.
     TenantId: string
+    TenantMode: TenantMode
 }
 
 /// SQL envelope session. Owned by caller; dispose closes connection.
@@ -50,6 +51,12 @@ type IEnvelopeSession =
 
     abstract member IsSearchIndexBackfilled: unit -> bool
     abstract member MarkSearchIndexBackfilled: unit -> unit
+
+    /// Upsert closure rows for Organization id (self + ancestors via optional partOf parent).
+    abstract member UpsertOrganizationClosure: orgId: string * parentOrgId: string option -> unit
+
+    /// Remove closure rows involving this Organization id.
+    abstract member DeleteOrganizationClosure: orgId: string -> unit
 
 /// Outbound adapter factory for the SQL store.
 type IEnvelopeDialect =

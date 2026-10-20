@@ -1,46 +1,60 @@
 # Architecture
 
-FhirServer uses a hexagonal / DDD-style layout so HTTP, persistence, and validation stay replaceable.
+FhirServer is a **FHIR backend**: resources in, resources out, with PostgreSQL persistence and FHIR Schema validation. The pieces below are what you compose when building healthcare apps on top of it.
 
-## Layers
+## Platform components
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│  Hosting          Program.fs · AppHost.fs (DI, routes)  │
-├─────────────────────────────────────────────────────────┤
-│  Infrastructure   HTTP · Capability · Persistence       │
-├─────────────────────────────────────────────────────────┤
-│  Application      ResourceHandlers · Audit recorder     │
-├─────────────────────────────────────────────────────────┤
-│  Domain           Types · Search · Validator · Ports    │
-└─────────────────────────────────────────────────────────┘
-         │                              │
-         ▼                              ▼
-   FhirServer.Validation         IResourceStore
-   FhirServer.Schemas            EnvelopeResourceStore
-                                 + SQL dialect (Postgres)
+┌─────────────────────────────────────────────────────────────────┐
+│                        Clients / apps                           │
+│              (EHR UI · SMART apps · integrations)               │
+└────────────────────────────┬────────────────────────────────────┘
+                             │  application/fhir+json
+┌────────────────────────────▼────────────────────────────────────┐
+│                      FHIR REST API                              │
+│     CRUD · Search · History · Bundle · Operations · Bulk        │
+├──────────────┬──────────────┬──────────────┬────────────────────┤
+│  Validation  │ Terminology  │ Access       │ Subscriptions      │
+│  FHIR Schema │ $expand /    │ SMART scopes │ rest-hook          │
+│  + profiles  │ $lookup /    │ Basic · BALP │ /_hooks sink       │
+│              │ $validate-   │ audit        │                    │
+│              │ code         │              │                    │
+├──────────────┴──────────────┴──────────────┴────────────────────┤
+│                 PostgreSQL                                      │
+│   JSONB envelopes (current + history) · search_* indexes · txid │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
-| Area | Responsibility |
-|------|----------------|
-| **Domain** | FHIR resource JSON model helpers, catalog, search logic, `IResourceStore` port, validation facade |
-| **Application** | Use cases (`create`, `read`, `search`, Bundle, …) and BALP audit event building |
-| **Infrastructure** | ASP.NET endpoints, auth, audit middleware, SQL persistence + migrations |
-| **Packages** | Embedded `*.schema.json`, valuesets, generated catalog and schema validator |
-| **Generator** | Offline tool: HL7 package → IR → schemas + F# validator source |
+| Component | Role |
+|-----------|------|
+| **FHIR REST API** | Standard interactions and `$` operations; `CapabilityStatement` from the generated catalog |
+| **Validation** | Writes and `$validate` run through FHIR Schema (no Firely at runtime) |
+| **Terminology** | Expand / lookup / validate-code against stored `ValueSet` and `CodeSystem` |
+| **Access control** | SMART discovery + tokens; HTTP Basic; optional organization (tenant) isolation via RLS |
+| **Subscriptions** | Rest-hook notifications when matching resources change |
+| **PostgreSQL** | Source of truth: envelope JSON + version history + SQL search indexes |
 
-## Persistence model
+Offline codegen ([`generator/`](../generator/README.md)) turns `hl7.fhir.r5.core` into embedded schemas, search catalog, and validator source under `packages/`.
 
-Resources are stored as **envelopes**, not as fully relational FHIR element columns:
+## FHIR & FhirServer
+
+- **Version:** FHIR R5 (`hl7.fhir.r5.core`).
+- **Wire format:** `application/fhir+json` (XML is not a first-class format yet).
+- **Storage:** FHIR JSON in PostgreSQL `jsonb` envelopes—not a fully relational column-per-element model.
+- **Validation:** FHIR Schema generated from StructureDefinition snapshots (plus a FHIRPath constraint subset and core constraint profiles).
+- **Search:** Parameter definitions from R5 `SearchParameter` resources; runtime filters use SQL side indexes maintained on write.
+
+Everything clients care about is a **resource**. Resource types drive tables, REST routes, search parameters, and validation schemas.
+
+## Database
+
+Resources are stored as **envelopes**:
 
 - One **current** table per resource type (e.g. `patient`)
 - One **history** table (e.g. `patient_history`) with PK `(id, txid)`
 - Global `txid_counter` → FHIR `meta.versionId` / ETag
-- Body column holds JSON (`jsonb`), omitting duplicated id / meta / resourceType where the codec owns those fields
-
-`EnvelopeResourceStore` implements `IResourceStore` once. `IEnvelopeDialect` / `IEnvelopeSession` supply SQL access (`SqlEnvelopeDialect` / Postgres). Migrations use `MigrationRunner` + `SqlMigrations`.
-
-Search uses side index tables maintained on upsert/delete (`search_string`, `search_token`, `search_ref`) plus envelope `ts` for `_lastUpdated`. `SearchEngine.toSearchPlan` builds the filter; `SearchCurrent` runs parameterized SQL with paging and total count.
+- Body column holds JSON (`jsonb`); the HTTP codec owns id / meta / resourceType on the wire
+- Search side tables (`search_string`, `search_token`, `search_ref`, `search_date`, `search_quantity`) updated on upsert/delete; `_lastUpdated` uses envelope `ts`
 
 ```mermaid
 erDiagram
@@ -98,41 +112,55 @@ erDiagram
     resource ||--o{ search_ref : indexed
 ```
 
+Migrations run on startup. Optional **organization / tenant** isolation uses Postgres RLS (`app.tenant_id`) when SMART clients carry `OrganizationId` — see [Features.md](Features.md) and [Configuration.md](Configuration.md).
+
 ## Validation pipeline
 
 1. Official package `hl7.fhir.r5.core` (via [`generator/`](../generator/README.md))
-2. StructureDefinition snapshot → nested IR → `*.schema.json` + valuesets
+2. StructureDefinition snapshot → nested IR → `*.schema.json` + valuesets (+ profile schemas)
 3. `make sync-schemas` copies artifacts into `packages/`
-4. At runtime, `ResourceValidator` → `SchemaEngine.validateJson`
+4. At runtime, create/update and `$validate` call the schema engine
 5. Writes return **422** on schema failure; `$validate` returns an `OperationOutcome` (HTTP 200)
 
-Core R5 constraint profiles and FHIRPath constraint subset are emitted by the generator and applied at validate/write when `meta.profile` references a loaded profile. Additional IGs require generating/syncing extra profile schemas.
+When `meta.profile` references a loaded core constraint profile, that profile schema is applied as well. Extra Implementation Guides need generating/syncing additional packages.
 
 ## Request flow (create)
 
 ```mermaid
 sequenceDiagram
   participant Client
-  participant HTTP as HTTP adapter
-  participant App as ResourceHandlers
-  participant Val as SchemaEngine
-  participant Store as EnvelopeResourceStore
+  participant API as FHIR REST API
+  participant Val as Schema engine
+  participant DB as PostgreSQL
 
-  Client->>HTTP: POST /Patient
-  HTTP->>App: create(store, type, body)
-  App->>Val: validateJson
+  Client->>API: POST /Patient
+  API->>Val: validate FHIR Schema
   alt invalid
-    App-->>HTTP: 422 OperationOutcome
+    API-->>Client: 422 OperationOutcome
   else valid
-    App->>Store: insert envelope + txid
-    Store-->>App: resource with id / meta
-    App-->>HTTP: 201 + Location
+    API->>DB: insert envelope + txid + search indexes
+    DB-->>API: id / meta.versionId
+    API-->>Client: 201 + Location
   end
 ```
 
-## Design principles
+## Code map (for contributors)
 
-- Prefer **small modules and explicit ports** over a large framework surface
-- Keep **one store implementation**; the SQL dialect owns persistence
-- Generate **schemas from HL7 packages** instead of hand-maintaining hundreds of resource shapes
-- Stay **Firely-free** at runtime so the validation story is owned in-repo
+| Area | Location | Responsibility |
+|------|----------|----------------|
+| Hosting & routes | `Program.fs`, `AppHost.fs` | DI, HTTP surface |
+| HTTP / capability / auth | `Infrastructure/Http`, Smart, Audit middleware | Wire format, discovery, scopes |
+| Resource use cases | `Application/` | create, read, search, Bundle, ops |
+| FHIR domain logic | `Domain/` | catalog, search planning, store contract, validation facade |
+| Persistence | `Infrastructure/Persistence` | Envelope store, SQL dialect, migrations, search SQL |
+| Schemas & validator | `packages/` | Embedded R5 artifacts + `SchemaEngine` |
+| Codegen | `generator/` | HL7 package → schemas + F# sources |
+
+Prefer extending behavior once in the resource handlers / envelope store rather than duplicating logic per endpoint. API surface checklist: [Features.md](Features.md).
+
+## Design choices
+
+- **FHIR-first wire contract** — clients speak standard REST + JSON; internals stay replaceable
+- **One envelope model** — shared store implementation; PostgreSQL owns durability
+- **Generate from HL7 packages** — avoid hand-maintaining hundreds of resource shapes
+- **Firely-free runtime** — validation story owned in-repo via FHIR Schema

@@ -46,6 +46,9 @@ module OpenApiDocs =
     [<Literal>]
     let TagBundle = "Bundle"
 
+    [<Literal>]
+    let TagOrgBac = "OrgBAC"
+
     let private fhirJson = "application/fhir+json"
     let private ndjson = "application/fhir+ndjson"
 
@@ -328,7 +331,7 @@ module OpenApiDocs =
                 BearerFormat = "opaque",
                 In = ParameterLocation.Header,
                 Description =
-                    "SMART Bearer token from /auth/token. Enforces patient|user|system scopes (v2 c/r/u/d/s), patient compartment when applicable, and Organization tenant filter when the client has OrganizationId."
+                    "SMART Bearer token from /auth/token. Enforces patient|user|system scopes (v2 c/r/u/d/s), patient compartment when applicable, and Organization tenant (exact on root API; hierarchical on /Organization/{orgId}/fhir)."
             )
 
         options.AddSecurityDefinition("basic", basicScheme)

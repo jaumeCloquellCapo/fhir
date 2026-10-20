@@ -29,7 +29,7 @@ GitHub Actions runs the API E2E suite and a generator smoke build on PRs that to
 2. **Describe why** — link issues when applicable
 3. **Add or update tests** for behavior changes when practical
 4. **Do not commit secrets** — use user secrets or env vars for credentials
-5. **Match existing style** — Fantomas formatting; F# idioms (modules, explicit ports)
+5. **Match existing style** — Fantomas formatting; clear F# modules; keep FHIR API docs/Swagger in sync when endpoints change
 
 ## Code of conduct
 

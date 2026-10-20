@@ -276,11 +276,16 @@ module SmartAuth =
 
     let tenantAccessOf (auth: AuthContext) =
         match auth.OrganizationId with
-        | Some orgId -> TenantAccess.Organization orgId
+        | Some orgId -> TenantAccess.Organization(orgId, hierarchical = false)
         | None -> TenantAccess.Unrestricted
 
     /// Bind ORGBAC tenant for this request (AsyncLocal + HttpContext.Items).
+    /// Prefer Auth.applyOrgBacPathContext after auth for org-scoped URLs.
     let applyTenantContext (ctx: Microsoft.AspNetCore.Http.HttpContext) (auth: AuthContext) =
         let access = tenantAccessOf auth
+        TenantContext.set access
+        ctx.Items[TenantContext.HttpItemKey] <- access
+
+    let applyTenantAccess (ctx: Microsoft.AspNetCore.Http.HttpContext) (access: TenantAccess) =
         TenantContext.set access
         ctx.Items[TenantContext.HttpItemKey] <- access

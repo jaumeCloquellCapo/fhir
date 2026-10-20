@@ -249,6 +249,118 @@ module PostgresMigrations =
                 GRANT fhir_app TO CURRENT_USER;
                 """
         }
+        {
+            Version = 10
+            Name = "orgbac_hierarchy_shared"
+            Script =
+                let modeColumns =
+                    ResourceCatalog.supportedResourceTypes
+                    |> List.map (fun resourceType ->
+                        let table = ResourceCatalog.tableName resourceType
+                        let history = ResourceCatalog.historyTableName resourceType
+                        let qTable = ResourceCatalog.quoteIdent table
+                        let qHistory = ResourceCatalog.quoteIdent history
+
+                        $"""
+                        ALTER TABLE {qTable} ADD COLUMN IF NOT EXISTS tenant_mode text NOT NULL DEFAULT 'owned';
+                        ALTER TABLE {qHistory} ADD COLUMN IF NOT EXISTS tenant_mode text NOT NULL DEFAULT 'owned';
+                        """)
+                    |> String.concat "\n"
+
+                let rls =
+                    ResourceCatalog.supportedResourceTypes
+                    |> List.map (fun resourceType ->
+                        let table = ResourceCatalog.tableName resourceType
+                        let history = ResourceCatalog.historyTableName resourceType
+                        let qTable = ResourceCatalog.quoteIdent table
+                        let qHistory = ResourceCatalog.quoteIdent history
+
+                        // Empty app.tenant_id = admin. orgbac_mode=hierarchy enables parent/child + shared.
+                        let usingPred =
+                            """(
+                              COALESCE(current_setting('app.tenant_id', true), '') = ''
+                              OR (
+                                COALESCE(current_setting('app.orgbac_mode', true), 'exact') = 'hierarchy'
+                                AND (
+                                  tenant_mode = 'system-shared'
+                                  OR tenant_id IN (
+                                    SELECT descendant_id FROM organization_closure
+                                    WHERE ancestor_id = current_setting('app.tenant_id', true)
+                                  )
+                                  OR (
+                                    tenant_mode = 'shared'
+                                    AND tenant_id IN (
+                                      SELECT ancestor_id FROM organization_closure
+                                      WHERE descendant_id = current_setting('app.tenant_id', true)
+                                        AND depth > 0
+                                    )
+                                  )
+                                )
+                              )
+                              OR (
+                                COALESCE(current_setting('app.orgbac_mode', true), 'exact') <> 'hierarchy'
+                                AND tenant_id = current_setting('app.tenant_id', true)
+                              )
+                            )"""
+
+                        let checkPred =
+                            """(
+                              COALESCE(current_setting('app.tenant_id', true), '') = ''
+                              OR (
+                                COALESCE(current_setting('app.orgbac_mode', true), 'exact') = 'hierarchy'
+                                AND (
+                                  (
+                                    tenant_mode = 'owned'
+                                    AND tenant_id IN (
+                                      SELECT descendant_id FROM organization_closure
+                                      WHERE ancestor_id = current_setting('app.tenant_id', true)
+                                    )
+                                  )
+                                  OR (
+                                    tenant_mode = 'shared'
+                                    AND tenant_id = current_setting('app.tenant_id', true)
+                                  )
+                                )
+                              )
+                              OR (
+                                COALESCE(current_setting('app.orgbac_mode', true), 'exact') <> 'hierarchy'
+                                AND tenant_id = current_setting('app.tenant_id', true)
+                                AND tenant_mode IN ('owned', 'shared')
+                              )
+                            )"""
+
+                        $"""
+                        DROP POLICY IF EXISTS tenant_isolation ON {qTable};
+                        CREATE POLICY tenant_isolation ON {qTable}
+                          FOR ALL
+                          USING {usingPred}
+                          WITH CHECK {checkPred};
+
+                        DROP POLICY IF EXISTS tenant_isolation ON {qHistory};
+                        CREATE POLICY tenant_isolation ON {qHistory}
+                          FOR ALL
+                          USING {usingPred}
+                          WITH CHECK {checkPred};
+                        """)
+                    |> String.concat "\n"
+
+                $"""
+                CREATE TABLE IF NOT EXISTS organization_closure (
+                    ancestor_id   text NOT NULL,
+                    descendant_id text NOT NULL,
+                    depth         integer NOT NULL CHECK (depth >= 0),
+                    PRIMARY KEY (ancestor_id, descendant_id)
+                );
+                CREATE INDEX IF NOT EXISTS idx_organization_closure_descendant
+                    ON organization_closure (descendant_id);
+
+                GRANT SELECT, INSERT, UPDATE, DELETE ON organization_closure TO fhir_app;
+
+                {modeColumns}
+
+                {rls}
+                """
+        }
     ]
 
     let migrate (connectionString: string) =

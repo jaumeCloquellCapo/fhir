@@ -37,6 +37,30 @@ type EnvelopeResourceStore(dialect: IEnvelopeDialect) =
 
                 session.MarkSearchIndexBackfilled())
 
+    let denyMutationIfNeeded (old: EnvelopeRow) =
+        match TenantContext.tryOrganizationId () with
+        | None -> ()
+        | Some orgId ->
+            match old.TenantMode with
+            | TenantMode.SystemShared ->
+                raise (TenantMutationForbiddenException "system-shared resources are read-only on organization-scoped APIs")
+            | TenantMode.Shared when not (String.Equals(old.TenantId, orgId, StringComparison.Ordinal)) ->
+                raise (
+                    TenantMutationForbiddenException
+                        "shared resources can only be updated or deleted from their owning organization API"
+                )
+            | _ -> ()
+
+    let syncOrganizationClosure (session: IEnvelopeSession) (resourceType: string) (resource: FhirResource) =
+        if resourceType.Equals("Organization", StringComparison.Ordinal) then
+            let orgId = FhirJson.id resource
+            let parent = OrganizationHierarchy.tryPartOfOrgId resource
+            session.UpsertOrganizationClosure(orgId, parent)
+
+    let removeOrganizationClosure (session: IEnvelopeSession) (resourceType: string) (id: string) =
+        if resourceType.Equals("Organization", StringComparison.Ordinal) then
+            session.DeleteOrganizationClosure id
+
     do
         dialect.Migrate()
         lock gate backfillSearchIndexes
@@ -69,34 +93,45 @@ type EnvelopeResourceStore(dialect: IEnvelopeDialect) =
             lock gate (fun () ->
                 withSession (fun session ->
                     let id = FhirJson.id resource
-                    let bodyJson = EnvelopeCodec.toBodyJson resource
                     let now = DateTimeOffset.UtcNow
                     let txid = session.NextTxid()
 
-                    let stamped =
-                        match session.TryReadCurrent(resourceType, id) with
-                        | Some old ->
-                            session.InsertHistory(resourceType, id, old)
-                            session.UpdateCurrent(resourceType, id, txid, now, bodyJson)
-                            EnvelopeCodec.stamp resource txid now
-                        | None ->
-                            session.InsertCurrent(
-                                resourceType,
-                                id,
-                                {
-                                    Txid = txid
-                                    Cts = now
-                                    Ts = now
-                                    Status = "created"
-                                    BodyJson = bodyJson
-                                    TenantId = TenantContext.writeTenantId ()
-                                }
-                            )
+                    match session.TryReadCurrent(resourceType, id) with
+                    | Some old ->
+                        denyMutationIfNeeded old
+                        session.InsertHistory(resourceType, id, old)
+                        let bodyJson = EnvelopeCodec.toBodyJson resource
+                        session.UpdateCurrent(resourceType, id, txid, now, bodyJson)
+                        let stamped = EnvelopeCodec.stamp resource txid now
+                        syncOrganizationClosure session resourceType stamped
+                        indexResource session resourceType stamped
+                        stamped
+                    | None ->
+                        let mode, tenantId =
+                            match OrganizationHierarchy.resolveCreateStamp resource with
+                            | Error msg -> raise (TenantStampException msg)
+                            | Ok pair -> pair
 
-                            EnvelopeCodec.stamp resource txid now
+                        let bodyJson = EnvelopeCodec.toBodyJson resource
 
-                    indexResource session resourceType stamped
-                    stamped))
+                        session.InsertCurrent(
+                            resourceType,
+                            id,
+                            {
+                                Txid = txid
+                                Cts = now
+                                Ts = now
+                                Status = "created"
+                                BodyJson = bodyJson
+                                TenantId = tenantId
+                                TenantMode = mode
+                            }
+                        )
+
+                        let stamped = EnvelopeCodec.stamp resource txid now
+                        syncOrganizationClosure session resourceType stamped
+                        indexResource session resourceType stamped
+                        stamped))
 
         member _.Delete(resourceType, id) =
             ResourceCatalog.ensureSupported resourceType
@@ -106,6 +141,7 @@ type EnvelopeResourceStore(dialect: IEnvelopeDialect) =
                     match session.TryReadCurrent(resourceType, id) with
                     | None -> None
                     | Some old ->
+                        denyMutationIfNeeded old
                         session.InsertHistory(resourceType, id, old)
                         let txid = session.NextTxid()
                         let now = DateTimeOffset.UtcNow
@@ -120,11 +156,13 @@ type EnvelopeResourceStore(dialect: IEnvelopeDialect) =
                                 Status = "deleted"
                                 BodyJson = old.BodyJson
                                 TenantId = old.TenantId
+                                TenantMode = old.TenantMode
                             }
                         )
 
                         session.DeleteCurrent(resourceType, id)
                         session.ClearSearchIndex(resourceType, id)
+                        removeOrganizationClosure session resourceType id
                         Some(EnvelopeCodec.hydrate resourceType id txid now old.BodyJson)))
 
         member _.ListByType(resourceType) =

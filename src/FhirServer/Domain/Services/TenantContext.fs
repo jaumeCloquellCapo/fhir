@@ -3,11 +3,46 @@ namespace FhirServer.Domain.Services
 open System
 open System.Threading
 
-/// ORGBAC-style access: unrestricted (admin / no org on token) or scoped to one Organization id.
+/// ORGBAC resource ownership mode (envelope column + Aidbox-compatible meta extension).
+[<RequireQualifiedAccess>]
+type TenantMode =
+    | Owned
+    | Shared
+    | SystemShared
+
+module TenantMode =
+    [<Literal>]
+    let ExtensionUrl = "https://aidbox.app/tenant-resource-mode"
+
+    [<Literal>]
+    let OrganizationExtensionUrl = "https://aidbox.app/tenant-organization-id"
+
+    let toDb =
+        function
+        | TenantMode.Owned -> "owned"
+        | TenantMode.Shared -> "shared"
+        | TenantMode.SystemShared -> "system-shared"
+
+    let ofDb (value: string) =
+        match value with
+        | "shared" -> TenantMode.Shared
+        | "system-shared" -> TenantMode.SystemShared
+        | _ -> TenantMode.Owned
+
+    let tryParse (value: string) =
+        match value.Trim().ToLowerInvariant() with
+        | "owned"
+        | "" -> Some TenantMode.Owned
+        | "shared" -> Some TenantMode.Shared
+        | "system-shared" -> Some TenantMode.SystemShared
+        | _ -> None
+
+/// ORGBAC access: unrestricted admin, or scoped to one Organization (exact or hierarchical).
 [<RequireQualifiedAccess>]
 type TenantAccess =
     | Unrestricted
-    | Organization of orgId: string
+    /// hierarchical=true → OrgBAC parent/child + shared visibility (org-scoped API).
+    | Organization of orgId: string * hierarchical: bool
 
 /// Request-scoped tenant for envelope SQL filtering.
 /// Prefers an HTTP-aware resolver (HttpContext.Items); falls back to AsyncLocal for non-HTTP paths.
@@ -47,10 +82,17 @@ module TenantContext =
     let tryOrganizationId () =
         match get () with
         | TenantAccess.Unrestricted -> None
-        | TenantAccess.Organization orgId -> Some orgId
+        | TenantAccess.Organization(orgId, _) -> Some orgId
 
-    /// Value stored on new envelopes (empty string when unrestricted).
-    let writeTenantId () =
+    /// True when the request uses hierarchical OrgBAC visibility (org-scoped API).
+    let isHierarchical () =
         match get () with
-        | TenantAccess.Unrestricted -> ""
-        | TenantAccess.Organization orgId -> orgId
+        | TenantAccess.Organization(_, hierarchical) -> hierarchical
+        | TenantAccess.Unrestricted -> false
+
+    /// Value stored on new envelopes (empty string when unrestricted or system-shared writer).
+    let writeTenantId (mode: TenantMode) =
+        match mode, get () with
+        | TenantMode.SystemShared, _ -> ""
+        | _, TenantAccess.Unrestricted -> ""
+        | _, TenantAccess.Organization(orgId, _) -> orgId

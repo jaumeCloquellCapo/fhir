@@ -161,6 +161,57 @@ module Auth =
             | None -> Ok()
         | None -> Ok()
 
+    /// Parse `/Organization/{orgId}/fhir/...` → orgId.
+    let tryParseOrgFhirPath (path: string) : string option =
+        if String.IsNullOrEmpty path then
+            None
+        else
+            let parts =
+                path.Trim('/').Split('/', StringSplitOptions.RemoveEmptyEntries)
+
+            if
+                parts.Length >= 3
+                && parts.[0].Equals("Organization", StringComparison.OrdinalIgnoreCase)
+                && parts.[2].Equals("fhir", StringComparison.OrdinalIgnoreCase)
+            then
+                let orgId = TenantContext.normalizeOrgId parts.[1]
+
+                if String.IsNullOrWhiteSpace orgId then
+                    None
+                else
+                    Some orgId
+            else
+                None
+
+    /// After auth: bind hierarchical tenant from org-scoped URL, or keep exact tenant from token.
+    let applyOrgBacPathContext (ctx: HttpContext) : Task =
+        task {
+            match tryParseOrgFhirPath (ctx.Request.Path.Value) with
+            | None -> return ()
+            | Some pathOrgId ->
+                match tryGetAuthContext ctx with
+                | None ->
+                    // Auth disabled: still scope the request to the path organization (hierarchical).
+                    SmartAuth.applyTenantAccess ctx (TenantAccess.Organization(pathOrgId, hierarchical = true))
+                    return ()
+                | Some auth ->
+                    match auth.OrganizationId with
+                    | None ->
+                        // Unrestricted (e.g. Basic admin): operate as the path org with hierarchy.
+                        SmartAuth.applyTenantAccess ctx (TenantAccess.Organization(pathOrgId, hierarchical = true))
+                        return ()
+                    | Some tokenOrg when
+                        String.Equals(tokenOrg, pathOrgId, StringComparison.Ordinal)
+                        ->
+                        SmartAuth.applyTenantAccess ctx (TenantAccess.Organization(pathOrgId, hierarchical = true))
+                        return ()
+                    | Some tokenOrg ->
+                        return!
+                            forbidden
+                                ctx
+                                $"Organization token '{tokenOrg}' cannot access /Organization/{pathOrgId}/fhir"
+        }
+
     let private enforceScopes (ctx: HttpContext) (auth: SmartAuth.AuthContext) =
         task {
             let interaction, resourceType =
@@ -196,6 +247,23 @@ module Auth =
                     finally
                         TenantContext.clear ()
                         ctx.Items.Remove(TenantContext.HttpItemKey) |> ignore
+                })
+        )
+        |> ignore
+
+        app
+
+    /// Bind hierarchical OrgBAC from `/Organization/{id}/fhir` after authentication (or when auth is off).
+    let useOrgBacPath (app: WebApplication) =
+        app.Use(
+            Func<HttpContext, RequestDelegate, Task>(fun ctx next ->
+                task {
+                    do! applyOrgBacPathContext ctx
+
+                    if ctx.Response.HasStarted || ctx.Response.StatusCode >= 400 then
+                        return ()
+                    else
+                        return! next.Invoke(ctx)
                 })
         )
         |> ignore

@@ -1,15 +1,13 @@
 # Packages
 
-Independent libraries consumed by `src/FhirServer`:
+Runtime FHIR Schema artifacts used by the server for validation and the resource catalog.
 
 | Project | Role | Doc |
 |---------|------|-----|
-| **[FhirServer.Schemas](FhirServer.Schemas/)** | Embedded R5 `*.schema.json` + `valuesets.json` + catalog | [README](FhirServer.Schemas/README.md) |
-| **[FhirServer.Validation](FhirServer.Validation/)** | `GeneratedSchemaValidator` + `SchemaEngine` | [README](FhirServer.Validation/README.md) |
+| **[FhirServer.Schemas](FhirServer.Schemas/)** | Embedded R5 `*.schema.json` + profiles + `valuesets.json` + catalog | [README](FhirServer.Schemas/README.md) |
+| **[FhirServer.Validation](FhirServer.Validation/)** | Generated validator + `SchemaEngine` (Firely-free) | [README](FhirServer.Validation/README.md) |
 
-How artifacts are **generated**: [`generator/README.md`](../generator/README.md) (UML pipeline).
-
-Refresh from the generator:
+Produced from official HL7 packages by [`generator/`](../generator/README.md); see [docs/Architecture.md](../docs/Architecture.md) for how validation fits the platform.
 
 ```bash
 make sync-schemas      # copy generator/out/r5 → these packages

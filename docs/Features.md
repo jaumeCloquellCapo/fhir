@@ -1,8 +1,20 @@
 # Features & API
 
-Supported FHIR HTTP interactions for the current MVP. Content type: **`application/fhir+json`**.
+What FhirServer exposes as a FHIR R5 backend. Content type: **`application/fhir+json`**. Base URL (local): `http://localhost:5050`.
 
-Base URL (local default): `http://localhost:5050`
+### At a glance
+
+| Area | Capabilities |
+|------|----------------|
+| **Core FHIR** | CRUD, conditional create, history / vread, Bundle transaction & batch, soft-delete |
+| **Search** | Catalog SearchParameters, modifiers, `_include` / `_revinclude`, chaining, `_has`, composites, `_filter` subset |
+| **Operations** | `$validate`, `$everything`, `$document`, `$lastn`, `$dump`, `$export` / `$import` |
+| **Terminology** | `$expand`, `$lookup`, `$validate-code` |
+| **Access** | SMART App Launch MVP (PKCE + `client_credentials`), HTTP Basic, optional org/tenant RLS |
+| **Reactive** | Subscriptions rest-hook + `/_hooks` sink |
+| **Quality** | FHIR Schema validation + core profiles; optional BALP `AuditEvent` |
+
+Interaction tables below; gaps in [Out of scope](#out-of-scope-roadmap).
 
 ## Interactive docs
 
@@ -100,7 +112,9 @@ Clients are configured under `Smart:Clients` (legacy `Smart:ClientId` / `ClientS
 
 ### Organization-based access (ORGBAC MVP)
 
-Set `Smart:Clients[].OrganizationId` to bind a client to a tenant. Issued tokens include `organization`; create/update stamps `tenant_id` on envelopes. Isolation is enforced with **Postgres RLS**: each store op opens a transaction, `SET LOCAL ROLE fhir_app` (so Docker superuser logins still obey RLS), and `SET LOCAL app.tenant_id` (empty = unrestricted admin). HTTP Basic stays **unrestricted** unless `Auth:OrganizationId` is set. Resource ids are globally unique across tenants. Hierarchical org trees are not implemented yet.
+Set `Smart:Clients[].OrganizationId` to bind a client to a tenant. Issued tokens include `organization`; create/update stamps `tenant_id` on envelopes. Isolation is enforced with **Postgres RLS**: each store op opens a transaction, `SET LOCAL ROLE fhir_app` (so Docker superuser logins still obey RLS), and `SET LOCAL app.tenant_id` (empty = unrestricted admin). HTTP Basic stays **unrestricted** unless `Auth:OrganizationId` is set. Resource ids are globally unique across tenants.
+
+Organization trees use `Organization.partOf` (closure table). Exact tenant match is the default for SMART clients; hierarchical parent/child + shared visibility is available when the request runs in hierarchy OrgBAC mode (`app.orgbac_mode=hierarchy`).
 
 ## Subscriptions (MVP)
 

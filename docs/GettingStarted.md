@@ -79,5 +79,5 @@ Content type: `application/fhir+json`.
 
 - [Features & API](Features.md) — supported interactions
 - [Configuration](Configuration.md) — auth, audit, connection strings
+- [Architecture](Architecture.md) — API, database, validation, access control
 - [Development](Development.md) — tests, format, schema generation
-- [Architecture](Architecture.md) — how the layers fit together

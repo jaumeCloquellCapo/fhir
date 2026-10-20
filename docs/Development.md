@@ -58,9 +58,11 @@ Commit regenerated `packages/` artifacts when the generator or package version c
 
 ## Project layout tips
 
-- Prefer changes in **Domain** / **Application** before touching HTTP adapters
-- New persistence behavior: implement once in `EnvelopeResourceStore` or `SqlEnvelopeSession`—avoid duplicating store logic
-- New FHIR interactions: add a handler, route in `AppHost`, and an E2E test under `Endpoints/`
+- New FHIR behavior: resource handler + route in `AppHost` + E2E test under `Endpoints/`
+- Persistence: extend the envelope store / SQL session once—avoid duplicating write or search logic per endpoint
+- Keep `/metadata`, Swagger, and [Features.md](Features.md) aligned when the HTTP surface changes (see `.cursor/skills/act-swagger`)
+
+Code map: [Architecture.md](Architecture.md)#code-map-for-contributors.
 
 ## Pull requests
 

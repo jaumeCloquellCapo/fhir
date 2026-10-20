@@ -163,10 +163,23 @@ module SmartScopes =
 
     let needsFhirUser (scope: string) = hasUserClinicalScopes scope
 
-    /// Map HTTP method + path segments to a FHIR interaction for scope checks.
-    let resolveInteraction (method: string) (path: string) : Interaction * string option =
+    /// Strip `/Organization/{id}/fhir` prefix so scope checks see the inner FHIR path.
+    let private fhirPathParts (path: string) =
         let parts =
             path.Trim('/').Split('/', StringSplitOptions.RemoveEmptyEntries)
+
+        if
+            parts.Length >= 3
+            && parts.[0].Equals("Organization", StringComparison.OrdinalIgnoreCase)
+            && parts.[2].Equals("fhir", StringComparison.OrdinalIgnoreCase)
+        then
+            parts.[3..]
+        else
+            parts
+
+    /// Map HTTP method + path segments to a FHIR interaction for scope checks.
+    let resolveInteraction (method: string) (path: string) : Interaction * string option =
+        let parts = fhirPathParts path
 
         let resourceType =
             match parts with

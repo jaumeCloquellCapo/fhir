@@ -13,6 +13,7 @@
     <Compile Include="Domain/Model/ResourceCatalog.fs" />
     <Compile Include="Domain/Services/QueryParams.fs" />
     <Compile Include="Domain/Services/TenantContext.fs" />
+    <Compile Include="Domain/Services/OrganizationHierarchy.fs" />
     <Compile Include="Domain/Services/SearchFilter.fs" />
     <Compile Include="Domain/Services/SearchEngine.fs" />
     <Compile Include="Domain/Services/SearchIndexer.fs" />

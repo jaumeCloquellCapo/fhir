@@ -21,13 +21,24 @@ type PostgresEnvelopeSession(connectionString: string) =
 
         c
 
-    /// Bind ORGBAC tenant for this transaction (Postgres RLS reads app.tenant_id).
+    /// Bind ORGBAC tenant for this transaction (Postgres RLS reads app.tenant_id / app.orgbac_mode).
     /// SET LOCAL ROLE fhir_app so Docker superuser logins still obey RLS; then SET LOCAL config.
     let applyTenantLocal () =
         let tenantId = TenantContext.tryOrganizationId () |> Option.defaultValue ""
+
+        let mode =
+            if TenantContext.isHierarchical () then
+                "hierarchy"
+            else
+                "exact"
+
         use c = cmd ()
-        c.CommandText <- "SET LOCAL ROLE fhir_app; SELECT set_config('app.tenant_id', @tenant_id, true);"
+
+        c.CommandText <-
+            "SET LOCAL ROLE fhir_app; SELECT set_config('app.tenant_id', @tenant_id, true), set_config('app.orgbac_mode', @orgbac_mode, true);"
+
         c.Parameters.AddWithValue("tenant_id", tenantId) |> ignore
+        c.Parameters.AddWithValue("orgbac_mode", mode) |> ignore
         c.ExecuteScalar() |> ignore
 
     interface IEnvelopeSession with
@@ -62,7 +73,10 @@ type PostgresEnvelopeSession(connectionString: string) =
         member _.TryReadCurrent(resourceType, id) =
             let table = ResourceCatalog.quoteIdent (ResourceCatalog.tableName resourceType)
             use c = cmd ()
-            c.CommandText <- $"SELECT txid, cts, ts, status, resource::text, tenant_id FROM {table} WHERE id = @id LIMIT 1;"
+
+            c.CommandText <-
+                $"SELECT txid, cts, ts, status, resource::text, tenant_id, tenant_mode FROM {table} WHERE id = @id LIMIT 1;"
+
             c.Parameters.AddWithValue("id", id) |> ignore
             use reader = c.ExecuteReader()
 
@@ -74,6 +88,7 @@ type PostgresEnvelopeSession(connectionString: string) =
                     Status = reader.GetString(3)
                     BodyJson = reader.GetString(4)
                     TenantId = reader.GetString(5)
+                    TenantMode = TenantMode.ofDb (reader.GetString(6))
                 }
             else
                 None
@@ -112,8 +127,8 @@ type PostgresEnvelopeSession(connectionString: string) =
             use c = cmd ()
 
             c.CommandText <-
-                $"INSERT INTO {history} (id, txid, cts, ts, resource_type, status, resource, tenant_id)
-                  VALUES (@id, @txid, @cts, @ts, @rtype, @status, @resource::jsonb, @tenant_id);"
+                $"INSERT INTO {history} (id, txid, cts, ts, resource_type, status, resource, tenant_id, tenant_mode)
+                  VALUES (@id, @txid, @cts, @ts, @rtype, @status, @resource::jsonb, @tenant_id, @tenant_mode);"
 
             c.Parameters.AddWithValue("id", id) |> ignore
             c.Parameters.AddWithValue("txid", row.Txid) |> ignore
@@ -123,6 +138,7 @@ type PostgresEnvelopeSession(connectionString: string) =
             c.Parameters.AddWithValue("status", row.Status) |> ignore
             c.Parameters.AddWithValue("resource", row.BodyJson) |> ignore
             c.Parameters.AddWithValue("tenant_id", row.TenantId) |> ignore
+            c.Parameters.AddWithValue("tenant_mode", TenantMode.toDb row.TenantMode) |> ignore
             c.ExecuteNonQuery() |> ignore
 
         member _.UpdateCurrent(resourceType, id, txid, ts, bodyJson) =
@@ -143,8 +159,8 @@ type PostgresEnvelopeSession(connectionString: string) =
             use c = cmd ()
 
             c.CommandText <-
-                $"INSERT INTO {table} (id, txid, cts, ts, resource_type, status, resource, tenant_id)
-                  VALUES (@id, @txid, @cts, @ts, @rtype, 'created', @resource::jsonb, @tenant_id);"
+                $"INSERT INTO {table} (id, txid, cts, ts, resource_type, status, resource, tenant_id, tenant_mode)
+                  VALUES (@id, @txid, @cts, @ts, @rtype, 'created', @resource::jsonb, @tenant_id, @tenant_mode);"
 
             c.Parameters.AddWithValue("id", id) |> ignore
             c.Parameters.AddWithValue("txid", row.Txid) |> ignore
@@ -153,6 +169,7 @@ type PostgresEnvelopeSession(connectionString: string) =
             c.Parameters.AddWithValue("rtype", resourceType) |> ignore
             c.Parameters.AddWithValue("resource", row.BodyJson) |> ignore
             c.Parameters.AddWithValue("tenant_id", row.TenantId) |> ignore
+            c.Parameters.AddWithValue("tenant_mode", TenantMode.toDb row.TenantMode) |> ignore
             c.ExecuteNonQuery() |> ignore
 
         member _.DeleteCurrent(resourceType, id) =
@@ -358,6 +375,63 @@ type PostgresEnvelopeSession(connectionString: string) =
         member _.MarkSearchIndexBackfilled() =
             use c = cmd ()
             c.CommandText <- "UPDATE search_index_state SET backfilled = true WHERE id = 1;"
+            c.ExecuteNonQuery() |> ignore
+
+        member _.UpsertOrganizationClosure(orgId, parentOrgId) =
+            // Remove external ancestor links into this subtree, keep internal links, then attach under parent.
+            use del = cmd ()
+
+            del.CommandText <-
+                """
+                WITH subtree AS (
+                  SELECT descendant_id FROM organization_closure WHERE ancestor_id = @id
+                  UNION
+                  SELECT @id
+                )
+                DELETE FROM organization_closure
+                WHERE descendant_id IN (SELECT descendant_id FROM subtree)
+                  AND ancestor_id NOT IN (SELECT descendant_id FROM subtree);
+                """
+
+            del.Parameters.AddWithValue("id", orgId) |> ignore
+            del.ExecuteNonQuery() |> ignore
+
+            use self = cmd ()
+
+            self.CommandText <-
+                """
+                INSERT INTO organization_closure (ancestor_id, descendant_id, depth)
+                VALUES (@id, @id, 0)
+                ON CONFLICT (ancestor_id, descendant_id) DO UPDATE SET depth = EXCLUDED.depth;
+                """
+
+            self.Parameters.AddWithValue("id", orgId) |> ignore
+            self.ExecuteNonQuery() |> ignore
+
+            match parentOrgId with
+            | None -> ()
+            | Some parent ->
+                use link = cmd ()
+
+                link.CommandText <-
+                    """
+                    INSERT INTO organization_closure (ancestor_id, descendant_id, depth)
+                    SELECT a.ancestor_id, d.descendant_id, a.depth + d.depth + 1
+                    FROM organization_closure a
+                    CROSS JOIN organization_closure d
+                    WHERE a.descendant_id = @parent
+                      AND d.ancestor_id = @id
+                    ON CONFLICT (ancestor_id, descendant_id) DO UPDATE SET depth = EXCLUDED.depth;
+                    """
+
+                link.Parameters.AddWithValue("parent", parent) |> ignore
+                link.Parameters.AddWithValue("id", orgId) |> ignore
+                link.ExecuteNonQuery() |> ignore
+
+        member _.DeleteOrganizationClosure(orgId) =
+            use c = cmd ()
+            c.CommandText <- "DELETE FROM organization_closure WHERE ancestor_id = @id OR descendant_id = @id;"
+            c.Parameters.AddWithValue("id", orgId) |> ignore
             c.ExecuteNonQuery() |> ignore
 
     interface IDisposable with

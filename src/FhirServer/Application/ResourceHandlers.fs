@@ -206,26 +206,48 @@ module ResourceHandlers =
                     | _, None -> Error(VersionNotFound(resourceType, id, vid))
                 | None -> Error(VersionNotFound(resourceType, id, vid)))
 
+    let private tryUpsert (store: IResourceStore) (body: FhirResource) : FhirResult<FhirResource> =
+        try
+            Ok(store.Upsert body)
+        with
+        | TenantStampException msg -> Error(BadRequest msg)
+        | TenantMutationForbiddenException msg -> Error(Forbidden msg)
+
+    let private tryDelete
+        (store: IResourceStore)
+        (resourceType: string)
+        (id: string)
+        : FhirResult<FhirResource option> =
+        try
+            Ok(store.Delete(resourceType, id))
+        with TenantMutationForbiddenException msg ->
+            Error(Forbidden msg)
+
     let create (store: IResourceStore) (resourceType: string) (body: FhirResource) : FhirResult<FhirResource> =
         ensureKnownResourceType resourceType
         |> Result.bind (fun () -> ResourceValidator.ensureValid (Some resourceType) body)
         |> Result.bind (fun () ->
-            let id =
-                let current = FhirJson.id body
+            match OrganizationHierarchy.resolveCreateStamp body with
+            | Error msg -> Error(BadRequest msg)
+            | Ok _ ->
+                let id =
+                    let current = FhirJson.id body
 
-                if String.IsNullOrWhiteSpace current then
-                    Guid.NewGuid().ToString("N")
-                else
-                    current
+                    if String.IsNullOrWhiteSpace current then
+                        Guid.NewGuid().ToString("N")
+                    else
+                        current
 
-            match store.Get(resourceType, id) with
-            | Some _ -> Error(Conflict $"Resource {resourceType}/{id} already exists.")
-            | None ->
-                body["resourceType"] <- resourceType
-                FhirJson.setId body id |> ignore
-                let created = store.Upsert body
-                SubscriptionNotifier.notifyChange store "create" created
-                Ok created)
+                match store.Get(resourceType, id) with
+                | Some _ -> Error(Conflict $"Resource {resourceType}/{id} already exists.")
+                | None ->
+                    body["resourceType"] <- resourceType
+                    FhirJson.setId body id |> ignore
+
+                    tryUpsert store body
+                    |> Result.map (fun created ->
+                        SubscriptionNotifier.notifyChange store "create" created
+                        created))
 
     let update
         (store: IResourceStore)
@@ -241,11 +263,20 @@ module ResourceHandlers =
 
             checkIfMatch existing ifMatch
             |> Result.bind (fun () ->
-                body["resourceType"] <- resourceType
-                FhirJson.setId body id |> ignore
-                let updated = store.Upsert body
-                SubscriptionNotifier.notifyChange store "update" updated
-                Ok updated))
+                match existing with
+                | Some ex ->
+                    match OrganizationHierarchy.ensureMutationAllowed ex with
+                    | Error msg -> Error(Forbidden msg)
+                    | Ok() -> Ok()
+                | None -> Ok()
+                |> Result.bind (fun () ->
+                    body["resourceType"] <- resourceType
+                    FhirJson.setId body id |> ignore
+
+                    tryUpsert store body
+                    |> Result.map (fun updated ->
+                        SubscriptionNotifier.notifyChange store "update" updated
+                        updated))))
 
     let validateRaw (resourceType: string option) (body: string) : FhirResult<FhirResource> =
         match resourceType with
@@ -268,12 +299,20 @@ module ResourceHandlers =
 
             checkIfMatch existing ifMatch
             |> Result.bind (fun () ->
-                match store.Delete(resourceType, id) with
-                | Some deleted ->
-                    SubscriptionNotifier.notifyChange store "delete" deleted
-                    Ok deleted
-                | None when store.WasDeleted(resourceType, id) -> Error(Gone(resourceType, id, None))
-                | None -> Error(NotFound(resourceType, id))))
+                match existing with
+                | Some ex ->
+                    match OrganizationHierarchy.ensureMutationAllowed ex with
+                    | Error msg -> Error(Forbidden msg)
+                    | Ok() -> Ok()
+                | None -> Ok()
+                |> Result.bind (fun () ->
+                    match tryDelete store resourceType id with
+                    | Error err -> Error err
+                    | Ok(Some deleted) ->
+                        SubscriptionNotifier.notifyChange store "delete" deleted
+                        Ok deleted
+                    | Ok None when store.WasDeleted(resourceType, id) -> Error(Gone(resourceType, id, None))
+                    | Ok None -> Error(NotFound(resourceType, id)))))
 
     let private parseCriteriaQuery (criteria: string) =
         criteria.Split('&')
@@ -623,31 +662,38 @@ module ResourceHandlers =
     let applyJsonPatch (store: IResourceStore) (resourceType: string) (id: string) (patchJson: string) =
         read store resourceType id
         |> Result.bind (fun current ->
-            try
-                let node = FhirJson.deepClone current
-                let patchDoc = JsonSerializer.Deserialize<JsonArray>(patchJson)
+            match OrganizationHierarchy.ensureMutationAllowed current with
+            | Error msg -> Error(Forbidden msg)
+            | Ok() ->
+                try
+                    let node = FhirJson.deepClone current
+                    let patchDoc = JsonSerializer.Deserialize<JsonArray>(patchJson)
 
-                if isNull patchDoc then
-                    Error(BadRequest "JSON Patch body must be an array.")
-                else
-                    for opNode in patchDoc do
-                        let op = opNode["op"].GetValue<string>()
-                        let path = opNode["path"].GetValue<string>()
-                        let field = path.TrimStart('/')
+                    if isNull patchDoc then
+                        Error(BadRequest "JSON Patch body must be an array.")
+                    else
+                        for opNode in patchDoc do
+                            let op = opNode["op"].GetValue<string>()
+                            let path = opNode["path"].GetValue<string>()
+                            let field = path.TrimStart('/')
 
-                        match op with
-                        | "replace"
-                        | "add" -> node[field] <- opNode["value"].DeepClone()
-                        | "remove" -> node.Remove(field) |> ignore
-                        | other -> failwith $"Unsupported patch op '{other}'"
+                            match op with
+                            | "replace"
+                            | "add" -> node[field] <- opNode["value"].DeepClone()
+                            | "remove" -> node.Remove(field) |> ignore
+                            | other -> failwith $"Unsupported patch op '{other}'"
 
-                    FhirJson.setId node id |> ignore
-                    node["resourceType"] <- resourceType
-                    let patched = store.Upsert node
-                    SubscriptionNotifier.notifyChange store "patch" patched
-                    Ok patched
-            with ex ->
-                Error(BadRequest $"JSON Patch failed: {ex.Message}"))
+                        FhirJson.setId node id |> ignore
+                        node["resourceType"] <- resourceType
+
+                        tryUpsert store node
+                        |> Result.map (fun patched ->
+                            SubscriptionNotifier.notifyChange store "patch" patched
+                            patched)
+                with
+                | TenantMutationForbiddenException msg -> Error(Forbidden msg)
+                | TenantStampException msg -> Error(BadRequest msg)
+                | ex -> Error(BadRequest $"JSON Patch failed: {ex.Message}"))
 
     let executeBundle (store: IResourceStore) (bundle: FhirResource) : FhirResult<FhirResource> =
         match FhirJson.propString bundle "type" with
