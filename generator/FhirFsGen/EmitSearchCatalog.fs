@@ -105,10 +105,16 @@ module EmitSearchCatalog =
         : Extractor option =
         let path = pathAfterType resourceType clause
 
+        let humanNameBases =
+            set [ "Patient"; "Practitioner"; "Person"; "RelatedPerson" ]
+
         match typeName, path, code with
-        | "string", [ "name" ], _ -> Some(Extractor.HumanName "any")
-        | "string", [ "name"; "family" ], _ -> Some(Extractor.HumanName "family")
-        | "string", [ "name"; "given" ], _ -> Some(Extractor.HumanName "given")
+        | "string", [ "name" ], _ when humanNameBases.Contains resourceType ->
+            Some(Extractor.HumanName "any")
+        | "string", [ "name"; "family" ], _ when humanNameBases.Contains resourceType ->
+            Some(Extractor.HumanName "family")
+        | "string", [ "name"; "given" ], _ when humanNameBases.Contains resourceType ->
+            Some(Extractor.HumanName "given")
         | "string", fields, _ when fields <> [] && not (fields |> List.exists (fun f -> f.Contains("("))) ->
             // Organization.name | Organization.alias → first simple field
             Some(Extractor.StringField [ List.head fields ])

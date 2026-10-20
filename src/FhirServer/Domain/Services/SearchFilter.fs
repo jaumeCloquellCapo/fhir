@@ -237,14 +237,12 @@ module SearchFilter =
         | CompareOp.Co -> [ $"{param}:contains", value ]
         | CompareOp.Sw -> [ param, value ]
         | CompareOp.Ne ->
-            if
-                value.Contains('|', StringComparison.Ordinal)
-                || param = "code"
-                || param = "identifier"
-            then
-                [ $"{param}:not", value ]
-            else
-                [ param, "ne" + value ]
+            // Prefer token :not; for date/quantity-style params use FHIR `ne` prefix.
+            match param with
+            | "birthdate"
+            | "date"
+            | "value-quantity" -> [ param, "ne" + value ]
+            | _ -> [ $"{param}:not", value ]
         | CompareOp.Eq -> [ param, value ]
         | CompareOp.Gt -> [ param, "gt" + value ]
         | CompareOp.Lt -> [ param, "lt" + value ]

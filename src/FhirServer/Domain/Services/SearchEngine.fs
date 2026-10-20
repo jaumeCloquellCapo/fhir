@@ -57,6 +57,7 @@ module SearchEngine =
     type StringFilter =
         { Param: string
           Match: StringMatch
+          Negated: bool
           Values: string list }
 
     type TokenFilter =
@@ -751,27 +752,42 @@ module SearchEngine =
         |> List.collect (fun (code, indexParam, defaultMatch, _) ->
             entriesFor query code
             |> List.choose (fun (modifier, values) ->
-                match modifier with
-                | Some "missing" -> None
-                | Some "exact" ->
-                    Some {
-                        Param = indexParam
-                        Match = StringMatch.Exact
-                        Values = values |> List.map (fun s -> s.ToLowerInvariant())
-                    }
-                | Some "contains" ->
-                    Some {
-                        Param = indexParam
-                        Match = StringMatch.Contains
-                        Values = values |> List.map (fun s -> s.ToLowerInvariant())
-                    }
-                | Some _ -> None
-                | None ->
-                    Some {
-                        Param = indexParam
-                        Match = defaultMatch
-                        Values = values |> List.map (fun s -> s.ToLowerInvariant())
-                    }))
+                let lowered = values |> List.map (fun (s: string) -> s.ToLowerInvariant())
+
+                let result: StringFilter option =
+                    match modifier with
+                    | Some "missing" -> None
+                    | Some "exact" ->
+                        Some {
+                            Param = indexParam
+                            Match = StringMatch.Exact
+                            Negated = false
+                            Values = lowered
+                        }
+                    | Some "contains" ->
+                        Some {
+                            Param = indexParam
+                            Match = StringMatch.Contains
+                            Negated = false
+                            Values = lowered
+                        }
+                    | Some "not" ->
+                        Some {
+                            Param = indexParam
+                            Match = StringMatch.Exact
+                            Negated = true
+                            Values = lowered
+                        }
+                    | Some _ -> None
+                    | None ->
+                        Some {
+                            Param = indexParam
+                            Match = defaultMatch
+                            Negated = false
+                            Values = lowered
+                        }
+
+                result))
 
     let private tokenFilters (resourceType: string) (query: Map<string, string list>) : TokenFilter list =
         tokenParamSpecs resourceType

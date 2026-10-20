@@ -92,7 +92,10 @@ module SearchIndexQuery =
                 |> String.concat " OR "
 
             if valueClauses <> "" then
-                sb.Append($" AND ({valueClauses})") |> ignore
+                if filter.Negated then
+                    sb.Append($" AND NOT ({valueClauses})") |> ignore
+                else
+                    sb.Append($" AND ({valueClauses})") |> ignore
 
         for filter in plan.Tokens do
             let paramPh = addParam (filter.Param :> obj)
