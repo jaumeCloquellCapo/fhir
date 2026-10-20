@@ -5,12 +5,12 @@ export PATH := /opt/homebrew/opt/dotnet/bin:$(PATH)
 PROJECT := FhirServer
 URL     := http://localhost:5050
 
-E2E := tests/FhirServer.E2E
+E2E := Tests/FhirServer.E2E
 
-GEN := generator/FhirFsGen
-GEN_OUT := generator/out/r5
-PKG_SCHEMAS := packages/FhirServer.Schemas
-PKG_VALIDATION := packages/FhirServer.Validation
+GEN := Generator/FhirFsGen
+GEN_OUT := Generator/out/r5
+PKG_SCHEMAS := Packages/FhirServer.Schemas
+PKG_VALIDATION := Packages/FhirServer.Validation
 
 .PHONY: help restore tools build run api watch clean format format-check lint test test-e2e test-metadata db-up db-down generate generate-r5-all generate-todo sync-schemas
 

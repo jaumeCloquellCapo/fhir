@@ -29,35 +29,35 @@ jobs:
       - name: Cache FHIR package
         uses: actions/cache@v5
         with:
-          path: generator/cache
+          path: Generator/cache
           key: fhir-r5-core-5.0.0
           restore-keys: |
             fhir-r5-core-
 
       - name: Restore
-        run: dotnet restore generator/FhirFsGen/FhirFsGen.fsproj
+        run: dotnet restore Generator/FhirFsGen/FhirFsGen.fsproj
 
       - name: Build generator
-        run: dotnet build generator/FhirFsGen/FhirFsGen.fsproj --configuration Release --no-restore
+        run: dotnet build Generator/FhirFsGen/FhirFsGen.fsproj --configuration Release --no-restore
 
       - name: Smoke generate Patient
         run: >
-          dotnet run --project generator/FhirFsGen --configuration Release --no-build --
-          --resource Patient --out generator/out/r5
+          dotnet run --project Generator/FhirFsGen --configuration Release --no-build --
+          --resource Patient --out Generator/out/r5
 
       - name: Assert generated artifacts
         run: |
           set -euo pipefail
-          test -f generator/out/r5/schemas/Patient.schema.json
-          test -f generator/out/r5/valuesets.json
-          test -f generator/out/r5/manifest.json
-          test -f generator/out/r5/GeneratedResourceCatalog.fs
-          test -f generator/out/r5/GeneratedSchemaValidator.fs
-          echo "Generated $(ls generator/out/r5/schemas/*.schema.json | wc -l | tr -d ' ') schema file(s)"
+          test -f Generator/out/r5/schemas/Patient.schema.json
+          test -f Generator/out/r5/valuesets.json
+          test -f Generator/out/r5/manifest.json
+          test -f Generator/out/r5/GeneratedResourceCatalog.fs
+          test -f Generator/out/r5/GeneratedSchemaValidator.fs
+          echo "Generated $(ls Generator/out/r5/schemas/*.schema.json | wc -l | tr -d ' ') schema file(s)"
 
       - name: Build schema packages
         run: |
-          dotnet restore packages/FhirServer.Schemas/FhirServer.Schemas.fsproj
-          dotnet build packages/FhirServer.Schemas/FhirServer.Schemas.fsproj --configuration Release --no-restore
-          dotnet restore packages/FhirServer.Validation/FhirServer.Validation.fsproj
-          dotnet build packages/FhirServer.Validation/FhirServer.Validation.fsproj --configuration Release --no-restore
+          dotnet restore Packages/FhirServer.Schemas/FhirServer.Schemas.fsproj
+          dotnet build Packages/FhirServer.Schemas/FhirServer.Schemas.fsproj --configuration Release --no-restore
+          dotnet restore Packages/FhirServer.Validation/FhirServer.Validation.fsproj
+          dotnet build Packages/FhirServer.Validation/FhirServer.Validation.fsproj --configuration Release --no-restore
