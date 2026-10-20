@@ -29,6 +29,12 @@
     <Compile Include="Application/Smart/SmartAuth.fs" />
     <Compile Include="Application/Subscriptions/SubscriptionNotifier.fs" />
     <Compile Include="Application/Terminology/TerminologyOps.fs" />
+    <Compile Include="Application/Resources/ResourceHelpers.fs" />
+    <Compile Include="Application/Resources/ResourceCrud.fs" />
+    <Compile Include="Application/Resources/ResourceSearch.fs" />
+    <Compile Include="Application/Resources/ResourceHistory.fs" />
+    <Compile Include="Application/Resources/ResourceOperations.fs" />
+    <Compile Include="Application/Resources/ResourceBundle.fs" />
     <Compile Include="Application/ResourceHandlers.fs" />
     <Compile Include="Application/BulkExport.fs" />
     <Compile Include="Application/BulkImport.fs" />
