@@ -13,6 +13,38 @@
     "type",
     "use"
   ],
+  "constraints": [
+    {
+      "key": "dom-2",
+      "severity": "error",
+      "expression": "contained.contained.empty()",
+      "human": "If the resource is contained in another resource, it SHALL NOT contain nested Resources"
+    },
+    {
+      "key": "dom-3",
+      "severity": "error",
+      "expression": "contained.where(((\u0027#\u0027\u002Bid in (%resource.descendants().reference | %resource.descendants().ofType(canonical) | %resource.descendants().ofType(uri) | %resource.descendants().ofType(url))) or descendants().where(reference = \u0027#\u0027).exists() or descendants().where(ofType(canonical) = \u0027#\u0027).exists() or descendants().where(ofType(canonical) = \u0027#\u0027).exists()).not()).trace(\u0027unmatched\u0027, id).empty()",
+      "human": "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource"
+    },
+    {
+      "key": "dom-4",
+      "severity": "error",
+      "expression": "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
+      "human": "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"
+    },
+    {
+      "key": "dom-5",
+      "severity": "error",
+      "expression": "contained.meta.security.empty()",
+      "human": "If a resource is contained in another resource, it SHALL NOT have a security label"
+    },
+    {
+      "key": "dom-6",
+      "severity": "warning",
+      "expression": "text.\u0060div\u0060.exists()",
+      "human": "A resource should have narrative for robust management"
+    }
+  ],
   "elements": {
     "addItem": {
       "path": "ClaimResponse.addItem",
@@ -22,6 +54,14 @@
       "type": [
         "BackboneElement"
       ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
       "elements": {
         "adjudication": {
           "path": "ClaimResponse.addItem.adjudication",
@@ -29,7 +69,15 @@
           "max": "*",
           "array": true,
           "type": [],
-          "contentReference": "#ClaimResponse.item.adjudication"
+          "contentReference": "#ClaimResponse.item.adjudication",
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
         },
         "bodySite": {
           "path": "ClaimResponse.addItem.bodySite",
@@ -39,6 +87,14 @@
           "type": [
             "BackboneElement"
           ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ],
           "elements": {
             "extension": {
               "path": "ClaimResponse.addItem.bodySite.extension",
@@ -47,6 +103,20 @@
               "array": true,
               "type": [
                 "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
               ]
             },
             "id": {
@@ -65,6 +135,20 @@
               "array": true,
               "type": [
                 "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
               ]
             },
             "site": {
@@ -78,7 +162,15 @@
               "binding": {
                 "strength": "example",
                 "valueSet": "http://hl7.org/fhir/ValueSet/tooth"
-              }
+              },
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
             },
             "subSite": {
               "path": "ClaimResponse.addItem.bodySite.subSite",
@@ -91,7 +183,15 @@
               "binding": {
                 "strength": "example",
                 "valueSet": "http://hl7.org/fhir/ValueSet/surface"
-              }
+              },
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
             }
           }
         },
@@ -103,6 +203,14 @@
           "type": [
             "BackboneElement"
           ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ],
           "elements": {
             "adjudication": {
               "path": "ClaimResponse.addItem.detail.adjudication",
@@ -110,7 +218,15 @@
               "max": "*",
               "array": true,
               "type": [],
-              "contentReference": "#ClaimResponse.item.adjudication"
+              "contentReference": "#ClaimResponse.item.adjudication",
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
             },
             "extension": {
               "path": "ClaimResponse.addItem.detail.extension",
@@ -119,6 +235,20 @@
               "array": true,
               "type": [
                 "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
               ]
             },
             "factor": {
@@ -128,6 +258,14 @@
               "array": false,
               "type": [
                 "decimal"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
               ]
             },
             "id": {
@@ -150,7 +288,15 @@
               "binding": {
                 "strength": "example",
                 "valueSet": "http://hl7.org/fhir/ValueSet/claim-modifiers"
-              }
+              },
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
             },
             "modifierExtension": {
               "path": "ClaimResponse.addItem.detail.modifierExtension",
@@ -159,6 +305,20 @@
               "array": true,
               "type": [
                 "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
               ]
             },
             "net": {
@@ -168,6 +328,14 @@
               "array": false,
               "type": [
                 "Money"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
               ]
             },
             "noteNumber": {
@@ -177,6 +345,14 @@
               "array": true,
               "type": [
                 "positiveInt"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
               ]
             },
             "productOrService": {
@@ -190,7 +366,15 @@
               "binding": {
                 "strength": "example",
                 "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
-              }
+              },
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
             },
             "productOrServiceEnd": {
               "path": "ClaimResponse.addItem.detail.productOrServiceEnd",
@@ -203,7 +387,15 @@
               "binding": {
                 "strength": "example",
                 "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
-              }
+              },
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
             },
             "quantity": {
               "path": "ClaimResponse.addItem.detail.quantity",
@@ -212,6 +404,14 @@
               "array": false,
               "type": [
                 "Quantity"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
               ]
             },
             "revenue": {
@@ -225,7 +425,15 @@
               "binding": {
                 "strength": "example",
                 "valueSet": "http://hl7.org/fhir/ValueSet/ex-revenue-center"
-              }
+              },
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
             },
             "reviewOutcome": {
               "path": "ClaimResponse.addItem.detail.reviewOutcome",
@@ -233,7 +441,15 @@
               "max": 1,
               "array": false,
               "type": [],
-              "contentReference": "#ClaimResponse.item.reviewOutcome"
+              "contentReference": "#ClaimResponse.item.reviewOutcome",
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
             },
             "subDetail": {
               "path": "ClaimResponse.addItem.detail.subDetail",
@@ -243,6 +459,14 @@
               "type": [
                 "BackboneElement"
               ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ],
               "elements": {
                 "adjudication": {
                   "path": "ClaimResponse.addItem.detail.subDetail.adjudication",
@@ -250,7 +474,15 @@
                   "max": "*",
                   "array": true,
                   "type": [],
-                  "contentReference": "#ClaimResponse.item.adjudication"
+                  "contentReference": "#ClaimResponse.item.adjudication",
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
+                  ]
                 },
                 "extension": {
                   "path": "ClaimResponse.addItem.detail.subDetail.extension",
@@ -259,6 +491,20 @@
                   "array": true,
                   "type": [
                     "Extension"
+                  ],
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    },
+                    {
+                      "key": "ext-1",
+                      "severity": "error",
+                      "expression": "extension.exists() != value.exists()",
+                      "human": "Must have either extensions or value[x], not both"
+                    }
                   ]
                 },
                 "factor": {
@@ -268,6 +514,14 @@
                   "array": false,
                   "type": [
                     "decimal"
+                  ],
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
                   ]
                 },
                 "id": {
@@ -290,7 +544,15 @@
                   "binding": {
                     "strength": "example",
                     "valueSet": "http://hl7.org/fhir/ValueSet/claim-modifiers"
-                  }
+                  },
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
+                  ]
                 },
                 "modifierExtension": {
                   "path": "ClaimResponse.addItem.detail.subDetail.modifierExtension",
@@ -299,6 +561,20 @@
                   "array": true,
                   "type": [
                     "Extension"
+                  ],
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    },
+                    {
+                      "key": "ext-1",
+                      "severity": "error",
+                      "expression": "extension.exists() != value.exists()",
+                      "human": "Must have either extensions or value[x], not both"
+                    }
                   ]
                 },
                 "net": {
@@ -308,6 +584,14 @@
                   "array": false,
                   "type": [
                     "Money"
+                  ],
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
                   ]
                 },
                 "noteNumber": {
@@ -317,6 +601,14 @@
                   "array": true,
                   "type": [
                     "positiveInt"
+                  ],
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
                   ]
                 },
                 "productOrService": {
@@ -330,7 +622,15 @@
                   "binding": {
                     "strength": "example",
                     "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
-                  }
+                  },
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
+                  ]
                 },
                 "productOrServiceEnd": {
                   "path": "ClaimResponse.addItem.detail.subDetail.productOrServiceEnd",
@@ -343,7 +643,15 @@
                   "binding": {
                     "strength": "example",
                     "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
-                  }
+                  },
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
+                  ]
                 },
                 "quantity": {
                   "path": "ClaimResponse.addItem.detail.subDetail.quantity",
@@ -352,6 +660,14 @@
                   "array": false,
                   "type": [
                     "Quantity"
+                  ],
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
                   ]
                 },
                 "revenue": {
@@ -365,7 +681,15 @@
                   "binding": {
                     "strength": "example",
                     "valueSet": "http://hl7.org/fhir/ValueSet/ex-revenue-center"
-                  }
+                  },
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
+                  ]
                 },
                 "reviewOutcome": {
                   "path": "ClaimResponse.addItem.detail.subDetail.reviewOutcome",
@@ -373,7 +697,15 @@
                   "max": 1,
                   "array": false,
                   "type": [],
-                  "contentReference": "#ClaimResponse.item.reviewOutcome"
+                  "contentReference": "#ClaimResponse.item.reviewOutcome",
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
+                  ]
                 },
                 "tax": {
                   "path": "ClaimResponse.addItem.detail.subDetail.tax",
@@ -382,6 +714,14 @@
                   "array": false,
                   "type": [
                     "Money"
+                  ],
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
                   ]
                 },
                 "traceNumber": {
@@ -391,6 +731,14 @@
                   "array": true,
                   "type": [
                     "Identifier"
+                  ],
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
                   ]
                 },
                 "unitPrice": {
@@ -400,6 +748,14 @@
                   "array": false,
                   "type": [
                     "Money"
+                  ],
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
                   ]
                 }
               }
@@ -411,6 +767,14 @@
               "array": false,
               "type": [
                 "Money"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
               ]
             },
             "traceNumber": {
@@ -420,6 +784,14 @@
               "array": true,
               "type": [
                 "Identifier"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
               ]
             },
             "unitPrice": {
@@ -429,6 +801,14 @@
               "array": false,
               "type": [
                 "Money"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
               ]
             }
           }
@@ -440,6 +820,14 @@
           "array": true,
           "type": [
             "positiveInt"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "extension": {
@@ -449,6 +837,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "factor": {
@@ -458,6 +860,14 @@
           "array": false,
           "type": [
             "decimal"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "id": {
@@ -476,6 +886,14 @@
           "array": true,
           "type": [
             "positiveInt"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "location": {
@@ -496,6 +914,14 @@
             "locationCodeableConcept",
             "locationAddress",
             "locationReference"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "modifier": {
@@ -509,7 +935,15 @@
           "binding": {
             "strength": "example",
             "valueSet": "http://hl7.org/fhir/ValueSet/claim-modifiers"
-          }
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
         },
         "modifierExtension": {
           "path": "ClaimResponse.addItem.modifierExtension",
@@ -518,6 +952,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "net": {
@@ -527,6 +975,14 @@
           "array": false,
           "type": [
             "Money"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "noteNumber": {
@@ -536,6 +992,14 @@
           "array": true,
           "type": [
             "positiveInt"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "productOrService": {
@@ -549,7 +1013,15 @@
           "binding": {
             "strength": "example",
             "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
-          }
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
         },
         "productOrServiceEnd": {
           "path": "ClaimResponse.addItem.productOrServiceEnd",
@@ -562,7 +1034,15 @@
           "binding": {
             "strength": "example",
             "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
-          }
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
         },
         "programCode": {
           "path": "ClaimResponse.addItem.programCode",
@@ -575,7 +1055,15 @@
           "binding": {
             "strength": "example",
             "valueSet": "http://hl7.org/fhir/ValueSet/ex-program-code"
-          }
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
         },
         "provider": {
           "path": "ClaimResponse.addItem.provider",
@@ -584,6 +1072,14 @@
           "array": true,
           "type": [
             "Reference"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "quantity": {
@@ -593,6 +1089,14 @@
           "array": false,
           "type": [
             "Quantity"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "request": {
@@ -602,6 +1106,14 @@
           "array": true,
           "type": [
             "Reference"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "revenue": {
@@ -615,7 +1127,15 @@
           "binding": {
             "strength": "example",
             "valueSet": "http://hl7.org/fhir/ValueSet/ex-revenue-center"
-          }
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
         },
         "reviewOutcome": {
           "path": "ClaimResponse.addItem.reviewOutcome",
@@ -623,7 +1143,15 @@
           "max": 1,
           "array": false,
           "type": [],
-          "contentReference": "#ClaimResponse.item.reviewOutcome"
+          "contentReference": "#ClaimResponse.item.reviewOutcome",
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
         },
         "serviced": {
           "path": "ClaimResponse.addItem.serviced[x]",
@@ -637,6 +1165,14 @@
           "choices": [
             "servicedDate",
             "servicedPeriod"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "subdetailSequence": {
@@ -646,6 +1182,14 @@
           "array": true,
           "type": [
             "positiveInt"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "tax": {
@@ -655,6 +1199,14 @@
           "array": false,
           "type": [
             "Money"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "traceNumber": {
@@ -664,6 +1216,14 @@
           "array": true,
           "type": [
             "Identifier"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "unitPrice": {
@@ -673,6 +1233,14 @@
           "array": false,
           "type": [
             "Money"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         }
       }
@@ -683,7 +1251,15 @@
       "max": "*",
       "array": true,
       "type": [],
-      "contentReference": "#ClaimResponse.item.adjudication"
+      "contentReference": "#ClaimResponse.item.adjudication",
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "communicationRequest": {
       "path": "ClaimResponse.communicationRequest",
@@ -692,6 +1268,14 @@
       "array": true,
       "type": [
         "Reference"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "contained": {
@@ -710,6 +1294,14 @@
       "array": false,
       "type": [
         "dateTime"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "decision": {
@@ -723,7 +1315,15 @@
       "binding": {
         "strength": "example",
         "valueSet": "http://hl7.org/fhir/ValueSet/claim-decision"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "diagnosisRelatedGroup": {
       "path": "ClaimResponse.diagnosisRelatedGroup",
@@ -736,7 +1336,15 @@
       "binding": {
         "strength": "example",
         "valueSet": "http://hl7.org/fhir/ValueSet/ex-diagnosisrelatedgroup"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "disposition": {
       "path": "ClaimResponse.disposition",
@@ -745,6 +1353,14 @@
       "array": false,
       "type": [
         "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "encounter": {
@@ -754,6 +1370,14 @@
       "array": true,
       "type": [
         "Reference"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "error": {
@@ -763,6 +1387,14 @@
       "array": true,
       "type": [
         "BackboneElement"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ],
       "elements": {
         "code": {
@@ -776,7 +1408,15 @@
           "binding": {
             "strength": "example",
             "valueSet": "http://hl7.org/fhir/ValueSet/adjudication-error"
-          }
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
         },
         "detailSequence": {
           "path": "ClaimResponse.error.detailSequence",
@@ -785,6 +1425,14 @@
           "array": false,
           "type": [
             "positiveInt"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "expression": {
@@ -794,6 +1442,14 @@
           "array": true,
           "type": [
             "string"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "extension": {
@@ -803,6 +1459,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "id": {
@@ -821,6 +1491,14 @@
           "array": false,
           "type": [
             "positiveInt"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "modifierExtension": {
@@ -830,6 +1508,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "subDetailSequence": {
@@ -839,6 +1531,14 @@
           "array": false,
           "type": [
             "positiveInt"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         }
       }
@@ -851,6 +1551,14 @@
       "type": [
         "BackboneElement"
       ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
       "elements": {
         "extension": {
           "path": "ClaimResponse.event.extension",
@@ -859,6 +1567,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "id": {
@@ -877,6 +1599,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "type": {
@@ -890,7 +1626,15 @@
           "binding": {
             "strength": "example",
             "valueSet": "http://hl7.org/fhir/ValueSet/datestype"
-          }
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
         },
         "when": {
           "path": "ClaimResponse.event.when[x]",
@@ -904,6 +1648,14 @@
           "choices": [
             "whenDateTime",
             "whenPeriod"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         }
       }
@@ -915,6 +1667,20 @@
       "array": true,
       "type": [
         "Extension"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "ext-1",
+          "severity": "error",
+          "expression": "extension.exists() != value.exists()",
+          "human": "Must have either extensions or value[x], not both"
+        }
       ]
     },
     "form": {
@@ -924,6 +1690,14 @@
       "array": false,
       "type": [
         "Attachment"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "formCode": {
@@ -937,7 +1711,15 @@
       "binding": {
         "strength": "example",
         "valueSet": "http://hl7.org/fhir/ValueSet/forms"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "fundsReserve": {
       "path": "ClaimResponse.fundsReserve",
@@ -950,7 +1732,15 @@
       "binding": {
         "strength": "example",
         "valueSet": "http://hl7.org/fhir/ValueSet/fundsreserve"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "id": {
       "path": "ClaimResponse.id",
@@ -968,6 +1758,14 @@
       "array": true,
       "type": [
         "Identifier"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "implicitRules": {
@@ -977,6 +1775,14 @@
       "array": false,
       "type": [
         "uri"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "insurance": {
@@ -987,6 +1793,14 @@
       "type": [
         "BackboneElement"
       ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
       "elements": {
         "businessArrangement": {
           "path": "ClaimResponse.insurance.businessArrangement",
@@ -995,6 +1809,14 @@
           "array": false,
           "type": [
             "string"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "claimResponse": {
@@ -1004,6 +1826,14 @@
           "array": false,
           "type": [
             "Reference"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "coverage": {
@@ -1013,6 +1843,14 @@
           "array": false,
           "type": [
             "Reference"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "extension": {
@@ -1022,6 +1860,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "focal": {
@@ -1031,6 +1883,14 @@
           "array": false,
           "type": [
             "boolean"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "id": {
@@ -1049,6 +1909,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "sequence": {
@@ -1058,6 +1932,14 @@
           "array": false,
           "type": [
             "positiveInt"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         }
       }
@@ -1069,6 +1951,14 @@
       "array": false,
       "type": [
         "Reference"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "item": {
@@ -1079,6 +1969,14 @@
       "type": [
         "BackboneElement"
       ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
       "elements": {
         "adjudication": {
           "path": "ClaimResponse.item.adjudication",
@@ -1088,6 +1986,14 @@
           "type": [
             "BackboneElement"
           ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ],
           "elements": {
             "amount": {
               "path": "ClaimResponse.item.adjudication.amount",
@@ -1096,6 +2002,14 @@
               "array": false,
               "type": [
                 "Money"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
               ]
             },
             "category": {
@@ -1109,7 +2023,15 @@
               "binding": {
                 "strength": "example",
                 "valueSet": "http://hl7.org/fhir/ValueSet/adjudication"
-              }
+              },
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
             },
             "extension": {
               "path": "ClaimResponse.item.adjudication.extension",
@@ -1118,6 +2040,20 @@
               "array": true,
               "type": [
                 "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
               ]
             },
             "id": {
@@ -1136,6 +2072,20 @@
               "array": true,
               "type": [
                 "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
               ]
             },
             "quantity": {
@@ -1145,6 +2095,14 @@
               "array": false,
               "type": [
                 "Quantity"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
               ]
             },
             "reason": {
@@ -1158,7 +2116,15 @@
               "binding": {
                 "strength": "example",
                 "valueSet": "http://hl7.org/fhir/ValueSet/adjudication-reason"
-              }
+              },
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
             }
           }
         },
@@ -1170,6 +2136,14 @@
           "type": [
             "BackboneElement"
           ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ],
           "elements": {
             "adjudication": {
               "path": "ClaimResponse.item.detail.adjudication",
@@ -1177,7 +2151,15 @@
               "max": "*",
               "array": true,
               "type": [],
-              "contentReference": "#ClaimResponse.item.adjudication"
+              "contentReference": "#ClaimResponse.item.adjudication",
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
             },
             "detailSequence": {
               "path": "ClaimResponse.item.detail.detailSequence",
@@ -1186,6 +2168,14 @@
               "array": false,
               "type": [
                 "positiveInt"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
               ]
             },
             "extension": {
@@ -1195,6 +2185,20 @@
               "array": true,
               "type": [
                 "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
               ]
             },
             "id": {
@@ -1213,6 +2217,20 @@
               "array": true,
               "type": [
                 "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
               ]
             },
             "noteNumber": {
@@ -1222,6 +2240,14 @@
               "array": true,
               "type": [
                 "positiveInt"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
               ]
             },
             "reviewOutcome": {
@@ -1230,7 +2256,15 @@
               "max": 1,
               "array": false,
               "type": [],
-              "contentReference": "#ClaimResponse.item.reviewOutcome"
+              "contentReference": "#ClaimResponse.item.reviewOutcome",
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
             },
             "subDetail": {
               "path": "ClaimResponse.item.detail.subDetail",
@@ -1240,6 +2274,14 @@
               "type": [
                 "BackboneElement"
               ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ],
               "elements": {
                 "adjudication": {
                   "path": "ClaimResponse.item.detail.subDetail.adjudication",
@@ -1247,7 +2289,15 @@
                   "max": "*",
                   "array": true,
                   "type": [],
-                  "contentReference": "#ClaimResponse.item.adjudication"
+                  "contentReference": "#ClaimResponse.item.adjudication",
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
+                  ]
                 },
                 "extension": {
                   "path": "ClaimResponse.item.detail.subDetail.extension",
@@ -1256,6 +2306,20 @@
                   "array": true,
                   "type": [
                     "Extension"
+                  ],
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    },
+                    {
+                      "key": "ext-1",
+                      "severity": "error",
+                      "expression": "extension.exists() != value.exists()",
+                      "human": "Must have either extensions or value[x], not both"
+                    }
                   ]
                 },
                 "id": {
@@ -1274,6 +2338,20 @@
                   "array": true,
                   "type": [
                     "Extension"
+                  ],
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    },
+                    {
+                      "key": "ext-1",
+                      "severity": "error",
+                      "expression": "extension.exists() != value.exists()",
+                      "human": "Must have either extensions or value[x], not both"
+                    }
                   ]
                 },
                 "noteNumber": {
@@ -1283,6 +2361,14 @@
                   "array": true,
                   "type": [
                     "positiveInt"
+                  ],
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
                   ]
                 },
                 "reviewOutcome": {
@@ -1291,7 +2377,15 @@
                   "max": 1,
                   "array": false,
                   "type": [],
-                  "contentReference": "#ClaimResponse.item.reviewOutcome"
+                  "contentReference": "#ClaimResponse.item.reviewOutcome",
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
+                  ]
                 },
                 "subDetailSequence": {
                   "path": "ClaimResponse.item.detail.subDetail.subDetailSequence",
@@ -1300,6 +2394,14 @@
                   "array": false,
                   "type": [
                     "positiveInt"
+                  ],
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
                   ]
                 },
                 "traceNumber": {
@@ -1309,6 +2411,14 @@
                   "array": true,
                   "type": [
                     "Identifier"
+                  ],
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
                   ]
                 }
               }
@@ -1320,6 +2430,14 @@
               "array": true,
               "type": [
                 "Identifier"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
               ]
             }
           }
@@ -1331,6 +2449,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "id": {
@@ -1349,6 +2481,14 @@
           "array": false,
           "type": [
             "positiveInt"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "modifierExtension": {
@@ -1358,6 +2498,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "noteNumber": {
@@ -1367,6 +2521,14 @@
           "array": true,
           "type": [
             "positiveInt"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "reviewOutcome": {
@@ -1376,6 +2538,14 @@
           "array": false,
           "type": [
             "BackboneElement"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ],
           "elements": {
             "decision": {
@@ -1389,7 +2559,15 @@
               "binding": {
                 "strength": "example",
                 "valueSet": "http://hl7.org/fhir/ValueSet/claim-decision"
-              }
+              },
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
             },
             "extension": {
               "path": "ClaimResponse.item.reviewOutcome.extension",
@@ -1398,6 +2576,20 @@
               "array": true,
               "type": [
                 "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
               ]
             },
             "id": {
@@ -1416,6 +2608,20 @@
               "array": true,
               "type": [
                 "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
               ]
             },
             "preAuthPeriod": {
@@ -1425,6 +2631,14 @@
               "array": false,
               "type": [
                 "Period"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
               ]
             },
             "preAuthRef": {
@@ -1434,6 +2648,14 @@
               "array": false,
               "type": [
                 "string"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
               ]
             },
             "reason": {
@@ -1447,7 +2669,15 @@
               "binding": {
                 "strength": "example",
                 "valueSet": "http://hl7.org/fhir/ValueSet/claim-decision-reason"
-              }
+              },
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
             }
           }
         },
@@ -1458,6 +2688,14 @@
           "array": true,
           "type": [
             "Identifier"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         }
       }
@@ -1473,7 +2711,15 @@
       "binding": {
         "strength": "required",
         "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "meta": {
       "path": "ClaimResponse.meta",
@@ -1482,6 +2728,14 @@
       "array": false,
       "type": [
         "Meta"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "modifierExtension": {
@@ -1491,6 +2745,20 @@
       "array": true,
       "type": [
         "Extension"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "ext-1",
+          "severity": "error",
+          "expression": "extension.exists() != value.exists()",
+          "human": "Must have either extensions or value[x], not both"
+        }
       ]
     },
     "outcome": {
@@ -1504,7 +2772,15 @@
       "binding": {
         "strength": "required",
         "valueSet": "http://hl7.org/fhir/ValueSet/claim-outcome|5.0.0"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "patient": {
       "path": "ClaimResponse.patient",
@@ -1513,6 +2789,14 @@
       "array": false,
       "type": [
         "Reference"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "payeeType": {
@@ -1526,7 +2810,15 @@
       "binding": {
         "strength": "example",
         "valueSet": "http://hl7.org/fhir/ValueSet/payeetype"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "payment": {
       "path": "ClaimResponse.payment",
@@ -1536,6 +2828,14 @@
       "type": [
         "BackboneElement"
       ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
       "elements": {
         "adjustment": {
           "path": "ClaimResponse.payment.adjustment",
@@ -1544,6 +2844,14 @@
           "array": false,
           "type": [
             "Money"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "adjustmentReason": {
@@ -1557,7 +2865,15 @@
           "binding": {
             "strength": "example",
             "valueSet": "http://hl7.org/fhir/ValueSet/payment-adjustment-reason"
-          }
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
         },
         "amount": {
           "path": "ClaimResponse.payment.amount",
@@ -1566,6 +2882,14 @@
           "array": false,
           "type": [
             "Money"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "date": {
@@ -1575,6 +2899,14 @@
           "array": false,
           "type": [
             "date"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "extension": {
@@ -1584,6 +2916,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "id": {
@@ -1602,6 +2948,14 @@
           "array": false,
           "type": [
             "Identifier"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "modifierExtension": {
@@ -1611,6 +2965,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "type": {
@@ -1624,7 +2992,15 @@
           "binding": {
             "strength": "example",
             "valueSet": "http://hl7.org/fhir/ValueSet/ex-paymenttype"
-          }
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
         }
       }
     },
@@ -1635,6 +3011,14 @@
       "array": false,
       "type": [
         "Period"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "preAuthRef": {
@@ -1644,6 +3028,14 @@
       "array": false,
       "type": [
         "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "processNote": {
@@ -1654,6 +3046,14 @@
       "type": [
         "BackboneElement"
       ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
       "elements": {
         "extension": {
           "path": "ClaimResponse.processNote.extension",
@@ -1662,6 +3062,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "id": {
@@ -1684,7 +3098,15 @@
           "binding": {
             "strength": "required",
             "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
-          }
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
         },
         "modifierExtension": {
           "path": "ClaimResponse.processNote.modifierExtension",
@@ -1693,6 +3115,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "number": {
@@ -1702,6 +3138,14 @@
           "array": false,
           "type": [
             "positiveInt"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "text": {
@@ -1711,6 +3155,14 @@
           "array": false,
           "type": [
             "string"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "type": {
@@ -1724,7 +3176,15 @@
           "binding": {
             "strength": "extensible",
             "valueSet": "http://hl7.org/fhir/ValueSet/note-type"
-          }
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
         }
       }
     },
@@ -1735,6 +3195,14 @@
       "array": false,
       "type": [
         "Reference"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "requestor": {
@@ -1744,6 +3212,14 @@
       "array": false,
       "type": [
         "Reference"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "status": {
@@ -1757,7 +3233,15 @@
       "binding": {
         "strength": "required",
         "valueSet": "http://hl7.org/fhir/ValueSet/fm-status|5.0.0"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "subType": {
       "path": "ClaimResponse.subType",
@@ -1770,7 +3254,15 @@
       "binding": {
         "strength": "example",
         "valueSet": "http://hl7.org/fhir/ValueSet/claim-subtype"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "text": {
       "path": "ClaimResponse.text",
@@ -1779,6 +3271,14 @@
       "array": false,
       "type": [
         "Narrative"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "total": {
@@ -1789,6 +3289,14 @@
       "type": [
         "BackboneElement"
       ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
       "elements": {
         "amount": {
           "path": "ClaimResponse.total.amount",
@@ -1797,6 +3305,14 @@
           "array": false,
           "type": [
             "Money"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "category": {
@@ -1810,7 +3326,15 @@
           "binding": {
             "strength": "example",
             "valueSet": "http://hl7.org/fhir/ValueSet/adjudication"
-          }
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
         },
         "extension": {
           "path": "ClaimResponse.total.extension",
@@ -1819,6 +3343,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "id": {
@@ -1837,6 +3375,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         }
       }
@@ -1848,6 +3400,14 @@
       "array": true,
       "type": [
         "Identifier"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "type": {
@@ -1861,7 +3421,15 @@
       "binding": {
         "strength": "extensible",
         "valueSet": "http://hl7.org/fhir/ValueSet/claim-type"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "use": {
       "path": "ClaimResponse.use",
@@ -1874,7 +3442,15 @@
       "binding": {
         "strength": "required",
         "valueSet": "http://hl7.org/fhir/ValueSet/claim-use|5.0.0"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     }
   }
 }

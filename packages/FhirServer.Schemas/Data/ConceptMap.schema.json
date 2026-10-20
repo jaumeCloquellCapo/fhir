@@ -8,6 +8,14 @@
   "required": [
     "status"
   ],
+  "constraints": [
+    {
+      "key": "cnl-0",
+      "severity": "warning",
+      "expression": "name.exists() implies name.matches(\u0027^[A-Z]([A-Za-z0-9_]){1,254}$\u0027)",
+      "human": "Name should be usable as an identifier for the module by machine processing applications such as code generation"
+    }
+  ],
   "elements": {
     "additionalAttribute": {
       "path": "ConceptMap.additionalAttribute",
@@ -17,6 +25,14 @@
       "type": [
         "BackboneElement"
       ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
       "elements": {
         "code": {
           "path": "ConceptMap.additionalAttribute.code",
@@ -25,6 +41,14 @@
           "array": false,
           "type": [
             "code"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "description": {
@@ -34,6 +58,14 @@
           "array": false,
           "type": [
             "string"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "extension": {
@@ -43,6 +75,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "id": {
@@ -61,6 +107,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "type": {
@@ -74,7 +134,15 @@
           "binding": {
             "strength": "required",
             "valueSet": "http://hl7.org/fhir/ValueSet/conceptmap-attribute-type|5.0.0"
-          }
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
         },
         "uri": {
           "path": "ConceptMap.additionalAttribute.uri",
@@ -83,6 +151,14 @@
           "array": false,
           "type": [
             "uri"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         }
       }
@@ -94,6 +170,14 @@
       "array": false,
       "type": [
         "date"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "author": {
@@ -103,6 +187,14 @@
       "array": true,
       "type": [
         "ContactDetail"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "contact": {
@@ -112,6 +204,14 @@
       "array": true,
       "type": [
         "ContactDetail"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "contained": {
@@ -130,6 +230,14 @@
       "array": false,
       "type": [
         "markdown"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "copyrightLabel": {
@@ -139,6 +247,14 @@
       "array": false,
       "type": [
         "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "date": {
@@ -148,6 +264,14 @@
       "array": false,
       "type": [
         "dateTime"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "description": {
@@ -157,6 +281,14 @@
       "array": false,
       "type": [
         "markdown"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "editor": {
@@ -166,6 +298,14 @@
       "array": true,
       "type": [
         "ContactDetail"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "effectivePeriod": {
@@ -175,6 +315,14 @@
       "array": false,
       "type": [
         "Period"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "endorser": {
@@ -184,6 +332,14 @@
       "array": true,
       "type": [
         "ContactDetail"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "experimental": {
@@ -193,6 +349,14 @@
       "array": false,
       "type": [
         "boolean"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "extension": {
@@ -202,6 +366,20 @@
       "array": true,
       "type": [
         "Extension"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "ext-1",
+          "severity": "error",
+          "expression": "extension.exists() != value.exists()",
+          "human": "Must have either extensions or value[x], not both"
+        }
       ]
     },
     "group": {
@@ -212,6 +390,14 @@
       "type": [
         "BackboneElement"
       ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
       "elements": {
         "element": {
           "path": "ConceptMap.group.element",
@@ -221,6 +407,26 @@
           "type": [
             "BackboneElement"
           ],
+          "constraints": [
+            {
+              "key": "cmd-4",
+              "severity": "error",
+              "expression": "(noMap.exists() and noMap=true) implies target.empty()",
+              "human": "If noMap is present, target SHALL NOT be present"
+            },
+            {
+              "key": "cmd-5",
+              "severity": "error",
+              "expression": "(code.exists() and valueSet.empty()) or (code.empty() and valueSet.exists())",
+              "human": "Either code or valueSet SHALL be present but not both."
+            },
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ],
           "elements": {
             "code": {
               "path": "ConceptMap.group.element.code",
@@ -229,6 +435,14 @@
               "array": false,
               "type": [
                 "code"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
               ]
             },
             "display": {
@@ -238,6 +452,14 @@
               "array": false,
               "type": [
                 "string"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
               ]
             },
             "extension": {
@@ -247,6 +469,20 @@
               "array": true,
               "type": [
                 "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
               ]
             },
             "id": {
@@ -265,6 +501,20 @@
               "array": true,
               "type": [
                 "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
               ]
             },
             "noMap": {
@@ -274,6 +524,14 @@
               "array": false,
               "type": [
                 "boolean"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
               ]
             },
             "target": {
@@ -284,6 +542,26 @@
               "type": [
                 "BackboneElement"
               ],
+              "constraints": [
+                {
+                  "key": "cmd-1",
+                  "severity": "error",
+                  "expression": "comment.exists() or (%resource.status = \u0027draft\u0027) or relationship.empty() or ((relationship != \u0027source-is-broader-than-target\u0027) and (relationship != \u0027not-related-to\u0027))",
+                  "human": "If the map is source-is-broader-than-target or not-related-to, there SHALL be some comments, unless the status is \u0027draft\u0027"
+                },
+                {
+                  "key": "cmd-7",
+                  "severity": "error",
+                  "expression": "(code.exists() and valueSet.empty()) or (code.empty() and valueSet.exists())",
+                  "human": "Either code or valueSet SHALL be present but not both."
+                },
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ],
               "elements": {
                 "code": {
                   "path": "ConceptMap.group.element.target.code",
@@ -292,6 +570,14 @@
                   "array": false,
                   "type": [
                     "code"
+                  ],
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
                   ]
                 },
                 "comment": {
@@ -301,6 +587,14 @@
                   "array": false,
                   "type": [
                     "string"
+                  ],
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
                   ]
                 },
                 "dependsOn": {
@@ -311,6 +605,20 @@
                   "type": [
                     "BackboneElement"
                   ],
+                  "constraints": [
+                    {
+                      "key": "cmd-6",
+                      "severity": "error",
+                      "expression": "(value.exists() and valueSet.empty()) or (value.empty() and valueSet.exists())",
+                      "human": "One of value[x] or valueSet must exist, but not both."
+                    },
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
+                  ],
                   "elements": {
                     "attribute": {
                       "path": "ConceptMap.group.element.target.dependsOn.attribute",
@@ -319,6 +627,14 @@
                       "array": false,
                       "type": [
                         "code"
+                      ],
+                      "constraints": [
+                        {
+                          "key": "ele-1",
+                          "severity": "error",
+                          "expression": "hasValue() or (children().count() \u003E id.count())",
+                          "human": "All FHIR elements must have a @value or children"
+                        }
                       ]
                     },
                     "extension": {
@@ -328,6 +644,20 @@
                       "array": true,
                       "type": [
                         "Extension"
+                      ],
+                      "constraints": [
+                        {
+                          "key": "ele-1",
+                          "severity": "error",
+                          "expression": "hasValue() or (children().count() \u003E id.count())",
+                          "human": "All FHIR elements must have a @value or children"
+                        },
+                        {
+                          "key": "ext-1",
+                          "severity": "error",
+                          "expression": "extension.exists() != value.exists()",
+                          "human": "Must have either extensions or value[x], not both"
+                        }
                       ]
                     },
                     "id": {
@@ -346,6 +676,20 @@
                       "array": true,
                       "type": [
                         "Extension"
+                      ],
+                      "constraints": [
+                        {
+                          "key": "ele-1",
+                          "severity": "error",
+                          "expression": "hasValue() or (children().count() \u003E id.count())",
+                          "human": "All FHIR elements must have a @value or children"
+                        },
+                        {
+                          "key": "ext-1",
+                          "severity": "error",
+                          "expression": "extension.exists() != value.exists()",
+                          "human": "Must have either extensions or value[x], not both"
+                        }
                       ]
                     },
                     "value": {
@@ -366,6 +710,14 @@
                         "valueString",
                         "valueBoolean",
                         "valueQuantity"
+                      ],
+                      "constraints": [
+                        {
+                          "key": "ele-1",
+                          "severity": "error",
+                          "expression": "hasValue() or (children().count() \u003E id.count())",
+                          "human": "All FHIR elements must have a @value or children"
+                        }
                       ]
                     },
                     "valueSet": {
@@ -375,6 +727,14 @@
                       "array": false,
                       "type": [
                         "canonical"
+                      ],
+                      "constraints": [
+                        {
+                          "key": "ele-1",
+                          "severity": "error",
+                          "expression": "hasValue() or (children().count() \u003E id.count())",
+                          "human": "All FHIR elements must have a @value or children"
+                        }
                       ]
                     }
                   }
@@ -386,6 +746,14 @@
                   "array": false,
                   "type": [
                     "string"
+                  ],
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
                   ]
                 },
                 "extension": {
@@ -395,6 +763,20 @@
                   "array": true,
                   "type": [
                     "Extension"
+                  ],
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    },
+                    {
+                      "key": "ext-1",
+                      "severity": "error",
+                      "expression": "extension.exists() != value.exists()",
+                      "human": "Must have either extensions or value[x], not both"
+                    }
                   ]
                 },
                 "id": {
@@ -413,6 +795,20 @@
                   "array": true,
                   "type": [
                     "Extension"
+                  ],
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    },
+                    {
+                      "key": "ext-1",
+                      "severity": "error",
+                      "expression": "extension.exists() != value.exists()",
+                      "human": "Must have either extensions or value[x], not both"
+                    }
                   ]
                 },
                 "product": {
@@ -421,7 +817,15 @@
                   "max": "*",
                   "array": true,
                   "type": [],
-                  "contentReference": "#ConceptMap.group.element.target.dependsOn"
+                  "contentReference": "#ConceptMap.group.element.target.dependsOn",
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
+                  ]
                 },
                 "property": {
                   "path": "ConceptMap.group.element.target.property",
@@ -431,6 +835,14 @@
                   "type": [
                     "BackboneElement"
                   ],
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
+                  ],
                   "elements": {
                     "code": {
                       "path": "ConceptMap.group.element.target.property.code",
@@ -439,6 +851,14 @@
                       "array": false,
                       "type": [
                         "code"
+                      ],
+                      "constraints": [
+                        {
+                          "key": "ele-1",
+                          "severity": "error",
+                          "expression": "hasValue() or (children().count() \u003E id.count())",
+                          "human": "All FHIR elements must have a @value or children"
+                        }
                       ]
                     },
                     "extension": {
@@ -448,6 +868,20 @@
                       "array": true,
                       "type": [
                         "Extension"
+                      ],
+                      "constraints": [
+                        {
+                          "key": "ele-1",
+                          "severity": "error",
+                          "expression": "hasValue() or (children().count() \u003E id.count())",
+                          "human": "All FHIR elements must have a @value or children"
+                        },
+                        {
+                          "key": "ext-1",
+                          "severity": "error",
+                          "expression": "extension.exists() != value.exists()",
+                          "human": "Must have either extensions or value[x], not both"
+                        }
                       ]
                     },
                     "id": {
@@ -466,6 +900,20 @@
                       "array": true,
                       "type": [
                         "Extension"
+                      ],
+                      "constraints": [
+                        {
+                          "key": "ele-1",
+                          "severity": "error",
+                          "expression": "hasValue() or (children().count() \u003E id.count())",
+                          "human": "All FHIR elements must have a @value or children"
+                        },
+                        {
+                          "key": "ext-1",
+                          "severity": "error",
+                          "expression": "extension.exists() != value.exists()",
+                          "human": "Must have either extensions or value[x], not both"
+                        }
                       ]
                     },
                     "value": {
@@ -490,6 +938,14 @@
                         "valueDateTime",
                         "valueDecimal",
                         "valueCode"
+                      ],
+                      "constraints": [
+                        {
+                          "key": "ele-1",
+                          "severity": "error",
+                          "expression": "hasValue() or (children().count() \u003E id.count())",
+                          "human": "All FHIR elements must have a @value or children"
+                        }
                       ]
                     }
                   }
@@ -505,7 +961,15 @@
                   "binding": {
                     "strength": "required",
                     "valueSet": "http://hl7.org/fhir/ValueSet/concept-map-relationship|5.0.0"
-                  }
+                  },
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
+                  ]
                 },
                 "valueSet": {
                   "path": "ConceptMap.group.element.target.valueSet",
@@ -514,6 +978,14 @@
                   "array": false,
                   "type": [
                     "canonical"
+                  ],
+                  "constraints": [
+                    {
+                      "key": "ele-1",
+                      "severity": "error",
+                      "expression": "hasValue() or (children().count() \u003E id.count())",
+                      "human": "All FHIR elements must have a @value or children"
+                    }
                   ]
                 }
               }
@@ -525,6 +997,14 @@
               "array": false,
               "type": [
                 "canonical"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
               ]
             }
           }
@@ -536,6 +1016,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "id": {
@@ -554,6 +1048,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "source": {
@@ -563,6 +1071,14 @@
           "array": false,
           "type": [
             "canonical"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "target": {
@@ -572,6 +1088,14 @@
           "array": false,
           "type": [
             "canonical"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "unmapped": {
@@ -582,6 +1106,44 @@
           "type": [
             "BackboneElement"
           ],
+          "constraints": [
+            {
+              "key": "cmd-2",
+              "severity": "error",
+              "expression": "(mode = \u0027fixed\u0027) implies ((code.exists() and valueSet.empty()) or (code.empty() and valueSet.exists()))",
+              "human": "If the mode is \u0027fixed\u0027, either a code or valueSet must be provided, but not both."
+            },
+            {
+              "key": "cmd-3",
+              "severity": "error",
+              "expression": "(mode = \u0027other-map\u0027) implies otherMap.exists()",
+              "human": "If the mode is \u0027other-map\u0027, a url for the other map must be provided"
+            },
+            {
+              "key": "cmd-8",
+              "severity": "error",
+              "expression": "(mode != \u0027fixed\u0027) implies (code.empty() and display.empty() and valueSet.empty())",
+              "human": "If the mode is not \u0027fixed\u0027, code, display and valueSet are not allowed"
+            },
+            {
+              "key": "cmd-9",
+              "severity": "error",
+              "expression": "(mode != \u0027other-map\u0027) implies relationship.exists()",
+              "human": "If the mode is not \u0027other-map\u0027, relationship must be provided"
+            },
+            {
+              "key": "cmd-10",
+              "severity": "error",
+              "expression": "(mode != \u0027other-map\u0027) implies otherMap.empty()",
+              "human": "If the mode is not \u0027other-map\u0027, otherMap is not allowed"
+            },
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ],
           "elements": {
             "code": {
               "path": "ConceptMap.group.unmapped.code",
@@ -590,6 +1152,14 @@
               "array": false,
               "type": [
                 "code"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
               ]
             },
             "display": {
@@ -599,6 +1169,14 @@
               "array": false,
               "type": [
                 "string"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
               ]
             },
             "extension": {
@@ -608,6 +1186,20 @@
               "array": true,
               "type": [
                 "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
               ]
             },
             "id": {
@@ -630,7 +1222,15 @@
               "binding": {
                 "strength": "required",
                 "valueSet": "http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode|5.0.0"
-              }
+              },
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
             },
             "modifierExtension": {
               "path": "ConceptMap.group.unmapped.modifierExtension",
@@ -639,6 +1239,20 @@
               "array": true,
               "type": [
                 "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
               ]
             },
             "otherMap": {
@@ -648,6 +1262,14 @@
               "array": false,
               "type": [
                 "canonical"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
               ]
             },
             "relationship": {
@@ -661,7 +1283,15 @@
               "binding": {
                 "strength": "required",
                 "valueSet": "http://hl7.org/fhir/ValueSet/concept-map-relationship|5.0.0"
-              }
+              },
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
             },
             "valueSet": {
               "path": "ConceptMap.group.unmapped.valueSet",
@@ -670,6 +1300,14 @@
               "array": false,
               "type": [
                 "canonical"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
               ]
             }
           }
@@ -692,6 +1330,14 @@
       "array": true,
       "type": [
         "Identifier"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "implicitRules": {
@@ -701,6 +1347,14 @@
       "array": false,
       "type": [
         "uri"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "jurisdiction": {
@@ -714,7 +1368,15 @@
       "binding": {
         "strength": "extensible",
         "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "language": {
       "path": "ConceptMap.language",
@@ -727,7 +1389,15 @@
       "binding": {
         "strength": "required",
         "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "lastReviewDate": {
       "path": "ConceptMap.lastReviewDate",
@@ -736,6 +1406,14 @@
       "array": false,
       "type": [
         "date"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "meta": {
@@ -745,6 +1423,14 @@
       "array": false,
       "type": [
         "Meta"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "modifierExtension": {
@@ -754,6 +1440,20 @@
       "array": true,
       "type": [
         "Extension"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "ext-1",
+          "severity": "error",
+          "expression": "extension.exists() != value.exists()",
+          "human": "Must have either extensions or value[x], not both"
+        }
       ]
     },
     "name": {
@@ -763,6 +1463,14 @@
       "array": false,
       "type": [
         "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "property": {
@@ -773,6 +1481,20 @@
       "type": [
         "BackboneElement"
       ],
+      "constraints": [
+        {
+          "key": "cmd-11",
+          "severity": "error",
+          "expression": "type = \u0027code\u0027 implies system.exists()",
+          "human": "If the property type is code, a system SHALL be specified"
+        },
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
       "elements": {
         "code": {
           "path": "ConceptMap.property.code",
@@ -781,6 +1503,14 @@
           "array": false,
           "type": [
             "code"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "description": {
@@ -790,6 +1520,14 @@
           "array": false,
           "type": [
             "string"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "extension": {
@@ -799,6 +1537,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "id": {
@@ -817,6 +1569,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "system": {
@@ -826,6 +1592,14 @@
           "array": false,
           "type": [
             "canonical"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "type": {
@@ -839,7 +1613,15 @@
           "binding": {
             "strength": "required",
             "valueSet": "http://hl7.org/fhir/ValueSet/conceptmap-property-type|5.0.0"
-          }
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
         },
         "uri": {
           "path": "ConceptMap.property.uri",
@@ -848,6 +1630,14 @@
           "array": false,
           "type": [
             "uri"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         }
       }
@@ -859,6 +1649,14 @@
       "array": false,
       "type": [
         "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "purpose": {
@@ -868,6 +1666,14 @@
       "array": false,
       "type": [
         "markdown"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "relatedArtifact": {
@@ -877,6 +1683,14 @@
       "array": true,
       "type": [
         "RelatedArtifact"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "reviewer": {
@@ -886,6 +1700,14 @@
       "array": true,
       "type": [
         "ContactDetail"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "sourceScope": {
@@ -900,6 +1722,14 @@
       "choices": [
         "sourceScopeUri",
         "sourceScopeCanonical"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "status": {
@@ -913,7 +1743,15 @@
       "binding": {
         "strength": "required",
         "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "targetScope": {
       "path": "ConceptMap.targetScope[x]",
@@ -927,6 +1765,14 @@
       "choices": [
         "targetScopeUri",
         "targetScopeCanonical"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "text": {
@@ -936,6 +1782,14 @@
       "array": false,
       "type": [
         "Narrative"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "title": {
@@ -945,6 +1799,14 @@
       "array": false,
       "type": [
         "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "topic": {
@@ -958,7 +1820,15 @@
       "binding": {
         "strength": "example",
         "valueSet": "http://hl7.org/fhir/ValueSet/definition-topic"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "url": {
       "path": "ConceptMap.url",
@@ -967,6 +1837,20 @@
       "array": false,
       "type": [
         "uri"
+      ],
+      "constraints": [
+        {
+          "key": "cnl-1",
+          "severity": "warning",
+          "expression": "exists() implies matches(\u0027^[^|# ]\u002B$\u0027)",
+          "human": "URL should not contain | or # - these characters make processing canonical references problematic"
+        },
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "useContext": {
@@ -976,6 +1860,14 @@
       "array": true,
       "type": [
         "UsageContext"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "version": {
@@ -985,6 +1877,14 @@
       "array": false,
       "type": [
         "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "versionAlgorithm": {
@@ -1003,6 +1903,14 @@
       "choices": [
         "versionAlgorithmString",
         "versionAlgorithmCoding"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     }
   }
