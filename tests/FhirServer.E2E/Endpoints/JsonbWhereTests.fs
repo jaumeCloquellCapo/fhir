@@ -16,11 +16,6 @@ type JsonbWhereTests() =
     let factory = new FhirApiFactory()
     let client = factory.CreateClient()
 
-    interface IDisposable with
-        member _.Dispose() =
-            client.Dispose()
-            factory.Dispose()
-
     let store () =
         factory.Services.GetRequiredService<IResourceStore>()
 
@@ -32,6 +27,11 @@ type JsonbWhereTests() =
             match Int32.TryParse raw with
             | true, n when n > 0 -> min n 20_000
             | _ -> 250
+
+    interface IDisposable with
+        member _.Dispose() =
+            client.Dispose()
+            factory.Dispose()
 
     [<Fact>]
     member _.``TryFindByTypeWhere finds CodeSystem by url among distractors``() : Task =
@@ -105,6 +105,7 @@ type JsonbWhereTests() =
 
             for i in 1 .. n - 1 do
                 let url = $"http://example.org/bench/{prefix}/noise-{i}"
+
                 let cs =
                     FhirJson.mkObject [
                         "resourceType", FhirJson.jStr "CodeSystem"
@@ -145,8 +146,6 @@ type JsonbWhereTests() =
             Assert.True(viaList.IsSome)
             Assert.Equal(FhirJson.id viaWhere.Value, FhirJson.id viaList.Value)
 
-            // Soft expectation: SQL @> should not be slower than full scan by a large factor once indexed.
-            // With small N the difference may be noise; only assert correctness + log timings.
             Assert.True(
                 swWhere.ElapsedMilliseconds >= 0L,
                 $"where={swWhere.ElapsedMilliseconds}ms list={swList.ElapsedMilliseconds}ms n={n}"
