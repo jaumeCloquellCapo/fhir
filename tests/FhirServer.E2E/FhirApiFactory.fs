@@ -19,6 +19,7 @@ type FhirApiFactory() =
         | value -> value
 
     let dbName = $"fhir_e2e_{Guid.NewGuid():N}"
+    let quotedDbName = "\"" + dbName.Replace("\"", "\"\"") + "\""
 
     let appConnectionString =
         let builder = NpgsqlConnectionStringBuilder(adminConnectionString ())
@@ -29,7 +30,7 @@ type FhirApiFactory() =
         use conn = new NpgsqlConnection(adminConnectionString ())
         conn.Open()
         use cmd = conn.CreateCommand()
-        cmd.CommandText <- $"CREATE DATABASE \"{dbName.Replace("\"", "\"\"")}\";"
+        cmd.CommandText <- $"CREATE DATABASE {quotedDbName};"
         cmd.ExecuteNonQuery() |> ignore
 
     member _.DbName = dbName
@@ -66,7 +67,7 @@ type FhirApiFactory() =
                 terminate.ExecuteNonQuery() |> ignore
 
                 use drop = conn.CreateCommand()
-                drop.CommandText <- $"DROP DATABASE IF EXISTS \"{dbName.Replace("\"", "\"\"")}\";"
+                drop.CommandText <- $"DROP DATABASE IF EXISTS {quotedDbName};"
                 drop.ExecuteNonQuery() |> ignore
             with _ ->
                 ()

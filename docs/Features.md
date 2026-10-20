@@ -53,9 +53,14 @@ Base URL (local default): `http://localhost:5050`
 
 ## Search (subset)
 
+Indexed in SQL (`search_string` / `search_token` / `search_ref`) on write; queries use SQL filters + `COUNT`/`LIMIT`/`OFFSET` (no full-table scan in memory).
+
 | Feature | Examples / notes |
 |---------|------------------|
-| Common | `_id`, `_lastUpdated`, `_count`, `_sort` |
+| Common | `_id`, `_lastUpdated` (`ge`/`le`/… on envelope `ts`), `_count`, `_sort` |
+| Patient | `family`, `given`, `name`, `gender`, `birthdate`, `identifier` |
+| Observation | `status`, `code`, `patient` / `subject` |
+| Clinical set | `patient` / `subject` (Encounter, Condition, …) |
 | `_include` | `Observation?_include=Observation:patient` |
 | `_revinclude` | `Patient?_revinclude=Observation:patient` |
 | Chaining | `Observation?subject.name=Garcia`, `patient.family=…` (best-effort for well-known refs) |

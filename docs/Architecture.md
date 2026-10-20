@@ -38,7 +38,9 @@ Resources are stored as **envelopes**, not as fully relational FHIR element colu
 - Global `txid_counter` → FHIR `meta.versionId` / ETag
 - Body column holds JSON (`jsonb`), omitting duplicated id / meta / resourceType where the codec owns those fields
 
-`EnvelopeResourceStore` implements `IResourceStore` once. `IEnvelopeDialect` / `IEnvelopeSession` supply Postgres access. Migrations use `MigrationRunner` + `PostgresMigrations`.
+`EnvelopeResourceStore` implements `IResourceStore` once. `IEnvelopeDialect` / `IEnvelopeSession` supply SQL (Postgres) access. Migrations use `MigrationRunner` + `PostgresMigrations`.
+
+Search uses side index tables maintained on upsert/delete (`search_string`, `search_token`, `search_ref`) plus envelope `ts` for `_lastUpdated`. `SearchEngine.toSearchPlan` builds the filter; `SearchCurrent` runs parameterized SQL with paging and total count.
 
 ```mermaid
 erDiagram
@@ -69,9 +71,31 @@ erDiagram
         text status
         jsonb resource
     }
+    search_string {
+        text resource_type
+        text id
+        text param
+        text value
+    }
+    search_token {
+        text resource_type
+        text id
+        text param
+        text system
+        text code
+    }
+    search_ref {
+        text resource_type
+        text id
+        text param
+        text target
+    }
     txid_counter ||--o{ resource : allocates
     txid_counter ||--o{ resource_history : allocates
     resource ||--o{ resource_history : versions
+    resource ||--o{ search_string : indexed
+    resource ||--o{ search_token : indexed
+    resource ||--o{ search_ref : indexed
 ```
 
 ## Validation pipeline
