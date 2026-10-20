@@ -138,6 +138,7 @@ module ResourceValidator =
         let issues =
             validate expectedType resource
             @ ReferenceValidation.collectIssues store resource
+            @ QuestionnaireValidation.collectIssues store resource
 
         if hasFatal issues then
             Error(ValidationFailed issues)

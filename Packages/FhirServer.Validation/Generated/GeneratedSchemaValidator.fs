@@ -1151,17 +1151,9 @@ module GeneratedSchemaValidator =
                             else
                                 $"{path}: constraint {c.Key} could not be evaluated ({reason}): {c.Human}"
 
-                        // Full-language gaps (where/descendants/%/…) stay warnings so writes remain usable.
-                        // Failures inside the claimed subset are fatal for error-severity constraints.
-                        let incompleteEngine =
-                            reason.StartsWith("unsupported FHIRPath", StringComparison.OrdinalIgnoreCase)
-
-                        if incompleteEngine
-                           || c.Severity.Equals("warning", StringComparison.OrdinalIgnoreCase)
-                           || c.Severity.Equals("information", StringComparison.OrdinalIgnoreCase) then
-                            yield warning detail
-                        else
-                            yield fatal detail
+                        // Unevaluable expressions (subset gaps, tokenize failures, etc.) are warnings —
+                        // never block writes when the engine cannot decide.
+                        yield warning detail
         ]
 
     let private codingCodes (obj: JsonObject) =

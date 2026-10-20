@@ -201,3 +201,49 @@ type ValidateTests() =
             Assert.Contains("NOT-A-GENDER", body)
             Assert.Contains("warning", body)
         }
+
+    [<Fact>]
+    member _.``POST /QuestionnaireResponse/$validate checks required and answer type``() : Task =
+        task {
+            let! qStatus, qBody, _ =
+                postJson
+                    client
+                    "/Questionnaire"
+                    """
+                    {
+                      "resourceType": "Questionnaire",
+                      "status": "active",
+                      "url": "http://example.org/Questionnaire/demo-q",
+                      "item": [
+                        { "linkId": "name", "type": "string", "required": true, "text": "Name" },
+                        { "linkId": "age", "type": "integer", "text": "Age" }
+                      ]
+                    }
+                    """
+
+            assertStatus HttpStatusCode.Created qStatus
+            Assert.Contains("Questionnaire", qBody)
+
+            // completed + missing required → fatal; wrong answer type → fatal
+            let! status, body, _ =
+                postJson
+                    client
+                    "/QuestionnaireResponse/$validate"
+                    """
+                    {
+                      "resourceType": "QuestionnaireResponse",
+                      "status": "completed",
+                      "questionnaire": "http://example.org/Questionnaire/demo-q",
+                      "item": [
+                        { "linkId": "age", "answer": [{ "valueString": "forty" }] }
+                      ]
+                    }
+                    """
+
+            assertStatus HttpStatusCode.OK status
+            assertResourceType "OperationOutcome" body
+            Assert.Contains("name", body)
+            Assert.Contains("required", body)
+            Assert.Contains("valueInteger", body)
+            Assert.Contains("\"severity\":\"fatal\"", body)
+        }

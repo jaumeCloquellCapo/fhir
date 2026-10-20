@@ -109,7 +109,17 @@ module ResourceCrud =
         schemaAndType
         |> Result.map (fun schemaIssues ->
             let refIssues = ReferenceValidation.collectIssuesFromJson store body
-            ResourceValidator.toOperationOutcome (schemaIssues @ refIssues))
+
+            let questionnaireIssues =
+                try
+                    match System.Text.Json.Nodes.JsonNode.Parse(body) with
+                    | :? System.Text.Json.Nodes.JsonObject as obj ->
+                        QuestionnaireValidation.collectIssues store obj
+                    | _ -> []
+                with _ ->
+                    []
+
+            ResourceValidator.toOperationOutcome (schemaIssues @ refIssues @ questionnaireIssues))
 
     let delete
         (store: IResourceStore)
