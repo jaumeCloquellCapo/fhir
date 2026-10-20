@@ -21,6 +21,7 @@
     <Compile Include="Domain/Services/SearchIndexer.fs" />
     <Compile Include="Domain/Services/ResourceValidator.fs" />
     <Compile Include="Domain/Ports/IResourceStore.fs" />
+    <Compile Include="Domain/Services/ReferenceValidation.fs" />
 
     <!-- Application (use cases) -->
     <Compile Include="Application/Smart/SmartScopes.fs" />

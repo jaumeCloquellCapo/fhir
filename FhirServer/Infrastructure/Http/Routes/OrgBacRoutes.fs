@@ -136,15 +136,20 @@ module OrgBacRoutes =
             "/{resourceType}/$validate",
             Func<HttpContext, string, string, Task<unit>>(fun ctx _orgId resourceType ->
                 task {
+                    let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
                     let! body = HttpRequestHelpers.readBody ctx
-                    let result = ResourceHandlers.validateRaw (Some resourceType) body
+                    let profiles = HttpRequestHelpers.validateProfileUrls ctx
+
+                    let result =
+                        ResourceHandlers.validateRaw store (Some resourceType) body profiles
+
                     return! Responses.fromResult result ctx
                 })
         )
         |> OpenApiDocs.documentFhirValidate
             [| OpenApiDocs.TagOrgBac; OpenApiDocs.TagValidate |]
             "OrgBAC Validate"
-            "Validate without persisting (organization-scoped URL)."
+            "Validate without persisting (organization-scoped URL). Optional `profile` / `_profile` query."
         |> ignore
 
         org.MapPost(

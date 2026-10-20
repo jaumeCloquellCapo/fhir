@@ -12,6 +12,11 @@ module ResourceValidator =
     let private mapIssue (i: GeneratedSchemaValidator.ValidationIssue) : ValidationIssue = {
         Diagnostics = i.Diagnostics
         Fatal = i.Fatal
+        Severity =
+            if String.IsNullOrWhiteSpace i.Severity then
+                if i.Fatal then "fatal" else "warning"
+            else
+                i.Severity
     }
 
     let private withExpectedType (expectedType: string option) (body: string) (issues: ValidationIssue list) =
@@ -31,12 +36,14 @@ module ResourceValidator =
                         {
                             Diagnostics = "resourceType is required."
                             Fatal = true
+                            Severity = "fatal"
                         }
                         :: issues
                     elif resourceType <> rt then
                         {
                             Diagnostics = $"Body resourceType '{resourceType}' does not match path '{rt}'."
                             Fatal = true
+                            Severity = "fatal"
                         }
                         :: issues
                     else
@@ -45,6 +52,7 @@ module ResourceValidator =
                     {
                         Diagnostics = "Request body must be a JSON object to check resourceType."
                         Fatal = true
+                        Severity = "fatal"
                     }
                     :: issues
             with
@@ -52,30 +60,47 @@ module ResourceValidator =
                 {
                     Diagnostics = $"Unable to parse JSON while checking resourceType: {ex.Message}"
                     Fatal = true
+                    Severity = "fatal"
                 }
                 :: issues
             | ex ->
                 {
                     Diagnostics = $"Unable to check resourceType against path '{rt}': {ex.Message}"
                     Fatal = true
+                    Severity = "fatal"
                 }
                 :: issues
 
-    let validateJson (expectedType: string option) (body: string) : ValidationIssue list =
-        SchemaEngine.validateJson body
+    let validateJsonWithProfiles
+        (expectedType: string option)
+        (body: string)
+        (forcedProfiles: string list)
+        : ValidationIssue list =
+        SchemaEngine.validateJsonWithProfiles body forcedProfiles
         |> List.map mapIssue
         |> withExpectedType expectedType body
 
-    let validate (expectedType: string option) (resource: FhirResource) : ValidationIssue list =
+    let validateJson (expectedType: string option) (body: string) : ValidationIssue list =
+        validateJsonWithProfiles expectedType body []
+
+    let validateWithProfiles
+        (expectedType: string option)
+        (resource: FhirResource)
+        (forcedProfiles: string list)
+        : ValidationIssue list =
         if isNull (resource :> obj) then
             [
                 {
                     Diagnostics = "Request body is required."
                     Fatal = true
+                    Severity = "fatal"
                 }
             ]
         else
-            validateJson expectedType (FhirJson.toJson resource)
+            validateJsonWithProfiles expectedType (FhirJson.toJson resource) forcedProfiles
+
+    let validate (expectedType: string option) (resource: FhirResource) : ValidationIssue list =
+        validateWithProfiles expectedType resource []
 
     let hasFatal (issues: ValidationIssue list) =
         issues |> List.exists (fun i -> i.Fatal)
@@ -87,10 +112,14 @@ module ResourceValidator =
             let rows =
                 issues
                 |> List.map (fun i ->
-                    if i.Fatal then
-                        "fatal", "invalid", i.Diagnostics
-                    else
-                        "warning", "informational", i.Diagnostics)
+                    let sev =
+                        match i.Severity.ToLowerInvariant() with
+                        | "fatal" -> "fatal"
+                        | "error" -> "error"
+                        | "information" -> "information"
+                        | _ -> "warning"
+
+                    sev, "invalid", i.Diagnostics)
 
             let oo = FhirJson.operationOutcome rows
 

@@ -92,14 +92,24 @@ module ResourceCrud =
                     SubscriptionNotifier.notifyChange store "update" updated
                     updated)))
 
-    let validateRaw (resourceType: string option) (body: string) : FhirResult<FhirResource> =
-        match resourceType with
-        | Some rt ->
-            ResourceHelpers.ensureKnownResourceType rt
-            |> Result.map (fun () ->
-                ResourceValidator.validateJson (Some rt) body
-                |> ResourceValidator.toOperationOutcome)
-        | None -> Ok(ResourceValidator.validateJson None body |> ResourceValidator.toOperationOutcome)
+    let validateRaw
+        (store: IResourceStore)
+        (resourceType: string option)
+        (body: string)
+        (forcedProfiles: string list)
+        : FhirResult<FhirResource> =
+        let schemaAndType =
+            match resourceType with
+            | Some rt ->
+                ResourceHelpers.ensureKnownResourceType rt
+                |> Result.map (fun () ->
+                    ResourceValidator.validateJsonWithProfiles (Some rt) body forcedProfiles)
+            | None -> Ok(ResourceValidator.validateJsonWithProfiles None body forcedProfiles)
+
+        schemaAndType
+        |> Result.map (fun schemaIssues ->
+            let refIssues = ReferenceValidation.collectIssuesFromJson store body
+            ResourceValidator.toOperationOutcome (schemaIssues @ refIssues))
 
     let delete
         (store: IResourceStore)
@@ -156,73 +166,6 @@ module ResourceCrud =
         | [ existing ], 1 -> update store resourceType (FhirJson.id existing) body ifMatch
         | [], 0 -> create store resourceType body
         | _ -> Error(Conflict $"Conditional update matched multiple {resourceType} resources.")
-
-    let observationLastN (store: IResourceStore) (query: Map<string, string list>) : FhirResult<FhirResource> =
-        ResourceHelpers.ensureKnownResourceType "Observation"
-        |> Result.bind (fun () ->
-            let maxN =
-                QueryParams.first query "max"
-                |> Option.bind (fun s ->
-                    match Int32.TryParse s with
-                    | true, n when n > 0 -> Some(min n 100)
-                    | _ -> None)
-                |> Option.defaultValue 1
-
-            let rec chainSearch (depth: int) (rt: string, q: Map<string, string list>) =
-                if depth > 5 || not (ResourceCatalog.isSupported rt) then
-                    []
-                else
-                    let nested = chainSearch (depth + 1)
-
-                    let expanded =
-                        q
-                        |> Map.add "_count" [ string ResourceHelpers.internalFetchCap ]
-                        |> SearchEngine.expandChainedQuery nested
-                        |> SearchEngine.expandHasQuery nested
-
-                    store.Search(rt, expanded) |> fst
-
-            let expandSearch = chainSearch 0
-
-            let filterQuery =
-                query
-                |> Map.remove "max"
-                |> Map.remove "_count"
-                |> Map.remove "_offset"
-                |> SearchEngine.expandChainedQuery expandSearch
-                |> SearchEngine.expandHasQuery expandSearch
-
-            // Fetch a bounded window then group in memory (MVP $lastn).
-            let fetchCap = min ResourceHelpers.internalFetchCap (maxN * 50 |> max 50)
-
-            let all =
-                store.Search("Observation", filterQuery |> Map.add "_count" [ string fetchCap ])
-                |> fst
-                |> List.sortByDescending (fun r ->
-                    FhirJson.lastUpdated r |> Option.defaultValue DateTimeOffset.MinValue)
-
-            let codeKey (resource: FhirResource) =
-                match resource["code"] with
-                | :? JsonObject as code ->
-                    match code["coding"] with
-                    | :? JsonArray as arr when arr.Count > 0 ->
-                        match arr.[0] with
-                        | :? JsonObject as c ->
-                            let system = FhirJson.propString c "system" |> Option.defaultValue ""
-                            let code = FhirJson.propString c "code" |> Option.defaultValue ""
-                            $"{system}|{code}"
-                        | _ -> FhirJson.id resource
-                    | _ -> FhirJson.id resource
-                | _ -> FhirJson.id resource
-
-            let selected =
-                all
-                |> List.groupBy codeKey
-                |> List.collect (fun (_, group) -> group |> List.truncate maxN)
-                |> List.sortByDescending (fun r ->
-                    FhirJson.lastUpdated r |> Option.defaultValue DateTimeOffset.MinValue)
-
-            Ok(ResourceHelpers.toSearchBundle "Observation" selected [] selected.Length))
 
     let applyJsonPatch (store: IResourceStore) (resourceType: string) (id: string) (patchJson: string) =
         read store resourceType id

@@ -67,13 +67,18 @@ module SystemRoutes =
             "/$validate",
             Func<HttpContext, Task<unit>>(fun ctx ->
                 task {
+                    let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
                     let! body = HttpRequestHelpers.readBody ctx
-                    let result = ResourceHandlers.validateRaw None body
+                    let profiles = HttpRequestHelpers.validateProfileUrls ctx
+
+                    let result =
+                        ResourceHandlers.validateRaw store None body profiles
+
                     return! Responses.fromResult result ctx
                 })
         )
         |> OpenApiDocs.documentFhirValidate
             [| OpenApiDocs.TagValidate |]
             "Validate (system)"
-            "Validate a resource body without persisting. Always returns 200 + OperationOutcome."
+            "Validate a resource body without persisting. Optional `profile` / `_profile` query. Always returns 200 + OperationOutcome."
         |> ignore

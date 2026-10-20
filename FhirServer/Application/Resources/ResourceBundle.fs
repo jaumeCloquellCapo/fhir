@@ -122,7 +122,7 @@ module ResourceBundle =
                                     let parts = typeAndQuery.[0].Split('/')
 
                                     if parts.Length < 2 then
-                                        Error(BadRequest "PUT url must be Type/id or Type?ResourceSearch.search")
+                                        Error(BadRequest "PUT url must be Type/id or Type?search")
                                     else
                                         ResourceCrud.update store parts.[0] parts.[1] resource None
 

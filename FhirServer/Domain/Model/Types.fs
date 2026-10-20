@@ -9,8 +9,13 @@ module Types =
     /// FHIR resource document (JSON object).
     type FhirResource = JsonObject
 
-    /// Lightweight validation issue (fatal/invalid diagnostics).
-    type ValidationIssue = { Diagnostics: string; Fatal: bool }
+    /// Lightweight validation issue (FHIR OperationOutcome severities).
+    type ValidationIssue = {
+        Diagnostics: string
+        Fatal: bool
+        /// fatal | error | warning | information
+        Severity: string
+    }
 
     type FhirError =
         | NotFound of resourceType: string * id: string

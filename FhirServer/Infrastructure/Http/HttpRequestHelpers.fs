@@ -57,3 +57,12 @@ module HttpRequestHelpers =
                 Some ctx.Request.ContentType
 
         Codec.negotiateFormat None contentType
+
+    /// `$validate` profile URLs from `profile` or `_profile` query (repeatable).
+    let validateProfileUrls (ctx: HttpContext) =
+        let q = queryMap ctx
+
+        (q |> Map.tryFind "profile" |> Option.defaultValue [])
+        @ (q |> Map.tryFind "_profile" |> Option.defaultValue [])
+        |> List.filter (fun s -> not (String.IsNullOrWhiteSpace s))
+        |> List.distinct

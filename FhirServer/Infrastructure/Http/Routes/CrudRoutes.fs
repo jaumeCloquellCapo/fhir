@@ -57,15 +57,20 @@ module CrudRoutes =
             "/{resourceType}/$validate",
             Func<HttpContext, string, Task<unit>>(fun ctx resourceType ->
                 task {
+                    let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
                     let! body = HttpRequestHelpers.readBody ctx
-                    let result = ResourceHandlers.validateRaw (Some resourceType) body
+                    let profiles = HttpRequestHelpers.validateProfileUrls ctx
+
+                    let result =
+                        ResourceHandlers.validateRaw store (Some resourceType) body profiles
+
                     return! Responses.fromResult result ctx
                 })
         )
         |> OpenApiDocs.documentFhirValidate
             [| OpenApiDocs.TagValidate |]
             "Validate (type)"
-            "Validate a resource of the given type without persisting."
+            "Validate a resource of the given type without persisting. Optional `profile` / `_profile` query."
         |> ignore
 
         app.MapPost(
