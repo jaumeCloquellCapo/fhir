@@ -109,6 +109,60 @@ module SmartAuth =
             None
         | _ -> None
 
+    [<RequireQualifiedAccess>]
+    type ScopeAction =
+        | Read
+        | Write
+
+    /// Parse SMART system scopes (`system/*.read`, `system/Patient.write`, `system/*.rs`, …).
+    let parseSystemScopes (scope: string) =
+        scope.Split([| ' ' |], StringSplitOptions.RemoveEmptyEntries)
+        |> Array.choose (fun raw ->
+            let s = raw.Trim()
+
+            if not (s.StartsWith("system/", StringComparison.Ordinal)) then
+                None
+            else
+                let rest = s.Substring("system/".Length)
+                let resourcePart, permPart =
+                    match rest.LastIndexOf('.') with
+                    | -1 -> rest, ""
+                    | i -> rest.Substring(0, i), rest.Substring(i + 1)
+
+                let read, write =
+                    match permPart.ToLowerInvariant() with
+                    | "read"
+                    | "r"
+                    | "rs" -> true, false
+                    | "write"
+                    | "w" -> false, true
+                    | "cruds"
+                    | "*" -> true, true
+                    | "" when resourcePart = "*" -> true, true
+                    | _ -> false, false
+
+                if not read && not write then
+                    None
+                else
+                    Some(resourcePart, read, write))
+        |> Array.toList
+
+    let allowsSystemScope (scope: string) (resourceType: string option) (action: ScopeAction) =
+        let scopes = parseSystemScopes scope
+
+        let matchesResource resourcePart =
+            resourcePart = "*"
+            || (match resourceType with
+                | Some rt -> resourcePart.Equals(rt, StringComparison.OrdinalIgnoreCase)
+                | None -> resourcePart = "*")
+
+        scopes
+        |> List.exists (fun (resourcePart, read, write) ->
+            matchesResource resourcePart
+            && (match action with
+                | ScopeAction.Read -> read
+                | ScopeAction.Write -> write))
+
     let validateClient (config: IConfiguration) (id: string) (secret: string) =
         id = clientId config && secret = clientSecret config
 

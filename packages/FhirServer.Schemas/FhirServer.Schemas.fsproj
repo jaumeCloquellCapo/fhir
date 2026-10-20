@@ -19,6 +19,12 @@
     <EmbeddedResource Include="Data\*.schema.json">
       <LogicalName>%(Filename)%(Extension)</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="Data\profiles\*.schema.json">
+      <LogicalName>profiles/%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\profiles-index.json">
+      <LogicalName>profiles-index.json</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="Data\valuesets.json">
       <LogicalName>valuesets.json</LogicalName>
     </EmbeddedResource>

@@ -64,11 +64,14 @@ type SearchAdvancedTests() =
     [<Fact>]
     member _.``birthdate ge filters patients``() : Task =
         task {
-            let! _ =
+            let! stOld, oldBody, _ =
                 postJson
                     client
                     "/Patient"
                     """{"resourceType":"Patient","name":[{"family":"Old"}],"birthDate":"1980-01-01"}"""
+
+            if stOld <> HttpStatusCode.Created then
+                failwith ("old create failed " + string (int stOld) + " " + oldBody)
 
             let! stYoung, young, _ =
                 postJson
@@ -76,7 +79,9 @@ type SearchAdvancedTests() =
                     "/Patient"
                     """{"resourceType":"Patient","name":[{"family":"Young"}],"birthDate":"2000-06-15"}"""
 
-            Assert.True(stYoung = HttpStatusCode.Created, sprintf "young create failed %A %s" stYoung young)
+            if stYoung <> HttpStatusCode.Created then
+                failwith ("young create failed " + string (int stYoung) + " " + young)
+
             let youngId = propString young "id" |> Option.defaultValue ""
 
             let! status, body = get client "/Patient?birthdate=ge1990-01-01"

@@ -7,6 +7,8 @@ open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Http
 open Microsoft.Extensions.Configuration
 open FhirServer.Application.Smart
+open FhirServer.Domain
+open FhirServer.Domain.Types
 
 module Auth =
 
@@ -15,6 +17,17 @@ module Auth =
             ctx.Response.StatusCode <- StatusCodes.Status401Unauthorized
             ctx.Response.Headers.WWWAuthenticate <- scheme
             do! ctx.Response.WriteAsync("Unauthorized")
+        }
+
+    let private forbidden (ctx: HttpContext) (message: string) =
+        task {
+            ctx.Response.StatusCode <- StatusCodes.Status403Forbidden
+            ctx.Response.ContentType <- "application/fhir+json"
+
+            let oo =
+                FhirJson.operationOutcome [ "error", "forbidden", message ]
+
+            do! ctx.Response.WriteAsync(FhirJson.toJson oo)
         }
 
     let private isPublicPath (path: string) =
@@ -45,14 +58,32 @@ module Auth =
             with _ ->
                 false
 
-    let private validateBearer (header: string) =
+    let private tryBearerRecord (header: string) =
         if not (header.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase)) then
-            false
+            None
         else
             let token = header.Substring(7).Trim()
-            SmartAuth.tryValidateBearer token |> Option.isSome
+            SmartAuth.tryValidateBearer token
+
+    let private isWriteMethod (method: string) =
+        method.Equals("POST", StringComparison.OrdinalIgnoreCase)
+        || method.Equals("PUT", StringComparison.OrdinalIgnoreCase)
+        || method.Equals("PATCH", StringComparison.OrdinalIgnoreCase)
+        || method.Equals("DELETE", StringComparison.OrdinalIgnoreCase)
+
+    let private resourceTypeFromPath (path: string) =
+        let parts =
+            path.Trim('/').Split('/', StringSplitOptions.RemoveEmptyEntries)
+
+        match parts with
+        | [||] -> None
+        | parts when parts.[0].StartsWith("$", StringComparison.Ordinal) -> None
+        | parts when parts.[0].Equals("metadata", StringComparison.OrdinalIgnoreCase) -> None
+        | parts when ResourceCatalog.isSupported parts.[0] -> Some parts.[0]
+        | _ -> None
 
     /// Require Basic and/or SMART Bearer when Auth:Enabled=true.
+    /// Basic = full access. Bearer scopes enforced for system/*.read|write.
     let useAuth (app: WebApplication) =
         let enabled = app.Configuration.GetValue<bool>("Auth:Enabled", false)
 
@@ -69,10 +100,35 @@ module Auth =
                         else
                             let header = ctx.Request.Headers.Authorization.ToString()
 
-                            if validateBasic app.Configuration header || validateBearer header then
+                            if validateBasic app.Configuration header then
                                 return! next.Invoke(ctx)
                             else
-                                return! unauthorized ctx "Bearer, Basic realm=\"FhirServer\""
+                                match tryBearerRecord header with
+                                | None -> return! unauthorized ctx "Bearer, Basic realm=\"FhirServer\""
+                                | Some record ->
+                                    let action =
+                                        if isWriteMethod ctx.Request.Method then
+                                            SmartAuth.ScopeAction.Write
+                                        else
+                                            SmartAuth.ScopeAction.Read
+
+                                    let resourceType = resourceTypeFromPath path
+
+                                    if SmartAuth.allowsSystemScope record.Scope resourceType action then
+                                        return! next.Invoke(ctx)
+                                    else
+                                        let needed =
+                                            match action with
+                                            | SmartAuth.ScopeAction.Read -> "read"
+                                            | SmartAuth.ScopeAction.Write -> "write"
+
+                                        let target =
+                                            resourceType |> Option.defaultValue "*"
+
+                                        return!
+                                            forbidden
+                                                ctx
+                                                $"Missing SMART scope system/{target}.{needed} (token scope: {record.Scope})"
                     })
             )
             |> ignore

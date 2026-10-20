@@ -495,11 +495,19 @@ module SearchEngine =
         | _ -> SortField.IdAsc
 
     let private parseInstant (raw: string) =
+        let toUtc (dto: DateTimeOffset) = dto.ToUniversalTime()
+
         match DateTimeOffset.TryParse(raw, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind) with
-        | true, dto -> Some dto
+        | true, dto -> Some(toUtc dto)
         | _ ->
-            match DateTimeOffset.TryParse(raw, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal) with
-            | true, dto -> Some dto
+            match
+                DateTimeOffset.TryParse(
+                    raw,
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.AssumeUniversal ||| DateTimeStyles.AdjustToUniversal
+                )
+            with
+            | true, dto -> Some(toUtc dto)
             | _ -> None
 
     /// Parse FHIR date search prefixes on `_lastUpdated` (ge/gt/le/lt/eq or bare → ge).

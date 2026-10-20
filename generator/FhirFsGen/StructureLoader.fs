@@ -87,3 +87,35 @@ module StructureLoader =
         |> Seq.distinct
         |> Seq.sort
         |> Seq.toList
+
+    let private hasSnapshot (sd: StructureDefinitionDoc) =
+        match prop sd.Json "snapshot" |> Option.bind (fun s -> prop s "element") with
+        | Some els when els.ValueKind = JsonValueKind.Array -> els.GetArrayLength() > 0
+        | _ -> false
+
+    let private structureId (sd: StructureDefinitionDoc) =
+        match str sd.Json "id" with
+        | Some id when not (String.IsNullOrWhiteSpace id) -> id
+        | _ ->
+            match sd.Url.LastIndexOf('/') with
+            | -1 -> sd.TypeName
+            | i -> sd.Url.Substring(i + 1)
+
+    /// Non-abstract constraint profiles with a snapshot (core IG profiles).
+    let listConstraintProfiles (packageDir: string) : Ir.ConstraintProfileRef list =
+        Directory.EnumerateFiles(packageDir, "StructureDefinition-*.json")
+        |> Seq.choose tryLoadFile
+        |> Seq.filter (fun sd ->
+            sd.Derivation = "constraint"
+            && not sd.Abstract
+            && not (String.IsNullOrWhiteSpace sd.Url)
+            && not (String.IsNullOrWhiteSpace sd.TypeName)
+            && hasSnapshot sd)
+        |> Seq.map (fun sd ->
+            { Ir.ConstraintProfileRef.Id = structureId sd
+              Url = sd.Url
+              TypeName = sd.TypeName
+              Kind = sd.Kind })
+        |> Seq.distinctBy (fun p -> p.Url)
+        |> Seq.sortBy (fun p -> p.Id)
+        |> Seq.toList

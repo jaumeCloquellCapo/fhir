@@ -105,6 +105,7 @@ let main args =
     let outDir = abs opts.OutDir
     let todoPath = Path.Combine(repoRoot, "generator", "TODO-R5.md")
     let schemasDir = Path.Combine(outDir, "schemas")
+    let profilesDir = Path.Combine(schemasDir, "profiles")
 
     let packageDir =
         match opts.PackageDir with
@@ -118,6 +119,7 @@ let main args =
     printfn "Package: %s" packageDir
     let allResourceTypes = StructureLoader.listConcreteResourceTypes packageDir
     let allComplexTypes = StructureLoader.listConcreteComplexTypes packageDir
+    let allProfiles = StructureLoader.listConstraintProfiles packageDir
     let resourceTypeSet = Set.ofList allResourceTypes
 
     let schemaNamesOnDisk () =
@@ -135,6 +137,15 @@ let main args =
         let schemaPath = Path.Combine(schemasDir, $"{name}.schema.json")
         EmitSchemaJson.writeResource schema schemaPath
         printfn "  -> %s (%d top-level elements, kind=%s)" schemaPath schema.Elements.Count schema.Kind
+        schema
+
+    let generateProfile (pref: ConstraintProfileRef) =
+        printfn "Generating profile %s..." pref.Id
+        let sd = StructureLoader.loadStructureDefinition packageDir pref.Id
+        let schema = SnapshotToIr.fromStructureDefinition fhirVersion sd
+        let schemaPath = Path.Combine(profilesDir, $"{pref.Id}.schema.json")
+        EmitSchemaJson.writeResource schema schemaPath
+        printfn "  -> %s (url=%s, type=%s)" schemaPath schema.Url schema.TypeName
         schema
 
     if opts.RefreshTodo && not opts.All && opts.Resources = [] then
@@ -158,6 +169,10 @@ let main args =
             // Always emit concrete complex datatypes so the validator can resolve nested types.
             let generatedDatatypes = allComplexTypes |> List.map generateOne
 
+            // Core constraint profiles (indexed by canonical URL at runtime).
+            Directory.CreateDirectory profilesDir |> ignore
+            let generatedProfiles = allProfiles |> List.map generateProfile
+
             let loadSchemaByName (name: string) =
                 let sd = StructureLoader.loadStructureDefinition packageDir name
                 SnapshotToIr.fromStructureDefinition fhirVersion sd
@@ -179,6 +194,23 @@ let main args =
                     | Some s -> s
                     | None -> loadSchemaByName name)
 
+            let profileIndexEntries =
+                generatedProfiles
+                |> List.map (fun s ->
+                    let fileName =
+                        match allProfiles |> List.tryFind (fun p -> p.Url = s.Url) with
+                        | Some p -> $"{p.Id}.schema.json"
+                        | None ->
+                            match s.Url.LastIndexOf('/') with
+                            | -1 -> $"{s.TypeName}.schema.json"
+                            | i -> $"{s.Url.Substring(i + 1)}.schema.json"
+
+                    s.Url, fileName)
+
+            EmitSchemaJson.writeProfilesIndex
+                profileIndexEntries
+                (Path.Combine(outDir, "profiles-index.json"))
+
             let manifest =
                 { FhirVersion = fhirVersion
                   GeneratedAtUtc = DateTime.UtcNow.ToString("o")
@@ -189,12 +221,15 @@ let main args =
             EmitValidator.writeSchemaValidatorFs (Path.Combine(outDir, "GeneratedSchemaValidator.fs"))
 
             let bindingUrls =
-                ValueSetLoader.collectRequiredBindings (resourceSchemasOnDisk @ datatypeSchemas)
+                ValueSetLoader.collectRequiredBindings (
+                    resourceSchemasOnDisk @ datatypeSchemas @ generatedProfiles
+                )
 
             let valueSets = ValueSetLoader.resolveMany packageDir bindingUrls
             EmitSchemaJson.writeValueSets valueSets (Path.Combine(outDir, "valuesets.json"))
             printfn "ValueSets: %d resolved / %d required bindings" valueSets.Length bindingUrls.Length
             printfn "Datatypes: %d complex-type schemas" datatypeSchemas.Length
+            printfn "Profiles: %d constraint schemas" generatedProfiles.Length
 
             let doneSet = Set.ofList (resourceSchemasOnDisk |> List.map (fun s -> s.TypeName))
             EmitFsharp.writeTodoMarkdown allResourceTypes doneSet todoPath

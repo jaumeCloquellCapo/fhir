@@ -44,6 +44,7 @@ See [docs/Architecture.md](docs/Architecture.md) for details.
 | Topic | Doc |
 |-------|-----|
 | Getting started | [docs/GettingStarted.md](docs/GettingStarted.md) |
+| **Swagger UI** | [http://localhost:5050/swagger](http://localhost:5050/swagger) (local) |
 | Architecture | [docs/Architecture.md](docs/Architecture.md) |
 | Features & API | [docs/Features.md](docs/Features.md) |
 | Configuration | [docs/Configuration.md](docs/Configuration.md) |
@@ -62,8 +63,18 @@ make db-up
 
 dotnet run --project src/FhirServer
 # → http://localhost:5050
-# → Swagger UI: http://localhost:5050/swagger
 ```
+
+## Swagger UI
+
+Interactive OpenAPI docs for every FHIR endpoint (CRUD, search, history, `$validate`, `$export`, Bundle, …):
+
+| Surface | URL |
+|---------|-----|
+| **Swagger UI** | [http://localhost:5050/swagger](http://localhost:5050/swagger) |
+| OpenAPI JSON | [http://localhost:5050/swagger/v1/swagger.json](http://localhost:5050/swagger/v1/swagger.json) |
+
+`dotnet run` opens Swagger in the browser by default (`launchUrl: swagger`). Use **Authorize** in the UI when `Auth:Enabled=true` (HTTP Basic).
 
 ```bash
 curl -s http://localhost:5050/metadata | jq .software

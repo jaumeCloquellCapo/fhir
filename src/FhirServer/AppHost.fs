@@ -16,6 +16,7 @@ open FhirServer.Domain.Ports
 open FhirServer.Application
 open FhirServer.Application.Smart
 open FhirServer.Application.Subscriptions
+open FhirServer.Application.Terminology
 open FhirServer.Infrastructure.Persistence
 open FhirServer.Infrastructure.Persistence.Postgres
 
@@ -425,6 +426,154 @@ module AppHost =
             [| OpenApiDocs.TagOperations |]
             "$dump"
             "Stream all current resources of a type as FHIR NDJSON."
+        |> ignore
+
+        let parseOptionalBody (ctx: HttpContext) (body: string) =
+            if String.IsNullOrWhiteSpace body then
+                Ok None
+            else
+                Codec.tryDeserialize (requestFormat ctx) body |> Result.map Some
+
+        app.MapGet(
+            "/ValueSet/$expand",
+            Func<HttpContext, Task<unit>>(fun ctx ->
+                task {
+                    let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
+                    return! Responses.fromResult (TerminologyOps.expand store None (queryMap ctx) None) ctx
+                })
+        )
+        |> OpenApiDocs.documentFhir [| OpenApiDocs.TagOperations |] "ValueSet $expand" "Expand a ValueSet by url."
+        |> ignore
+
+        app.MapPost(
+            "/ValueSet/$expand",
+            Func<HttpContext, Task<unit>>(fun ctx ->
+                task {
+                    let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
+                    let! body = readBody ctx
+
+                    match parseOptionalBody ctx body with
+                    | Error err -> return! Responses.fromError err ctx
+                    | Ok resource ->
+                        return!
+                            Responses.fromResult (TerminologyOps.expand store None (queryMap ctx) resource) ctx
+                })
+        )
+        |> ignore
+
+        app.MapGet(
+            "/ValueSet/{id}/$expand",
+            Func<HttpContext, string, Task<unit>>(fun ctx id ->
+                task {
+                    let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
+                    return! Responses.fromResult (TerminologyOps.expand store (Some id) (queryMap ctx) None) ctx
+                })
+        )
+        |> OpenApiDocs.documentFhir [| OpenApiDocs.TagOperations |] "ValueSet/{id}/$expand" "Expand a stored ValueSet."
+        |> ignore
+
+        app.MapPost(
+            "/ValueSet/{id}/$expand",
+            Func<HttpContext, string, Task<unit>>(fun ctx id ->
+                task {
+                    let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
+                    let! body = readBody ctx
+
+                    match parseOptionalBody ctx body with
+                    | Error err -> return! Responses.fromError err ctx
+                    | Ok resource ->
+                        return!
+                            Responses.fromResult (TerminologyOps.expand store (Some id) (queryMap ctx) resource) ctx
+                })
+        )
+        |> ignore
+
+        app.MapGet(
+            "/CodeSystem/$lookup",
+            Func<HttpContext, Task<unit>>(fun ctx ->
+                task {
+                    let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
+                    return! Responses.fromResult (TerminologyOps.lookup store (queryMap ctx) None) ctx
+                })
+        )
+        |> OpenApiDocs.documentFhir [| OpenApiDocs.TagOperations |] "CodeSystem $lookup" "Lookup a code in a CodeSystem."
+        |> ignore
+
+        app.MapPost(
+            "/CodeSystem/$lookup",
+            Func<HttpContext, Task<unit>>(fun ctx ->
+                task {
+                    let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
+                    let! body = readBody ctx
+
+                    match parseOptionalBody ctx body with
+                    | Error err -> return! Responses.fromError err ctx
+                    | Ok resource ->
+                        return! Responses.fromResult (TerminologyOps.lookup store (queryMap ctx) resource) ctx
+                })
+        )
+        |> ignore
+
+        app.MapGet(
+            "/ValueSet/$validate-code",
+            Func<HttpContext, Task<unit>>(fun ctx ->
+                task {
+                    let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
+
+                    return!
+                        Responses.fromResult (TerminologyOps.validateCode store None (queryMap ctx) None) ctx
+                })
+        )
+        |> OpenApiDocs.documentFhir
+            [| OpenApiDocs.TagOperations |]
+            "ValueSet $validate-code"
+            "Validate a code against a ValueSet."
+        |> ignore
+
+        app.MapPost(
+            "/ValueSet/$validate-code",
+            Func<HttpContext, Task<unit>>(fun ctx ->
+                task {
+                    let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
+                    let! body = readBody ctx
+
+                    match parseOptionalBody ctx body with
+                    | Error err -> return! Responses.fromError err ctx
+                    | Ok resource ->
+                        return!
+                            Responses.fromResult (TerminologyOps.validateCode store None (queryMap ctx) resource) ctx
+                })
+        )
+        |> ignore
+
+        app.MapGet(
+            "/ValueSet/{id}/$validate-code",
+            Func<HttpContext, string, Task<unit>>(fun ctx id ->
+                task {
+                    let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
+
+                    return!
+                        Responses.fromResult (TerminologyOps.validateCode store (Some id) (queryMap ctx) None) ctx
+                })
+        )
+        |> ignore
+
+        app.MapPost(
+            "/ValueSet/{id}/$validate-code",
+            Func<HttpContext, string, Task<unit>>(fun ctx id ->
+                task {
+                    let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
+                    let! body = readBody ctx
+
+                    match parseOptionalBody ctx body with
+                    | Error err -> return! Responses.fromError err ctx
+                    | Ok resource ->
+                        return!
+                            Responses.fromResult
+                                (TerminologyOps.validateCode store (Some id) (queryMap ctx) resource)
+                                ctx
+                })
+        )
         |> ignore
 
         app.MapGet(

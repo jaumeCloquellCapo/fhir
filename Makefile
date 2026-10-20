@@ -15,8 +15,10 @@ PKG_VALIDATION := packages/FhirServer.Validation
 .PHONY: help restore tools build run api watch clean format format-check lint test test-e2e test-metadata db-up db-down generate generate-r5-all generate-todo sync-schemas
 
 SYNC_SCHEMAS = \
-	mkdir -p $(PKG_SCHEMAS)/Data $(PKG_SCHEMAS)/Generated $(PKG_VALIDATION)/Generated && \
+	mkdir -p $(PKG_SCHEMAS)/Data $(PKG_SCHEMAS)/Data/profiles $(PKG_SCHEMAS)/Generated $(PKG_VALIDATION)/Generated && \
 	cp -f $(GEN_OUT)/schemas/*.schema.json $(PKG_SCHEMAS)/Data/ && \
+	cp -f $(GEN_OUT)/schemas/profiles/*.schema.json $(PKG_SCHEMAS)/Data/profiles/ && \
+	cp -f $(GEN_OUT)/profiles-index.json $(PKG_SCHEMAS)/Data/profiles-index.json && \
 	cp -f $(GEN_OUT)/valuesets.json $(PKG_SCHEMAS)/Data/valuesets.json && \
 	cp -f $(GEN_OUT)/GeneratedResourceCatalog.fs $(PKG_SCHEMAS)/Generated/GeneratedResourceCatalog.fs && \
 	cp -f $(GEN_OUT)/GeneratedSchemaValidator.fs $(PKG_VALIDATION)/Generated/GeneratedSchemaValidator.fs

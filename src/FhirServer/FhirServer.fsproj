@@ -20,6 +20,7 @@
     <!-- Application (use cases) -->
     <Compile Include="Application/Smart/SmartAuth.fs" />
     <Compile Include="Application/Subscriptions/SubscriptionNotifier.fs" />
+    <Compile Include="Application/Terminology/TerminologyOps.fs" />
     <Compile Include="Application/ResourceHandlers.fs" />
     <Compile Include="Application/BulkExport.fs" />
     <Compile Include="Application/BulkImport.fs" />

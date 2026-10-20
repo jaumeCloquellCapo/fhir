@@ -16,6 +16,24 @@ module EmitSchemaJson =
         | BindingStrengthKind.Preferred -> "preferred"
         | BindingStrengthKind.Example -> "example"
 
+    let private writeConstraints (writer: Utf8JsonWriter) (constraints: ElementConstraint list) =
+        if constraints <> [] then
+            writer.WritePropertyName("constraints")
+            writer.WriteStartArray()
+
+            for c in constraints do
+                writer.WriteStartObject()
+                writer.WriteString("key", c.Key)
+                writer.WriteString("severity", c.Severity)
+                writer.WriteString("expression", c.Expression)
+
+                if not (String.IsNullOrWhiteSpace c.Human) then
+                    writer.WriteString("human", c.Human)
+
+                writer.WriteEndObject()
+
+            writer.WriteEndArray()
+
     let rec private writeElement (writer: Utf8JsonWriter) (el: ElementSchema) =
         writer.WriteStartObject()
         writer.WriteString("path", el.Path)
@@ -60,6 +78,8 @@ module EmitSchemaJson =
             writer.WriteString("contentReference", cref)
         | _ -> ()
 
+        writeConstraints writer el.Constraints
+
         if not (Map.isEmpty el.Elements) then
             writer.WritePropertyName("elements")
             writer.WriteStartObject()
@@ -73,7 +93,10 @@ module EmitSchemaJson =
         writer.WriteEndObject()
 
     let writeResource (schema: ResourceSchema) (path: string) =
-        Directory.CreateDirectory(Path.GetDirectoryName path) |> ignore
+        let dir = Path.GetDirectoryName path
+
+        if not (String.IsNullOrEmpty dir) then
+            Directory.CreateDirectory dir |> ignore
 
         use stream = File.Create path
         use writer = new Utf8JsonWriter(stream, JsonWriterOptions(Indented = true))
@@ -84,7 +107,14 @@ module EmitSchemaJson =
         writer.WriteString("type", schema.TypeName)
         writer.WriteString("name", schema.TypeName)
         writer.WriteString("kind", schema.Kind)
-        writer.WriteString("derivation", "specialization")
+
+        let derivation =
+            if String.IsNullOrWhiteSpace schema.Derivation then
+                "specialization"
+            else
+                schema.Derivation
+
+        writer.WriteString("derivation", derivation)
 
         writer.WritePropertyName("required")
         writer.WriteStartArray()
@@ -93,6 +123,8 @@ module EmitSchemaJson =
             writer.WriteStringValue(r)
 
         writer.WriteEndArray()
+
+        writeConstraints writer schema.Constraints
 
         writer.WritePropertyName("elements")
         writer.WriteStartObject()
@@ -104,6 +136,18 @@ module EmitSchemaJson =
         writer.WriteEndObject()
         writer.WriteEndObject()
         writer.Flush()
+
+    /// canonical URL → relative schema file name under schemas/profiles/.
+    let writeProfilesIndex (entries: (string * string) list) (path: string) =
+        let dir = Path.GetDirectoryName path
+
+        if not (String.IsNullOrEmpty dir) then
+            Directory.CreateDirectory dir |> ignore
+
+        let options = JsonSerializerOptions(WriteIndented = true)
+        let dto = entries |> dict
+        let utf8 = UTF8Encoding(false)
+        File.WriteAllText(path, JsonSerializer.Serialize(dto, options), utf8)
 
     let writeManifest (manifest: GenerationManifest) (path: string) =
         Directory.CreateDirectory(Path.GetDirectoryName path) |> ignore

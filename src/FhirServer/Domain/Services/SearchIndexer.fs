@@ -117,11 +117,19 @@ module SearchIndexer =
             acc
 
     let private parseInstant (raw: string) =
+        let toUtc (dto: DateTimeOffset) = dto.ToUniversalTime()
+
         match DateTimeOffset.TryParse(raw, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind) with
-        | true, dto -> Some dto
+        | true, dto -> Some(toUtc dto)
         | _ ->
-            match DateTimeOffset.TryParse(raw, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal) with
-            | true, dto -> Some dto
+            match
+                DateTimeOffset.TryParse(
+                    raw,
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.AssumeUniversal ||| DateTimeStyles.AdjustToUniversal
+                )
+            with
+            | true, dto -> Some(toUtc dto)
             | _ -> None
 
     let private addDate (param: string) (startTs: DateTimeOffset) (endTs: DateTimeOffset) (acc: DateRow list) =

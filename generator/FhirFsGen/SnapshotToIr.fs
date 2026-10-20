@@ -66,6 +66,22 @@ module SnapshotToIr =
             |> Seq.toList
         | _ -> []
 
+    let private constraintsOf (e: JsonElement) : ElementConstraint list =
+        match prop e "constraint" with
+        | Some c when c.ValueKind = JsonValueKind.Array ->
+            c.EnumerateArray()
+            |> Seq.choose (fun item ->
+                match str item "key", str item "expression" with
+                | Some key, Some expr when not (String.IsNullOrWhiteSpace key) && not (String.IsNullOrWhiteSpace expr) ->
+                    Some
+                        { Key = key
+                          Severity = str item "severity" |> Option.defaultValue "error"
+                          Expression = expr.Trim()
+                          Human = str item "human" |> Option.defaultValue "" }
+                | _ -> None)
+            |> Seq.toList
+        | _ -> []
+
     type private ElementRow =
         { Path: string
           Min: int
@@ -73,7 +89,7 @@ module SnapshotToIr =
           Types: string list
           Binding: ElementBinding option
           ContentReference: string option
-          Raw: JsonElement }
+          Constraints: ElementConstraint list }
 
     let private relativeName (resourceType: string) (path: string) =
         let prefix = resourceType + "."
@@ -116,7 +132,7 @@ module SnapshotToIr =
                           Types = typesOf e
                           Binding = elementBinding e
                           ContentReference = str e "contentReference"
-                          Raw = e })
+                          Constraints = constraintsOf e })
             |> Seq.toList
         | _ -> failwith $"StructureDefinition '{sd.TypeName}' has no snapshot.element."
 
@@ -196,7 +212,8 @@ module SnapshotToIr =
                   Binding = e.Binding
                   Choices = choices
                   ContentReference = contentRef
-                  Elements = nested }
+                  Elements = nested
+                  Constraints = e.Constraints }
 
             name, child)
         |> Map.ofList
@@ -204,6 +221,12 @@ module SnapshotToIr =
     let fromStructureDefinition (fhirVersion: string) (sd: StructureLoader.StructureDefinitionDoc) : ResourceSchema =
         let rows = rowsOf sd
         let tree = buildChildren sd.TypeName rows ""
+
+        let rootConstraints =
+            rows
+            |> List.tryFind (fun r -> r.Path = sd.TypeName)
+            |> Option.map (fun r -> r.Constraints)
+            |> Option.defaultValue []
 
         // Choice [x] bases are not JSON properties — cardinality is enforced by validateChoice.
         let required =
@@ -220,5 +243,7 @@ module SnapshotToIr =
           TypeName = sd.TypeName
           Url = sd.Url
           Kind = sd.Kind
+          Derivation = sd.Derivation
           Elements = tree
-          Required = required }
+          Required = required
+          Constraints = rootConstraints }

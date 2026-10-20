@@ -175,6 +175,27 @@ module Metadata =
             ]
         )
 
+        operations.Add(
+            FhirJson.mkObject [
+                "name", FhirJson.jStr "expand"
+                "definition", FhirJson.jStr "http://hl7.org/fhir/OperationDefinition/ValueSet-expand"
+            ]
+        )
+
+        operations.Add(
+            FhirJson.mkObject [
+                "name", FhirJson.jStr "lookup"
+                "definition", FhirJson.jStr "http://hl7.org/fhir/OperationDefinition/CodeSystem-lookup"
+            ]
+        )
+
+        operations.Add(
+            FhirJson.mkObject [
+                "name", FhirJson.jStr "validate-code"
+                "definition", FhirJson.jStr "http://hl7.org/fhir/OperationDefinition/ValueSet-validate-code"
+            ]
+        )
+
         let securityServices = JsonArray()
 
         securityServices.Add(

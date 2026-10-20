@@ -13,6 +13,13 @@ module Ir =
         { Strength: BindingStrengthKind
           ValueSet: string }
 
+    /// StructureDefinition element constraint (FHIRPath invariant).
+    type ElementConstraint =
+        { Key: string
+          Severity: string
+          Expression: string
+          Human: string }
+
     type ElementSchema =
         { Name: string
           Path: string
@@ -28,7 +35,9 @@ module Ir =
           /// Snapshot contentReference (e.g. #Questionnaire.item) — resolved at validate time.
           ContentReference: string option
           /// Nested backbone / complex children keyed by element name.
-          Elements: Map<string, ElementSchema> }
+          Elements: Map<string, ElementSchema>
+          /// Constraints declared on this element (excludes root — see ResourceSchema.Constraints).
+          Constraints: ElementConstraint list }
 
     type ValueSetCodes =
         { Url: string
@@ -39,10 +48,21 @@ module Ir =
           TypeName: string
           Url: string
           Kind: string
+          /// specialization | constraint
+          Derivation: string
           Elements: Map<string, ElementSchema>
-          Required: string list }
+          Required: string list
+          /// Constraints on the root StructureDefinition element (path = TypeName).
+          Constraints: ElementConstraint list }
 
     type GenerationManifest =
         { FhirVersion: string
           GeneratedAtUtc: string
           Resources: ResourceSchema list }
+
+    /// Core package profile (derivation=constraint) to emit under schemas/profiles/.
+    type ConstraintProfileRef =
+        { Id: string
+          Url: string
+          TypeName: string
+          Kind: string }
