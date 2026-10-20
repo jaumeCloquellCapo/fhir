@@ -246,10 +246,8 @@ module AppHost =
                         do! ctx.Response.WriteAsync(authorizeHtml (hiddenFields withUser) "Enter the Patient id for this launch.")
                     }
 
-                let authEnabled = config.GetValue<bool>("Auth:Enabled", true)
-
                 let requireAuthorizeLogin =
-                    config.GetValue<bool>("Smart:RequireAuthorizeLogin", authEnabled)
+                    config.GetValue<bool>("Smart:RequireAuthorizeLogin", true)
 
                 if requireAuthorizeLogin then
                     let header = ctx.Request.Headers.Authorization.ToString()
@@ -363,7 +361,7 @@ module AppHost =
         |> OpenApiDocs.documentJson
             [| OpenApiDocs.TagSystem |]
             "OAuth authorize"
-            "SMART authorization_code + PKCE (S256). When Auth:Enabled, requires HTTP Basic (Smart:RequireAuthorizeLogin). patient= must exist; otherwise an HTML form is shown."
+            "SMART authorization_code + PKCE (S256). When Smart:RequireAuthorizeLogin=true (default), requires HTTP Basic. patient= must exist; otherwise an HTML form is shown."
         |> ignore
 
         app.MapPost(
@@ -1357,10 +1355,10 @@ module AppHost =
         app
 
     let create (args: string[]) =
-        // Repo root (…/src/FhirServer → …/) then content root after builder exists.
+        // Repo root (…/FhirServer → …/) then content root after builder exists.
         let startDir = Directory.GetCurrentDirectory()
         DotEnv.loadFromDirectory startDir
-        DotEnv.loadFromDirectory (Path.GetFullPath(Path.Combine(startDir, "../..")))
+        DotEnv.loadFromDirectory (Path.GetFullPath(Path.Combine(startDir, "..")))
 
         let builder = WebApplication.CreateBuilder(args)
 

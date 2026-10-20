@@ -13,10 +13,10 @@ Whenever you touch an **endpoint** or a **resource** handler, update Swagger in 
 
 ## When this applies
 
-- New / changed / removed `MapGet` / `MapPost` / `MapPut` / `MapDelete` / `MapMethods` in `src/FhirServer/AppHost.fs`
+- New / changed / removed `MapGet` / `MapPost` / `MapPut` / `MapDelete` / `MapMethods` in `FhirServer/AppHost.fs`
 - Changes to `ResourceHandlers`, responses, status codes, or request/response shapes used by those routes
 - New FHIR operations (`$…`), search params exposed via HTTP, bulk/export/import, metadata, SMART, or system routes
-- Edits to `src/FhirServer/Infrastructure/Http/OpenApiDocs.fs`
+- Edits to `FhirServer/Infrastructure/Http/OpenApiDocs.fs`
 
 ## Required workflow
 
@@ -81,6 +81,6 @@ Prefer an existing tag. Add a new `[<Literal>]` tag in `OpenApiDocs` only when t
 
 ## Key files
 
-- `src/FhirServer/AppHost.fs` — route registration + `OpenApiDocs.document*` pipes
-- `src/FhirServer/Infrastructure/Http/OpenApiDocs.fs` — helpers, tags, schemas, `configureSwagger`
-- `src/FhirServer/Application/ResourceHandlers.fs` — resource behavior reflected in descriptions
+- `FhirServer/AppHost.fs` — route registration + `OpenApiDocs.document*` pipes
+- `FhirServer/Infrastructure/Http/OpenApiDocs.fs` — helpers, tags, schemas, `configureSwagger`
+- `FhirServer/Application/ResourceHandlers.fs` — resource behavior reflected in descriptions

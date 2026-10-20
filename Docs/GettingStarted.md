@@ -30,7 +30,7 @@ export PATH="/opt/homebrew/opt/dotnet/bin:$PATH"
 3. Run the server:
 
    ```bash
-   dotnet run --project src/FhirServer
+   dotnet run --project FhirServer
    ```
 
 4. Open **http://localhost:5050** — try `GET /metadata` and `GET /health`.

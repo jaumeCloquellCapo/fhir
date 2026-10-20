@@ -2,7 +2,7 @@
 name: fhir-perf-correctness
 description: >-
   FHIR F# server performance, memory, DB session, and correctness guardrails.
-  Use when writing or reviewing F# code under src/FhirServer — especially
+  Use when writing or reviewing F# code under FhirServer/ — especially
   ResourceStore, ListByType, Search, Bundle transaction, subscriptions,
   bulk dump/export/import, AppHost body reading, or auth secrets.
 ---

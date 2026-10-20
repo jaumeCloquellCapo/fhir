@@ -20,7 +20,6 @@ type SmartFlowFactory() =
         base.ConfigureWebHost(builder)
 
         builder
-            .UseSetting("Auth:Enabled", "true")
             .UseSetting("Auth:Username", "fhir")
             .UseSetting("Auth:Password", "secret")
             .UseSetting("Smart:EnableDcr", "true")

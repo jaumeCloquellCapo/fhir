@@ -65,8 +65,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\packages\FhirServer.Schemas\FhirServer.Schemas.fsproj" />
-    <ProjectReference Include="..\..\packages\FhirServer.Validation\FhirServer.Validation.fsproj" />
+    <ProjectReference Include="..\packages\FhirServer.Schemas\FhirServer.Schemas.fsproj" />
+    <ProjectReference Include="..\packages\FhirServer.Validation\FhirServer.Validation.fsproj" />
   </ItemGroup>
 
 </Project>

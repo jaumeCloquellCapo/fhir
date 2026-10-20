@@ -48,7 +48,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\FhirServer\FhirServer.fsproj" />
+    <ProjectReference Include="..\..\FhirServer\FhirServer.fsproj" />
   </ItemGroup>
 
 </Project>

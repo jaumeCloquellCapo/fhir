@@ -103,7 +103,7 @@ sequenceDiagram
 
 ```mermaid
 flowchart LR
-  subgraph Server["src/FhirServer"]
+  subgraph Server["FhirServer"]
     RH["ResourceHandlers<br/>$validate / write"]
     RV["ResourceValidator"]
   end

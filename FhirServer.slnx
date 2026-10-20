@@ -1,6 +1,6 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/FhirServer/FhirServer.fsproj" />
+  <Folder Name="/FhirServer/">
+    <Project Path="FhirServer/FhirServer.fsproj" />
   </Folder>
   <Folder Name="/packages/">
     <Project Path="packages/FhirServer.Schemas/FhirServer.Schemas.fsproj" />

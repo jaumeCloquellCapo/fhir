@@ -37,13 +37,12 @@ type FhirApiFactory() =
 
     override _.ConfigureWebHost(builder: IWebHostBuilder) =
         let contentRoot =
-            Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "..", "src", "FhirServer"))
+            Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "..", "FhirServer"))
 
         builder
             .UseEnvironment(Environments.Development)
             .UseContentRoot(contentRoot)
             .UseSetting("ConnectionStrings:Fhir", appConnectionString)
-            .UseSetting("Auth:Enabled", "true")
             .UseSetting("Auth:Username", "fhir")
             .UseSetting("Auth:Password", "secret")
             .UseSetting("Auth:BasicScopes", "system/*.cruds")

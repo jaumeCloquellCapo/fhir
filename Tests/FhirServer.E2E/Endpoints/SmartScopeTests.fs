@@ -18,7 +18,6 @@ type ScopeAuthFactory() =
         base.ConfigureWebHost(builder)
 
         builder
-            .UseSetting("Auth:Enabled", "true")
             .UseSetting("Auth:Username", "fhir")
             .UseSetting("Auth:Password", "secret")
             .UseSetting("Smart:Clients:0:ClientId", "fhir-client")

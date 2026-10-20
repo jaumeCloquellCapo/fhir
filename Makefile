@@ -2,7 +2,7 @@
 export DOTNET_ROOT ?= /opt/homebrew/opt/dotnet/libexec
 export PATH := /opt/homebrew/opt/dotnet/bin:$(PATH)
 
-PROJECT := src/FhirServer
+PROJECT := FhirServer
 URL     := http://localhost:5050
 
 E2E := tests/FhirServer.E2E

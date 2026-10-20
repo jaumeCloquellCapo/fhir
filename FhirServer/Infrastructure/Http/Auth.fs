@@ -37,9 +37,9 @@ module Auth =
         let b = SHA256.HashData(Encoding.UTF8.GetBytes(right))
         CryptographicOperations.FixedTimeEquals(a.AsSpan(), b.AsSpan())
 
-    let private isPublicPath (config: IConfiguration) (authEnabled: bool) (path: string) =
+    let private isPublicPath (config: IConfiguration) (path: string) =
         let allowPublicHooks =
-            config.GetValue<bool>("Subscriptions:AllowPublicHooks", not authEnabled)
+            config.GetValue<bool>("Subscriptions:AllowPublicHooks", false)
 
         let enableDcr = config.GetValue<bool>("Smart:EnableDcr", false)
 
@@ -191,7 +191,7 @@ module Auth =
             | Some pathOrgId ->
                 match tryGetAuthContext ctx with
                 | None ->
-                    // Auth disabled: still scope the request to the path organization (hierarchical).
+                    // No auth context (public path): still scope to the path organization (hierarchical).
                     SmartAuth.applyTenantAccess ctx (TenantAccess.Organization(pathOrgId, hierarchical = true))
                     return ()
                 | Some auth ->
@@ -253,7 +253,7 @@ module Auth =
 
         app
 
-    /// Bind hierarchical OrgBAC from `/Organization/{id}/fhir` after authentication (or when auth is off).
+    /// Bind hierarchical OrgBAC from `/Organization/{id}/fhir` after authentication.
     let useOrgBacPath (app: WebApplication) =
         app.Use(
             Func<HttpContext, RequestDelegate, Task>(fun ctx next ->
@@ -270,49 +270,44 @@ module Auth =
 
         app
 
-    /// Require Basic and/or SMART Bearer when Auth:Enabled=true.
+    /// Require Basic and/or SMART Bearer on protected routes.
     /// Basic uses Auth:BasicScopes (default system/*.cruds) — same scope checks as Bearer.
     let useAuth (app: WebApplication) =
-        let enabled = app.Configuration.GetValue<bool>("Auth:Enabled", true)
+        app.Use(
+            Func<HttpContext, RequestDelegate, Task>(fun ctx next ->
+                task {
+                    let path = ctx.Request.Path.Value
+                    let config = app.Configuration
 
-        if not enabled then
-            app
-        else
-            app.Use(
-                Func<HttpContext, RequestDelegate, Task>(fun ctx next ->
-                    task {
-                        let path = ctx.Request.Path.Value
-                        let config = app.Configuration
+                    if isPublicPath config path then
+                        return! next.Invoke(ctx)
+                    else
+                        let header = ctx.Request.Headers.Authorization.ToString()
 
-                        if isPublicPath config true path then
-                            return! next.Invoke(ctx)
+                        if validateBasic config header then
+                            let auth = basicAuthContext config
+                            do! enforceScopes ctx auth
+
+                            if ctx.Response.HasStarted || ctx.Response.StatusCode >= 400 then
+                                return ()
+                            else
+                                return! next.Invoke(ctx)
                         else
-                            let header = ctx.Request.Headers.Authorization.ToString()
-
-                            if validateBasic config header then
-                                let auth = basicAuthContext config
+                            match tryBearerRecord header with
+                            | None -> return! unauthorized ctx "Bearer, Basic realm=\"FhirServer\""
+                            | Some record ->
+                                let auth = SmartAuth.toAuthContext record
                                 do! enforceScopes ctx auth
 
                                 if ctx.Response.HasStarted || ctx.Response.StatusCode >= 400 then
                                     return ()
                                 else
                                     return! next.Invoke(ctx)
-                            else
-                                match tryBearerRecord header with
-                                | None -> return! unauthorized ctx "Bearer, Basic realm=\"FhirServer\""
-                                | Some record ->
-                                    let auth = SmartAuth.toAuthContext record
-                                    do! enforceScopes ctx auth
+                })
+        )
+        |> ignore
 
-                                    if ctx.Response.HasStarted || ctx.Response.StatusCode >= 400 then
-                                        return ()
-                                    else
-                                        return! next.Invoke(ctx)
-                    })
-            )
-            |> ignore
-
-            app
+        app
 
     [<Obsolete("Use useAuth")>]
     let useBasicAuth = useAuth

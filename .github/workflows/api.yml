@@ -45,7 +45,7 @@ jobs:
         run: dotnet restore FhirServer.slnx
 
       - name: Build API
-        run: dotnet build src/FhirServer/FhirServer.fsproj --configuration Release --no-restore
+        run: dotnet build FhirServer/FhirServer.fsproj --configuration Release --no-restore
 
       - name: Run E2E tests
         env:

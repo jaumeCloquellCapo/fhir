@@ -1,6 +1,6 @@
 # Configuration
 
-Settings live in `src/FhirServer/appsettings.json`, with optional overrides via `appsettings.Development.json`, `.env.dev` / `.env`, environment variables, or [.NET user secrets](https://learn.microsoft.com/aspnet/core/security/app-secrets).
+Settings live in `FhirServer/appsettings.json`, with optional overrides via `appsettings.Development.json`, `.env.dev` / `.env`, environment variables, or [.NET user secrets](https://learn.microsoft.com/aspnet/core/security/app-secrets).
 
 Environment variable form uses `__` for nesting, e.g. `ConnectionStrings__Fhir=...`. At startup the server loads `.env.dev` then `.env` from the repo root (and content root) without overwriting variables already set in the process.
 
@@ -16,7 +16,6 @@ Local defaults are in [`.env.dev`](../.env.dev) (matches `make db-up`). Public t
 
 | Key | Default | Description |
 |-----|---------|-------------|
-| `Auth:Enabled` | `true` | Require HTTP Basic **or** SMART Bearer on protected routes (`false` only for disposable local demos) |
 | `Auth:Username` | — | Basic username |
 | `Auth:Password` | — | Basic password — **set via secrets in any shared environment** |
 | `Auth:BasicScopes` | `system/*.cruds` | SMART scopes applied to Basic credentials (same enforcement as Bearer) |
@@ -27,7 +26,7 @@ Local defaults are in [`.env.dev`](../.env.dev) (matches `make db-up`). Public t
 |-----|---------|-------------|
 | `Smart:Enabled` | `true` | Advertise SMART discovery |
 | `Smart:EnableDcr` | `false` | When `true`, expose `POST /auth/register` (patient/user scopes only; no `system/*`) |
-| `Smart:RequireAuthorizeLogin` | same as `Auth:Enabled` | When `true`, `/auth/authorize` requires HTTP Basic before issuing a code |
+| `Smart:RequireAuthorizeLogin` | `true` | When `true`, `/auth/authorize` requires HTTP Basic before issuing a code |
 | `Smart:TokenLifetimeMinutes` | `60` | Access token lifetime |
 | `Smart:AuthCodeLifetimeMinutes` | `5` | Authorization code lifetime |
 | `Smart:Clients` | (see appsettings) | Array of confidential clients |
@@ -55,7 +54,7 @@ Envelopes store `tenant_id` and `tenant_mode` (`owned` \| `shared` \| `system-sh
 
 `POST /auth/register` is off unless `Smart:EnableDcr=true`. Registered clients are ephemeral (process memory) and cannot request `system/*` or `client_credentials`.
 
-Auth is **on** by default. Change `Auth:Password` / SMART client secrets before any shared use. Set `Auth:Enabled=false` only for disposable local demos.
+Auth is always required on protected routes. Change `Auth:Password` / SMART client secrets before any shared use.
 
 ## Subscriptions
 

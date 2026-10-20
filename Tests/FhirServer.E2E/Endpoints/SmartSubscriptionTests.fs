@@ -18,7 +18,6 @@ type SmartAuthFactory() =
         base.ConfigureWebHost(builder)
 
         builder
-            .UseSetting("Auth:Enabled", "true")
             .UseSetting("Auth:Username", "fhir")
             .UseSetting("Auth:Password", "secret")
             .UseSetting("Smart:Clients:0:ClientId", "fhir-client")
@@ -72,7 +71,7 @@ type SmartSubscriptionTests() =
         }
 
     [<Fact>]
-    member _.``Bearer token authorizes when Auth enabled``() : Task =
+    member _.``Bearer token authorizes protected routes``() : Task =
         task {
             let basic =
                 Convert.ToBase64String(Encoding.UTF8.GetBytes("fhir-client:smart-secret"))

@@ -34,7 +34,7 @@ Full interaction matrix: [docs/Features.md](docs/Features.md).
 
 ```bash
 make db-up
-dotnet run --project src/FhirServer
+dotnet run --project FhirServer
 # → http://localhost:5050
 ```
 
@@ -86,7 +86,7 @@ Schemas and the validator are produced offline by [`generator/`](generator/READM
 ## Repository layout
 
 ```
-src/FhirServer/          FHIR API (ASP.NET Core)
+FhirServer/              FHIR API (ASP.NET Core)
 packages/                Embedded R5 schemas + validation engine
 generator/               HL7 package → FHIR Schema + F# validator
 tests/FhirServer.E2E/    In-process end-to-end tests
