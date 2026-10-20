@@ -87,14 +87,14 @@ let main args =
     let repoRoot =
         let cwd = Directory.GetCurrentDirectory()
 
-        if Directory.Exists(Path.Combine(cwd, "generator")) then
+        if Directory.Exists(Path.Combine(cwd, "Generator")) then
             cwd
         else
             let start = DirectoryInfo(AppContext.BaseDirectory)
 
             let rec find (d: DirectoryInfo) =
                 if isNull d then cwd
-                elif Directory.Exists(Path.Combine(d.FullName, "generator")) then
+                elif Directory.Exists(Path.Combine(d.FullName, "Generator")) then
                     d.FullName
                 else
                     find d.Parent
@@ -107,7 +107,7 @@ let main args =
 
     let cacheDir = abs opts.CacheDir
     let outDir = abs opts.OutDir
-    let todoPath = Path.Combine(repoRoot, "generator", "TODO-R5.md")
+    let todoPath = Path.Combine(repoRoot, "Generator", "TODO-R5.md")
     let schemasDir = Path.Combine(outDir, "schemas")
     let profilesDir = Path.Combine(schemasDir, "profiles")
 

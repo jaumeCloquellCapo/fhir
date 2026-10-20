@@ -22,7 +22,7 @@ module EmitFsharp =
 
         sb.AppendLine("namespace FhirServer.Schemas") |> ignore
         sb.AppendLine() |> ignore
-        sb.AppendLine("/// Resource catalog produced by generator/FhirFsGen (R5).")
+        sb.AppendLine("/// Resource catalog produced by Generator/FhirFsGen (R5).")
         |> ignore
 
         sb.AppendLine("module GeneratedResourceCatalog =") |> ignore

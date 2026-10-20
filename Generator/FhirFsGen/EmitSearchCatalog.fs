@@ -372,7 +372,7 @@ module EmitSearchCatalog =
 
         sb.AppendLine("namespace FhirServer.Schemas") |> ignore
         sb.AppendLine() |> ignore
-        sb.AppendLine("/// Search parameter catalog produced by generator/FhirFsGen.")
+        sb.AppendLine("/// Search parameter catalog produced by Generator/FhirFsGen.")
         |> ignore
 
         sb.AppendLine("module GeneratedSearchCatalog =") |> ignore
