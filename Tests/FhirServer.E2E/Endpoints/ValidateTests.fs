@@ -352,28 +352,23 @@ type ValidateTests() =
     [<Fact>]
     member _.``POST /QuestionnaireResponse/$validate answerValueSet membership``() : Task =
         task {
-            let! vsStatus, _, _ =
+            let! csStatus, csBody, _ =
+                postJson
+                    client
+                    "/CodeSystem"
+                    """{"resourceType":"CodeSystem","status":"active","content":"complete","url":"http://example.org/cs/qr-colors","name":"QrColors","concept":[{"code":"red"},{"code":"blue"}]}"""
+
+            assertStatus HttpStatusCode.Created csStatus
+            Assert.Contains("CodeSystem", csBody)
+
+            let! vsStatus, vsBody, _ =
                 postJson
                     client
                     "/ValueSet"
-                    """
-                    {
-                      "resourceType": "ValueSet",
-                      "status": "active",
-                      "url": "http://example.org/ValueSet/colors",
-                      "compose": {
-                        "include": [{
-                          "system": "http://example.org/CodeSystem/colors",
-                          "concept": [
-                            { "code": "red" },
-                            { "code": "blue" }
-                          ]
-                        }]
-                      }
-                    }
-                    """
+                    """{"resourceType":"ValueSet","status":"active","url":"http://example.org/vs/qr-colors","compose":{"include":[{"system":"http://example.org/cs/qr-colors"}]}}"""
 
             assertStatus HttpStatusCode.Created vsStatus
+            Assert.Contains("ValueSet", vsBody)
 
             let! qStatus, _, _ =
                 postJson
@@ -389,7 +384,7 @@ type ValidateTests() =
                           "linkId": "color",
                           "type": "choice",
                           "required": true,
-                          "answerValueSet": "http://example.org/ValueSet/colors"
+                          "answerValueSet": "http://example.org/vs/qr-colors"
                         }
                       ]
                     }
@@ -411,7 +406,7 @@ type ValidateTests() =
                           "linkId": "color",
                           "answer": [{
                             "valueCoding": {
-                              "system": "http://example.org/CodeSystem/colors",
+                              "system": "http://example.org/cs/qr-colors",
                               "code": "green"
                             }
                           }]
