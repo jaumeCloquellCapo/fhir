@@ -103,3 +103,53 @@ type SearchHistoryBundleTests() =
             assertResourceType "Bundle" body
             Assert.Contains("BundleTx", body)
         }
+
+    [<Fact>]
+    member _.``transaction bundle rolls back prior entries on failure``() : Task =
+        task {
+            let marker = Guid.NewGuid().ToString("N")
+
+            let bundle =
+                $"""
+                {{
+                  "resourceType": "Bundle",
+                  "type": "transaction",
+                  "entry": [
+                    {{
+                      "request": {{ "method": "POST", "url": "Patient" }},
+                      "resource": {{
+                        "resourceType": "Patient",
+                        "id": "tx-ok-{marker}",
+                        "name": [{{ "family": "TxRollbackOk" }}],
+                        "gender": "male"
+                      }}
+                    }},
+                    {{
+                      "request": {{ "method": "POST", "url": "Patient" }}
+                    }}
+                  ]
+                }}
+                """
+
+            let! status, _, _ = postJson client "/" bundle
+            Assert.True(status = HttpStatusCode.BadRequest || int status >= 400)
+
+            let! getStatus, _ = get client $"/Patient/tx-ok-{marker}"
+            assertStatus HttpStatusCode.NotFound getStatus
+        }
+
+    [<Fact>]
+    member _.``create with existing id returns Conflict``() : Task =
+        task {
+            let id = Guid.NewGuid().ToString("N")
+
+            let body =
+                $"""{{"resourceType":"Patient","id":"{id}","name":[{{"family":"Dup"}}],"gender":"female"}}"""
+
+            let! s1, _, _ = postJson client "/Patient" body
+            assertStatus HttpStatusCode.Created s1
+
+            let! s2, b2, _ = postJson client "/Patient" body
+            assertStatus HttpStatusCode.Conflict s2
+            Assert.Contains("already exists", b2)
+        }

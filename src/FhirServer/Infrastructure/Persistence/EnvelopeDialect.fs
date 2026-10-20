@@ -45,8 +45,17 @@ type IEnvelopeSession =
             * limit: int
             -> (string * int64 * DateTimeOffset * string) list
 
+    /// Returns (page rows ordered by txid DESC, total matching count). LIMIT/OFFSET applied in SQL when possible.
     abstract member QueryHistory:
-        filter: HistoryFilter -> (string * string * int64 * DateTimeOffset * string * string) list
+        filter: HistoryFilter -> (string * string * int64 * DateTimeOffset * string * string) list * int
+
+    /// Keyset page of current rows: ORDER BY id, optional afterId exclusive, LIMIT.
+    abstract member ListCurrentPage:
+        resourceType: string * afterId: string option * limit: int -> (string * int64 * DateTimeOffset * string) list
+
+    /// Batch read by ids (`WHERE id = ANY(@ids)`).
+    abstract member ReadCurrentMany:
+        resourceType: string * ids: string list -> (string * int64 * DateTimeOffset * string) list
 
     abstract member ReplaceSearchIndex:
         resourceType: string * id: string * rows: SearchIndexer.IndexRows -> unit

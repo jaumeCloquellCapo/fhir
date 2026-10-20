@@ -17,10 +17,18 @@ module BulkExport =
     }
 
     let private jobs = ConcurrentDictionary<string, ExportJob>()
+    let private jobTtl = TimeSpan.FromHours(2.0)
 
     let private defaultTypes =
         [ "Patient"; "Observation"; "Encounter"; "Condition" ]
         |> List.filter ResourceCatalog.isSupported
+
+    let private evictExpired () =
+        let cutoff = DateTimeOffset.UtcNow - jobTtl
+
+        for kv in jobs do
+            if kv.Value.RequestedAt < cutoff then
+                jobs.TryRemove(kv.Key) |> ignore
 
     let parseTypes (raw: string option) =
         match raw with
@@ -35,6 +43,7 @@ module BulkExport =
                 | xs -> xs
 
     let start (resourceTypes: string list) =
+        evictExpired ()
         let id = Guid.NewGuid().ToString("N")
 
         let job = {
@@ -47,6 +56,8 @@ module BulkExport =
         job
 
     let tryGet (jobId: string) =
+        evictExpired ()
+
         match jobs.TryGetValue jobId with
         | true, job -> Some job
         | _ -> None
@@ -70,7 +81,13 @@ module BulkExport =
             "error", JsonArray()
         ]
 
-    let fileNdjson (store: IResourceStore) (jobId: string) (resourceType: string) : FhirResult<string> =
+    /// Stream NDJSON lines via callback (keyset pages — no full ListByType).
+    let streamFileNdjson
+        (store: IResourceStore)
+        (jobId: string)
+        (resourceType: string)
+        (writeLine: string -> unit)
+        : FhirResult<unit> =
         match tryGet jobId with
         | None -> Error(NotFound("BulkExport", jobId))
         | Some job when not (List.contains resourceType job.ResourceTypes) ->
@@ -79,7 +96,25 @@ module BulkExport =
             if not (ResourceCatalog.isSupported resourceType) then
                 Error(UnsupportedType resourceType)
             else
-                let body =
-                    store.ListByType resourceType |> List.map FhirJson.toJson |> String.concat "\n"
+                let mutable after: string option = None
+                let mutable cont = true
 
-                Ok(if String.IsNullOrEmpty body then body else body + "\n")
+                while cont do
+                    let page = store.ListByTypePage(resourceType, after, 500)
+
+                    match page with
+                    | [] -> cont <- false
+                    | rows ->
+                        for resource in rows do
+                            writeLine (FhirJson.toJson resource)
+
+                        after <- rows |> List.tryLast |> Option.map FhirJson.id
+
+                Ok()
+
+    [<Obsolete("Use streamFileNdjson")>]
+    let fileNdjson (store: IResourceStore) (jobId: string) (resourceType: string) : FhirResult<string> =
+        let sb = System.Text.StringBuilder()
+
+        streamFileNdjson store jobId resourceType (fun line -> sb.AppendLine(line) |> ignore)
+        |> Result.map (fun () -> sb.ToString())

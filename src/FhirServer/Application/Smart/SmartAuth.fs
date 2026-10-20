@@ -36,6 +36,17 @@ module SmartAuth =
     let private tokens = ConcurrentDictionary<string, TokenRecord>()
     let private authCodes = ConcurrentDictionary<string, AuthCodeRecord>()
 
+    let private evictExpiredAuthState () =
+        let now = DateTimeOffset.UtcNow
+
+        for kv in tokens do
+            if kv.Value.ExpiresAt <= now then
+                tokens.TryRemove(kv.Key) |> ignore
+
+        for kv in authCodes do
+            if kv.Value.ExpiresAt <= now then
+                authCodes.TryRemove(kv.Key) |> ignore
+
     let isEnabled (config: IConfiguration) =
         config.GetValue<bool>("Smart:Enabled", true)
 
@@ -138,6 +149,7 @@ module SmartAuth =
             OrganizationId = organizationId |> Option.map TenantContext.normalizeOrgId
         }
 
+        evictExpiredAuthState ()
         tokens[token] <- record
         tokenResponse record (minutes * 60)
 
@@ -172,6 +184,7 @@ module SmartAuth =
             FhirUser = fhirUser
         }
 
+        evictExpiredAuthState ()
         authCodes[code] <- record
         code
 

@@ -297,9 +297,9 @@ module SearchEngine =
                 | _ -> None
         | _ -> None
 
-    /// Resolve `_include` resources for the given match set.
+    /// Resolve `_include` resources for the given match set (batched GetMany per target type).
     let resolveIncludes
-        (get: string * string -> FhirResource option)
+        (getMany: string -> string list -> FhirResource list)
         (sourceType: string)
         (includeTokens: string list)
         (matches: FhirResource list)
@@ -314,19 +314,23 @@ module SearchEngine =
         else
             let seen = System.Collections.Generic.HashSet<string>()
 
-            matches
-            |> List.collect (fun resource ->
-                specs
-                |> List.collect (fun (_, fields) ->
-                    fields
-                    |> List.choose (fun field ->
-                        match resource[field] with
-                        | null -> None
-                        | node -> referenceTarget node)
-                    |> List.choose (fun (rt, id) ->
-                        let key = $"{rt}/{id}"
+            let refs =
+                matches
+                |> List.collect (fun resource ->
+                    specs
+                    |> List.collect (fun (_, fields) ->
+                        fields
+                        |> List.choose (fun field ->
+                            match resource[field] with
+                            | null -> None
+                            | node -> referenceTarget node)
+                        |> List.choose (fun (rt, id) ->
+                            let key = $"{rt}/{id}"
+                            if seen.Add key then Some(rt, id) else None)))
 
-                        if seen.Add key then get (rt, id) else None)))
+            refs
+            |> List.groupBy fst
+            |> List.collect (fun (rt, pairs) -> getMany rt (pairs |> List.map snd))
 
     /// `_revinclude=Observation:patient` — find Observation resources pointing at matched Patients.
     let resolveRevincludes
@@ -511,8 +515,8 @@ module SearchEngine =
             firstQuery query "_count"
             |> Option.bind (fun s ->
                 match Int32.TryParse s with
-                // Allow up to 10k so internal chain/_has expansion is not silently truncated at 200.
-                | true, n when n > 0 -> Some(min n 10_000)
+                // Hard cap client `_count` (internal expansion uses its own lower cap in ResourceHandlers).
+                | true, n when n > 0 -> Some(min n 1_000)
                 | _ -> None)
             |> Option.defaultValue 50
 

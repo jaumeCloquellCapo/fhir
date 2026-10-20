@@ -7,6 +7,7 @@ open FhirServer.Domain
 
 exception TenantStampException of message: string
 exception TenantMutationForbiddenException of message: string
+exception DuplicateResourceException of resourceType: string * id: string
 
 /// Parse Organization.partOf and Aidbox tenant meta extensions from FHIR JSON.
 module OrganizationHierarchy =

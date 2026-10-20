@@ -43,12 +43,16 @@ store.TryFindByTypeWhere("CodeSystem", [ "url", systemUrl ])
 |---------|---------|
 | Internal field equality | `ListByTypeWhere` / `TryFindByTypeWhere` (`@>`) |
 | Clinical FHIR Search | `store.Search` + `search_*` indexes |
-| Internal expansion (`_include`, chain, `_filter`) | Prefer id-only projection; cap `_count` |
-| `_include` | Batch get by ids (`ANY(@ids)`), not N× `Get` |
-| Writes + hooks | Enqueue; never block Upsert on outbound HTTP |
-| Create with client id | Insert-only / unique constraint → `Conflict`; no Get-then-Upsert TOCTOU |
-| Bundle transaction | One `IEnvelopeSession` / one Npgsql transaction for all entries |
-| Secrets | Config/env; fail-fast if missing when not Development |
+| Dump / export | `ListByTypePage` keyset streaming — never materialize full type |
+| History | SQL `ORDER BY txid DESC LIMIT/OFFSET` (+ count); no hydrate-then-skip |
+| Search index writes | Batch `unnest` inserts; single multi-DELETE clear |
+| Internal expansion (`_include`, chain, `_filter`) | Cap `_count` (≤500 internal / ≤1000 client) |
+| `_include` | `GetMany` / `ANY(@ids)`, not N× `Get` |
+| Writes + hooks | In-process sync; remote HTTP off write path |
+| Create with client id | `store.Create` insert-only → `DuplicateResourceException` / Conflict |
+| Bundle transaction | `RunInTransaction` + ambient session (one DB tx) |
+| Process lock | No global write lock; only startup backfill gate |
+| Secrets | Config/env; fail-fast if missing |
 | Swagger | Development only (or authenticated) |
 
 ## Checklist before finishing a PR

@@ -212,6 +212,18 @@ module ResourceHandlers =
         with
         | TenantStampException msg -> Error(BadRequest msg)
         | TenantMutationForbiddenException msg -> Error(Forbidden msg)
+        | DuplicateResourceException(rt, id) -> Error(Conflict $"Resource {rt}/{id} already exists.")
+
+    let private tryCreate (store: IResourceStore) (body: FhirResource) : FhirResult<FhirResource> =
+        try
+            Ok(store.Create body)
+        with
+        | TenantStampException msg -> Error(BadRequest msg)
+        | TenantMutationForbiddenException msg -> Error(Forbidden msg)
+        | DuplicateResourceException(rt, id) -> Error(Conflict $"Resource {rt}/{id} already exists.")
+
+    /// Cap for internal chain/_has/_filter expansion and compartment gathers (not client `_count`).
+    let private internalFetchCap = 500
 
     let private tryDelete
         (store: IResourceStore)
@@ -242,16 +254,13 @@ module ResourceHandlers =
                         else
                             current
 
-                    match store.Get(resourceType, id) with
-                    | Some _ -> Error(Conflict $"Resource {resourceType}/{id} already exists.")
-                    | None ->
-                        body["resourceType"] <- resourceType
-                        FhirJson.setId body id |> ignore
+                    body["resourceType"] <- resourceType
+                    FhirJson.setId body id |> ignore
 
-                        tryUpsert store body
-                        |> Result.map (fun created ->
-                            SubscriptionNotifier.notifyChange store "create" created
-                            created)))
+                    tryCreate store body
+                    |> Result.map (fun created ->
+                        SubscriptionNotifier.notifyChange store "create" created
+                        created)))
 
     let private prepareTenantMetaForWrite
         (existing: FhirResource option)
@@ -370,7 +379,7 @@ module ResourceHandlers =
 
                     let expanded =
                         q
-                        |> Map.add "_count" [ "10000" ]
+                        |> Map.add "_count" [ string internalFetchCap ]
                         |> SearchEngine.expandChainedQuery nested
                         |> SearchEngine.expandHasQuery nested
 
@@ -402,7 +411,7 @@ module ResourceHandlers =
                         let ids =
                             alts
                             |> List.collect (fun alt ->
-                                let q = alt |> Map.add "_count" [ "10000" ]
+                                let q = alt |> Map.add "_count" [ string internalFetchCap ]
                                 runSearch q |> fst |> List.map FhirJson.id)
                             |> List.distinct
 
@@ -419,8 +428,10 @@ module ResourceHandlers =
                         runSearch idQuery
                     | SearchFilter.Expansion.Invalid _ -> [], 0
 
+                let getMany rt ids = store.GetMany(rt, ids)
+
                 let includes =
-                    SearchEngine.resolveIncludes (fun (rt, id) -> store.Get(rt, id)) resourceType includeTokens page
+                    SearchEngine.resolveIncludes getMany resourceType includeTokens page
 
                 let revincludes =
                     SearchEngine.resolveRevincludes expandSearch resourceType revIncludeTokens page
@@ -453,7 +464,7 @@ module ResourceHandlers =
                     relatedTypes
                     |> List.collect (fun rt ->
                         if ResourceCatalog.isSupported rt then
-                            store.Search(rt, query |> Map.add "_count" [ "10000" ]) |> fst
+                            store.Search(rt, query |> Map.add "_count" [ string internalFetchCap ]) |> fst
                         else
                             [])
 
@@ -484,9 +495,24 @@ module ResourceHandlers =
 
                 Ok bundle)
 
+    /// Prefer AppHost streaming via ListByTypePage; kept for callers that need a full list (tests).
     let dump (store: IResourceStore) (resourceType: string) : FhirResult<FhirResource list> =
         ensureKnownResourceType resourceType
-        |> Result.map (fun () -> store.ListByType resourceType)
+        |> Result.map (fun () ->
+            let acc = ResizeArray<FhirResource>()
+            let mutable after: string option = None
+            let mutable cont = true
+
+            while cont do
+                let page = store.ListByTypePage(resourceType, after, 500)
+
+                match page with
+                | [] -> cont <- false
+                | rows ->
+                    acc.AddRange(rows)
+                    after <- rows |> List.tryLast |> Option.map FhirJson.id
+
+            acc |> Seq.toList)
 
     /// FHIR Document Bundle for a Patient (Composition + clinical resources).
     let patientDocument (store: IResourceStore) (id: string) : FhirResult<FhirResource> =
@@ -644,7 +670,7 @@ module ResourceHandlers =
 
                     let expanded =
                         q
-                        |> Map.add "_count" [ "10000" ]
+                        |> Map.add "_count" [ string internalFetchCap ]
                         |> SearchEngine.expandChainedQuery nested
                         |> SearchEngine.expandHasQuery nested
 
@@ -660,8 +686,11 @@ module ResourceHandlers =
                 |> SearchEngine.expandChainedQuery expandSearch
                 |> SearchEngine.expandHasQuery expandSearch
 
+            // Fetch a bounded window then group in memory (MVP $lastn).
+            let fetchCap = min internalFetchCap (maxN * 50 |> max 50)
+
             let all =
-                store.Search("Observation", filterQuery |> Map.add "_count" [ "10000" ])
+                store.Search("Observation", filterQuery |> Map.add "_count" [ string fetchCap ])
                 |> fst
                 |> List.sortByDescending (fun r ->
                     FhirJson.lastUpdated r |> Option.defaultValue DateTimeOffset.MinValue)

@@ -581,12 +581,31 @@ module AppHost =
                 task {
                     let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
 
-                    match BulkExport.fileNdjson store jobId resourceType with
-                    | Error err -> return! Responses.fromError err ctx
-                    | Ok body ->
+                    match BulkExport.tryGet jobId with
+                    | None -> return! Responses.fromError (NotFound("BulkExport", jobId)) ctx
+                    | Some job when not (List.contains resourceType job.ResourceTypes) ->
+                        return!
+                            Responses.fromError
+                                (BadRequest $"Resource type '{resourceType}' is not part of export job '{jobId}'.")
+                                ctx
+                    | Some _ when not (ResourceCatalog.isSupported resourceType) ->
+                        return! Responses.fromError (UnsupportedType resourceType) ctx
+                    | Some _ ->
                         ctx.Response.StatusCode <- StatusCodes.Status200OK
                         ctx.Response.ContentType <- "application/fhir+ndjson"
-                        do! ctx.Response.WriteAsync(body)
+                        let mutable after: string option = None
+                        let mutable cont = true
+
+                        while cont do
+                            let page = store.ListByTypePage(resourceType, after, 500)
+
+                            match page with
+                            | [] -> cont <- false
+                            | rows ->
+                                for resource in rows do
+                                    do! ctx.Response.WriteAsync(FhirJson.toJson resource + "\n")
+
+                                after <- rows |> List.tryLast |> Option.map FhirJson.id
                 })
         )
         |> OpenApiDocs.documentNdjson
@@ -715,14 +734,24 @@ module AppHost =
                 task {
                     let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
 
-                    match ResourceHandlers.dump store resourceType with
-                    | Error err -> return! Responses.fromError err ctx
-                    | Ok resources ->
+                    if not (ResourceCatalog.isSupported resourceType) then
+                        return! Responses.fromError (UnsupportedType resourceType) ctx
+                    else
                         ctx.Response.StatusCode <- StatusCodes.Status200OK
                         ctx.Response.ContentType <- "application/fhir+ndjson"
+                        let mutable after: string option = None
+                        let mutable cont = true
 
-                        for resource in resources do
-                            do! ctx.Response.WriteAsync(FhirJson.toJson resource + "\n")
+                        while cont do
+                            let page = store.ListByTypePage(resourceType, after, 500)
+
+                            match page with
+                            | [] -> cont <- false
+                            | rows ->
+                                for resource in rows do
+                                    do! ctx.Response.WriteAsync(FhirJson.toJson resource + "\n")
+
+                                after <- rows |> List.tryLast |> Option.map FhirJson.id
                 })
         )
         |> OpenApiDocs.documentNdjson

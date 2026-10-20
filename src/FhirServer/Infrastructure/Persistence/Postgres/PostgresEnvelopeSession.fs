@@ -204,6 +204,51 @@ type PostgresEnvelopeSession(connectionString: string) =
                         reader.GetString(3)
             ]
 
+        member _.ListCurrentPage(resourceType, afterId, limit) =
+            let capped = max 1 (min limit 10_000)
+            let table = ResourceCatalog.quoteIdent (ResourceCatalog.tableName resourceType)
+            use c = cmd ()
+
+            match afterId with
+            | Some after when not (String.IsNullOrWhiteSpace after) ->
+                c.CommandText <-
+                    $"SELECT id, txid, ts, resource::text FROM {table} WHERE id > @after ORDER BY id LIMIT @limit;"
+
+                c.Parameters.AddWithValue("after", after) |> ignore
+            | _ ->
+                c.CommandText <- $"SELECT id, txid, ts, resource::text FROM {table} ORDER BY id LIMIT @limit;"
+
+            c.Parameters.AddWithValue("limit", capped) |> ignore
+            use reader = c.ExecuteReader()
+
+            [
+                while reader.Read() do
+                    yield
+                        reader.GetString(0),
+                        reader.GetInt64(1),
+                        reader.GetFieldValue<DateTimeOffset>(2),
+                        reader.GetString(3)
+            ]
+
+        member _.ReadCurrentMany(resourceType, ids) =
+            if List.isEmpty ids then
+                []
+            else
+                let table = ResourceCatalog.quoteIdent (ResourceCatalog.tableName resourceType)
+                use c = cmd ()
+                c.CommandText <- $"SELECT id, txid, ts, resource::text FROM {table} WHERE id = ANY(@ids);"
+                c.Parameters.AddWithValue("ids", ids |> List.toArray) |> ignore
+                use reader = c.ExecuteReader()
+
+                [
+                    while reader.Read() do
+                        yield
+                            reader.GetString(0),
+                            reader.GetInt64(1),
+                            reader.GetFieldValue<DateTimeOffset>(2),
+                            reader.GetString(3)
+                ]
+
         member _.ListCurrentByJsonbContainment(resourceType, filters, limit) =
             let capped = max 1 (min limit 10_000)
             let table = ResourceCatalog.quoteIdent (ResourceCatalog.tableName resourceType)
@@ -254,123 +299,220 @@ type PostgresEnvelopeSession(connectionString: string) =
                 | Some rt -> [ rt ]
                 | None -> ResourceCatalog.supportedResourceTypes
 
-            types
-            |> List.collect (fun resourceType ->
+            let pageSize = max 1 filter.Count
+            let offset = max 0 filter.Offset
+            // For multi-type history, fetch enough candidates per type to fill the page after merge.
+            let perTypeFetch = offset + pageSize
+
+            let idClause = if filter.Id.IsSome then " AND id=@id" else ""
+            let sinceClause = if filter.Since.IsSome then " AND ts >= @since" else ""
+
+            let bindFilters (c: NpgsqlCommand) =
+                match filter.Id with
+                | Some id -> c.Parameters.AddWithValue("id", id) |> ignore
+                | None -> ()
+
+                match filter.Since with
+                | Some since -> c.Parameters.AddWithValue("since", since) |> ignore
+                | None -> ()
+
+            let countType resourceType =
                 let table = ResourceCatalog.quoteIdent (ResourceCatalog.tableName resourceType)
 
                 let history =
                     ResourceCatalog.quoteIdent (ResourceCatalog.historyTableName resourceType)
 
-                let read source =
-                    use c = cmd ()
-                    let idClause = if filter.Id.IsSome then " AND id=@id" else ""
-                    let sinceClause = if filter.Since.IsSome then " AND ts >= @since" else ""
+                use c = cmd ()
 
-                    c.CommandText <-
-                        $"SELECT id, txid, ts, status, resource::text FROM {source} WHERE 1=1{idClause}{sinceClause}"
+                c.CommandText <-
+                    $"SELECT (SELECT COUNT(*) FROM {history} WHERE 1=1{idClause}{sinceClause})
+                            + (SELECT COUNT(*) FROM {table} WHERE 1=1{idClause}{sinceClause});"
 
-                    match filter.Id with
-                    | Some id -> c.Parameters.AddWithValue("id", id) |> ignore
-                    | None -> ()
+                bindFilters c
+                Convert.ToInt32(c.ExecuteScalar())
 
-                    match filter.Since with
-                    | Some since -> c.Parameters.AddWithValue("since", since) |> ignore
-                    | None -> ()
+            let readType resourceType (limit: int) (off: int) =
+                let table = ResourceCatalog.quoteIdent (ResourceCatalog.tableName resourceType)
 
-                    use reader = c.ExecuteReader()
+                let history =
+                    ResourceCatalog.quoteIdent (ResourceCatalog.historyTableName resourceType)
 
-                    [
-                        while reader.Read() do
-                            yield
-                                resourceType,
-                                reader.GetString(0),
-                                reader.GetInt64(1),
-                                reader.GetFieldValue<DateTimeOffset>(2),
-                                reader.GetString(3),
-                                reader.GetString(4)
-                    ]
+                use c = cmd ()
 
-                read history @ read table)
+                c.CommandText <-
+                    $"""
+                    SELECT id, txid, ts, status, resource::text FROM (
+                      SELECT id, txid, ts, status, resource::text FROM {history} WHERE 1=1{idClause}{sinceClause}
+                      UNION ALL
+                      SELECT id, txid, ts, status, resource::text FROM {table} WHERE 1=1{idClause}{sinceClause}
+                    ) u
+                    ORDER BY txid DESC
+                    LIMIT @limit OFFSET @offset;
+                    """
+
+                bindFilters c
+                c.Parameters.AddWithValue("limit", limit) |> ignore
+                c.Parameters.AddWithValue("offset", off) |> ignore
+                use reader = c.ExecuteReader()
+
+                [
+                    while reader.Read() do
+                        yield
+                            resourceType,
+                            reader.GetString(0),
+                            reader.GetInt64(1),
+                            reader.GetFieldValue<DateTimeOffset>(2),
+                            reader.GetString(3),
+                            reader.GetString(4)
+                ]
+
+            match types with
+            | [ resourceType ] ->
+                let total = countType resourceType
+                let rows = readType resourceType pageSize offset
+                rows, total
+            | many ->
+                let total = many |> List.sumBy countType
+
+                let merged =
+                    many
+                    |> List.collect (fun rt -> readType rt perTypeFetch 0)
+                    |> List.distinctBy (fun (rt, id, txid, _, _, _) -> rt, id, txid)
+                    |> List.sortByDescending (fun (_, _, txid, _, _, _) -> txid)
+                    |> List.skip offset
+                    |> List.truncate pageSize
+
+                merged, total
 
         member _.ClearSearchIndex(resourceType, id) =
-            for table in [
-                "search_string"
-                "search_token"
-                "search_ref"
-                "search_date"
-                "search_quantity"
-            ] do
-                use c = cmd ()
-                c.CommandText <- $"DELETE FROM {table} WHERE resource_type = @rt AND id = @id;"
-                c.Parameters.AddWithValue("rt", resourceType) |> ignore
-                c.Parameters.AddWithValue("id", id) |> ignore
-                c.ExecuteNonQuery() |> ignore
+            use c = cmd ()
+
+            c.CommandText <-
+                """
+                DELETE FROM search_string WHERE resource_type = @rt AND id = @id;
+                DELETE FROM search_token WHERE resource_type = @rt AND id = @id;
+                DELETE FROM search_ref WHERE resource_type = @rt AND id = @id;
+                DELETE FROM search_date WHERE resource_type = @rt AND id = @id;
+                DELETE FROM search_quantity WHERE resource_type = @rt AND id = @id;
+                """
+
+            c.Parameters.AddWithValue("rt", resourceType) |> ignore
+            c.Parameters.AddWithValue("id", id) |> ignore
+            c.ExecuteNonQuery() |> ignore
 
         member this.ReplaceSearchIndex(resourceType, id, rows: SearchIndexer.IndexRows) =
             (this :> IEnvelopeSession).ClearSearchIndex(resourceType, id)
 
-            for row in rows.Strings do
+            if rows.Strings <> [] then
                 use c = cmd ()
 
                 c.CommandText <-
-                    "INSERT INTO search_string (resource_type, id, param, value) VALUES (@rt, @id, @param, @value);"
+                    """
+                    INSERT INTO search_string (resource_type, id, param, value)
+                    SELECT @rt, @id, p, v
+                    FROM unnest(@params::text[], @values::text[]) AS t(p, v);
+                    """
 
                 c.Parameters.AddWithValue("rt", resourceType) |> ignore
                 c.Parameters.AddWithValue("id", id) |> ignore
-                c.Parameters.AddWithValue("param", row.Param) |> ignore
-                c.Parameters.AddWithValue("value", row.Value) |> ignore
+                c.Parameters.AddWithValue("params", rows.Strings |> List.map (fun r -> r.Param) |> List.toArray)
+                |> ignore
+
+                c.Parameters.AddWithValue("values", rows.Strings |> List.map (fun r -> r.Value) |> List.toArray)
+                |> ignore
+
                 c.ExecuteNonQuery() |> ignore
 
-            for row in rows.Tokens do
+            if rows.Tokens <> [] then
                 use c = cmd ()
 
                 c.CommandText <-
-                    "INSERT INTO search_token (resource_type, id, param, system, code) VALUES (@rt, @id, @param, @system, @code);"
+                    """
+                    INSERT INTO search_token (resource_type, id, param, system, code)
+                    SELECT @rt, @id, p, s, code
+                    FROM unnest(@params::text[], @systems::text[], @codes::text[]) AS t(p, s, code);
+                    """
 
                 c.Parameters.AddWithValue("rt", resourceType) |> ignore
                 c.Parameters.AddWithValue("id", id) |> ignore
-                c.Parameters.AddWithValue("param", row.Param) |> ignore
-                c.Parameters.AddWithValue("system", row.System) |> ignore
-                c.Parameters.AddWithValue("code", row.Code) |> ignore
+                c.Parameters.AddWithValue("params", rows.Tokens |> List.map (fun r -> r.Param) |> List.toArray)
+                |> ignore
+
+                c.Parameters.AddWithValue("systems", rows.Tokens |> List.map (fun r -> r.System) |> List.toArray)
+                |> ignore
+
+                c.Parameters.AddWithValue("codes", rows.Tokens |> List.map (fun r -> r.Code) |> List.toArray)
+                |> ignore
+
                 c.ExecuteNonQuery() |> ignore
 
-            for row in rows.Refs do
+            if rows.Refs <> [] then
                 use c = cmd ()
 
                 c.CommandText <-
-                    "INSERT INTO search_ref (resource_type, id, param, target) VALUES (@rt, @id, @param, @target);"
+                    """
+                    INSERT INTO search_ref (resource_type, id, param, target)
+                    SELECT @rt, @id, p, tgt
+                    FROM unnest(@params::text[], @targets::text[]) AS t(p, tgt);
+                    """
 
                 c.Parameters.AddWithValue("rt", resourceType) |> ignore
                 c.Parameters.AddWithValue("id", id) |> ignore
-                c.Parameters.AddWithValue("param", row.Param) |> ignore
-                c.Parameters.AddWithValue("target", row.Target) |> ignore
+                c.Parameters.AddWithValue("params", rows.Refs |> List.map (fun r -> r.Param) |> List.toArray)
+                |> ignore
+
+                c.Parameters.AddWithValue("targets", rows.Refs |> List.map (fun r -> r.Target) |> List.toArray)
+                |> ignore
+
                 c.ExecuteNonQuery() |> ignore
 
-            for row in rows.Dates do
+            if rows.Dates <> [] then
                 use c = cmd ()
 
                 c.CommandText <-
-                    "INSERT INTO search_date (resource_type, id, param, start_ts, end_ts) VALUES (@rt, @id, @param, @start_ts, @end_ts);"
+                    """
+                    INSERT INTO search_date (resource_type, id, param, start_ts, end_ts)
+                    SELECT @rt, @id, p, s, e
+                    FROM unnest(@params::text[], @starts::timestamptz[], @ends::timestamptz[]) AS t(p, s, e);
+                    """
 
                 c.Parameters.AddWithValue("rt", resourceType) |> ignore
                 c.Parameters.AddWithValue("id", id) |> ignore
-                c.Parameters.AddWithValue("param", row.Param) |> ignore
-                c.Parameters.AddWithValue("start_ts", row.StartTs) |> ignore
-                c.Parameters.AddWithValue("end_ts", row.EndTs) |> ignore
+                c.Parameters.AddWithValue("params", rows.Dates |> List.map (fun r -> r.Param) |> List.toArray)
+                |> ignore
+
+                c.Parameters.AddWithValue("starts", rows.Dates |> List.map (fun r -> r.StartTs) |> List.toArray)
+                |> ignore
+
+                c.Parameters.AddWithValue("ends", rows.Dates |> List.map (fun r -> r.EndTs) |> List.toArray)
+                |> ignore
+
                 c.ExecuteNonQuery() |> ignore
 
-            for row in rows.Quantities do
+            if rows.Quantities <> [] then
                 use c = cmd ()
 
                 c.CommandText <-
-                    "INSERT INTO search_quantity (resource_type, id, param, value, system, code) VALUES (@rt, @id, @param, @value, @system, @code);"
+                    """
+                    INSERT INTO search_quantity (resource_type, id, param, value, system, code)
+                    SELECT @rt, @id, p, v, s, code
+                    FROM unnest(@params::text[], @values::numeric[], @systems::text[], @codes::text[]) AS t(p, v, s, code);
+                    """
 
                 c.Parameters.AddWithValue("rt", resourceType) |> ignore
                 c.Parameters.AddWithValue("id", id) |> ignore
-                c.Parameters.AddWithValue("param", row.Param) |> ignore
-                c.Parameters.AddWithValue("value", row.Value) |> ignore
-                c.Parameters.AddWithValue("system", row.System) |> ignore
-                c.Parameters.AddWithValue("code", row.Code) |> ignore
+                c.Parameters.AddWithValue("params", rows.Quantities |> List.map (fun r -> r.Param) |> List.toArray)
+                |> ignore
+
+                c.Parameters.AddWithValue("values", rows.Quantities |> List.map (fun r -> r.Value) |> List.toArray)
+                |> ignore
+
+                c.Parameters.AddWithValue("systems", rows.Quantities |> List.map (fun r -> r.System) |> List.toArray)
+                |> ignore
+
+                c.Parameters.AddWithValue("codes", rows.Quantities |> List.map (fun r -> r.Code) |> List.toArray)
+                |> ignore
+
                 c.ExecuteNonQuery() |> ignore
 
         member _.SearchCurrent(resourceType, plan) =
