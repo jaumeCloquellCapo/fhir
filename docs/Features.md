@@ -100,7 +100,7 @@ Clients are configured under `Smart:Clients` (legacy `Smart:ClientId` / `ClientS
 
 ### Organization-based access (ORGBAC MVP)
 
-Set `Smart:Clients[].OrganizationId` to bind a client to a tenant. Issued tokens include `organization`; create/update stamps `tenant_id` on envelopes. Isolation is enforced with **Postgres RLS**: each store op opens a transaction and `SET LOCAL app.tenant_id` (empty = unrestricted admin). HTTP Basic stays **unrestricted** unless `Auth:OrganizationId` is set. Resource ids are globally unique across tenants. Hierarchical org trees are not implemented yet.
+Set `Smart:Clients[].OrganizationId` to bind a client to a tenant. Issued tokens include `organization`; create/update stamps `tenant_id` on envelopes. Isolation is enforced with **Postgres RLS**: each store op opens a transaction, `SET LOCAL ROLE fhir_app` (so Docker superuser logins still obey RLS), and `SET LOCAL app.tenant_id` (empty = unrestricted admin). HTTP Basic stays **unrestricted** unless `Auth:OrganizationId` is set. Resource ids are globally unique across tenants. Hierarchical org trees are not implemented yet.
 
 ## Subscriptions (MVP)
 
