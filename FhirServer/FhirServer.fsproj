@@ -52,6 +52,16 @@
     <Compile Include="Infrastructure/Http/AuditMiddleware.fs" />
     <Compile Include="Infrastructure/Http/OpenApiDocs.fs" />
     <Compile Include="Infrastructure/Http/DotEnv.fs" />
+    <Compile Include="Infrastructure/Http/HttpRequestHelpers.fs" />
+    <Compile Include="Infrastructure/Http/Routes/SystemRoutes.fs" />
+    <Compile Include="Infrastructure/Http/Routes/SmartAuthRoutes.fs" />
+    <Compile Include="Infrastructure/Http/Routes/HookRoutes.fs" />
+    <Compile Include="Infrastructure/Http/Routes/BulkRoutes.fs" />
+    <Compile Include="Infrastructure/Http/Routes/HistoryBundleRoutes.fs" />
+    <Compile Include="Infrastructure/Http/Routes/TerminologyRoutes.fs" />
+    <Compile Include="Infrastructure/Http/Routes/OperationRoutes.fs" />
+    <Compile Include="Infrastructure/Http/Routes/CrudRoutes.fs" />
+    <Compile Include="Infrastructure/Http/Routes/OrgBacRoutes.fs" />
 
     <!-- Composition root -->
     <Compile Include="AppHost.fs" />

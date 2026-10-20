@@ -13,7 +13,7 @@ Whenever you touch an **endpoint** or a **resource** handler, update Swagger in 
 
 ## When this applies
 
-- New / changed / removed `MapGet` / `MapPost` / `MapPut` / `MapDelete` / `MapMethods` in `FhirServer/AppHost.fs`
+- New / changed / removed `MapGet` / `MapPost` / `MapPut` / `MapDelete` / `MapMethods` in `FhirServer/AppHost.fs` or `FhirServer/Infrastructure/Http/Routes/*.fs`
 - Changes to `ResourceHandlers`, responses, status codes, or request/response shapes used by those routes
 - New FHIR operations (`$…`), search params exposed via HTTP, bulk/export/import, metadata, SMART, or system routes
 - Edits to `FhirServer/Infrastructure/Http/OpenApiDocs.fs`

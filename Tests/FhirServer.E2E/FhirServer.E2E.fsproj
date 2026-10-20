@@ -9,6 +9,7 @@
   <ItemGroup>
     <Compile Include="FhirApiFactory.fs" />
     <Compile Include="HttpAssert.fs" />
+    <Compile Include="SearchTestHelpers.fs" />
     <Compile Include="FixtureFiles.fs" />
     <Compile Include="Endpoints/RootHealthVersionTests.fs" />
     <Compile Include="Endpoints/MetadataTests.fs" />
@@ -16,7 +17,11 @@
     <Compile Include="Endpoints/CrudTests.fs" />
     <Compile Include="Endpoints/SearchHistoryBundleTests.fs" />
     <Compile Include="Endpoints/SearchIndexTests.fs" />
-    <Compile Include="Endpoints/SearchAdvancedTests.fs" />
+    <Compile Include="Endpoints/SearchModifierTests.fs" />
+    <Compile Include="Endpoints/SearchDateQuantityTests.fs" />
+    <Compile Include="Endpoints/SearchHasChainTests.fs" />
+    <Compile Include="Endpoints/SearchCodeCompositeTests.fs" />
+    <Compile Include="Endpoints/SearchFilterTests.fs" />
     <Compile Include="Endpoints/IncludeEverythingDumpTests.fs" />
     <Compile Include="Endpoints/RevincludeChainExportTests.fs" />
     <Compile Include="Endpoints/ImportDocumentTests.fs" />
