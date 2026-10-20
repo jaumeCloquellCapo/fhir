@@ -1,0 +1,1566 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/bmi",
+  "type": "Observation",
+  "name": "Observation",
+  "kind": "resource",
+  "derivation": "constraint",
+  "required": [
+    "category",
+    "code",
+    "status",
+    "subject"
+  ],
+  "constraints": [
+    {
+      "key": "dom-2",
+      "severity": "error",
+      "expression": "contained.contained.empty()",
+      "human": "If the resource is contained in another resource, it SHALL NOT contain nested Resources"
+    },
+    {
+      "key": "dom-3",
+      "severity": "error",
+      "expression": "contained.where(((\u0027#\u0027\u002Bid in (%resource.descendants().reference | %resource.descendants().ofType(canonical) | %resource.descendants().ofType(uri) | %resource.descendants().ofType(url))) or descendants().where(reference = \u0027#\u0027).exists() or descendants().where(ofType(canonical) = \u0027#\u0027).exists() or descendants().where(ofType(canonical) = \u0027#\u0027).exists()).not()).trace(\u0027unmatched\u0027, id).empty()",
+      "human": "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource"
+    },
+    {
+      "key": "dom-4",
+      "severity": "error",
+      "expression": "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
+      "human": "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"
+    },
+    {
+      "key": "dom-5",
+      "severity": "error",
+      "expression": "contained.meta.security.empty()",
+      "human": "If a resource is contained in another resource, it SHALL NOT have a security label"
+    },
+    {
+      "key": "dom-6",
+      "severity": "warning",
+      "expression": "text.\u0060div\u0060.exists()",
+      "human": "A resource should have narrative for robust management"
+    },
+    {
+      "key": "obs-6",
+      "severity": "error",
+      "expression": "dataAbsentReason.empty() or value.empty()",
+      "human": "dataAbsentReason SHALL only be present if Observation.value[x] is not present"
+    },
+    {
+      "key": "obs-7",
+      "severity": "error",
+      "expression": "value.empty() or component.code.where(coding.intersect(%resource.code.coding).exists()).empty()",
+      "human": "If Observation.component.code is the same as Observation.code, then Observation.value SHALL NOT be present (the Observation.component.value[x] holds the value)."
+    },
+    {
+      "key": "obs-8",
+      "severity": "error",
+      "expression": "bodySite.exists() implies bodyStructure.empty()",
+      "human": "bodyStructure SHALL only be present if Observation.bodySite is not present"
+    },
+    {
+      "key": "vs-2",
+      "severity": "error",
+      "expression": "(component.empty() and hasMember.empty()) implies (dataAbsentReason.exists() or value.exists())",
+      "human": "If there is no component or hasMember element then either a value[x] or a data absent reason must be present."
+    }
+  ],
+  "elements": {
+    "basedOn": {
+      "path": "Observation.basedOn",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "bodySite": {
+      "path": "Observation.bodySite",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/body-site"
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "bodyStructure": {
+      "path": "Observation.bodyStructure",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "category": {
+      "path": "Observation.category",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/observation-category"
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
+      "elements": {
+        "coding": {
+          "path": "Observation.category.coding",
+          "min": 1,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Coding"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ],
+          "elements": {
+            "code": {
+              "path": "Observation.category.coding.code",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "display": {
+              "path": "Observation.category.coding.display",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "extension": {
+              "path": "Observation.category.coding.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
+              ]
+            },
+            "id": {
+              "path": "Observation.category.coding.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "system": {
+              "path": "Observation.category.coding.system",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "uri"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "userSelected": {
+              "path": "Observation.category.coding.userSelected",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "version": {
+              "path": "Observation.category.coding.version",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            }
+          }
+        },
+        "extension": {
+          "path": "Observation.category.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
+          ]
+        },
+        "id": {
+          "path": "Observation.category.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "text": {
+          "path": "Observation.category.text",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        }
+      }
+    },
+    "code": {
+      "path": "Observation.code",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/observation-vitalsignresult"
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
+      "elements": {
+        "coding": {
+          "path": "Observation.code.coding",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Coding"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ],
+          "elements": {
+            "code": {
+              "path": "Observation.code.coding.code",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "display": {
+              "path": "Observation.code.coding.display",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "extension": {
+              "path": "Observation.code.coding.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
+              ]
+            },
+            "id": {
+              "path": "Observation.code.coding.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "system": {
+              "path": "Observation.code.coding.system",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "uri"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "userSelected": {
+              "path": "Observation.code.coding.userSelected",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "version": {
+              "path": "Observation.code.coding.version",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            }
+          }
+        },
+        "extension": {
+          "path": "Observation.code.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
+          ]
+        },
+        "id": {
+          "path": "Observation.code.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "text": {
+          "path": "Observation.code.text",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        }
+      }
+    },
+    "component": {
+      "path": "Observation.component",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "vs-3",
+          "severity": "error",
+          "expression": "value.exists() or dataAbsentReason.exists()",
+          "human": "If there is no a value a data absent reason must be present"
+        }
+      ],
+      "elements": {
+        "code": {
+          "path": "Observation.component.code",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/observation-vitalsignresult"
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "dataAbsentReason": {
+          "path": "Observation.component.dataAbsentReason",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/data-absent-reason"
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "extension": {
+          "path": "Observation.component.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
+          ]
+        },
+        "id": {
+          "path": "Observation.component.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "interpretation": {
+          "path": "Observation.component.interpretation",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/observation-interpretation"
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "modifierExtension": {
+          "path": "Observation.component.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
+          ]
+        },
+        "referenceRange": {
+          "path": "Observation.component.referenceRange",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.referenceRange",
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "value": {
+          "path": "Observation.component.value[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/ucum-vitals-common"
+          },
+          "choices": [
+            "valueQuantity"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        }
+      }
+    },
+    "contained": {
+      "path": "Observation.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "dataAbsentReason": {
+      "path": "Observation.dataAbsentReason",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/data-absent-reason"
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "derivedFrom": {
+      "path": "Observation.derivedFrom",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "device": {
+      "path": "Observation.device",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "effective": {
+      "path": "Observation.effective[x]",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime",
+        "Period"
+      ],
+      "choices": [
+        "effectiveDateTime",
+        "effectivePeriod"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "vs-1",
+          "severity": "error",
+          "expression": "($this as dateTime).toString().length() \u003E= 8",
+          "human": "if Observation.effective[x] is dateTime and has a value then that value shall be precise to the day"
+        }
+      ]
+    },
+    "encounter": {
+      "path": "Observation.encounter",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "extension": {
+      "path": "Observation.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "ext-1",
+          "severity": "error",
+          "expression": "extension.exists() != value.exists()",
+          "human": "Must have either extensions or value[x], not both"
+        }
+      ]
+    },
+    "focus": {
+      "path": "Observation.focus",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "hasMember": {
+      "path": "Observation.hasMember",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "id": {
+      "path": "Observation.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Observation.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "implicitRules": {
+      "path": "Observation.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "instantiates": {
+      "path": "Observation.instantiates[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "canonical",
+        "Reference"
+      ],
+      "choices": [
+        "instantiatesCanonical",
+        "instantiatesReference"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "interpretation": {
+      "path": "Observation.interpretation",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/observation-interpretation"
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "issued": {
+      "path": "Observation.issued",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "instant"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "language": {
+      "path": "Observation.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "meta": {
+      "path": "Observation.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "method": {
+      "path": "Observation.method",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/observation-methods"
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "modifierExtension": {
+      "path": "Observation.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "ext-1",
+          "severity": "error",
+          "expression": "extension.exists() != value.exists()",
+          "human": "Must have either extensions or value[x], not both"
+        }
+      ]
+    },
+    "note": {
+      "path": "Observation.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "partOf": {
+      "path": "Observation.partOf",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "performer": {
+      "path": "Observation.performer",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "referenceRange": {
+      "path": "Observation.referenceRange",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "obs-3",
+          "severity": "error",
+          "expression": "low.exists() or high.exists() or text.exists()",
+          "human": "Must have at least a low or a high or text"
+        }
+      ],
+      "elements": {
+        "age": {
+          "path": "Observation.referenceRange.age",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Range"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "appliesTo": {
+          "path": "Observation.referenceRange.appliesTo",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/referencerange-appliesto"
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "extension": {
+          "path": "Observation.referenceRange.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
+          ]
+        },
+        "high": {
+          "path": "Observation.referenceRange.high",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "id": {
+          "path": "Observation.referenceRange.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "low": {
+          "path": "Observation.referenceRange.low",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "modifierExtension": {
+          "path": "Observation.referenceRange.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
+          ]
+        },
+        "normalValue": {
+          "path": "Observation.referenceRange.normalValue",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/observation-referencerange-normalvalue"
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "text": {
+          "path": "Observation.referenceRange.text",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "type": {
+          "path": "Observation.referenceRange.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "preferred",
+            "valueSet": "http://hl7.org/fhir/ValueSet/referencerange-meaning"
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        }
+      }
+    },
+    "specimen": {
+      "path": "Observation.specimen",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "obs-9",
+          "severity": "error",
+          "expression": "(reference.resolve().exists() and reference.resolve() is Group) implies reference.resolve().member.entity.resolve().all($this is Specimen)",
+          "human": "If Observation.specimen is a reference to Group, the group can only have specimens"
+        }
+      ]
+    },
+    "status": {
+      "path": "Observation.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/observation-status"
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "subject": {
+      "path": "Observation.subject",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "text": {
+      "path": "Observation.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "triggeredBy": {
+      "path": "Observation.triggeredBy",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
+      "elements": {
+        "extension": {
+          "path": "Observation.triggeredBy.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
+          ]
+        },
+        "id": {
+          "path": "Observation.triggeredBy.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Observation.triggeredBy.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
+          ]
+        },
+        "observation": {
+          "path": "Observation.triggeredBy.observation",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "reason": {
+          "path": "Observation.triggeredBy.reason",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "type": {
+          "path": "Observation.triggeredBy.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/observation-triggeredbytype|5.0.0"
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        }
+      }
+    },
+    "value": {
+      "path": "Observation.value[x]",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Quantity"
+      ],
+      "choices": [
+        "valueQuantity"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    }
+  }
+}

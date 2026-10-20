@@ -1,0 +1,152 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/SimpleQuantity",
+  "type": "Quantity",
+  "name": "Quantity",
+  "kind": "complex-type",
+  "derivation": "constraint",
+  "required": [],
+  "constraints": [
+    {
+      "key": "ele-1",
+      "severity": "error",
+      "expression": "hasValue() or (children().count() \u003E id.count())",
+      "human": "All FHIR elements must have a @value or children"
+    },
+    {
+      "key": "qty-3",
+      "severity": "error",
+      "expression": "code.empty() or system.exists()",
+      "human": "If a code for the unit is present, the system SHALL also be present"
+    },
+    {
+      "key": "sqty-1",
+      "severity": "error",
+      "expression": "comparator.empty()",
+      "human": "The comparator is not used on a SimpleQuantity"
+    }
+  ],
+  "elements": {
+    "code": {
+      "path": "Quantity.code",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "comparator": {
+      "path": "Quantity.comparator",
+      "min": 0,
+      "max": 0,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/quantity-comparator|5.0.0"
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "extension": {
+      "path": "Quantity.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "ext-1",
+          "severity": "error",
+          "expression": "extension.exists() != value.exists()",
+          "human": "Must have either extensions or value[x], not both"
+        }
+      ]
+    },
+    "id": {
+      "path": "Quantity.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "system": {
+      "path": "Quantity.system",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "unit": {
+      "path": "Quantity.unit",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "value": {
+      "path": "Quantity.value",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "decimal"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,2295 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-de",
+  "type": "ElementDefinition",
+  "name": "ElementDefinition",
+  "kind": "complex-type",
+  "derivation": "constraint",
+  "required": [
+    "path"
+  ],
+  "constraints": [
+    {
+      "key": "eld-2",
+      "severity": "error",
+      "expression": "min.empty() or max.empty() or (max = \u0027*\u0027) or iif(max != \u0027*\u0027, min \u003C= max.toInteger())",
+      "human": "Min \u003C= Max"
+    },
+    {
+      "key": "eld-5",
+      "severity": "error",
+      "expression": "contentReference.empty() or (type.empty() and defaultValue.empty() and fixed.empty() and pattern.empty() and example.empty() and minValue.empty() and maxValue.empty() and maxLength.empty() and binding.empty())",
+      "human": "if the element definition has a contentReference, it cannot have type, defaultValue, fixed, pattern, example, minValue, maxValue, maxLength, or binding"
+    },
+    {
+      "key": "eld-6",
+      "severity": "error",
+      "expression": "fixed.empty() or (type.count()  \u003C= 1)",
+      "human": "Fixed value may only be specified if there is one type"
+    },
+    {
+      "key": "eld-7",
+      "severity": "error",
+      "expression": "pattern.empty() or (type.count() \u003C= 1)",
+      "human": "Pattern may only be specified if there is one type"
+    },
+    {
+      "key": "eld-8",
+      "severity": "error",
+      "expression": "pattern.empty() or fixed.empty()",
+      "human": "Pattern and fixed are mutually exclusive"
+    },
+    {
+      "key": "eld-11",
+      "severity": "error",
+      "expression": "binding.empty() or type.code.empty() or type.code.contains(\u0022:\u0022) or type.select((code = \u0027code\u0027) or (code = \u0027Coding\u0027) or (code=\u0027CodeableConcept\u0027) or (code = \u0027Quantity\u0027) or (code = \u0027string\u0027) or (code = \u0027uri\u0027) or (code = \u0027Duration\u0027)).exists()",
+      "human": "Binding can only be present for coded elements, string, and uri if using FHIR-defined types"
+    },
+    {
+      "key": "eld-13",
+      "severity": "error",
+      "expression": "type.select(code).isDistinct()",
+      "human": "Types must be unique by code"
+    },
+    {
+      "key": "eld-14",
+      "severity": "error",
+      "expression": "constraint.select(key).isDistinct()",
+      "human": "Constraints must be unique by key"
+    },
+    {
+      "key": "eld-15",
+      "severity": "error",
+      "expression": "defaultValue.empty() or meaningWhenMissing.empty()",
+      "human": "default value and meaningWhenMissing are mutually exclusive"
+    },
+    {
+      "key": "eld-16",
+      "severity": "error",
+      "expression": "sliceName.empty() or sliceName.matches(\u0027^[a-zA-Z0-9\\\\/\\\\-_\\\\[\\\\]\\\\@]\u002B$\u0027)",
+      "human": "sliceName must be composed of proper tokens separated by \u0022/\u0022"
+    },
+    {
+      "key": "eld-18",
+      "severity": "error",
+      "expression": "(isModifier.exists() and isModifier) implies isModifierReason.exists()",
+      "human": "Must have a modifier reason if isModifier = true"
+    },
+    {
+      "key": "eld-19",
+      "severity": "error",
+      "expression": "path.matches(\u0027^[^\\\\s\\\\.,:;\\\\\\\u0027\u0022\\\\/|?!@#$%\u0026*()\\\\[\\\\]{}]{1,64}(\\\\.[^\\\\s\\\\.,:;\\\\\\\u0027\u0022\\\\/|?!@#$%\u0026*()\\\\[\\\\]{}]{1,64}(\\\\[x\\\\])?(\\\\:[^\\\\s\\\\.]\u002B)?)*$\u0027)",
+      "human": "Element path SHALL be expressed as a set of \u0027.\u0027-separated components with each component restricted to a maximum of 64 characters and with some limits on the allowed choice of characters"
+    },
+    {
+      "key": "eld-20",
+      "severity": "warning",
+      "expression": "path.matches(\u0027^[A-Za-z][A-Za-z0-9]{0,63}(\\\\.[a-z][A-Za-z0-9]{0,63}(\\\\[x])?)*$\u0027)",
+      "human": "The first component of the path should be UpperCamelCase.  Additional components (following a \u0027.\u0027) should be lowerCamelCase.  If this syntax is not adhered to, code generation tools may be broken. Logical models may be less concerned about this implication."
+    },
+    {
+      "key": "eld-22",
+      "severity": "error",
+      "expression": "sliceIsConstraining.exists() implies sliceName.exists()",
+      "human": "sliceIsConstraining can only appear if slicename is present"
+    },
+    {
+      "key": "eld-24",
+      "severity": "warning",
+      "expression": "fixed.exists().not()",
+      "human": "pattern[x] should be used rather than fixed[x]"
+    },
+    {
+      "key": "eld-25",
+      "severity": "warning",
+      "expression": "orderMeaning.empty() implies slicing.where(rules=\u0027openAtEnd\u0027 or ordered).exists().not()",
+      "human": "Order has no meaning (and cannot be asserted to have meaning), so enforcing rules on order is improper"
+    },
+    {
+      "key": "eld-27",
+      "severity": "warning",
+      "expression": "mapping.select(identity).isDistinct()",
+      "human": "Mappings SHOULD be unique by key"
+    },
+    {
+      "key": "eld-28",
+      "severity": "error",
+      "expression": "mustHaveValue.value implies valueAlternatives.empty()",
+      "human": "Can\u0027t have valueAlternatives if mustHaveValue is true"
+    },
+    {
+      "key": "ele-1",
+      "severity": "error",
+      "expression": "hasValue() or (children().count() \u003E id.count())",
+      "human": "All FHIR elements must have a @value or children"
+    }
+  ],
+  "elements": {
+    "alias": {
+      "path": "ElementDefinition.alias",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "base": {
+      "path": "ElementDefinition.base",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Element"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
+      "elements": {
+        "extension": {
+          "path": "ElementDefinition.base.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
+          ]
+        },
+        "id": {
+          "path": "ElementDefinition.base.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "max": {
+          "path": "ElementDefinition.base.max",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "min": {
+          "path": "ElementDefinition.base.min",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "unsignedInt"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "path": {
+          "path": "ElementDefinition.base.path",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        }
+      }
+    },
+    "binding": {
+      "path": "ElementDefinition.binding",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Element"
+      ],
+      "constraints": [
+        {
+          "key": "eld-12",
+          "severity": "error",
+          "expression": "valueSet.exists() implies (valueSet.startsWith(\u0027http:\u0027) or valueSet.startsWith(\u0027https\u0027) or valueSet.startsWith(\u0027urn:\u0027) or valueSet.startsWith(\u0027#\u0027))",
+          "human": "ValueSet SHALL start with http:// or https:// or urn: or #"
+        },
+        {
+          "key": "eld-23",
+          "severity": "error",
+          "expression": "description.exists() or valueSet.exists()",
+          "human": "binding SHALL have either description or valueSet"
+        },
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
+      "elements": {
+        "additional": {
+          "path": "ElementDefinition.binding.additional",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Element"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ],
+          "elements": {
+            "any": {
+              "path": "ElementDefinition.binding.additional.any",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "documentation": {
+              "path": "ElementDefinition.binding.additional.documentation",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "markdown"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "extension": {
+              "path": "ElementDefinition.binding.additional.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
+              ]
+            },
+            "id": {
+              "path": "ElementDefinition.binding.additional.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "purpose": {
+              "path": "ElementDefinition.binding.additional.purpose",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/additional-binding-purpose|5.0.0"
+              },
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "shortDoco": {
+              "path": "ElementDefinition.binding.additional.shortDoco",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "usage": {
+              "path": "ElementDefinition.binding.additional.usage",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "UsageContext"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "valueSet": {
+              "path": "ElementDefinition.binding.additional.valueSet",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "canonical"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            }
+          }
+        },
+        "description": {
+          "path": "ElementDefinition.binding.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "extension": {
+          "path": "ElementDefinition.binding.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
+          ]
+        },
+        "id": {
+          "path": "ElementDefinition.binding.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "strength": {
+          "path": "ElementDefinition.binding.strength",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/binding-strength|5.0.0"
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "valueSet": {
+          "path": "ElementDefinition.binding.valueSet",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "canonical"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        }
+      }
+    },
+    "code": {
+      "path": "ElementDefinition.code",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Coding"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://loinc.org/vs"
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "comment": {
+      "path": "ElementDefinition.comment",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "condition": {
+      "path": "ElementDefinition.condition",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "id"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "constraint": {
+      "path": "ElementDefinition.constraint",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Element"
+      ],
+      "constraints": [
+        {
+          "key": "eld-21",
+          "severity": "warning",
+          "expression": "expression.exists()",
+          "human": "Constraints should have an expression or else validators will not be able to enforce them"
+        },
+        {
+          "key": "eld-26",
+          "severity": "error",
+          "expression": "(severity = \u0027error\u0027) implies suppress.empty()",
+          "human": "Errors cannot be suppressed"
+        },
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
+      "elements": {
+        "expression": {
+          "path": "ElementDefinition.constraint.expression",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "extension": {
+          "path": "ElementDefinition.constraint.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
+          ]
+        },
+        "human": {
+          "path": "ElementDefinition.constraint.human",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "id": {
+          "path": "ElementDefinition.constraint.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "key": {
+          "path": "ElementDefinition.constraint.key",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "id"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "requirements": {
+          "path": "ElementDefinition.constraint.requirements",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "severity": {
+          "path": "ElementDefinition.constraint.severity",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/constraint-severity|5.0.0"
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "source": {
+          "path": "ElementDefinition.constraint.source",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "canonical"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "suppress": {
+          "path": "ElementDefinition.constraint.suppress",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        }
+      }
+    },
+    "contentReference": {
+      "path": "ElementDefinition.contentReference",
+      "min": 0,
+      "max": 0,
+      "array": false,
+      "type": [
+        "uri"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "defaultValue": {
+      "path": "ElementDefinition.defaultValue[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "base64Binary",
+        "boolean",
+        "canonical",
+        "code",
+        "date",
+        "dateTime",
+        "decimal",
+        "id",
+        "instant",
+        "integer",
+        "integer64",
+        "markdown",
+        "oid",
+        "positiveInt",
+        "string",
+        "time",
+        "unsignedInt",
+        "uri",
+        "url",
+        "uuid",
+        "Address",
+        "Age",
+        "Annotation",
+        "Attachment",
+        "CodeableConcept",
+        "CodeableReference",
+        "Coding",
+        "ContactPoint",
+        "Count",
+        "Distance",
+        "Duration",
+        "HumanName",
+        "Identifier",
+        "Money",
+        "Period",
+        "Quantity",
+        "Range",
+        "Ratio",
+        "RatioRange",
+        "Reference",
+        "SampledData",
+        "Signature",
+        "Timing",
+        "ContactDetail",
+        "DataRequirement",
+        "Expression",
+        "ParameterDefinition",
+        "RelatedArtifact",
+        "TriggerDefinition",
+        "UsageContext",
+        "Availability",
+        "ExtendedContactDetail",
+        "Dosage",
+        "Meta"
+      ],
+      "choices": [
+        "defaultValueBase64Binary",
+        "defaultValueBoolean",
+        "defaultValueCanonical",
+        "defaultValueCode",
+        "defaultValueDate",
+        "defaultValueDateTime",
+        "defaultValueDecimal",
+        "defaultValueId",
+        "defaultValueInstant",
+        "defaultValueInteger",
+        "defaultValueInteger64",
+        "defaultValueMarkdown",
+        "defaultValueOid",
+        "defaultValuePositiveInt",
+        "defaultValueString",
+        "defaultValueTime",
+        "defaultValueUnsignedInt",
+        "defaultValueUri",
+        "defaultValueUrl",
+        "defaultValueUuid",
+        "defaultValueAddress",
+        "defaultValueAge",
+        "defaultValueAnnotation",
+        "defaultValueAttachment",
+        "defaultValueCodeableConcept",
+        "defaultValueCodeableReference",
+        "defaultValueCoding",
+        "defaultValueContactPoint",
+        "defaultValueCount",
+        "defaultValueDistance",
+        "defaultValueDuration",
+        "defaultValueHumanName",
+        "defaultValueIdentifier",
+        "defaultValueMoney",
+        "defaultValuePeriod",
+        "defaultValueQuantity",
+        "defaultValueRange",
+        "defaultValueRatio",
+        "defaultValueRatioRange",
+        "defaultValueReference",
+        "defaultValueSampledData",
+        "defaultValueSignature",
+        "defaultValueTiming",
+        "defaultValueContactDetail",
+        "defaultValueDataRequirement",
+        "defaultValueExpression",
+        "defaultValueParameterDefinition",
+        "defaultValueRelatedArtifact",
+        "defaultValueTriggerDefinition",
+        "defaultValueUsageContext",
+        "defaultValueAvailability",
+        "defaultValueExtendedContactDetail",
+        "defaultValueDosage",
+        "defaultValueMeta"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "definition": {
+      "path": "ElementDefinition.definition",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "example": {
+      "path": "ElementDefinition.example",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Element"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
+      "elements": {
+        "extension": {
+          "path": "ElementDefinition.example.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
+          ]
+        },
+        "id": {
+          "path": "ElementDefinition.example.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "label": {
+          "path": "ElementDefinition.example.label",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "value": {
+          "path": "ElementDefinition.example.value[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "base64Binary",
+            "boolean",
+            "canonical",
+            "code",
+            "date",
+            "dateTime",
+            "decimal",
+            "id",
+            "instant",
+            "integer",
+            "integer64",
+            "markdown",
+            "oid",
+            "positiveInt",
+            "string",
+            "time",
+            "unsignedInt",
+            "uri",
+            "url",
+            "uuid",
+            "Address",
+            "Age",
+            "Annotation",
+            "Attachment",
+            "CodeableConcept",
+            "CodeableReference",
+            "Coding",
+            "ContactPoint",
+            "Count",
+            "Distance",
+            "Duration",
+            "HumanName",
+            "Identifier",
+            "Money",
+            "Period",
+            "Quantity",
+            "Range",
+            "Ratio",
+            "RatioRange",
+            "Reference",
+            "SampledData",
+            "Signature",
+            "Timing",
+            "ContactDetail",
+            "DataRequirement",
+            "Expression",
+            "ParameterDefinition",
+            "RelatedArtifact",
+            "TriggerDefinition",
+            "UsageContext",
+            "Availability",
+            "ExtendedContactDetail",
+            "Dosage",
+            "Meta"
+          ],
+          "choices": [
+            "valueBase64Binary",
+            "valueBoolean",
+            "valueCanonical",
+            "valueCode",
+            "valueDate",
+            "valueDateTime",
+            "valueDecimal",
+            "valueId",
+            "valueInstant",
+            "valueInteger",
+            "valueInteger64",
+            "valueMarkdown",
+            "valueOid",
+            "valuePositiveInt",
+            "valueString",
+            "valueTime",
+            "valueUnsignedInt",
+            "valueUri",
+            "valueUrl",
+            "valueUuid",
+            "valueAddress",
+            "valueAge",
+            "valueAnnotation",
+            "valueAttachment",
+            "valueCodeableConcept",
+            "valueCodeableReference",
+            "valueCoding",
+            "valueContactPoint",
+            "valueCount",
+            "valueDistance",
+            "valueDuration",
+            "valueHumanName",
+            "valueIdentifier",
+            "valueMoney",
+            "valuePeriod",
+            "valueQuantity",
+            "valueRange",
+            "valueRatio",
+            "valueRatioRange",
+            "valueReference",
+            "valueSampledData",
+            "valueSignature",
+            "valueTiming",
+            "valueContactDetail",
+            "valueDataRequirement",
+            "valueExpression",
+            "valueParameterDefinition",
+            "valueRelatedArtifact",
+            "valueTriggerDefinition",
+            "valueUsageContext",
+            "valueAvailability",
+            "valueExtendedContactDetail",
+            "valueDosage",
+            "valueMeta"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        }
+      }
+    },
+    "extension": {
+      "path": "ElementDefinition.extension",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Extension"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "ext-1",
+          "severity": "error",
+          "expression": "extension.exists() != value.exists()",
+          "human": "Must have either extensions or value[x], not both"
+        }
+      ]
+    },
+    "fixed": {
+      "path": "ElementDefinition.fixed[x]",
+      "min": 0,
+      "max": 0,
+      "array": false,
+      "type": [
+        "base64Binary",
+        "boolean",
+        "canonical",
+        "code",
+        "date",
+        "dateTime",
+        "decimal",
+        "id",
+        "instant",
+        "integer",
+        "integer64",
+        "markdown",
+        "oid",
+        "positiveInt",
+        "string",
+        "time",
+        "unsignedInt",
+        "uri",
+        "url",
+        "uuid",
+        "Address",
+        "Age",
+        "Annotation",
+        "Attachment",
+        "CodeableConcept",
+        "CodeableReference",
+        "Coding",
+        "ContactPoint",
+        "Count",
+        "Distance",
+        "Duration",
+        "HumanName",
+        "Identifier",
+        "Money",
+        "Period",
+        "Quantity",
+        "Range",
+        "Ratio",
+        "RatioRange",
+        "Reference",
+        "SampledData",
+        "Signature",
+        "Timing",
+        "ContactDetail",
+        "DataRequirement",
+        "Expression",
+        "ParameterDefinition",
+        "RelatedArtifact",
+        "TriggerDefinition",
+        "UsageContext",
+        "Availability",
+        "ExtendedContactDetail",
+        "Dosage",
+        "Meta"
+      ],
+      "choices": [
+        "fixedBase64Binary",
+        "fixedBoolean",
+        "fixedCanonical",
+        "fixedCode",
+        "fixedDate",
+        "fixedDateTime",
+        "fixedDecimal",
+        "fixedId",
+        "fixedInstant",
+        "fixedInteger",
+        "fixedInteger64",
+        "fixedMarkdown",
+        "fixedOid",
+        "fixedPositiveInt",
+        "fixedString",
+        "fixedTime",
+        "fixedUnsignedInt",
+        "fixedUri",
+        "fixedUrl",
+        "fixedUuid",
+        "fixedAddress",
+        "fixedAge",
+        "fixedAnnotation",
+        "fixedAttachment",
+        "fixedCodeableConcept",
+        "fixedCodeableReference",
+        "fixedCoding",
+        "fixedContactPoint",
+        "fixedCount",
+        "fixedDistance",
+        "fixedDuration",
+        "fixedHumanName",
+        "fixedIdentifier",
+        "fixedMoney",
+        "fixedPeriod",
+        "fixedQuantity",
+        "fixedRange",
+        "fixedRatio",
+        "fixedRatioRange",
+        "fixedReference",
+        "fixedSampledData",
+        "fixedSignature",
+        "fixedTiming",
+        "fixedContactDetail",
+        "fixedDataRequirement",
+        "fixedExpression",
+        "fixedParameterDefinition",
+        "fixedRelatedArtifact",
+        "fixedTriggerDefinition",
+        "fixedUsageContext",
+        "fixedAvailability",
+        "fixedExtendedContactDetail",
+        "fixedDosage",
+        "fixedMeta"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "id": {
+      "path": "ElementDefinition.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "isModifier": {
+      "path": "ElementDefinition.isModifier",
+      "min": 0,
+      "max": 0,
+      "array": false,
+      "type": [
+        "boolean"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "isModifierReason": {
+      "path": "ElementDefinition.isModifierReason",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "isSummary": {
+      "path": "ElementDefinition.isSummary",
+      "min": 0,
+      "max": 0,
+      "array": false,
+      "type": [
+        "boolean"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "label": {
+      "path": "ElementDefinition.label",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "mapping": {
+      "path": "ElementDefinition.mapping",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Element"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
+      "elements": {
+        "comment": {
+          "path": "ElementDefinition.mapping.comment",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "extension": {
+          "path": "ElementDefinition.mapping.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
+          ]
+        },
+        "id": {
+          "path": "ElementDefinition.mapping.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "identity": {
+          "path": "ElementDefinition.mapping.identity",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "id"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "language": {
+          "path": "ElementDefinition.mapping.language",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/mimetypes|5.0.0"
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "map": {
+          "path": "ElementDefinition.mapping.map",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        }
+      }
+    },
+    "max": {
+      "path": "ElementDefinition.max",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ],
+      "constraints": [
+        {
+          "key": "eld-3",
+          "severity": "error",
+          "expression": "empty() or ($this = \u0027*\u0027) or (toInteger() \u003E= 0)",
+          "human": "Max SHALL be a number or \u0022*\u0022"
+        },
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "maxLength": {
+      "path": "ElementDefinition.maxLength",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "integer"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "maxValue": {
+      "path": "ElementDefinition.maxValue[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date",
+        "dateTime",
+        "instant",
+        "time",
+        "decimal",
+        "integer",
+        "integer64",
+        "positiveInt",
+        "unsignedInt",
+        "Quantity"
+      ],
+      "choices": [
+        "maxValueDate",
+        "maxValueDateTime",
+        "maxValueInstant",
+        "maxValueTime",
+        "maxValueDecimal",
+        "maxValueInteger",
+        "maxValueInteger64",
+        "maxValuePositiveInt",
+        "maxValueUnsignedInt",
+        "maxValueQuantity"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "meaningWhenMissing": {
+      "path": "ElementDefinition.meaningWhenMissing",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "min": {
+      "path": "ElementDefinition.min",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "unsignedInt"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "minValue": {
+      "path": "ElementDefinition.minValue[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date",
+        "dateTime",
+        "instant",
+        "time",
+        "decimal",
+        "integer",
+        "integer64",
+        "positiveInt",
+        "unsignedInt",
+        "Quantity"
+      ],
+      "choices": [
+        "minValueDate",
+        "minValueDateTime",
+        "minValueInstant",
+        "minValueTime",
+        "minValueDecimal",
+        "minValueInteger",
+        "minValueInteger64",
+        "minValuePositiveInt",
+        "minValueUnsignedInt",
+        "minValueQuantity"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "modifierExtension": {
+      "path": "ElementDefinition.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "ext-1",
+          "severity": "error",
+          "expression": "extension.exists() != value.exists()",
+          "human": "Must have either extensions or value[x], not both"
+        }
+      ]
+    },
+    "mustHaveValue": {
+      "path": "ElementDefinition.mustHaveValue",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "mustSupport": {
+      "path": "ElementDefinition.mustSupport",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "orderMeaning": {
+      "path": "ElementDefinition.orderMeaning",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "path": {
+      "path": "ElementDefinition.path",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "pattern": {
+      "path": "ElementDefinition.pattern[x]",
+      "min": 0,
+      "max": 0,
+      "array": false,
+      "type": [
+        "base64Binary",
+        "boolean",
+        "canonical",
+        "code",
+        "date",
+        "dateTime",
+        "decimal",
+        "id",
+        "instant",
+        "integer",
+        "integer64",
+        "markdown",
+        "oid",
+        "positiveInt",
+        "string",
+        "time",
+        "unsignedInt",
+        "uri",
+        "url",
+        "uuid",
+        "Address",
+        "Age",
+        "Annotation",
+        "Attachment",
+        "CodeableConcept",
+        "CodeableReference",
+        "Coding",
+        "ContactPoint",
+        "Count",
+        "Distance",
+        "Duration",
+        "HumanName",
+        "Identifier",
+        "Money",
+        "Period",
+        "Quantity",
+        "Range",
+        "Ratio",
+        "RatioRange",
+        "Reference",
+        "SampledData",
+        "Signature",
+        "Timing",
+        "ContactDetail",
+        "DataRequirement",
+        "Expression",
+        "ParameterDefinition",
+        "RelatedArtifact",
+        "TriggerDefinition",
+        "UsageContext",
+        "Availability",
+        "ExtendedContactDetail",
+        "Dosage",
+        "Meta"
+      ],
+      "choices": [
+        "patternBase64Binary",
+        "patternBoolean",
+        "patternCanonical",
+        "patternCode",
+        "patternDate",
+        "patternDateTime",
+        "patternDecimal",
+        "patternId",
+        "patternInstant",
+        "patternInteger",
+        "patternInteger64",
+        "patternMarkdown",
+        "patternOid",
+        "patternPositiveInt",
+        "patternString",
+        "patternTime",
+        "patternUnsignedInt",
+        "patternUri",
+        "patternUrl",
+        "patternUuid",
+        "patternAddress",
+        "patternAge",
+        "patternAnnotation",
+        "patternAttachment",
+        "patternCodeableConcept",
+        "patternCodeableReference",
+        "patternCoding",
+        "patternContactPoint",
+        "patternCount",
+        "patternDistance",
+        "patternDuration",
+        "patternHumanName",
+        "patternIdentifier",
+        "patternMoney",
+        "patternPeriod",
+        "patternQuantity",
+        "patternRange",
+        "patternRatio",
+        "patternRatioRange",
+        "patternReference",
+        "patternSampledData",
+        "patternSignature",
+        "patternTiming",
+        "patternContactDetail",
+        "patternDataRequirement",
+        "patternExpression",
+        "patternParameterDefinition",
+        "patternRelatedArtifact",
+        "patternTriggerDefinition",
+        "patternUsageContext",
+        "patternAvailability",
+        "patternExtendedContactDetail",
+        "patternDosage",
+        "patternMeta"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "representation": {
+      "path": "ElementDefinition.representation",
+      "min": 0,
+      "max": 0,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/property-representation|5.0.0"
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "requirements": {
+      "path": "ElementDefinition.requirements",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "short": {
+      "path": "ElementDefinition.short",
+      "min": 0,
+      "max": 0,
+      "array": false,
+      "type": [
+        "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "sliceIsConstraining": {
+      "path": "ElementDefinition.sliceIsConstraining",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "sliceName": {
+      "path": "ElementDefinition.sliceName",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "slicing": {
+      "path": "ElementDefinition.slicing",
+      "min": 0,
+      "max": 0,
+      "array": false,
+      "type": [
+        "Element"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
+      "elements": {
+        "description": {
+          "path": "ElementDefinition.slicing.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "discriminator": {
+          "path": "ElementDefinition.slicing.discriminator",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Element"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ],
+          "elements": {
+            "extension": {
+              "path": "ElementDefinition.slicing.discriminator.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
+              ]
+            },
+            "id": {
+              "path": "ElementDefinition.slicing.discriminator.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "path": {
+              "path": "ElementDefinition.slicing.discriminator.path",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "type": {
+              "path": "ElementDefinition.slicing.discriminator.type",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/discriminator-type|5.0.0"
+              },
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            }
+          }
+        },
+        "extension": {
+          "path": "ElementDefinition.slicing.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
+          ]
+        },
+        "id": {
+          "path": "ElementDefinition.slicing.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "ordered": {
+          "path": "ElementDefinition.slicing.ordered",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "rules": {
+          "path": "ElementDefinition.slicing.rules",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/resource-slicing-rules|5.0.0"
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        }
+      }
+    },
+    "type": {
+      "path": "ElementDefinition.type",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Element"
+      ],
+      "constraints": [
+        {
+          "key": "eld-4",
+          "severity": "error",
+          "expression": "aggregation.empty() or (code = \u0027Reference\u0027) or (code = \u0027canonical\u0027) or (code = \u0027CodeableReference\u0027)",
+          "human": "Aggregation may only be specified if one of the allowed types for the element is a reference"
+        },
+        {
+          "key": "eld-17",
+          "severity": "error",
+          "expression": "(code=\u0027Reference\u0027 or code = \u0027canonical\u0027 or code = \u0027CodeableReference\u0027) or targetProfile.empty()",
+          "human": "targetProfile is only allowed if the type is Reference or canonical"
+        },
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
+      "elements": {
+        "aggregation": {
+          "path": "ElementDefinition.type.aggregation",
+          "min": 0,
+          "max": 0,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/resource-aggregation-mode|5.0.0"
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "code": {
+          "path": "ElementDefinition.type.code",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "uri"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/elementdefinition-types"
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "extension": {
+          "path": "ElementDefinition.type.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
+          ]
+        },
+        "id": {
+          "path": "ElementDefinition.type.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "profile": {
+          "path": "ElementDefinition.type.profile",
+          "min": 0,
+          "max": 0,
+          "array": false,
+          "type": [
+            "canonical"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "targetProfile": {
+          "path": "ElementDefinition.type.targetProfile",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "canonical"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "versioning": {
+          "path": "ElementDefinition.type.versioning",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/reference-version-rules|5.0.0"
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        }
+      }
+    },
+    "valueAlternatives": {
+      "path": "ElementDefinition.valueAlternatives",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "canonical"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    }
+  }
+}

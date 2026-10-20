@@ -6,6 +6,26 @@
   "kind": "complex-type",
   "derivation": "specialization",
   "required": [],
+  "constraints": [
+    {
+      "key": "age-1",
+      "severity": "error",
+      "expression": "(code.exists() or value.empty()) and (system.empty() or system = %ucum) and (value.empty() or value.hasValue().not() or value \u003E 0)",
+      "human": "There SHALL be a code if there is a value and it SHALL be an expression of time.  If system is present, it SHALL be UCUM.  If value is present, it SHALL be positive."
+    },
+    {
+      "key": "ele-1",
+      "severity": "error",
+      "expression": "hasValue() or (children().count() \u003E id.count())",
+      "human": "All FHIR elements must have a @value or children"
+    },
+    {
+      "key": "qty-3",
+      "severity": "error",
+      "expression": "code.empty() or system.exists()",
+      "human": "If a code for the unit is present, the system SHALL also be present"
+    }
+  ],
   "elements": {
     "code": {
       "path": "Age.code",
@@ -14,6 +34,14 @@
       "array": false,
       "type": [
         "code"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "comparator": {
@@ -27,7 +55,15 @@
       "binding": {
         "strength": "required",
         "valueSet": "http://hl7.org/fhir/ValueSet/quantity-comparator|5.0.0"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "extension": {
       "path": "Age.extension",
@@ -36,6 +72,20 @@
       "array": true,
       "type": [
         "Extension"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "ext-1",
+          "severity": "error",
+          "expression": "extension.exists() != value.exists()",
+          "human": "Must have either extensions or value[x], not both"
+        }
       ]
     },
     "id": {
@@ -54,6 +104,14 @@
       "array": false,
       "type": [
         "uri"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "unit": {
@@ -63,6 +121,14 @@
       "array": false,
       "type": [
         "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "value": {
@@ -72,6 +138,14 @@
       "array": false,
       "type": [
         "decimal"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     }
   }

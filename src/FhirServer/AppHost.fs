@@ -236,7 +236,7 @@ module AppHost =
                     return! Responses.fromResult result ctx
                 })
         )
-        |> OpenApiDocs.documentFhir
+        |> OpenApiDocs.documentFhirValidate
             [| OpenApiDocs.TagValidate |]
             "Validate (system)"
             "Validate a resource body without persisting. Always returns 200 + OperationOutcome."
@@ -259,14 +259,17 @@ module AppHost =
             }
 
         app.MapGet("/$export", Func<HttpContext, Task<unit>>(startExport))
-        |> OpenApiDocs.documentJson
+        |> OpenApiDocs.documentBulkAccepted
             [| OpenApiDocs.TagBulk |]
             "Kick off $export (GET)"
             "Starts an async bulk export job. Optional `_type` (comma-separated). Returns 202 + Content-Location."
         |> ignore
 
         app.MapPost("/$export", Func<HttpContext, Task<unit>>(startExport))
-        |> OpenApiDocs.documentJson [| OpenApiDocs.TagBulk |] "Kick off $export (POST)" "Same as GET /$export."
+        |> OpenApiDocs.documentBulkAccepted
+            [| OpenApiDocs.TagBulk |]
+            "Kick off $export (POST)"
+            "Same as GET /$export."
         |> ignore
 
         app.MapGet(
@@ -335,7 +338,7 @@ module AppHost =
                 ResourceHandlers.historyFromQuery store None None (queryMap ctx)
                 |> fun result -> Responses.fromSearch result ctx)
         )
-        |> OpenApiDocs.documentFhir
+        |> OpenApiDocs.documentFhirSearch
             [| OpenApiDocs.TagHistory |]
             "System history"
             "History Bundle across all resource types."
@@ -358,7 +361,7 @@ module AppHost =
                     return! Responses.fromSearch result ctx
                 })
         )
-        |> OpenApiDocs.documentFhir
+        |> OpenApiDocs.documentFhirBundle
             [| OpenApiDocs.TagBundle |]
             "Bundle transaction/batch"
             "Execute a Bundle of type transaction or batch (URN fullUrl resolution)."
@@ -372,7 +375,7 @@ module AppHost =
                 ResourceHandlers.historyFromQuery store (Some resourceType) None (queryMap ctx)
                 |> fun result -> Responses.fromSearch result ctx)
         )
-        |> OpenApiDocs.documentFhir
+        |> OpenApiDocs.documentFhirSearch
             [| OpenApiDocs.TagHistory |]
             "Type history"
             "History Bundle for all instances of a resource type."
@@ -400,7 +403,7 @@ module AppHost =
                 ResourceHandlers.historyFromQuery store (Some resourceType) (Some id) (queryMap ctx)
                 |> fun result -> Responses.fromSearch result ctx)
         )
-        |> OpenApiDocs.documentFhir
+        |> OpenApiDocs.documentFhirSearch
             [| OpenApiDocs.TagHistory |]
             "Instance history"
             "History Bundle for one resource id."
@@ -588,7 +591,7 @@ module AppHost =
                         return! Responses.fromSearch (ResourceHandlers.observationLastN store (queryMap ctx)) ctx
                 })
         )
-        |> OpenApiDocs.documentFhir
+        |> OpenApiDocs.documentFhirSearch
             [| OpenApiDocs.TagOperations |]
             "$lastn (Observation)"
             "Most recent Observations matching search criteria (Observation only)."
@@ -605,7 +608,7 @@ module AppHost =
                         return! Responses.fromSearch (ResourceHandlers.patientEverything store id) ctx
                 })
         )
-        |> OpenApiDocs.documentFhir
+        |> OpenApiDocs.documentFhirSearch
             [| OpenApiDocs.TagOperations |]
             "$everything (Patient)"
             "Patient clinical summary Bundle (Patient only)."
@@ -650,10 +653,10 @@ module AppHost =
                 ResourceHandlers.search store resourceType (queryMap ctx)
                 |> fun result -> Responses.fromSearch result ctx)
         )
-        |> OpenApiDocs.documentFhir
+        |> OpenApiDocs.documentFhirSearch
             [| OpenApiDocs.TagSearch |]
             "Search"
-            "Search resources of a type. Supports subset of FHIR search params + `_include`."
+            "Search resources of a type. Supports subset of FHIR search params + `_include` / `_revinclude` / chaining."
         |> ignore
 
         app.MapPost(
@@ -665,7 +668,7 @@ module AppHost =
                     return! Responses.fromResult result ctx
                 })
         )
-        |> OpenApiDocs.documentFhir
+        |> OpenApiDocs.documentFhirValidate
             [| OpenApiDocs.TagValidate |]
             "Validate (type)"
             "Validate a resource of the given type without persisting."
@@ -690,7 +693,7 @@ module AppHost =
                     return! Responses.fromCreated resourceType result ctx
                 })
         )
-        |> OpenApiDocs.documentFhir
+        |> OpenApiDocs.documentFhirCreate
             [| OpenApiDocs.TagCrud |]
             "Create"
             "Create a resource. Optional If-None-Exist for conditional create. 422 if schema-invalid."
@@ -711,7 +714,7 @@ module AppHost =
                     return! Responses.fromResult result ctx
                 })
         )
-        |> OpenApiDocs.documentFhir
+        |> OpenApiDocs.documentFhirUpdate
             [| OpenApiDocs.TagCrud |]
             "Update"
             "Update (or create) by id. If-Match → 412 on version mismatch."
@@ -728,7 +731,7 @@ module AppHost =
                     return! Responses.fromResult result ctx
                 })
         )
-        |> OpenApiDocs.documentFhir
+        |> OpenApiDocs.documentFhirUpdate
             [| OpenApiDocs.TagCrud |]
             "Patch"
             "JSON Patch (root-field subset) against the current resource."
@@ -742,7 +745,7 @@ module AppHost =
                 ResourceHandlers.delete store resourceType id (header ctx "If-Match")
                 |> fun result -> Responses.fromDelete result ctx)
         )
-        |> OpenApiDocs.documentFhir
+        |> OpenApiDocs.documentFhirDelete
             [| OpenApiDocs.TagCrud |]
             "Delete"
             "Soft-delete via history. Returns 200 + deleted resource body."

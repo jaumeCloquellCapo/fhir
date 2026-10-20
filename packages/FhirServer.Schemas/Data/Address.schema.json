@@ -6,6 +6,14 @@
   "kind": "complex-type",
   "derivation": "specialization",
   "required": [],
+  "constraints": [
+    {
+      "key": "ele-1",
+      "severity": "error",
+      "expression": "hasValue() or (children().count() \u003E id.count())",
+      "human": "All FHIR elements must have a @value or children"
+    }
+  ],
   "elements": {
     "city": {
       "path": "Address.city",
@@ -14,6 +22,14 @@
       "array": false,
       "type": [
         "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "country": {
@@ -23,6 +39,14 @@
       "array": false,
       "type": [
         "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "district": {
@@ -32,6 +56,14 @@
       "array": false,
       "type": [
         "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "extension": {
@@ -41,6 +73,20 @@
       "array": true,
       "type": [
         "Extension"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "ext-1",
+          "severity": "error",
+          "expression": "extension.exists() != value.exists()",
+          "human": "Must have either extensions or value[x], not both"
+        }
       ]
     },
     "id": {
@@ -59,6 +105,14 @@
       "array": true,
       "type": [
         "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "period": {
@@ -68,6 +122,14 @@
       "array": false,
       "type": [
         "Period"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "postalCode": {
@@ -77,6 +139,14 @@
       "array": false,
       "type": [
         "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "state": {
@@ -86,6 +156,14 @@
       "array": false,
       "type": [
         "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "text": {
@@ -95,6 +173,14 @@
       "array": false,
       "type": [
         "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "type": {
@@ -108,7 +194,15 @@
       "binding": {
         "strength": "required",
         "valueSet": "http://hl7.org/fhir/ValueSet/address-type|5.0.0"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "use": {
       "path": "Address.use",
@@ -121,7 +215,15 @@
       "binding": {
         "strength": "required",
         "valueSet": "http://hl7.org/fhir/ValueSet/address-use|5.0.0"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     }
   }
 }

@@ -1,0 +1,980 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/publishablelibrary",
+  "type": "Library",
+  "name": "Library",
+  "kind": "resource",
+  "derivation": "constraint",
+  "required": [
+    "date",
+    "description",
+    "status",
+    "title",
+    "type",
+    "url",
+    "version"
+  ],
+  "constraints": [
+    {
+      "key": "cnl-0",
+      "severity": "warning",
+      "expression": "name.exists() implies name.matches(\u0027^[A-Z]([A-Za-z0-9_]){1,254}$\u0027)",
+      "human": "Name should be usable as an identifier for the module by machine processing applications such as code generation"
+    }
+  ],
+  "elements": {
+    "approvalDate": {
+      "path": "Library.approvalDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "author": {
+      "path": "Library.author",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "contact": {
+      "path": "Library.contact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "contained": {
+      "path": "Library.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "content": {
+      "path": "Library.content",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Attachment"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "copyright": {
+      "path": "Library.copyright",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "copyrightLabel": {
+      "path": "Library.copyrightLabel",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "dataRequirement": {
+      "path": "Library.dataRequirement",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "DataRequirement"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "date": {
+      "path": "Library.date",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "description": {
+      "path": "Library.description",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "editor": {
+      "path": "Library.editor",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "effectivePeriod": {
+      "path": "Library.effectivePeriod",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "endorser": {
+      "path": "Library.endorser",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "experimental": {
+      "path": "Library.experimental",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "extension": {
+      "path": "Library.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "ext-1",
+          "severity": "error",
+          "expression": "extension.exists() != value.exists()",
+          "human": "Must have either extensions or value[x], not both"
+        }
+      ]
+    },
+    "id": {
+      "path": "Library.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Library.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "implicitRules": {
+      "path": "Library.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "jurisdiction": {
+      "path": "Library.jurisdiction",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "language": {
+      "path": "Library.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "lastReviewDate": {
+      "path": "Library.lastReviewDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "meta": {
+      "path": "Library.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "modifierExtension": {
+      "path": "Library.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "ext-1",
+          "severity": "error",
+          "expression": "extension.exists() != value.exists()",
+          "human": "Must have either extensions or value[x], not both"
+        }
+      ]
+    },
+    "name": {
+      "path": "Library.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "parameter": {
+      "path": "Library.parameter",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ParameterDefinition"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "publisher": {
+      "path": "Library.publisher",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "purpose": {
+      "path": "Library.purpose",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "relatedArtifact": {
+      "path": "Library.relatedArtifact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "RelatedArtifact"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
+      "elements": {
+        "citation": {
+          "path": "Library.relatedArtifact.citation",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "classifier": {
+          "path": "Library.relatedArtifact.classifier",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/citation-artifact-classifier"
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "display": {
+          "path": "Library.relatedArtifact.display",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "document": {
+          "path": "Library.relatedArtifact.document",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Attachment"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "extension": {
+          "path": "Library.relatedArtifact.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
+          ]
+        },
+        "id": {
+          "path": "Library.relatedArtifact.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "label": {
+          "path": "Library.relatedArtifact.label",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "publicationDate": {
+          "path": "Library.relatedArtifact.publicationDate",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "date"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "publicationStatus": {
+          "path": "Library.relatedArtifact.publicationStatus",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "resource": {
+          "path": "Library.relatedArtifact.resource",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "canonical"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "resourceReference": {
+          "path": "Library.relatedArtifact.resourceReference",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "type": {
+          "path": "Library.relatedArtifact.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/related-artifact-type|5.0.0"
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        }
+      }
+    },
+    "reviewer": {
+      "path": "Library.reviewer",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "status": {
+      "path": "Library.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "subject": {
+      "path": "Library.subject[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept",
+        "Reference"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/participant-resource-types"
+      },
+      "choices": [
+        "subjectCodeableConcept",
+        "subjectReference"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "subtitle": {
+      "path": "Library.subtitle",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "text": {
+      "path": "Library.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "title": {
+      "path": "Library.title",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "topic": {
+      "path": "Library.topic",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/definition-topic"
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "type": {
+      "path": "Library.type",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/library-type"
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "url": {
+      "path": "Library.url",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ],
+      "constraints": [
+        {
+          "key": "cnl-1",
+          "severity": "warning",
+          "expression": "exists() implies matches(\u0027^[^|# ]\u002B$\u0027)",
+          "human": "URL should not contain | or # - these characters make processing canonical references problematic"
+        },
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "usage": {
+      "path": "Library.usage",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "useContext": {
+      "path": "Library.useContext",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "UsageContext"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "version": {
+      "path": "Library.version",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "versionAlgorithm": {
+      "path": "Library.versionAlgorithm[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string",
+        "Coding"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/version-algorithm"
+      },
+      "choices": [
+        "versionAlgorithmString",
+        "versionAlgorithmCoding"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    }
+  }
+}

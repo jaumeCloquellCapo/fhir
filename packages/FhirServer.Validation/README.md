@@ -13,11 +13,15 @@ FhirServer.Validation/
   FhirServer.Validation.fsproj
 
 FhirServer.Schemas/                       # sibling package
-  Data/*.schema.json                      # embedded resources
+  Data/*.schema.json                      # embedded base resources / datatypes
+  Data/profiles/*.schema.json             # core constraint profiles
+  Data/profiles-index.json                # canonical URL → profile schema file
   Data/valuesets.json
   Generated/GeneratedResourceCatalog.fs
   SchemaPackage.fs                        # assembly marker
 ```
+
+Runtime also evaluates StructureDefinition `constraint` expressions (error + warning/information) with a FHIRPath subset; expressions outside the subset surface as **warning** issues (`could not be evaluated`).
 
 ## How artifacts are generated (UML)
 

@@ -6,6 +6,14 @@
   "kind": "complex-type",
   "derivation": "specialization",
   "required": [],
+  "constraints": [
+    {
+      "key": "ele-1",
+      "severity": "error",
+      "expression": "hasValue() or (children().count() \u003E id.count())",
+      "human": "All FHIR elements must have a @value or children"
+    }
+  ],
   "elements": {
     "currency": {
       "path": "Money.currency",
@@ -18,7 +26,15 @@
       "binding": {
         "strength": "required",
         "valueSet": "http://hl7.org/fhir/ValueSet/currencies|5.0.0"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "extension": {
       "path": "Money.extension",
@@ -27,6 +43,20 @@
       "array": true,
       "type": [
         "Extension"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "ext-1",
+          "severity": "error",
+          "expression": "extension.exists() != value.exists()",
+          "human": "Must have either extensions or value[x], not both"
+        }
       ]
     },
     "id": {
@@ -45,6 +75,14 @@
       "array": false,
       "type": [
         "decimal"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     }
   }

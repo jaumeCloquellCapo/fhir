@@ -6,6 +6,20 @@
   "kind": "complex-type",
   "derivation": "specialization",
   "required": [],
+  "constraints": [
+    {
+      "key": "dos-1",
+      "severity": "error",
+      "expression": "asNeededFor.empty() or asNeeded.empty() or asNeeded",
+      "human": "AsNeededFor can only be set if AsNeeded is empty or true"
+    },
+    {
+      "key": "ele-1",
+      "severity": "error",
+      "expression": "hasValue() or (children().count() \u003E id.count())",
+      "human": "All FHIR elements must have a @value or children"
+    }
+  ],
   "elements": {
     "additionalInstruction": {
       "path": "Dosage.additionalInstruction",
@@ -18,7 +32,15 @@
       "binding": {
         "strength": "example",
         "valueSet": "http://hl7.org/fhir/ValueSet/additional-instruction-codes"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "asNeeded": {
       "path": "Dosage.asNeeded",
@@ -27,6 +49,14 @@
       "array": false,
       "type": [
         "boolean"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "asNeededFor": {
@@ -40,7 +70,15 @@
       "binding": {
         "strength": "example",
         "valueSet": "http://hl7.org/fhir/ValueSet/medication-as-needed-reason"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "doseAndRate": {
       "path": "Dosage.doseAndRate",
@@ -49,6 +87,14 @@
       "array": true,
       "type": [
         "Element"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ],
       "elements": {
         "dose": {
@@ -63,6 +109,14 @@
           "choices": [
             "doseRange",
             "doseQuantity"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "extension": {
@@ -72,6 +126,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "id": {
@@ -97,6 +165,14 @@
             "rateRatio",
             "rateRange",
             "rateQuantity"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "type": {
@@ -110,7 +186,15 @@
           "binding": {
             "strength": "example",
             "valueSet": "http://terminology.hl7.org/ValueSet/dose-rate-type"
-          }
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
         }
       }
     },
@@ -121,6 +205,20 @@
       "array": true,
       "type": [
         "Extension"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "ext-1",
+          "severity": "error",
+          "expression": "extension.exists() != value.exists()",
+          "human": "Must have either extensions or value[x], not both"
+        }
       ]
     },
     "id": {
@@ -139,6 +237,14 @@
       "array": false,
       "type": [
         "Quantity"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "maxDosePerLifetime": {
@@ -148,6 +254,14 @@
       "array": false,
       "type": [
         "Quantity"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "maxDosePerPeriod": {
@@ -157,6 +271,14 @@
       "array": true,
       "type": [
         "Ratio"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "method": {
@@ -170,7 +292,15 @@
       "binding": {
         "strength": "example",
         "valueSet": "http://hl7.org/fhir/ValueSet/administration-method-codes"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "modifierExtension": {
       "path": "Dosage.modifierExtension",
@@ -179,6 +309,20 @@
       "array": true,
       "type": [
         "Extension"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "ext-1",
+          "severity": "error",
+          "expression": "extension.exists() != value.exists()",
+          "human": "Must have either extensions or value[x], not both"
+        }
       ]
     },
     "patientInstruction": {
@@ -188,6 +332,14 @@
       "array": false,
       "type": [
         "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "route": {
@@ -201,7 +353,15 @@
       "binding": {
         "strength": "example",
         "valueSet": "http://hl7.org/fhir/ValueSet/route-codes"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "sequence": {
       "path": "Dosage.sequence",
@@ -210,6 +370,14 @@
       "array": false,
       "type": [
         "integer"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "site": {
@@ -223,7 +391,15 @@
       "binding": {
         "strength": "example",
         "valueSet": "http://hl7.org/fhir/ValueSet/approach-site-codes"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "text": {
       "path": "Dosage.text",
@@ -232,6 +408,14 @@
       "array": false,
       "type": [
         "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "timing": {
@@ -241,6 +425,14 @@
       "array": false,
       "type": [
         "Timing"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     }
   }

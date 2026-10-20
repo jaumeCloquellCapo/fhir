@@ -34,24 +34,74 @@ type ValidateTests() =
     [<Fact>]
     member _.``POST /Patient/$validate valid returns all ok``() : Task =
         task {
+            // Include Narrative so dom-6 (warning) passes; unsupported dom-3 still warns.
             let! status, body, _ =
                 postJson
                     client
                     "/Patient/$validate"
-                    """{"resourceType":"Patient","name":[{"family":"Ok"}],"gender":"female"}"""
+                    """{"resourceType":"Patient","text":{"status":"generated","div":"<div xmlns=\"http://www.w3.org/1999/xhtml\">Ok</div>"},"name":[{"family":"Ok"}],"gender":"female"}"""
 
             assertStatus HttpStatusCode.OK status
-            Assert.Contains("all ok", body)
+            assertResourceType "OperationOutcome" body
+            Assert.DoesNotContain("\"severity\":\"fatal\"", body)
+            Assert.Contains("dom-3", body) // unevaluable full FHIRPath → warning
         }
 
     [<Fact>]
     member _.``POST /$validate without type works``() : Task =
         task {
             let! status, body, _ =
-                postJson client "/$validate" """{"resourceType":"Patient","gender":"female"}"""
+                postJson
+                    client
+                    "/$validate"
+                    """{"resourceType":"Patient","text":{"status":"generated","div":"<div xmlns=\"http://www.w3.org/1999/xhtml\">Ok</div>"},"gender":"female"}"""
 
             assertStatus HttpStatusCode.OK status
-            Assert.Contains("all ok", body)
+            assertResourceType "OperationOutcome" body
+            Assert.DoesNotContain("\"severity\":\"fatal\"", body)
+        }
+
+    [<Fact>]
+    member _.``POST /Patient/$validate reports pat-1 on incomplete contact``() : Task =
+        task {
+            let! status, body, _ =
+                postJson
+                    client
+                    "/Patient/$validate"
+                    """{"resourceType":"Patient","contact":[{"gender":"male"}]}"""
+
+            assertStatus HttpStatusCode.OK status
+            assertResourceType "OperationOutcome" body
+            Assert.Contains("pat-1", body)
+        }
+
+    [<Fact>]
+    member _.``POST /Observation/$validate applies bmi profile requireds``() : Task =
+        task {
+            let! status, body, _ =
+                postJson
+                    client
+                    "/Observation/$validate"
+                    """{"resourceType":"Observation","meta":{"profile":["http://hl7.org/fhir/StructureDefinition/bmi"]},"status":"final","code":{"coding":[{"system":"http://loinc.org","code":"39156-5"}]}}"""
+
+            assertStatus HttpStatusCode.OK status
+            assertResourceType "OperationOutcome" body
+            Assert.Contains("subject", body)
+        }
+
+    [<Fact>]
+    member _.``POST /Patient/$validate warns on unknown meta.profile``() : Task =
+        task {
+            let! status, body, _ =
+                postJson
+                    client
+                    "/Patient/$validate"
+                    """{"resourceType":"Patient","meta":{"profile":["http://example.org/StructureDefinition/UnknownProfile"]},"gender":"female"}"""
+
+            assertStatus HttpStatusCode.OK status
+            assertResourceType "OperationOutcome" body
+            Assert.Contains("not loaded", body)
+            Assert.Contains("warning", body)
         }
 
     [<Fact>]

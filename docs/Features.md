@@ -50,22 +50,27 @@ Base URL (local default): `http://localhost:5050`
 | GET | `/$export-files/{jobId}/{type}` | NDJSON file for one type in a job |
 | POST | `/$import` · `/$load` | Sync NDJSON import (create/update) → `Parameters` |
 | GET | `/Patient/{id}/$document` | FHIR Document Bundle (`Composition` + clinical resources) |
+| GET/POST | `/ValueSet/$expand` · `/ValueSet/{id}/$expand` | Expand stored ValueSet (+ CodeSystem concepts) |
+| GET/POST | `/CodeSystem/$lookup` | Lookup code → `Parameters` |
+| GET/POST | `/ValueSet/$validate-code` · `/{id}/$validate-code` | Validate code membership → `Parameters` |
 
 ## Search (subset)
 
-Indexed in SQL (`search_string` / `search_token` / `search_ref`) on write; queries use SQL filters + `COUNT`/`LIMIT`/`OFFSET` (no full-table scan in memory).
+Indexed in SQL (`search_string` / `search_token` / `search_ref` / `search_date` / `search_quantity`) on write; queries use SQL filters + `COUNT`/`LIMIT`/`OFFSET`.
 
 | Feature | Examples / notes |
 |---------|------------------|
 | Common | `_id`, `_lastUpdated` (`ge`/`le`/… on envelope `ts`), `_count`, `_sort` |
 | Patient | `family`, `given`, `name`, `gender`, `birthdate`, `identifier` |
-| Observation | `status`, `code`, `patient` / `subject` |
+| Observation | `status`, `code`, `patient` / `subject`, `date`, `value-quantity` |
 | Clinical set | `patient` / `subject` (Encounter, Condition, …) |
+| Modifiers | `:exact`, `:contains`, `:missing`, token `:not` |
 | `_include` | `Observation?_include=Observation:patient` |
 | `_revinclude` | `Patient?_revinclude=Observation:patient` |
-| Chaining | `Observation?subject.name=Garcia`, `patient.family=…` (best-effort for well-known refs) |
+| Chaining | `Observation?subject.name=Garcia`, `patient.family=…` |
+| `_has` | `Patient?_has:Observation:patient:code=…` |
 
-Resource-specific search parameters are advertised in `/metadata` where implemented. Full FHIR search (modifiers, composites, arbitrary reverse chains) is **not** claimed.
+Resource-specific search parameters are advertised in `/metadata` where implemented. Composites / full `_filter` grammar remain **out of scope**.
 
 ## Validation
 
@@ -85,7 +90,7 @@ When `Audit:Enabled=true`, the server records BALP-oriented `AuditEvent` resourc
 | POST | `/auth/token` | `client_credentials` (Basic or form client_id/secret) |
 | GET | `/auth/authorize` | Stub **501** (use client_credentials) |
 
-When `Auth:Enabled=true`, API calls accept **Bearer** (SMART token) or **HTTP Basic**.
+When `Auth:Enabled=true`, API calls accept **Bearer** (SMART token) or **HTTP Basic**. Bearer tokens enforce **system** scopes (`system/*.read`, `system/Patient.write`, …); Basic keeps full access.
 
 ## Subscriptions (MVP)
 
@@ -95,9 +100,14 @@ Create an active `Subscription` with `channelType.code=rest-hook` and `endpoint`
 |--------|------|-------|
 | POST/GET/DELETE | `/_hooks/{sinkId}` | Local capture sink for e2e / demos |
 
+## Validation depth
+
+- Base resource schemas + **FHIRPath constraint subset** + **core constraint profiles** are generated into `FhirServer.Schemas` / `FhirServer.Validation` (`make generate-r5-all`).
+- When `meta.profile` names a loaded core profile, the server re-validates against that profile snapshot schema.
+- Custom/external IGs beyond the R5 core package are not packaged by default (run the generator against additional packages to add them).
+
 ## Out of scope (roadmap)
 
-- Full IG / profile StructureDefinition conformance
 - Full SMART authorize / PKCE / EHR launch UX
 - External webhook reliability (retries, signing)
 - XML (`application/fhir+xml`) as a first-class format

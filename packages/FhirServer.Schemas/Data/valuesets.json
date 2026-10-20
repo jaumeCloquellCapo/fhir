@@ -1650,6 +1650,10 @@
     "historical",
     "source"
   ],
+  "http://hl7.org/fhir/ValueSet/lipid-ldl-codes": [
+    "13457-7",
+    "18262-6"
+  ],
   "http://hl7.org/fhir/ValueSet/list-mode": [
     "changes",
     "snapshot",
@@ -2911,6 +2915,20 @@
     "search-type",
     "update",
     "vread"
+  ],
+  "http://hl7.org/fhir/ValueSet/ucum-vitals-common": [
+    "%",
+    "/min",
+    "Cel",
+    "[degF]",
+    "[in_i]",
+    "[lb_av]",
+    "cm",
+    "g",
+    "kg",
+    "kg/m2",
+    "m2",
+    "mm[Hg]"
   ],
   "http://hl7.org/fhir/ValueSet/udi-entry-type": [
     "barcode",

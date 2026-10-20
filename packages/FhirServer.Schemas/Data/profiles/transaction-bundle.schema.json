@@ -1,0 +1,962 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/transaction-bundle",
+  "type": "Bundle",
+  "name": "Bundle",
+  "kind": "resource",
+  "derivation": "constraint",
+  "required": [
+    "type"
+  ],
+  "constraints": [
+    {
+      "key": "bdl-1",
+      "severity": "error",
+      "expression": "total.empty() or (type = \u0027searchset\u0027) or (type = \u0027history\u0027)",
+      "human": "total only when a search or history"
+    },
+    {
+      "key": "bdl-2",
+      "severity": "error",
+      "expression": "(type = \u0027searchset\u0027) or entry.search.empty()",
+      "human": "entry.search only when a search"
+    },
+    {
+      "key": "bdl-7",
+      "severity": "error",
+      "expression": "(type = \u0027history\u0027) or entry.where(fullUrl.exists()).select(fullUrl\u0026iif(resource.meta.versionId.exists(), resource.meta.versionId, \u0027\u0027)).isDistinct()",
+      "human": "FullUrl must be unique in a bundle, or else entries with the same fullUrl must have different meta.versionId (except in history bundles)"
+    },
+    {
+      "key": "bdl-9",
+      "severity": "error",
+      "expression": "type = \u0027document\u0027 implies (identifier.system.exists() and identifier.value.exists())",
+      "human": "A document must have an identifier with a system and a value"
+    },
+    {
+      "key": "bdl-10",
+      "severity": "error",
+      "expression": "type = \u0027document\u0027 implies (timestamp.hasValue())",
+      "human": "A document must have a date"
+    },
+    {
+      "key": "bdl-11",
+      "severity": "error",
+      "expression": "type = \u0027document\u0027 implies entry.first().resource.is(Composition)",
+      "human": "A document must have a Composition as the first resource"
+    },
+    {
+      "key": "bdl-12",
+      "severity": "error",
+      "expression": "type = \u0027message\u0027 implies entry.first().resource.is(MessageHeader)",
+      "human": "A message must have a MessageHeader as the first resource"
+    },
+    {
+      "key": "bdl-13",
+      "severity": "error",
+      "expression": "type = \u0027subscription-notification\u0027 implies entry.first().resource.is(SubscriptionStatus)",
+      "human": "A subscription-notification must have a SubscriptionStatus as the first resource"
+    },
+    {
+      "key": "bdl-14",
+      "severity": "error",
+      "expression": "type = \u0027history\u0027 implies entry.request.method != \u0027PATCH\u0027",
+      "human": "entry.request.method PATCH not allowed for history"
+    },
+    {
+      "key": "bdl-15",
+      "severity": "error",
+      "expression": "type=\u0027transaction\u0027 or type=\u0027transaction-response\u0027 or type=\u0027batch\u0027 or type=\u0027batch-response\u0027 or entry.all(fullUrl.exists() or request.method=\u0027POST\u0027)",
+      "human": "Bundle resources where type is not transaction, transaction-response, batch, or batch-response or when the request is a POST SHALL have Bundle.entry.fullUrl populated"
+    },
+    {
+      "key": "bdl-16",
+      "severity": "error",
+      "expression": "issues.exists() implies (issues.issue.severity = \u0027information\u0027 or issues.issue.severity = \u0027warning\u0027)",
+      "human": "Issue.severity for all issues within the OperationOutcome must be either \u0027information\u0027 or \u0027warning\u0027."
+    },
+    {
+      "key": "bdl-17",
+      "severity": "error",
+      "expression": "type = \u0027document\u0027 implies issues.empty()",
+      "human": "Use and meaning of issues for documents has not been validated because the content will not be rendered in the document."
+    },
+    {
+      "key": "bdl-18",
+      "severity": "error",
+      "expression": "type = \u0027searchset\u0027 implies link.where(relation = \u0027self\u0027 and url.exists()).exists()",
+      "human": "Self link is required for searchsets."
+    },
+    {
+      "key": "bdl-3a",
+      "severity": "error",
+      "expression": "type in (\u0027document\u0027 | \u0027message\u0027 | \u0027searchset\u0027 | \u0027collection\u0027) implies entry.all(resource.exists() and request.empty() and response.empty())",
+      "human": "For collections of type document, message, searchset or collection, all entries must contain resources, and not have request or response elements"
+    },
+    {
+      "key": "bdl-3b",
+      "severity": "error",
+      "expression": "type = \u0027history\u0027 implies entry.all(request.exists() and response.exists() and ((request.method in (\u0027POST\u0027 | \u0027PATCH\u0027 | \u0027PUT\u0027)) = resource.exists()))",
+      "human": "For collections of type history, all entries must contain request or response elements, and resources if the method is POST, PUT or PATCH"
+    },
+    {
+      "key": "bdl-3c",
+      "severity": "error",
+      "expression": "type in (\u0027transaction\u0027 | \u0027batch\u0027) implies entry.all(request.method.exists() and ((request.method in (\u0027POST\u0027 | \u0027PATCH\u0027 | \u0027PUT\u0027)) = resource.exists()))",
+      "human": "For collections of type transaction or batch, all entries must contain request elements, and resources if the method is POST, PUT or PATCH"
+    },
+    {
+      "key": "bdl-3d",
+      "severity": "error",
+      "expression": "type in (\u0027transaction-response\u0027 | \u0027batch-response\u0027) implies entry.all(response.exists())",
+      "human": "For collections of type transaction-response or batch-response, all entries must contain response elements"
+    }
+  ],
+  "elements": {
+    "entry": {
+      "path": "Bundle.entry",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "constraints": [
+        {
+          "key": "bdl-5",
+          "severity": "error",
+          "expression": "resource.exists() or request.exists() or response.exists()",
+          "human": "must be a resource unless there\u0027s a request or response"
+        },
+        {
+          "key": "bdl-8",
+          "severity": "error",
+          "expression": "fullUrl.exists() implies fullUrl.contains(\u0027/_history/\u0027).not()",
+          "human": "fullUrl cannot be a version specific reference"
+        },
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
+      "elements": {
+        "extension": {
+          "path": "Bundle.entry.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
+          ]
+        },
+        "fullUrl": {
+          "path": "Bundle.entry.fullUrl",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "uri"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "id": {
+          "path": "Bundle.entry.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "link": {
+          "path": "Bundle.entry.link",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "http://hl7.org/fhir/StructureDefinition/Bundle#Bundle.link",
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "modifierExtension": {
+          "path": "Bundle.entry.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
+          ]
+        },
+        "request": {
+          "path": "Bundle.entry.request",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ],
+          "elements": {
+            "extension": {
+              "path": "Bundle.entry.request.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
+              ]
+            },
+            "id": {
+              "path": "Bundle.entry.request.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "ifMatch": {
+              "path": "Bundle.entry.request.ifMatch",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "ifModifiedSince": {
+              "path": "Bundle.entry.request.ifModifiedSince",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "instant"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "ifNoneExist": {
+              "path": "Bundle.entry.request.ifNoneExist",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "ifNoneMatch": {
+              "path": "Bundle.entry.request.ifNoneMatch",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "method": {
+              "path": "Bundle.entry.request.method",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/http-verb|5.0.0"
+              },
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "modifierExtension": {
+              "path": "Bundle.entry.request.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
+              ]
+            },
+            "url": {
+              "path": "Bundle.entry.request.url",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "uri"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            }
+          }
+        },
+        "resource": {
+          "path": "Bundle.entry.resource",
+          "min": 0,
+          "max": 0,
+          "array": false,
+          "type": [
+            "Resource"
+          ]
+        },
+        "response": {
+          "path": "Bundle.entry.response",
+          "min": 0,
+          "max": 0,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ],
+          "elements": {
+            "etag": {
+              "path": "Bundle.entry.response.etag",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "extension": {
+              "path": "Bundle.entry.response.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
+              ]
+            },
+            "id": {
+              "path": "Bundle.entry.response.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "lastModified": {
+              "path": "Bundle.entry.response.lastModified",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "instant"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "location": {
+              "path": "Bundle.entry.response.location",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "uri"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "modifierExtension": {
+              "path": "Bundle.entry.response.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
+              ]
+            },
+            "outcome": {
+              "path": "Bundle.entry.response.outcome",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Resource"
+              ]
+            },
+            "status": {
+              "path": "Bundle.entry.response.status",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            }
+          }
+        },
+        "search": {
+          "path": "Bundle.entry.search",
+          "min": 0,
+          "max": 0,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ],
+          "elements": {
+            "extension": {
+              "path": "Bundle.entry.search.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
+              ]
+            },
+            "id": {
+              "path": "Bundle.entry.search.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "mode": {
+              "path": "Bundle.entry.search.mode",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/search-entry-mode|5.0.0"
+              },
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            },
+            "modifierExtension": {
+              "path": "Bundle.entry.search.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                },
+                {
+                  "key": "ext-1",
+                  "severity": "error",
+                  "expression": "extension.exists() != value.exists()",
+                  "human": "Must have either extensions or value[x], not both"
+                }
+              ]
+            },
+            "score": {
+              "path": "Bundle.entry.search.score",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "decimal"
+              ],
+              "constraints": [
+                {
+                  "key": "ele-1",
+                  "severity": "error",
+                  "expression": "hasValue() or (children().count() \u003E id.count())",
+                  "human": "All FHIR elements must have a @value or children"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "id": {
+      "path": "Bundle.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Bundle.identifier",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Identifier"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "implicitRules": {
+      "path": "Bundle.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "issues": {
+      "path": "Bundle.issues",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Resource"
+      ]
+    },
+    "language": {
+      "path": "Bundle.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "link": {
+      "path": "Bundle.link",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
+      "elements": {
+        "extension": {
+          "path": "Bundle.link.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
+          ]
+        },
+        "id": {
+          "path": "Bundle.link.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Bundle.link.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
+          ]
+        },
+        "relation": {
+          "path": "Bundle.link.relation",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/iana-link-relations|5.0.0"
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        },
+        "url": {
+          "path": "Bundle.link.url",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "uri"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
+        }
+      }
+    },
+    "meta": {
+      "path": "Bundle.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "signature": {
+      "path": "Bundle.signature",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Signature"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "timestamp": {
+      "path": "Bundle.timestamp",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "instant"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "total": {
+      "path": "Bundle.total",
+      "min": 0,
+      "max": 0,
+      "array": false,
+      "type": [
+        "unsignedInt"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    },
+    "type": {
+      "path": "Bundle.type",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/bundle-type|5.0.0"
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
+    }
+  }
+}

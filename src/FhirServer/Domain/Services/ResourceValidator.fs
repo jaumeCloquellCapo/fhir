@@ -65,16 +65,22 @@ module ResourceValidator =
         issues |> List.exists (fun i -> i.Fatal)
 
     let toOperationOutcome (issues: ValidationIssue list) : FhirResource =
-        if not (hasFatal issues) then
+        if issues = [] then
             FhirJson.operationOutcome [ "information", "informational", "all ok" ]
         else
             let rows =
                 issues
-                |> List.filter (fun i -> i.Fatal)
-                |> List.map (fun i -> "fatal", "invalid", i.Diagnostics)
+                |> List.map (fun i ->
+                    if i.Fatal then
+                        "fatal", "invalid", i.Diagnostics
+                    else
+                        "warning", "informational", i.Diagnostics)
 
             let oo = FhirJson.operationOutcome rows
-            oo["id"] <- "invalid"
+
+            if hasFatal issues then
+                oo["id"] <- "invalid"
+
             oo
 
     let ensureValid (expectedType: string option) (resource: FhirResource) : FhirResult<unit> =

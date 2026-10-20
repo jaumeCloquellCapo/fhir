@@ -8,6 +8,32 @@
   "required": [
     "type"
   ],
+  "constraints": [
+    {
+      "key": "ele-1",
+      "severity": "error",
+      "expression": "hasValue() or (children().count() \u003E id.count())",
+      "human": "All FHIR elements must have a @value or children"
+    },
+    {
+      "key": "trd-1",
+      "severity": "error",
+      "expression": "data.empty() or timing.empty()",
+      "human": "Either timing, or a data requirement, but not both"
+    },
+    {
+      "key": "trd-2",
+      "severity": "error",
+      "expression": "condition.exists() implies data.exists()",
+      "human": "A condition only if there is a data requirement"
+    },
+    {
+      "key": "trd-3",
+      "severity": "error",
+      "expression": "(type = \u0027named-event\u0027 implies name.exists()) and (type = \u0027periodic\u0027 implies timing.exists()) and (type.startsWith(\u0027data-\u0027) implies data.exists())",
+      "human": "A named event requires a name, a periodic event requires timing, and a data event requires data"
+    }
+  ],
   "elements": {
     "code": {
       "path": "TriggerDefinition.code",
@@ -16,6 +42,14 @@
       "array": false,
       "type": [
         "CodeableConcept"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "condition": {
@@ -25,6 +59,14 @@
       "array": false,
       "type": [
         "Expression"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "data": {
@@ -34,6 +76,14 @@
       "array": true,
       "type": [
         "DataRequirement"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "extension": {
@@ -43,6 +93,20 @@
       "array": true,
       "type": [
         "Extension"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "ext-1",
+          "severity": "error",
+          "expression": "extension.exists() != value.exists()",
+          "human": "Must have either extensions or value[x], not both"
+        }
       ]
     },
     "id": {
@@ -61,6 +125,14 @@
       "array": false,
       "type": [
         "string"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "subscriptionTopic": {
@@ -70,6 +142,14 @@
       "array": false,
       "type": [
         "canonical"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "timing": {
@@ -88,6 +168,14 @@
         "timingReference",
         "timingDate",
         "timingDateTime"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "type": {
@@ -101,7 +189,15 @@
       "binding": {
         "strength": "required",
         "valueSet": "http://hl7.org/fhir/ValueSet/trigger-type|5.0.0"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     }
   }
 }

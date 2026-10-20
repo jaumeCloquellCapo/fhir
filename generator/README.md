@@ -12,9 +12,9 @@ Resource index: [hl7.org/fhir/resourcelist.html](https://hl7.org/fhir/resourceli
 |---------|-------------|
 | Structure, cardinality, arrays, choices `[x]`, primitives (incl. date/dateTime/instant/uri/…), required bindings, complex datatypes, `contentReference`, ele-1, `meta.profile` format | **`FhirServer.Validation`** + schemas from **`FhirServer.Schemas`** |
 | `$validate` / write 422 | FhirServer `ResourceValidator` → `SchemaEngine.validateJson` |
-| Full IG/profile StructureDefinition conformance | Not yet (only `meta.profile` canonical format) |
-| Business rules / FHIRPath invariants beyond ele-1 | Server / application |
-| This generator | Package → IR → resource + **42 complex-type** schemas + valuesets + validator source |
+| Core constraint profiles (`derivation=constraint`) + FHIRPath constraint subset | Generator emits `schemas/profiles/` + `profiles-index.json`; validator applies when `meta.profile` matches |
+| Extra / custom IGs beyond `hl7.fhir.r5.core` | Generate from additional packages, then `make sync-schemas` |
+| This generator | Package → IR → resource + complex-type + **profile** schemas + valuesets + validator source |
 
 ## Layout
 
@@ -26,13 +26,15 @@ generator/
   cache/                  # hl7.fhir.r5.core (gitignored)
   out/r5/
     schemas/*.schema.json
+    schemas/profiles/*.schema.json
+    profiles-index.json
     valuesets.json
     manifest.json
     GeneratedResourceCatalog.fs
     GeneratedSchemaValidator.fs
 
 packages/
-  FhirServer.Schemas/     # embedded *.schema.json + valuesets + catalog
+  FhirServer.Schemas/     # embedded *.schema.json + profiles + valuesets + catalog
   FhirServer.Validation/  # GeneratedSchemaValidator + SchemaEngine
 ```
 

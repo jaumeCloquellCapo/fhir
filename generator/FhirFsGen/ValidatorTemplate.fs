@@ -602,6 +602,398 @@ module GeneratedSchemaValidator =
                     { schema with Elements = dt.Elements })
                 |> Option.defaultValue schema
 
+    /// Minimal FHIRPath subset for common StructureDefinition constraints.
+    module private FhirPathSubset =
+
+        type private Token =
+            | Ident of string
+            | Dot
+            | LParen
+            | RParen
+            | And
+            | Or
+            | Eq
+            | Ne
+            | Gt
+            | Lt
+            | Eof
+
+        type private Value =
+            | Collection of JsonNode list
+            | Boolean of bool
+            | Number of decimal
+            | Unsupported of string
+
+        let private unsupportedMarkers =
+            [| "%"
+               "where("
+               "ofType("
+               "descendants("
+               "trace("
+               "select("
+               "all("
+               "as("
+               "is("
+               "implies"
+               "xor"
+               "|" |]
+
+        let private isUnsupportedExpression (expr: string) =
+            unsupportedMarkers
+            |> Array.exists (fun m -> expr.IndexOf(m, StringComparison.OrdinalIgnoreCase) >= 0)
+
+        let private tokenize (expr: string) : Token list option =
+            let chars = expr.ToCharArray()
+            let mutable i = 0
+            let tokens = ResizeArray<Token>()
+
+            let peek () =
+                if i < chars.Length then Some chars.[i] else None
+
+            let advance () =
+                i <- i + 1
+
+            let readIdent () =
+                let start = i
+
+                while i < chars.Length && (Char.IsLetterOrDigit chars.[i] || chars.[i] = '_') do
+                    advance ()
+
+                let raw = expr.Substring(start, i - start)
+
+                match raw.ToLowerInvariant() with
+                | "and" -> And
+                | "or" -> Or
+                | _ -> Ident raw
+
+            let readBacktickIdent () =
+                advance () // opening `
+                let start = i
+
+                while i < chars.Length && chars.[i] <> '`' do
+                    advance ()
+
+                let name = expr.Substring(start, i - start)
+
+                if i < chars.Length && chars.[i] = '`' then
+                    advance ()
+                    Ident name
+                else
+                    Ident name
+
+            let mutable ok = true
+
+            while ok && i < chars.Length do
+                match peek () with
+                | None -> ()
+                | Some c when Char.IsWhiteSpace c -> advance ()
+                | Some '.' ->
+                    tokens.Add Dot
+                    advance ()
+                | Some '(' ->
+                    tokens.Add LParen
+                    advance ()
+                | Some ')' ->
+                    tokens.Add RParen
+                    advance ()
+                | Some '=' ->
+                    tokens.Add Eq
+                    advance ()
+                | Some '!' when i + 1 < chars.Length && chars.[i + 1] = '=' ->
+                    tokens.Add Ne
+                    advance ()
+                    advance ()
+                | Some '>' ->
+                    tokens.Add Gt
+                    advance ()
+                | Some '<' ->
+                    tokens.Add Lt
+                    advance ()
+                | Some '`' -> tokens.Add(readBacktickIdent ())
+                | Some c when Char.IsLetter c || c = '_' -> tokens.Add(readIdent ())
+                | Some _ -> ok <- false
+
+            if ok then
+                tokens.Add Eof
+                Some(List.ofSeq tokens)
+            else
+                None
+
+        let private asCollection =
+            function
+            | Collection ns -> ns
+            | Boolean b -> [ JsonValue.Create(b) :> JsonNode ]
+            | Number n -> [ JsonValue.Create(n) :> JsonNode ]
+            | Unsupported _ -> []
+
+        let private isTruthy =
+            function
+            | Boolean b -> b
+            | Collection ns -> ns <> []
+            | Number n -> n <> 0m
+            | Unsupported _ -> false
+
+        let private flattenNode (node: JsonNode) =
+            if isNull node || node.GetValueKind() = JsonValueKind.Null then
+                []
+            else
+                match node with
+                | :? JsonArray as arr ->
+                    [
+                        for i = 0 to arr.Count - 1 do
+                            let item = arr[i]
+
+                            if not (isNull item) && item.GetValueKind() <> JsonValueKind.Null then
+                                yield item
+                    ]
+                | _ -> [ node ]
+
+        let private navigate (nodes: JsonNode list) (name: string) =
+            nodes
+            |> List.collect flattenNode
+            |> List.collect (fun n ->
+                match n with
+                | :? JsonObject as obj ->
+                    match tryProp obj name with
+                    | Some child -> flattenNode child
+                    | None -> []
+                | _ -> [])
+
+        let private childrenOf (nodes: JsonNode list) =
+            nodes
+            |> List.collect flattenNode
+            |> List.collect (fun n ->
+                match n with
+                | :? JsonObject as obj ->
+                    [
+                        for KeyValue(_, child) in obj do
+                            if not (isNull child) && child.GetValueKind() <> JsonValueKind.Null then
+                                yield! flattenNode child
+                    ]
+                | :? JsonArray as arr ->
+                    [
+                        for i = 0 to arr.Count - 1 do
+                            let item = arr[i]
+
+                            if not (isNull item) && item.GetValueKind() <> JsonValueKind.Null then
+                                yield item
+                    ]
+                | _ -> [])
+
+        let private hasValueOf (nodes: JsonNode list) =
+            nodes
+            |> List.exists (fun n ->
+                match n with
+                | :? JsonValue -> true
+                | _ -> false)
+
+        let private applyFunction (name: string) (args: Value list) (target: Value) : Value =
+            match name.ToLowerInvariant(), args with
+            | "exists", [] -> Boolean(asCollection target <> [])
+            | "empty", [] -> Boolean(asCollection target = [])
+            | "count", [] -> Number(decimal (asCollection target).Length)
+            | "children", [] -> Collection(childrenOf (asCollection target))
+            | "hasvalue", [] -> Boolean(hasValueOf (asCollection target))
+            | _ -> Unsupported $"function '{name}'"
+
+        let private compare (op: Token) (left: Value) (right: Value) : Value =
+            match left, right with
+            | Unsupported u, _
+            | _, Unsupported u -> Unsupported u
+            | Boolean a, Boolean b ->
+                match op with
+                | Eq -> Boolean(a = b)
+                | Ne -> Boolean(a <> b)
+                | _ -> Unsupported "boolean comparison"
+            | Number a, Number b ->
+                match op with
+                | Eq -> Boolean(a = b)
+                | Ne -> Boolean(a <> b)
+                | Gt -> Boolean(a > b)
+                | Lt -> Boolean(a < b)
+                | _ -> Unsupported "number comparison"
+            | Collection a, Collection b when op = Eq || op = Ne ->
+                let eq = a.Length = b.Length // shallow; enough for rare cases
+                Boolean(if op = Eq then eq else not eq)
+            | _ -> Unsupported "comparison operands"
+
+        let evaluate (expr: string) (context: JsonNode) : Result<bool, string> =
+            if String.IsNullOrWhiteSpace expr then
+                Error "empty expression"
+            elif isUnsupportedExpression expr then
+                Error "unsupported FHIRPath features"
+            else
+                match tokenize expr with
+                | None -> Error "tokenize failed"
+                | Some tokens ->
+                    let mutable pos = 0
+
+                    let peekTok () =
+                        if pos < tokens.Length then tokens.[pos] else Eof
+
+                    let nextTok () =
+                        let t = peekTok ()
+                        if t <> Eof then pos <- pos + 1
+                        t
+
+                    // Must not be in the `and` chain: nested `let rec loop` inside parsePostfix
+                    // breaks F# offside rules when followed by another `and`.
+                    let parseArgList () =
+                        match peekTok () with
+                        | RParen -> []
+                        | _ ->
+                            // Subset functions take no arguments; non-empty arg lists are unsupported.
+                            [ Unsupported "function arguments" ]
+
+                    let rec parseOr () =
+                        let mutable left = parseAnd ()
+
+                        while (match peekTok () with
+                               | Or -> true
+                               | _ -> false) do
+                            nextTok () |> ignore
+                            let right = parseAnd ()
+
+                            left <-
+                                match left, right with
+                                | Unsupported u, _
+                                | _, Unsupported u -> Unsupported u
+                                | l, r -> Boolean(isTruthy l || isTruthy r)
+
+                        left
+
+                    and parseAnd () =
+                        let mutable left = parseComparison ()
+
+                        while (match peekTok () with
+                               | And -> true
+                               | _ -> false) do
+                            nextTok () |> ignore
+                            let right = parseComparison ()
+
+                            left <-
+                                match left, right with
+                                | Unsupported u, _
+                                | _, Unsupported u -> Unsupported u
+                                | l, r -> Boolean(isTruthy l && isTruthy r)
+
+                        left
+
+                    and parseComparison () =
+                        let mutable left = parseUnary ()
+
+                        match peekTok () with
+                        | Eq
+                        | Ne
+                        | Gt
+                        | Lt as op ->
+                            nextTok () |> ignore
+                            let right = parseUnary ()
+                            left <- compare op left right
+                        | _ -> ()
+
+                        left
+
+                    and parseUnary () = parsePostfix (parsePrimary ())
+
+                    and parsePrimary () =
+                        match nextTok () with
+                        | Ident name ->
+                            match peekTok () with
+                            | LParen ->
+                                // Function on the current context node (e.g. children(), hasValue()).
+                                nextTok () |> ignore
+                                let args = parseArgList ()
+
+                                match nextTok () with
+                                | RParen -> applyFunction name args (Collection(flattenNode context))
+                                | _ -> Unsupported "missing ')'"
+                            | _ -> Collection(navigate (flattenNode context) name)
+                        | LParen ->
+                            let inner = parseOr ()
+
+                            match nextTok () with
+                            | RParen -> inner
+                            | _ -> Unsupported "missing ')'"
+                        | _ -> Unsupported "expected expression"
+
+                    and parsePostfix (target: Value) =
+                        let mutable current = target
+
+                        let rec loop () =
+                            match peekTok () with
+                            | Dot ->
+                                nextTok () |> ignore
+
+                                match nextTok () with
+                                | Ident name ->
+                                    match peekTok () with
+                                    | LParen ->
+                                        nextTok () |> ignore
+                                        let args = parseArgList ()
+
+                                        match nextTok () with
+                                        | RParen ->
+                                            current <- applyFunction name args current
+                                            loop ()
+                                        | _ -> current <- Unsupported "missing ')'"
+                                    | _ ->
+                                        current <- Collection(navigate (asCollection current) name)
+                                        loop ()
+                                | _ -> current <- Unsupported "expected identifier after '.'"
+                            | LParen ->
+                                current <- Unsupported "unexpected '('"
+                            | _ -> ()
+
+                        loop ()
+                        current
+
+                    let result = parseOr ()
+
+                    match peekTok () with
+                    | Eof ->
+                        match result with
+                        | Unsupported msg -> Error msg
+                        | v -> Ok(isTruthy v)
+                    | _ -> Error "trailing tokens"
+
+    let private constraintIssue (path: string) (c: ElementConstraint) (ok: bool) =
+        if ok then
+            []
+        else
+            let detail =
+                if String.IsNullOrWhiteSpace c.Human then
+                    $"{path}: constraint {c.Key} failed ({c.Expression})."
+                else
+                    $"{path}: {c.Key}: {c.Human}"
+
+            if c.Severity.Equals("warning", StringComparison.OrdinalIgnoreCase)
+               || c.Severity.Equals("information", StringComparison.OrdinalIgnoreCase) then
+                [ warning detail ]
+            else
+                [ fatal detail ]
+
+    let private evaluateConstraints (path: string) (constraints: ElementConstraint list) (node: JsonNode) =
+        [
+            for c in constraints do
+                // ele-1 is enforced structurally; skip duplicate schema-driven evaluation.
+                if c.Key.Equals("ele-1", StringComparison.OrdinalIgnoreCase) then
+                    ()
+                else
+                    match FhirPathSubset.evaluate c.Expression node with
+                    | Ok true -> ()
+                    | Ok false -> yield! constraintIssue path c false
+                    | Error reason ->
+                        // Surface unevaluable expressions (full FHIRPath not implemented) as warnings.
+                        let detail =
+                            if String.IsNullOrWhiteSpace c.Human then
+                                $"{path}: constraint {c.Key} could not be evaluated ({reason}): {c.Expression}"
+                            else
+                                $"{path}: constraint {c.Key} could not be evaluated ({reason}): {c.Human}"
+
+                        yield warning detail
+        ]
+
     let private codingCodes (obj: JsonObject) =
         match tryProp obj "coding" with
         | Some(:? JsonArray as arr) ->
@@ -666,8 +1058,8 @@ module GeneratedSchemaValidator =
         else
             []
 
-    /// meta.profile entries must be valid canonical URIs (full profile StructureDefinition checks are out of scope).
-    let private validateMetaProfiles (path: string) (obj: JsonObject) =
+    /// meta.profile URI / absolute-canonical shape only (profile schema apply is separate).
+    let private validateMetaProfileUris (path: string) (obj: JsonObject) =
         match tryProp obj "profile" with
         | Some(:? JsonArray as arr) ->
             [
@@ -790,7 +1182,8 @@ module GeneratedSchemaValidator =
                           Binding = schema.Binding
                           Choices = []
                           ContentReference = None
-                          Elements = emptyElements }
+                          Elements = emptyElements
+                          Constraints = [] }
                         |> resolveSchema schemas pathIndex
 
                     match node with
@@ -836,7 +1229,7 @@ module GeneratedSchemaValidator =
                     match typeName with
                     | "CodeableConcept" -> validateCodeableConceptBinding valueSets path schema.Binding obj
                     | "Coding" -> validateCodingBinding valueSets path schema.Binding obj
-                    | "Meta" -> validateMetaProfiles path obj
+                    | "Meta" -> validateMetaProfileUris path obj
                     | _ -> []
 
                 let ele1 =
@@ -845,7 +1238,10 @@ module GeneratedSchemaValidator =
                     else
                         []
 
-                ele1 @ structural @ bindingIssues
+                let constraintIssues =
+                    evaluateConstraints path (schema.Constraints @ resolved.Constraints) obj
+
+                ele1 @ structural @ bindingIssues @ constraintIssues
             | _ ->
                 let typeHint =
                     schema.Types
@@ -877,11 +1273,13 @@ module GeneratedSchemaValidator =
                     | None -> ()
         ]
 
-    let validate
+    and private validateResource
         (schemas: Map<string, ResourceSchema>)
         (valueSets: Map<string, Set<string>>)
+        (profiles: Map<string, ResourceSchema>)
         (schema: ResourceSchema)
         (root: JsonObject)
+        (applyProfiles: bool)
         =
         let pathIndex = indexElementsByPath schema
 
@@ -910,14 +1308,59 @@ module GeneratedSchemaValidator =
                   Binding = None
                   Choices = []
                   ContentReference = None
-                  Elements = schema.Elements }
+                  Elements = schema.Elements
+                  Constraints = [] }
 
             yield! validateObject schemas pathIndex valueSets "" rootSchema root
+            yield! evaluateConstraints schema.TypeName schema.Constraints root
+
+            if applyProfiles then
+                yield! applyDeclaredProfiles schemas valueSets profiles root
         ]
+
+    and private applyDeclaredProfiles
+        (schemas: Map<string, ResourceSchema>)
+        (valueSets: Map<string, Set<string>>)
+        (profiles: Map<string, ResourceSchema>)
+        (root: JsonObject)
+        =
+        match tryProp root "meta" with
+        | Some(:? JsonObject as meta) ->
+            match tryProp meta "profile" with
+            | Some(:? JsonArray as arr) ->
+                [
+                    for i = 0 to arr.Count - 1 do
+                        let item = arr[i]
+                        let itemPath = $"meta.profile[{i}]"
+
+                        if not (isNull item) && item.GetValueKind() = JsonValueKind.String then
+                            let canon = canonicalProfileUrl (item.GetValue<string>())
+
+                            if not (String.IsNullOrWhiteSpace canon) then
+                                match Map.tryFind canon profiles with
+                                | None ->
+                                    yield
+                                        warning
+                                            $"{itemPath}: profile '{canon}' is not loaded; structural profile checks skipped."
+                                | Some profileSchema ->
+                                    yield! validateResource schemas valueSets profiles profileSchema root false
+                ]
+            | _ -> []
+        | _ -> []
+
+    let validate
+        (schemas: Map<string, ResourceSchema>)
+        (valueSets: Map<string, Set<string>>)
+        (profiles: Map<string, ResourceSchema>)
+        (schema: ResourceSchema)
+        (root: JsonObject)
+        =
+        validateResource schemas valueSets profiles schema root true
 
     let validateJson
         (schemas: Map<string, ResourceSchema>)
         (valueSets: Map<string, Set<string>>)
+        (profiles: Map<string, ResourceSchema>)
         (body: string)
         =
         if String.IsNullOrWhiteSpace body then
@@ -933,7 +1376,7 @@ module GeneratedSchemaValidator =
                         match Map.tryFind rt schemas with
                         | Some schema when schema.Kind = "complex-type" ->
                             [ fatal $"'{rt}' is a data type, not a resource." ]
-                        | Some schema -> validate schemas valueSets schema obj
+                        | Some schema -> validate schemas valueSets profiles schema obj
                         | None -> [ fatal $"No schema loaded for resourceType '{rt}'." ]
                     | _ -> [ fatal "resourceType is required." ]
                 | _ -> [ fatal "Request body must be a JSON object." ]

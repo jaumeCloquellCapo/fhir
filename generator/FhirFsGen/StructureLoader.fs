@@ -112,10 +112,13 @@ module StructureLoader =
             && not (String.IsNullOrWhiteSpace sd.TypeName)
             && hasSnapshot sd)
         |> Seq.map (fun sd ->
-            { Ir.ConstraintProfileRef.Id = structureId sd
-              Url = sd.Url
-              TypeName = sd.TypeName
-              Kind = sd.Kind })
+            {
+                Id = structureId sd
+                Url = sd.Url
+                TypeName = sd.TypeName
+                Kind = sd.Kind
+            }
+            : Ir.ConstraintProfileRef)
         |> Seq.distinctBy (fun p -> p.Url)
         |> Seq.sortBy (fun p -> p.Id)
         |> Seq.toList

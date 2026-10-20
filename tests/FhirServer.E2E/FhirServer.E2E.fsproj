@@ -20,6 +20,7 @@
     <Compile Include="Endpoints/RevincludeChainExportTests.fs" />
     <Compile Include="Endpoints/ImportDocumentTests.fs" />
     <Compile Include="Endpoints/SmartSubscriptionTests.fs" />
+    <Compile Include="Endpoints/SmartScopeTests.fs" />
     <Compile Include="Endpoints/TerminologyTests.fs" />
     <Compile Include="Endpoints/AuditTests.fs" />
   </ItemGroup>

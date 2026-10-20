@@ -6,6 +6,14 @@
   "kind": "complex-type",
   "derivation": "specialization",
   "required": [],
+  "constraints": [
+    {
+      "key": "ele-1",
+      "severity": "error",
+      "expression": "hasValue() or (children().count() \u003E id.count())",
+      "human": "All FHIR elements must have a @value or children"
+    }
+  ],
   "elements": {
     "code": {
       "path": "Timing.code",
@@ -18,7 +26,15 @@
       "binding": {
         "strength": "preferred",
         "valueSet": "http://hl7.org/fhir/ValueSet/timing-abbreviation"
-      }
+      },
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ]
     },
     "event": {
       "path": "Timing.event",
@@ -27,6 +43,14 @@
       "array": true,
       "type": [
         "dateTime"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
       ]
     },
     "extension": {
@@ -36,6 +60,20 @@
       "array": true,
       "type": [
         "Extension"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "ext-1",
+          "severity": "error",
+          "expression": "extension.exists() != value.exists()",
+          "human": "Must have either extensions or value[x], not both"
+        }
       ]
     },
     "id": {
@@ -54,6 +92,20 @@
       "array": true,
       "type": [
         "Extension"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "ext-1",
+          "severity": "error",
+          "expression": "extension.exists() != value.exists()",
+          "human": "Must have either extensions or value[x], not both"
+        }
       ]
     },
     "repeat": {
@@ -63,6 +115,68 @@
       "array": false,
       "type": [
         "Element"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "tim-1",
+          "severity": "error",
+          "expression": "duration.empty() or durationUnit.exists()",
+          "human": "if there\u0027s a duration, there needs to be duration units"
+        },
+        {
+          "key": "tim-2",
+          "severity": "error",
+          "expression": "period.empty() or periodUnit.exists()",
+          "human": "if there\u0027s a period, there needs to be period units"
+        },
+        {
+          "key": "tim-4",
+          "severity": "error",
+          "expression": "duration.exists() implies duration \u003E= 0",
+          "human": "duration SHALL be a non-negative value"
+        },
+        {
+          "key": "tim-5",
+          "severity": "error",
+          "expression": "period.exists() implies period \u003E= 0",
+          "human": "period SHALL be a non-negative value"
+        },
+        {
+          "key": "tim-6",
+          "severity": "error",
+          "expression": "periodMax.empty() or period.exists()",
+          "human": "If there\u0027s a periodMax, there must be a period"
+        },
+        {
+          "key": "tim-7",
+          "severity": "error",
+          "expression": "durationMax.empty() or duration.exists()",
+          "human": "If there\u0027s a durationMax, there must be a duration"
+        },
+        {
+          "key": "tim-8",
+          "severity": "error",
+          "expression": "countMax.empty() or count.exists()",
+          "human": "If there\u0027s a countMax, there must be a count"
+        },
+        {
+          "key": "tim-9",
+          "severity": "error",
+          "expression": "offset.empty() or (when.exists() and when.select($this in (\u0027C\u0027 | \u0027CM\u0027 | \u0027CD\u0027 | \u0027CV\u0027)).allFalse())",
+          "human": "If there\u0027s an offset, there must be a when (and not C, CM, CD, CV)"
+        },
+        {
+          "key": "tim-10",
+          "severity": "error",
+          "expression": "timeOfDay.empty() or when.empty()",
+          "human": "If there\u0027s a timeOfDay, there cannot be a when, or vice versa"
+        }
       ],
       "elements": {
         "bounds": {
@@ -79,6 +193,14 @@
             "boundsDuration",
             "boundsRange",
             "boundsPeriod"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "count": {
@@ -88,6 +210,14 @@
           "array": false,
           "type": [
             "positiveInt"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "countMax": {
@@ -97,6 +227,14 @@
           "array": false,
           "type": [
             "positiveInt"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "dayOfWeek": {
@@ -110,7 +248,15 @@
           "binding": {
             "strength": "required",
             "valueSet": "http://hl7.org/fhir/ValueSet/days-of-week|5.0.0"
-          }
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
         },
         "duration": {
           "path": "Timing.repeat.duration",
@@ -119,6 +265,14 @@
           "array": false,
           "type": [
             "decimal"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "durationMax": {
@@ -128,6 +282,14 @@
           "array": false,
           "type": [
             "decimal"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "durationUnit": {
@@ -141,7 +303,15 @@
           "binding": {
             "strength": "required",
             "valueSet": "http://hl7.org/fhir/ValueSet/units-of-time|5.0.0"
-          }
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
         },
         "extension": {
           "path": "Timing.repeat.extension",
@@ -150,6 +320,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "frequency": {
@@ -159,6 +343,14 @@
           "array": false,
           "type": [
             "positiveInt"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "frequencyMax": {
@@ -168,6 +360,14 @@
           "array": false,
           "type": [
             "positiveInt"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "id": {
@@ -186,6 +386,14 @@
           "array": false,
           "type": [
             "unsignedInt"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "period": {
@@ -195,6 +403,14 @@
           "array": false,
           "type": [
             "decimal"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "periodMax": {
@@ -204,6 +420,14 @@
           "array": false,
           "type": [
             "decimal"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "periodUnit": {
@@ -217,7 +441,15 @@
           "binding": {
             "strength": "required",
             "valueSet": "http://hl7.org/fhir/ValueSet/units-of-time|5.0.0"
-          }
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
         },
         "timeOfDay": {
           "path": "Timing.repeat.timeOfDay",
@@ -226,6 +458,14 @@
           "array": true,
           "type": [
             "time"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "when": {
@@ -239,7 +479,15 @@
           "binding": {
             "strength": "required",
             "valueSet": "http://hl7.org/fhir/ValueSet/event-timing|5.0.0"
-          }
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
         }
       }
     }

@@ -106,7 +106,7 @@ erDiagram
 4. At runtime, `ResourceValidator` → `SchemaEngine.validateJson`
 5. Writes return **422** on schema failure; `$validate` returns an `OperationOutcome` (HTTP 200)
 
-Full IG / profile StructureDefinition conformance is not implemented yet (canonical `meta.profile` format is checked).
+Core R5 constraint profiles and FHIRPath constraint subset are emitted by the generator and applied at validate/write when `meta.profile` references a loaded profile. Additional IGs require generating/syncing extra profile schemas.
 
 ## Request flow (create)
 

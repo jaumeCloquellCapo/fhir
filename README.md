@@ -101,7 +101,7 @@ compose.yaml             Postgres for local development
 
 This project is an **MVP**. It is useful for learning, demos, and as a foundation for a custom FHIR service. It is **not** a certified, production-hardened clinical platform out of the box.
 
-**Not yet in scope:** full IG/profile StructureDefinition conformance; full SMART authorize/PKCE/EHR launch; subscription webhook retries/signing.
+**Not yet in scope:** full SMART authorize/PKCE/EHR launch; subscription webhook retries/signing; packaging arbitrary external IGs beyond R5 core profiles (generator already emits core constraint profiles + FHIRPath constraints).
 
 Contributions that move those areas forward are welcome—see [CONTRIBUTING.md](CONTRIBUTING.md).
 

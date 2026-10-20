@@ -6,6 +6,14 @@
   "kind": "complex-type",
   "derivation": "specialization",
   "required": [],
+  "constraints": [
+    {
+      "key": "ele-1",
+      "severity": "error",
+      "expression": "hasValue() or (children().count() \u003E id.count())",
+      "human": "All FHIR elements must have a @value or children"
+    }
+  ],
   "elements": {
     "availableTime": {
       "path": "Availability.availableTime",
@@ -15,6 +23,20 @@
       "type": [
         "Element"
       ],
+      "constraints": [
+        {
+          "key": "av-1",
+          "severity": "error",
+          "expression": "allDay.exists().not() or (allDay implies availableStartTime.exists().not() and availableEndTime.exists().not())",
+          "human": "Cannot include start/end times when selecting all day availability."
+        },
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
       "elements": {
         "allDay": {
           "path": "Availability.availableTime.allDay",
@@ -23,6 +45,14 @@
           "array": false,
           "type": [
             "boolean"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "availableEndTime": {
@@ -32,6 +62,14 @@
           "array": false,
           "type": [
             "time"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "availableStartTime": {
@@ -41,6 +79,14 @@
           "array": false,
           "type": [
             "time"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "daysOfWeek": {
@@ -54,7 +100,15 @@
           "binding": {
             "strength": "required",
             "valueSet": "http://hl7.org/fhir/ValueSet/days-of-week|5.0.0"
-          }
+          },
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
+          ]
         },
         "extension": {
           "path": "Availability.availableTime.extension",
@@ -63,6 +117,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "id": {
@@ -83,6 +151,20 @@
       "array": true,
       "type": [
         "Extension"
+      ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        },
+        {
+          "key": "ext-1",
+          "severity": "error",
+          "expression": "extension.exists() != value.exists()",
+          "human": "Must have either extensions or value[x], not both"
+        }
       ]
     },
     "id": {
@@ -102,6 +184,14 @@
       "type": [
         "Element"
       ],
+      "constraints": [
+        {
+          "key": "ele-1",
+          "severity": "error",
+          "expression": "hasValue() or (children().count() \u003E id.count())",
+          "human": "All FHIR elements must have a @value or children"
+        }
+      ],
       "elements": {
         "description": {
           "path": "Availability.notAvailableTime.description",
@@ -110,6 +200,14 @@
           "array": false,
           "type": [
             "string"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "during": {
@@ -119,6 +217,14 @@
           "array": false,
           "type": [
             "Period"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            }
           ]
         },
         "extension": {
@@ -128,6 +234,20 @@
           "array": true,
           "type": [
             "Extension"
+          ],
+          "constraints": [
+            {
+              "key": "ele-1",
+              "severity": "error",
+              "expression": "hasValue() or (children().count() \u003E id.count())",
+              "human": "All FHIR elements must have a @value or children"
+            },
+            {
+              "key": "ext-1",
+              "severity": "error",
+              "expression": "extension.exists() != value.exists()",
+              "human": "Must have either extensions or value[x], not both"
+            }
           ]
         },
         "id": {
