@@ -164,18 +164,21 @@ module SubscriptionNotifier =
 
         bundle
 
-    let private deliverAsync (endpoint: string) (payload: string) (ct: CancellationToken) =
+    let private deliverInProcess (endpoint: string) (payload: string) =
+        match tryHookSinkId endpoint with
+        | Some id ->
+            captureHook id payload
+            true
+        | None -> false
+
+    let private deliverRemoteAsync (endpoint: string) (payload: string) =
         task {
-            match tryHookSinkId endpoint with
-            | Some id ->
-                captureHook id payload
-                return true
-            | None when not allowRemoteHooks -> return false
-            | None when not (isSafeRemoteEndpoint endpoint) -> return false
-            | None ->
+            if not allowRemoteHooks || not (isSafeRemoteEndpoint endpoint) then
+                return false
+            else
                 try
                     use content = new StringContent(payload, Encoding.UTF8, "application/fhir+json")
-                    use! response = http.PostAsync(endpoint, content, ct)
+                    use! response = http.PostAsync(endpoint, content, CancellationToken.None)
                     return response.IsSuccessStatusCode
                 with
                 | :? HttpRequestException
@@ -183,7 +186,9 @@ module SubscriptionNotifier =
                 | :? SocketException -> return false
         }
 
-    let private notifyChangeCore (store: IResourceStore) (interaction: string) (resource: FhirResource) =
+    /// Notify active rest-hook subscriptions whose topic matches the resource type.
+    /// In-process `/_hooks/` sinks are synchronous; remote HTTP is queued off the write path.
+    let notifyChange (store: IResourceStore) (interaction: string) (resource: FhirResource) =
         if not (ResourceCatalog.isSupported "Subscription") then
             ()
         else
@@ -208,21 +213,17 @@ module SubscriptionNotifier =
                                 let notification = buildNotification subscription interaction resource
                                 let payload = FhirJson.toJson notification
 
-                                deliverAsync endpoint payload CancellationToken.None
-                                |> Async.AwaitTask
-                                |> Async.RunSynchronously
-                                |> ignore
+                                if not (deliverInProcess endpoint payload) then
+                                    let remotePayload = payload
+
+                                    Task.Run(fun () ->
+                                        try
+                                            deliverRemoteAsync endpoint remotePayload
+                                            |> Async.AwaitTask
+                                            |> Async.RunSynchronously
+                                            |> ignore
+                                        with ex ->
+                                            logWarning ex "Remote subscription delivery failed")
+                                    |> ignore
                 with ex ->
                     logWarning ex "Subscription notification fan-out failed"
-
-    /// Notify active rest-hook subscriptions whose topic matches the resource type.
-    /// Runs off the request thread so writes are not blocked on HTTP delivery.
-    let notifyChange (store: IResourceStore) (interaction: string) (resource: FhirResource) =
-        let snapshot = FhirJson.deepClone resource
-
-        Task.Run(fun () ->
-            try
-                notifyChangeCore store interaction snapshot
-            with ex ->
-                logWarning ex "Background subscription notify failed")
-        |> ignore
