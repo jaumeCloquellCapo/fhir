@@ -18,7 +18,7 @@ The goal is a small, readable codebase that developers can run locally, extend, 
 - **REST API** — CRUD, history, Bundle transaction/batch, `$validate`, `$everything`, `$document`, `$lastn`, `$dump`, `$export` / `$import`
 - **Search (SQL-indexed)** — catalog from R5 `SearchParameter` codegen; `_include` / `_revinclude`, multi-hop chaining, nested `_has`, composites, `_filter` subset, modifiers (`:exact` / `:contains` / `:missing` / `:not` / `:above` / `:below`), date & quantity prefixes (incl. `ap`)
 - **Terminology MVP** — `$expand`, `$lookup`, `$validate-code` over stored `ValueSet` / `CodeSystem`
-- **SMART App Launch MVP** — discovery + `/auth/token` (`client_credentials`); Bearer **system** scopes when `Auth:Enabled=true`
+- **SMART App Launch MVP** — discovery + `/auth/token` (`client_credentials`); Bearer/Basic scopes enforced with auth on by default
 - **Subscriptions MVP** — rest-hook notifications + local `/_hooks/{id}` capture sink
 - **Envelope persistence** — one current + history table per resource type on PostgreSQL
 - **Schema validation** — cardinality, choices, bindings, primitives, FHIRPath constraint subset, and **core constraint profiles** (`meta.profile`) via generated `FhirServer.Validation` + embedded schemas
