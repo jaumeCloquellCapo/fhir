@@ -40,6 +40,8 @@ module QuestionnaireValidation =
         EnableWhen: EnableWhen list
         AnswerValueSet: string option
         AnswerOptions: AnswerOption list
+        /// R5: optionsOnly | optionsOrType | optionsOrString (open-choice ≈ optionsOrString).
+        AnswerConstraint: string option
         Children: QItem list
     }
 
@@ -156,6 +158,7 @@ module QuestionnaireValidation =
                 EnableWhen = enableWhen
                 AnswerValueSet = propString obj "answerValueSet" |> Option.map (fun u -> u.Split('|').[0].Trim())
                 AnswerOptions = answerOptions
+                AnswerConstraint = propString obj "answerConstraint"
                 Children = itemsArray obj |> List.choose parseQItem
             }
 
@@ -223,6 +226,7 @@ module QuestionnaireValidation =
         | "url"
         | "uri" -> Some "valueUri"
         | "attachment" -> Some "valueAttachment"
+        // R5: choice/open-choice → coding (+ answerConstraint for open).
         | "coding"
         | "choice"
         | "open-choice" -> Some "valueCoding"
@@ -617,7 +621,12 @@ module QuestionnaireValidation =
                         let answers = responseAnswers node
 
                         if answers <> [] then
-                            let isOpenChoice = qItem.Type.Equals("open-choice", StringComparison.OrdinalIgnoreCase)
+                            let allowsFreeString =
+                                qItem.Type.Equals("open-choice", StringComparison.OrdinalIgnoreCase)
+                                || (match qItem.AnswerConstraint with
+                                    | Some c when c.Equals("optionsOrString", StringComparison.OrdinalIgnoreCase) ->
+                                        true
+                                    | _ -> false)
 
                             // answerOption membership
                             if qItem.AnswerOptions <> [] then
@@ -625,8 +634,7 @@ module QuestionnaireValidation =
                                     let ok = qItem.AnswerOptions |> List.exists (fun o -> optionMatches o answer)
 
                                     let freeText =
-                                        isOpenChoice
-                                        && answerHasExpectedValue answer "valueString"
+                                        allowsFreeString && answerHasExpectedValue answer "valueString"
 
                                     if not ok && not freeText then
                                         let msg =
@@ -634,7 +642,7 @@ module QuestionnaireValidation =
 
                                         if strict then yield fatal msg else yield warning msg
 
-                            // answerValueSet membership (choice / open-choice / coding)
+                            // answerValueSet membership (coding / R4 choice)
                             match qItem.AnswerValueSet with
                             | None -> ()
                             | Some vsUrl ->
@@ -662,10 +670,9 @@ module QuestionnaireValidation =
                                                         $"QuestionnaireResponse item '{linkId}' answer[{i}] coding '{shown}' is not in answerValueSet '{vsUrl}'."
 
                                                     if strict then yield fatal msg else yield warning msg
-                                            | _ when isOpenChoice && answerHasExpectedValue answer "valueString" ->
-                                                () // open-choice free text allowed
+                                            | _ when allowsFreeString && answerHasExpectedValue answer "valueString" ->
+                                                ()
                                             | _ when answerHasExpectedValue answer "valueString" && qItem.AnswerOptions = [] ->
-                                                // choice typed as string answer → not in VS
                                                 let msg =
                                                     $"QuestionnaireResponse item '{linkId}' answer[{i}] must be valueCoding from answerValueSet '{vsUrl}'."
 

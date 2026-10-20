@@ -370,7 +370,7 @@ type ValidateTests() =
             assertStatus HttpStatusCode.Created vsStatus
             Assert.Contains("ValueSet", vsBody)
 
-            let! qStatus, _, _ =
+            let! qStatus, qBody, _ =
                 postJson
                     client
                     "/Questionnaire"
@@ -382,15 +382,17 @@ type ValidateTests() =
                       "item": [
                         {
                           "linkId": "color",
-                          "type": "choice",
+                          "type": "coding",
                           "required": true,
+                          "text": "Color",
                           "answerValueSet": "http://example.org/vs/qr-colors"
                         }
                       ]
                     }
                     """
 
-            assertStatus HttpStatusCode.Created qStatus
+            if qStatus <> HttpStatusCode.Created then
+                failwith ("Questionnaire create failed " + string (int qStatus) + " " + qBody)
 
             let! status, body, _ =
                 postJson
