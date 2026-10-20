@@ -21,6 +21,8 @@ make lint
 make test
 ```
 
+GitHub Actions runs the API E2E suite and a generator smoke build on PRs that touch the relevant paths (see [docs/Development.md](docs/Development.md)).
+
 ## Pull request guidelines
 
 1. **One concern per PR** — easier to review and revert

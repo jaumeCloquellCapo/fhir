@@ -20,6 +20,17 @@ make test
 # or: dotnet test tests/FhirServer.E2E
 ```
 
+## CI (GitHub Actions)
+
+Workflows under [`.github/workflows/`](../.github/workflows/):
+
+| Workflow | What it runs |
+|----------|----------------|
+| [api.yml](../.github/workflows/api.yml) | Build `FhirServer` + E2E tests |
+| [generator.yml](../.github/workflows/generator.yml) | Build `FhirFsGen`, smoke-generate `Patient`, build schema packages |
+
+Both run on `push` / `pull_request` to `main` (path-filtered) and support `workflow_dispatch`.
+
 ## Format & lint
 
 ```bash

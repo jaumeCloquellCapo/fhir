@@ -4,6 +4,8 @@ An open-source [HL7 FHIR](https://hl7.org/fhir/) server written in [F#](https://
 
 | Build | Status |
 |-------|--------|
+| API | [![API](https://github.com/jaumeCloquellCapo/fhir/actions/workflows/api.yml/badge.svg)](https://github.com/jaumeCloquellCapo/fhir/actions/workflows/api.yml) |
+| Generator | [![Generator](https://github.com/jaumeCloquellCapo/fhir/actions/workflows/generator.yml/badge.svg)](https://github.com/jaumeCloquellCapo/fhir/actions/workflows/generator.yml) |
 | Local | `make build` · `make test` |
 
 FhirServer helps you stand up a standards-oriented FHIR API quickly: create, read, update, search, history, validate, and related operations—backed by an envelope store (PostgreSQL or SQLite) and schema validation generated from official HL7 packages (no Firely / `Hl7.Fhir.*` runtime dependency).

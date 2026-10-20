@@ -1,0 +1,48 @@
+name: API
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "packages/**"
+      - "tests/**"
+      - "FhirServer.slnx"
+      - ".github/workflows/api.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "packages/**"
+      - "tests/**"
+      - "FhirServer.slnx"
+      - ".github/workflows/api.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: api-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Build & E2E
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Restore
+        run: dotnet restore FhirServer.slnx
+
+      - name: Build API
+        run: dotnet build src/FhirServer/FhirServer.fsproj --configuration Release --no-restore
+
+      - name: Run E2E tests
+        run: dotnet test tests/FhirServer.E2E/FhirServer.E2E.fsproj --configuration Release --no-restore --verbosity minimal
