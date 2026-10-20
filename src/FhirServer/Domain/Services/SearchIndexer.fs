@@ -1,12 +1,13 @@
 namespace FhirServer.Domain.Services
 
 open System
+open System.Globalization
 open System.Text.Json
 open System.Text.Json.Nodes
 open FhirServer.Domain
 open FhirServer.Domain.Types
 
-/// Extract FHIR search index rows from a resource (mirrors SearchEngine.matchesQuery coverage).
+/// Extract FHIR search index rows from a resource (mirrors SearchEngine plan coverage).
 module SearchIndexer =
 
     type StringRow = { Param: string; Value: string }
@@ -18,15 +19,30 @@ module SearchIndexer =
 
     type RefRow = { Param: string; Target: string }
 
+    type DateRow =
+        { Param: string
+          StartTs: DateTimeOffset
+          EndTs: DateTimeOffset }
+
+    type QuantityRow =
+        { Param: string
+          Value: decimal
+          System: string
+          Code: string }
+
     type IndexRows =
         { Strings: StringRow list
           Tokens: TokenRow list
-          Refs: RefRow list }
+          Refs: RefRow list
+          Dates: DateRow list
+          Quantities: QuantityRow list }
 
     let empty: IndexRows =
         { Strings = []
           Tokens = []
-          Refs = [] }
+          Refs = []
+          Dates = []
+          Quantities = [] }
 
     let private str (node: JsonNode) =
         if isNull node || node.GetValueKind() = JsonValueKind.Null then
@@ -100,6 +116,85 @@ module SearchIndexer =
                 | _ -> rows)
             acc
 
+    let private parseInstant (raw: string) =
+        match DateTimeOffset.TryParse(raw, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind) with
+        | true, dto -> Some dto
+        | _ ->
+            match DateTimeOffset.TryParse(raw, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal) with
+            | true, dto -> Some dto
+            | _ -> None
+
+    let private addDate (param: string) (startTs: DateTimeOffset) (endTs: DateTimeOffset) (acc: DateRow list) =
+        { Param = param
+          StartTs = startTs
+          EndTs = endTs }
+        :: acc
+
+    let private addDateFromString (param: string) (raw: string) (acc: DateRow list) =
+        match parseInstant raw with
+        | None -> acc
+        | Some startTs ->
+            // Day-precision strings get an exclusive end of next day when date-only.
+            let endTs =
+                if raw.Length <= 10 then
+                    startTs.AddDays 1.0
+                else
+                    startTs.AddSeconds 1.0
+
+            addDate param startTs endTs acc
+
+    let private addQuantity
+        (param: string)
+        (value: decimal)
+        (system: string option)
+        (code: string option)
+        (acc: QuantityRow list)
+        =
+        { Param = param
+          Value = value
+          System = system |> Option.defaultValue ""
+          Code = code |> Option.defaultValue "" }
+        :: acc
+
+    let private observationDates (resource: FhirResource) =
+        let mutable dates: DateRow list = []
+
+        match FhirJson.propString resource "effectiveDateTime" with
+        | Some raw -> dates <- addDateFromString "date" raw dates
+        | None -> ()
+
+        match resource["effectivePeriod"] with
+        | :? JsonObject as period ->
+            let startTs = str period["start"] |> Option.bind parseInstant
+            let endTs = str period["end"] |> Option.bind parseInstant
+
+            match startTs, endTs with
+            | Some s, Some e -> dates <- addDate "date" s e dates
+            | Some s, None -> dates <- addDate "date" s (s.AddDays 1.0) dates
+            | None, Some e -> dates <- addDate "date" e e dates
+            | _ -> ()
+        | _ -> ()
+
+        match FhirJson.propString resource "effectiveInstant" with
+        | Some raw -> dates <- addDateFromString "date" raw dates
+        | None -> ()
+
+        dates
+
+    let private observationQuantities (resource: FhirResource) =
+        match resource["valueQuantity"] with
+        | :? JsonObject as qty ->
+            match qty["value"] with
+            | null -> []
+            | node ->
+                let raw = node.ToJsonString().Trim('"')
+
+                match Decimal.TryParse(raw, NumberStyles.Float, CultureInfo.InvariantCulture) with
+                | true, value ->
+                    addQuantity "value-quantity" value (str qty["system"]) (str qty["code"]) []
+                | _ -> []
+        | _ -> []
+
     let extract (resourceType: string) (resource: FhirResource) : IndexRows =
         match resourceType with
         | "Patient" ->
@@ -130,10 +225,10 @@ module SearchIndexer =
                 | Some g -> addString "gender" g strings
                 | None -> strings
 
-            let strings =
+            let dates =
                 match FhirJson.propString resource "birthDate" with
-                | Some bd -> addString "birthdate" bd strings
-                | None -> strings
+                | Some bd -> addDateFromString "birthdate" bd []
+                | None -> []
 
             let tokens =
                 propObjects resource "identifier"
@@ -146,7 +241,9 @@ module SearchIndexer =
 
             { Strings = strings |> List.distinct
               Tokens = tokens |> List.distinct
-              Refs = [] }
+              Refs = []
+              Dates = dates |> List.distinct
+              Quantities = [] }
 
         | "Observation" ->
             let strings =
@@ -167,7 +264,9 @@ module SearchIndexer =
 
             { Strings = strings |> List.distinct
               Tokens = tokens |> List.distinct
-              Refs = refs |> List.distinct }
+              Refs = refs |> List.distinct
+              Dates = observationDates resource |> List.distinct
+              Quantities = observationQuantities resource |> List.distinct }
 
         | "Encounter"
         | "Condition"
@@ -183,6 +282,8 @@ module SearchIndexer =
 
             { Strings = []
               Tokens = []
-              Refs = refs |> List.distinct }
+              Refs = refs |> List.distinct
+              Dates = []
+              Quantities = [] }
 
         | _ -> empty

@@ -15,6 +15,34 @@ module SearchEngine =
         | Exact
         | Prefix
 
+    [<RequireQualifiedAccess>]
+    type IndexKind =
+        | String
+        | Token
+        | Ref
+        | Date
+        | Quantity
+
+    [<RequireQualifiedAccess>]
+    type DateComparator =
+        | Eq
+        | Ne
+        | Gt
+        | Lt
+        | Ge
+        | Le
+        | Sa
+        | Eb
+
+    [<RequireQualifiedAccess>]
+    type QuantityComparator =
+        | Eq
+        | Ne
+        | Gt
+        | Lt
+        | Ge
+        | Le
+
     type StringFilter =
         { Param: string
           Match: StringMatch
@@ -22,10 +50,28 @@ module SearchEngine =
 
     type TokenFilter =
         { Param: string
+          Negated: bool
           /// (system option, code) — None system matches any system.
           Values: (string option * string) list }
 
     type RefFilter = { Param: string; Values: string list }
+
+    type MissingFilter =
+        { Param: string
+          Kind: IndexKind
+          Missing: bool }
+
+    type DateFilter =
+        { Param: string
+          Comparator: DateComparator
+          Instant: DateTimeOffset }
+
+    type QuantityFilter =
+        { Param: string
+          Comparator: QuantityComparator
+          Value: decimal
+          System: string option
+          Code: string option }
 
     [<RequireQualifiedAccess>]
     type SortField =
@@ -41,10 +87,12 @@ module SearchEngine =
           Strings: StringFilter list
           Tokens: TokenFilter list
           Refs: RefFilter list
+          Missing: MissingFilter list
+          Dates: DateFilter list
+          Quantities: QuantityFilter list
           Sort: SortField
           Offset: int
           Count: int }
-
     let private str (node: JsonNode) =
         if isNull node || node.GetValueKind() = JsonValueKind.Null then
             None
@@ -341,6 +389,78 @@ module SearchEngine =
                 | _ -> acc)
             plain
 
+    let private refIdsFromResource (resource: FhirResource) (param: string) =
+        let fields =
+            match param with
+            | "patient"
+            | "subject" -> [ "subject"; "patient" ]
+            | other -> [ other ]
+
+        fields
+        |> List.choose (fun field ->
+            match resource[field] with
+            | :? JsonObject as obj ->
+                match str obj["reference"] with
+                | Some reference ->
+                    let cleaned = reference.Trim().Split('?').[0].TrimStart('/')
+
+                    match cleaned.Split('/') with
+                    | [| _; id |] when not (String.IsNullOrWhiteSpace id) -> Some id
+                    | _ when not (String.IsNullOrWhiteSpace cleaned) -> Some cleaned
+                    | _ -> None
+                | None -> None
+            | _ -> None)
+
+    /// Expand `_has:RevType:refParam:nestedParam=value` into `_id` filters on the source type.
+    let expandHasQuery
+        (search: string * Map<string, string list> -> FhirResource list)
+        (query: Map<string, string list>)
+        : Map<string, string list> =
+        let hasEntries, plainEntries =
+            query
+            |> Map.toList
+            |> List.partition (fun (key, _) -> key.StartsWith("_has:", StringComparison.Ordinal))
+
+        let plain = Map.ofList plainEntries
+
+        hasEntries
+        |> List.fold
+            (fun (acc: Map<string, string list>) (key, values) ->
+                let rest = key.Substring("_has:".Length)
+
+                match rest.Split(':', 3) with
+                | [| revType; refParam; nestedParam |] when
+                    not (String.IsNullOrWhiteSpace revType || String.IsNullOrWhiteSpace nestedParam)
+                    ->
+                    let found = search (revType, Map.ofList [ nestedParam, values ])
+
+                    let ids =
+                        if List.isEmpty found then
+                            [ "__has_nomatch__" ]
+                        else
+                            found
+                            |> List.collect (fun r -> refIdsFromResource r refParam)
+                            |> List.distinct
+
+                    let existing = acc |> Map.tryFind "_id" |> Option.defaultValue []
+                    acc |> Map.add "_id" (existing @ ids)
+                | [| revType; refParam |] when not (String.IsNullOrWhiteSpace revType) ->
+                    // `_has:Observation:patient=Patient/x` → Observations pointing at that patient → inject ids
+                    let found = search (revType, Map.ofList [ refParam, values ])
+
+                    let ids =
+                        if List.isEmpty found then
+                            [ "__has_nomatch__" ]
+                        else
+                            found
+                            |> List.collect (fun r -> refIdsFromResource r refParam)
+                            |> List.distinct
+
+                    let existing = acc |> Map.tryFind "_id" |> Option.defaultValue []
+                    acc |> Map.add "_id" (existing @ ids)
+                | _ -> acc)
+            plain
+
     let private firstQuery (query: Map<string, string list>) key =
         query |> Map.tryFind key |> Option.bind List.tryHead
 
@@ -425,95 +545,115 @@ module SearchEngine =
             | [| value |] -> None, value
             | _ -> None, token)
 
-    let private stringFilters (resourceType: string) (query: Map<string, string list>) =
+    let private parseParamKey (key: string) =
+        // Ignore control params and _has / chained keys here.
+        if key.StartsWith('_') || key.Contains('.', StringComparison.Ordinal) then
+            key, None
+        else
+            match key.Split(':', 2) with
+            | [| name; modifier |] when name <> "" && modifier <> "" ->
+                name, Some(modifier.ToLowerInvariant())
+            | [| name |] -> name, None
+            | _ -> key, None
+
+    let private entriesFor (query: Map<string, string list>) (baseName: string) =
+        query
+        |> Map.toList
+        |> List.choose (fun (key, values) ->
+            let name, modifier = parseParamKey key
+
+            if name.Equals(baseName, StringComparison.Ordinal) then
+                Some(modifier, values)
+            else
+                None)
+
+    let private parseMissingFlag (values: string list) =
+        match values |> List.tryHead |> Option.map (fun s -> s.Trim().ToLowerInvariant()) with
+        | Some "true"
+        | Some "1"
+        | Some "yes" -> Some true
+        | Some "false"
+        | Some "0"
+        | Some "no" -> Some false
+        | _ -> Some true
+
+    let private parseDatePrefix (raw: string) : (DateComparator * string) option =
+        let prefixes = [ "eq"; "ne"; "gt"; "lt"; "ge"; "le"; "sa"; "eb" ]
+
+        let prefix, rest =
+            match prefixes |> List.tryFind (fun p -> raw.StartsWith(p, StringComparison.Ordinal)) with
+            | Some p when raw.Length > p.Length -> p, raw.Substring(p.Length)
+            | _ -> "eq", raw
+
+        let cmp =
+            match prefix with
+            | "ne" -> DateComparator.Ne
+            | "gt" -> DateComparator.Gt
+            | "lt" -> DateComparator.Lt
+            | "ge" -> DateComparator.Ge
+            | "le" -> DateComparator.Le
+            | "sa" -> DateComparator.Sa
+            | "eb" -> DateComparator.Eb
+            | _ -> DateComparator.Eq
+
+        Some(cmp, rest)
+
+    let private parseQuantityValue (raw: string) : (QuantityComparator * decimal * string option * string option) option =
+        let prefix, rest =
+            if
+                raw.Length >= 2
+                && (raw.StartsWith("ge", StringComparison.Ordinal)
+                    || raw.StartsWith("gt", StringComparison.Ordinal)
+                    || raw.StartsWith("le", StringComparison.Ordinal)
+                    || raw.StartsWith("lt", StringComparison.Ordinal)
+                    || raw.StartsWith("eq", StringComparison.Ordinal)
+                    || raw.StartsWith("ne", StringComparison.Ordinal))
+            then
+                raw.Substring(0, 2), raw.Substring(2)
+            else
+                "eq", raw
+
+        let cmp =
+            match prefix with
+            | "ne" -> QuantityComparator.Ne
+            | "gt" -> QuantityComparator.Gt
+            | "lt" -> QuantityComparator.Lt
+            | "ge" -> QuantityComparator.Ge
+            | "le" -> QuantityComparator.Le
+            | _ -> QuantityComparator.Eq
+
+        let parts = rest.Split('|')
+
+        let numberPart = parts.[0]
+
+        match Decimal.TryParse(numberPart, NumberStyles.Float, CultureInfo.InvariantCulture) with
+        | true, value ->
+            let system = if parts.Length > 1 && parts.[1] <> "" then Some parts.[1] else None
+            let code = if parts.Length > 2 && parts.[2] <> "" then Some parts.[2] else None
+            Some(cmp, value, system, code)
+        | _ -> None
+
+    let private stringParamSpecs (resourceType: string) =
         match resourceType with
         | "Patient" ->
             [
-                let family = valuesOf query "family"
-                if family <> [] then
-                    yield
-                        { Param = "family"
-                          Match = StringMatch.Contains
-                          Values = family |> List.map (fun s -> s.ToLowerInvariant()) }
-
-                let given = valuesOf query "given"
-                if given <> [] then
-                    yield
-                        { Param = "given"
-                          Match = StringMatch.Contains
-                          Values = given |> List.map (fun s -> s.ToLowerInvariant()) }
-
-                let name = valuesOf query "name"
-                if name <> [] then
-                    yield
-                        { Param = "name"
-                          Match = StringMatch.Contains
-                          Values = name |> List.map (fun s -> s.ToLowerInvariant()) }
-
-                let gender = valuesOf query "gender"
-                if gender <> [] then
-                    yield
-                        { Param = "gender"
-                          Match = StringMatch.Exact
-                          Values = gender |> List.map (fun s -> s.ToLowerInvariant()) }
-
-                let birth = valuesOf query "birthdate"
-                if birth <> [] then
-                    yield
-                        { Param = "birthdate"
-                          Match = StringMatch.Prefix
-                          Values = birth }
+                "family", StringMatch.Contains, IndexKind.String
+                "given", StringMatch.Contains, IndexKind.String
+                "name", StringMatch.Contains, IndexKind.String
+                "gender", StringMatch.Exact, IndexKind.String
             ]
-        | "Observation" ->
-            [
-                let status = valuesOf query "status"
-                if status <> [] then
-                    yield
-                        { Param = "status"
-                          Match = StringMatch.Exact
-                          Values = status |> List.map (fun s -> s.ToLowerInvariant()) }
-            ]
+        | "Observation" -> [ "status", StringMatch.Exact, IndexKind.String ]
         | _ -> []
 
-    let private tokenFilters (resourceType: string) (query: Map<string, string list>) : TokenFilter list =
+    let private tokenParamSpecs (resourceType: string) =
         match resourceType with
-        | "Patient" ->
-            let ids = valuesOf query "identifier"
-
-            if ids = [] then
-                []
-            else
-                [ {
-                      Param = "identifier"
-                      Values = parseTokenValues ids
-                  } ]
-        | "Observation" ->
-            let codes = valuesOf query "code"
-
-            if codes = [] then
-                []
-            else
-                [ {
-                      Param = "code"
-                      Values = parseTokenValues codes
-                  } ]
+        | "Patient" -> [ "identifier", IndexKind.Token ]
+        | "Observation" -> [ "code", IndexKind.Token ]
         | _ -> []
 
-    let private refFilters (resourceType: string) (query: Map<string, string list>) : RefFilter list =
-        let patientVals = valuesOf query "patient"
-        let subjectVals = valuesOf query "subject"
-
+    let private refParamSpecs (resourceType: string) =
         match resourceType with
-        | "Observation" ->
-            let combined = patientVals @ subjectVals
-
-            if combined = [] then
-                []
-            else
-                [ {
-                      Param = "subject"
-                      Values = combined
-                  } ]
+        | "Observation" -> [ "patient", "subject"; "subject", "subject" ]
         | "Encounter"
         | "Condition"
         | "AllergyIntolerance"
@@ -522,17 +662,178 @@ module SearchEngine =
         | "DiagnosticReport"
         | "Immunization"
         | "CarePlan"
-        | "DocumentReference" ->
-            let combined = patientVals @ subjectVals
-
-            if combined = [] then
-                []
-            else
-                [ {
-                      Param = "patient"
-                      Values = combined
-                  } ]
+        | "DocumentReference" -> [ "patient", "patient"; "subject", "patient" ]
         | _ -> []
+
+    let private dateParamSpecs (resourceType: string) =
+        match resourceType with
+        | "Patient" -> [ "birthdate" ]
+        | "Observation" -> [ "date" ]
+        | _ -> []
+
+    let private quantityParamSpecs (resourceType: string) =
+        match resourceType with
+        | "Observation" -> [ "value-quantity" ]
+        | _ -> []
+
+    let private stringFilters (resourceType: string) (query: Map<string, string list>) =
+        stringParamSpecs resourceType
+        |> List.collect (fun (param, defaultMatch, _) ->
+            entriesFor query param
+            |> List.choose (fun (modifier, values) ->
+                match modifier with
+                | Some "missing" -> None
+                | Some "exact" ->
+                    Some {
+                        Param = param
+                        Match = StringMatch.Exact
+                        Values = values |> List.map (fun s -> s.ToLowerInvariant())
+                    }
+                | Some "contains" ->
+                    Some {
+                        Param = param
+                        Match = StringMatch.Contains
+                        Values = values |> List.map (fun s -> s.ToLowerInvariant())
+                    }
+                | Some _ -> None
+                | None ->
+                    Some {
+                        Param = param
+                        Match = defaultMatch
+                        Values = values |> List.map (fun s -> s.ToLowerInvariant())
+                    }))
+
+    let private tokenFilters (resourceType: string) (query: Map<string, string list>) : TokenFilter list =
+        tokenParamSpecs resourceType
+        |> List.collect (fun (param, _) ->
+            entriesFor query param
+            |> List.choose (fun (modifier, values) ->
+                match modifier with
+                | Some "missing" -> None
+                | Some "not" ->
+                    Some {
+                        Param = param
+                        Negated = true
+                        Values = parseTokenValues values
+                    }
+                | Some _ -> None
+                | None ->
+                    Some {
+                        Param = param
+                        Negated = false
+                        Values = parseTokenValues values
+                    }))
+
+    let private refFilters (resourceType: string) (query: Map<string, string list>) : RefFilter list =
+        refParamSpecs resourceType
+        |> List.collect (fun (queryParam, indexParam) ->
+            entriesFor query queryParam
+            |> List.choose (fun (modifier, values) ->
+                match modifier with
+                | Some "missing" -> None
+                | Some _ -> None
+                | None when values = [] -> None
+                | None -> Some { Param = indexParam; Values = values }))
+        |> List.groupBy (fun f -> f.Param)
+        |> List.map (fun (param, filters) -> {
+            Param = param
+            Values = filters |> List.collect (fun f -> f.Values)
+        })
+
+    let private missingFilters (resourceType: string) (query: Map<string, string list>) : MissingFilter list =
+        let specs =
+            [
+                for param, _, kind in stringParamSpecs resourceType do
+                    yield param, kind
+                for param, kind in tokenParamSpecs resourceType do
+                    yield param, kind
+                for queryParam, indexParam in refParamSpecs resourceType do
+                    yield queryParam, IndexKind.Ref
+                    yield indexParam, IndexKind.Ref
+                for param in dateParamSpecs resourceType do
+                    yield param, IndexKind.Date
+                for param in quantityParamSpecs resourceType do
+                    yield param, IndexKind.Quantity
+            ]
+            |> List.distinctBy fst
+
+        specs
+        |> List.collect (fun (param, kind) ->
+            entriesFor query param
+            |> List.choose (fun (modifier, values) ->
+                match modifier with
+                | Some "missing" ->
+                    parseMissingFlag values
+                    |> Option.map (fun missing -> {
+                        Param =
+                            match kind, param with
+                            | IndexKind.Ref, "patient" when resourceType = "Observation" -> "subject"
+                            | IndexKind.Ref, "subject" when resourceType <> "Observation" -> "patient"
+                            | _ -> param
+                        Kind = kind
+                        Missing = missing
+                    })
+                | _ -> None))
+
+    let private dateFilters (resourceType: string) (query: Map<string, string list>) : DateFilter list =
+        dateParamSpecs resourceType
+        |> List.collect (fun param ->
+            entriesFor query param
+            |> List.collect (fun (modifier, values) ->
+                match modifier with
+                | Some "missing" -> []
+                | Some _ -> []
+                | None ->
+                    values
+                    |> List.choose (fun raw ->
+                        match parseDatePrefix raw with
+                        | None -> None
+                        | Some(cmp, rest) ->
+                            match parseInstant rest with
+                            | Some dto ->
+                                Some {
+                                    Param = param
+                                    Comparator = cmp
+                                    Instant = dto
+                                }
+                            | None ->
+                                // Allow bare dates like 1990-01-01
+                                match
+                                    DateTimeOffset.TryParse(
+                                        rest,
+                                        CultureInfo.InvariantCulture,
+                                        DateTimeStyles.AssumeUniversal
+                                    )
+                                with
+                                | true, dto ->
+                                    Some {
+                                        Param = param
+                                        Comparator = cmp
+                                        Instant = dto
+                                    }
+                                | _ -> None)))
+
+    let private quantityFilters (resourceType: string) (query: Map<string, string list>) : QuantityFilter list =
+        quantityParamSpecs resourceType
+        |> List.collect (fun param ->
+            entriesFor query param
+            |> List.collect (fun (modifier, values) ->
+                match modifier with
+                | Some "missing" -> []
+                | Some _ -> []
+                | None ->
+                    values
+                    |> List.choose (fun raw ->
+                        match parseQuantityValue raw with
+                        | None -> None
+                        | Some(cmp, value, system, code) ->
+                            Some {
+                                Param = param
+                                Comparator = cmp
+                                Value = value
+                                System = system
+                                Code = code
+                            })))
 
     /// Build a search plan from a FHIR query map (indexed params only; others ignored).
     let toSearchPlan (resourceType: string) (query: Map<string, string list>) : SearchPlan =
@@ -545,10 +846,12 @@ module SearchEngine =
           Strings = stringFilters resourceType query
           Tokens = tokenFilters resourceType query
           Refs = refFilters resourceType query
+          Missing = missingFilters resourceType query
+          Dates = dateFilters resourceType query
+          Quantities = quantityFilters resourceType query
           Sort = parseSort query
           Offset = offset
           Count = count }
-
     let applyPagingSort (query: Map<string, string list>) (items: FhirResource list) =
         let sorted =
             match parseSort query with

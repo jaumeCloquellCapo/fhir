@@ -125,6 +125,39 @@ module PostgresMigrations =
                 ON CONFLICT (id) DO NOTHING;
                 """
         }
+        {
+            Version = 5
+            Name = "search_date_quantity_tables"
+            Script =
+                """
+                CREATE TABLE IF NOT EXISTS search_date (
+                    resource_type text NOT NULL,
+                    id            text NOT NULL,
+                    param         text NOT NULL,
+                    start_ts      timestamptz NOT NULL,
+                    end_ts        timestamptz NOT NULL
+                );
+                CREATE INDEX IF NOT EXISTS idx_search_date_lookup
+                    ON search_date (resource_type, param, start_ts, end_ts);
+                CREATE INDEX IF NOT EXISTS idx_search_date_resource
+                    ON search_date (resource_type, id);
+
+                CREATE TABLE IF NOT EXISTS search_quantity (
+                    resource_type text NOT NULL,
+                    id            text NOT NULL,
+                    param         text NOT NULL,
+                    value         numeric NOT NULL,
+                    system        text NOT NULL,
+                    code          text NOT NULL
+                );
+                CREATE INDEX IF NOT EXISTS idx_search_quantity_lookup
+                    ON search_quantity (resource_type, param, value);
+                CREATE INDEX IF NOT EXISTS idx_search_quantity_resource
+                    ON search_quantity (resource_type, id);
+
+                UPDATE search_index_state SET backfilled = false WHERE id = 1;
+                """
+        }
     ]
 
     let migrate (connectionString: string) =

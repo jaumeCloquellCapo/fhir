@@ -21,6 +21,14 @@ module SearchIndexQuery =
         | SearchEngine.SortField.IdDesc -> "ORDER BY t.id DESC"
         | SearchEngine.SortField.IdAsc -> "ORDER BY t.id ASC"
 
+    let private indexTable =
+        function
+        | SearchEngine.IndexKind.String -> "search_string"
+        | SearchEngine.IndexKind.Token -> "search_token"
+        | SearchEngine.IndexKind.Ref -> "search_ref"
+        | SearchEngine.IndexKind.Date -> "search_date"
+        | SearchEngine.IndexKind.Quantity -> "search_quantity"
+
     let buildWhere (resourceType: string) (plan: SearchEngine.SearchPlan) : BuiltQuery =
         let sb = StringBuilder(" WHERE 1=1")
         let mutable parameters: (string * obj) list = []
@@ -83,7 +91,8 @@ module SearchIndexQuery =
                         + " || '%')")
                 |> String.concat " OR "
 
-            sb.Append($" AND ({valueClauses})") |> ignore
+            if valueClauses <> "" then
+                sb.Append($" AND ({valueClauses})") |> ignore
 
         for filter in plan.Tokens do
             let paramPh = addParam (filter.Param :> obj)
@@ -102,7 +111,11 @@ module SearchIndexQuery =
                         $"EXISTS (SELECT 1 FROM search_token tk WHERE tk.resource_type = {rtPh} AND tk.id = t.id AND tk.param = {paramPh} AND tk.code = {codePh} AND tk.system = {sysPh})")
                 |> String.concat " OR "
 
-            sb.Append($" AND ({valueClauses})") |> ignore
+            if valueClauses <> "" then
+                if filter.Negated then
+                    sb.Append($" AND NOT ({valueClauses})") |> ignore
+                else
+                    sb.Append($" AND ({valueClauses})") |> ignore
 
         for filter in plan.Refs do
             let paramPh = addParam (filter.Param :> obj)
@@ -115,7 +128,74 @@ module SearchIndexQuery =
                     $"EXISTS (SELECT 1 FROM search_ref r WHERE r.resource_type = {rtPh} AND r.id = t.id AND r.param = {paramPh} AND r.target = {tPh})")
                 |> String.concat " OR "
 
-            sb.Append($" AND ({valueClauses})") |> ignore
+            if valueClauses <> "" then
+                sb.Append($" AND ({valueClauses})") |> ignore
+
+        for filter in plan.Missing do
+            let paramPh = addParam (filter.Param :> obj)
+            let table = indexTable filter.Kind
+            let exists =
+                $"EXISTS (SELECT 1 FROM {table} x WHERE x.resource_type = {rtPh} AND x.id = t.id AND x.param = {paramPh})"
+
+            if filter.Missing then
+                sb.Append($" AND NOT {exists}") |> ignore
+            else
+                sb.Append($" AND {exists}") |> ignore
+
+        for filter in plan.Dates do
+            let paramPh = addParam (filter.Param :> obj)
+            let instantPh = addParam (filter.Instant :> obj)
+
+            let clause =
+                match filter.Comparator with
+                | SearchEngine.DateComparator.Eq ->
+                    $"EXISTS (SELECT 1 FROM search_date d WHERE d.resource_type = {rtPh} AND d.id = t.id AND d.param = {paramPh} AND d.start_ts <= {instantPh} AND d.end_ts > {instantPh})"
+                | SearchEngine.DateComparator.Ne ->
+                    $"NOT EXISTS (SELECT 1 FROM search_date d WHERE d.resource_type = {rtPh} AND d.id = t.id AND d.param = {paramPh} AND d.start_ts <= {instantPh} AND d.end_ts > {instantPh})"
+                | SearchEngine.DateComparator.Gt
+                | SearchEngine.DateComparator.Sa ->
+                    $"EXISTS (SELECT 1 FROM search_date d WHERE d.resource_type = {rtPh} AND d.id = t.id AND d.param = {paramPh} AND d.start_ts > {instantPh})"
+                | SearchEngine.DateComparator.Lt
+                | SearchEngine.DateComparator.Eb ->
+                    $"EXISTS (SELECT 1 FROM search_date d WHERE d.resource_type = {rtPh} AND d.id = t.id AND d.param = {paramPh} AND d.end_ts <= {instantPh})"
+                | SearchEngine.DateComparator.Ge ->
+                    $"EXISTS (SELECT 1 FROM search_date d WHERE d.resource_type = {rtPh} AND d.id = t.id AND d.param = {paramPh} AND d.end_ts > {instantPh})"
+                | SearchEngine.DateComparator.Le ->
+                    $"EXISTS (SELECT 1 FROM search_date d WHERE d.resource_type = {rtPh} AND d.id = t.id AND d.param = {paramPh} AND d.start_ts <= {instantPh})"
+
+            sb.Append($" AND {clause}") |> ignore
+
+        for filter in plan.Quantities do
+            let paramPh = addParam (filter.Param :> obj)
+            let valuePh = addParam (filter.Value :> obj)
+
+            let op =
+                match filter.Comparator with
+                | SearchEngine.QuantityComparator.Eq -> "="
+                | SearchEngine.QuantityComparator.Ne -> "<>"
+                | SearchEngine.QuantityComparator.Gt -> ">"
+                | SearchEngine.QuantityComparator.Lt -> "<"
+                | SearchEngine.QuantityComparator.Ge -> ">="
+                | SearchEngine.QuantityComparator.Le -> "<="
+
+            let systemClause =
+                match filter.System with
+                | None -> ""
+                | Some sys ->
+                    let sysPh = addParam (sys :> obj)
+                    $" AND q.system = {sysPh}"
+
+            let codeClause =
+                match filter.Code with
+                | None -> ""
+                | Some code ->
+                    let codePh = addParam (code :> obj)
+                    $" AND q.code = {codePh}"
+
+            let clause =
+                $"EXISTS (SELECT 1 FROM search_quantity q WHERE q.resource_type = {rtPh} AND q.id = t.id AND q.param = {paramPh} AND q.value {op} {valuePh}{systemClause}{codeClause})"
+
+            sb.Append($" AND {clause}") |> ignore
 
         { WhereClause = sb.ToString()
           OrderBy = orderBy plan

@@ -304,9 +304,9 @@ module ResourceHandlers =
                 |> Map.remove "_include"
                 |> Map.remove "_revinclude"
                 |> SearchEngine.expandChainedQuery searchList
+                |> SearchEngine.expandHasQuery searchList
 
             let page, total = store.Search(resourceType, filterQuery)
-
             let includes =
                 SearchEngine.resolveIncludes (fun (rt, id) -> store.Get(rt, id)) resourceType includeTokens page
 

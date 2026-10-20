@@ -214,7 +214,13 @@ type PostgresEnvelopeSession(connectionString: string) =
                 read history @ read table)
 
         member _.ClearSearchIndex(resourceType, id) =
-            for table in [ "search_string"; "search_token"; "search_ref" ] do
+            for table in [
+                "search_string"
+                "search_token"
+                "search_ref"
+                "search_date"
+                "search_quantity"
+            ] do
                 use c = cmd ()
                 c.CommandText <- $"DELETE FROM {table} WHERE resource_type = @rt AND id = @id;"
                 c.Parameters.AddWithValue("rt", resourceType) |> ignore
@@ -259,6 +265,33 @@ type PostgresEnvelopeSession(connectionString: string) =
                 c.Parameters.AddWithValue("id", id) |> ignore
                 c.Parameters.AddWithValue("param", row.Param) |> ignore
                 c.Parameters.AddWithValue("target", row.Target) |> ignore
+                c.ExecuteNonQuery() |> ignore
+
+            for row in rows.Dates do
+                use c = cmd ()
+
+                c.CommandText <-
+                    "INSERT INTO search_date (resource_type, id, param, start_ts, end_ts) VALUES (@rt, @id, @param, @start_ts, @end_ts);"
+
+                c.Parameters.AddWithValue("rt", resourceType) |> ignore
+                c.Parameters.AddWithValue("id", id) |> ignore
+                c.Parameters.AddWithValue("param", row.Param) |> ignore
+                c.Parameters.AddWithValue("start_ts", row.StartTs) |> ignore
+                c.Parameters.AddWithValue("end_ts", row.EndTs) |> ignore
+                c.ExecuteNonQuery() |> ignore
+
+            for row in rows.Quantities do
+                use c = cmd ()
+
+                c.CommandText <-
+                    "INSERT INTO search_quantity (resource_type, id, param, value, system, code) VALUES (@rt, @id, @param, @value, @system, @code);"
+
+                c.Parameters.AddWithValue("rt", resourceType) |> ignore
+                c.Parameters.AddWithValue("id", id) |> ignore
+                c.Parameters.AddWithValue("param", row.Param) |> ignore
+                c.Parameters.AddWithValue("value", row.Value) |> ignore
+                c.Parameters.AddWithValue("system", row.System) |> ignore
+                c.Parameters.AddWithValue("code", row.Code) |> ignore
                 c.ExecuteNonQuery() |> ignore
 
         member _.SearchCurrent(resourceType, plan) =
