@@ -48,8 +48,18 @@ Each client entry:
 | `AllowedScopes` | Space-separated allow-list; token requests are intersected with this set |
 | `GrantTypes` | e.g. `client_credentials`, `authorization_code` |
 | `RedirectUris` | Allowed redirect URIs for authorize |
+| `OrganizationId` | Optional ORGBAC tenant (`hospital-a` or `Organization/hospital-a`). Tokens include `organization`; CRUD/search/history are filtered to that tenant |
 
-Legacy single-client keys `Smart:ClientId`, `Smart:ClientSecret`, and `Smart:Scopes` are still accepted when `Smart:Clients` is empty (secret required).
+Legacy single-client keys `Smart:ClientId`, `Smart:ClientSecret`, `Smart:Scopes`, and `Smart:OrganizationId` are still accepted when `Smart:Clients` is empty (secret required).
+
+## Multi-tenancy (ORGBAC MVP)
+
+| Key | Description |
+|-----|-------------|
+| `Smart:Clients[].OrganizationId` | Scopes a confidential client to one Organization id |
+| `Auth:OrganizationId` | Optional; when set, HTTP Basic is also tenant-scoped (default Basic is **unrestricted** admin) |
+
+Envelopes store `tenant_id` (empty when the writer was unrestricted). Postgres RLS policies filter on `current_setting('app.tenant_id')` (set per store transaction via `SET LOCAL`). Resource ids remain globally unique across tenants.
 
 `POST /auth/register` is off unless `Smart:EnableDcr=true`. Registered clients are ephemeral (process memory) and cannot request `system/*` or `client_credentials`.
 

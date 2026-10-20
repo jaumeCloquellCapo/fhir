@@ -10,6 +10,7 @@ open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.DependencyInjection
 open FhirServer.Infrastructure.Capability
 open FhirServer.Domain
+open FhirServer.Domain.Services
 open FhirServer.Domain.Types
 open FhirServer.Infrastructure.Http
 open FhirServer.Domain.Ports
@@ -1088,6 +1089,8 @@ module AppHost =
     let create (args: string[]) =
         let builder = WebApplication.CreateBuilder(args)
 
+        builder.Services.AddHttpContextAccessor() |> ignore
+
         builder.Services.AddSingleton<IResourceStore>(fun sp -> createStore (sp.GetRequiredService<IConfiguration>()))
         |> ignore
 
@@ -1095,6 +1098,16 @@ module AppHost =
         builder.Services.AddSwaggerGen(Action<_> OpenApiDocs.configureSwagger) |> ignore
 
         let app = builder.Build()
+
+        let httpAccessor = app.Services.GetRequiredService<IHttpContextAccessor>()
+
+        TenantContext.configureHttpResolver (fun () ->
+            match httpAccessor.HttpContext with
+            | null -> None
+            | ctx ->
+                match ctx.Items.TryGetValue(TenantContext.HttpItemKey) with
+                | true, (:? TenantAccess as access) -> Some access
+                | _ -> None)
 
         SubscriptionNotifier.configure app.Configuration
 
@@ -1106,6 +1119,7 @@ module AppHost =
             options.RoutePrefix <- "swagger")
         |> ignore
 
+        Auth.useTenantScope app |> ignore
         Auth.useAuth app |> ignore
         AuditMiddleware.useAudit app |> ignore
         mapRoutes app

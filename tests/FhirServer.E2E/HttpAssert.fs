@@ -1,5 +1,6 @@
 namespace FhirServer.E2E
 
+open System
 open System.Net
 open System.Net.Http
 open System.Text
@@ -11,14 +12,33 @@ module HttpAssert =
 
     let fhirJson = "application/fhir+json"
 
-    let get (client: HttpClient) (path: string) =
-        task {
-            use! response = client.GetAsync(path)
-            let! body = response.Content.ReadAsStringAsync()
-            return response.StatusCode, body
-        }
+    /// Matches FhirApiFactory Auth:Username / Auth:Password.
+    let e2eUsername = "fhir"
+    let e2ePassword = "secret"
 
-    let send
+    let e2eBasicHeader =
+        let token =
+            Convert.ToBase64String(Encoding.UTF8.GetBytes($"{e2eUsername}:{e2ePassword}"))
+
+        $"Basic {token}"
+
+    let private hasAuthorization (headers: (string * string) list) =
+        headers
+        |> List.exists (fun (name, _) -> name.Equals("Authorization", StringComparison.OrdinalIgnoreCase))
+
+    let private withE2EAuth (headers: (string * string) list) =
+        if hasAuthorization headers then
+            headers
+        else
+            ("Authorization", e2eBasicHeader) :: headers
+
+    /// Attach E2E Basic auth when the request has no Authorization header yet.
+    let applyE2EAuth (request: HttpRequestMessage) =
+        if isNull (box request.Headers.Authorization) && not (request.Headers.Contains "Authorization") then
+            request.Headers.TryAddWithoutValidation("Authorization", e2eBasicHeader) |> ignore
+
+    let sendWith
+        (injectAuth: bool)
         (client: HttpClient)
         (method: HttpMethod)
         (path: string)
@@ -32,12 +52,32 @@ module HttpAssert =
             | Some json -> request.Content <- new StringContent(json, Encoding.UTF8, fhirJson)
             | None -> ()
 
+            let headers =
+                if injectAuth then
+                    withE2EAuth headers
+                else
+                    headers
+
             for name, value in headers do
                 request.Headers.TryAddWithoutValidation(name, value) |> ignore
 
             use! response = client.SendAsync(request)
             let! text = response.Content.ReadAsStringAsync()
             return response.StatusCode, text, response
+        }
+
+    /// Authenticated request (default E2E Basic unless Authorization is already set).
+    let send client method path body headers =
+        sendWith true client method path body headers
+
+    /// No Authorization header — for asserting 401 when Auth is on.
+    let sendAnonymous client method path body =
+        sendWith false client method path body []
+
+    let get (client: HttpClient) (path: string) =
+        task {
+            let! status, body, _ = send client HttpMethod.Get path None []
+            return status, body
         }
 
     let postJson client path json =

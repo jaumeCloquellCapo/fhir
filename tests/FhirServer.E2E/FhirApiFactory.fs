@@ -43,7 +43,11 @@ type FhirApiFactory() =
             .UseEnvironment(Environments.Development)
             .UseContentRoot(contentRoot)
             .UseSetting("ConnectionStrings:Fhir", appConnectionString)
-            .UseSetting("Auth:Enabled", "false")
+            .UseSetting("Auth:Enabled", "true")
+            .UseSetting("Auth:Username", "fhir")
+            .UseSetting("Auth:Password", "secret")
+            .UseSetting("Auth:BasicScopes", "system/*.cruds")
+            .UseSetting("Subscriptions:AllowPublicHooks", "false")
         |> ignore
 
     override this.Dispose(disposing) =

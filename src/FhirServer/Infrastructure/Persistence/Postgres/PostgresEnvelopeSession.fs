@@ -21,8 +21,22 @@ type PostgresEnvelopeSession(connectionString: string) =
 
         c
 
+    /// Bind ORGBAC tenant for this transaction (Postgres RLS reads app.tenant_id).
+    /// SET LOCAL ROLE fhir_app so Docker superuser logins still obey RLS; then SET LOCAL config.
+    let applyTenantLocal () =
+        let tenantId = TenantContext.tryOrganizationId () |> Option.defaultValue ""
+        use c = cmd ()
+        c.CommandText <- "SET LOCAL ROLE fhir_app; SELECT set_config('app.tenant_id', @tenant_id, true);"
+        c.Parameters.AddWithValue("tenant_id", tenantId) |> ignore
+        c.ExecuteScalar() |> ignore
+
     interface IEnvelopeSession with
-        member _.BeginTransaction() = tx <- Some(conn.BeginTransaction())
+        member _.BeginTransaction() =
+            match tx with
+            | Some _ -> applyTenantLocal ()
+            | None ->
+                tx <- Some(conn.BeginTransaction())
+                applyTenantLocal ()
 
         member _.Commit() =
             match tx with
@@ -48,7 +62,7 @@ type PostgresEnvelopeSession(connectionString: string) =
         member _.TryReadCurrent(resourceType, id) =
             let table = ResourceCatalog.quoteIdent (ResourceCatalog.tableName resourceType)
             use c = cmd ()
-            c.CommandText <- $"SELECT txid, cts, ts, status, resource::text FROM {table} WHERE id = @id LIMIT 1;"
+            c.CommandText <- $"SELECT txid, cts, ts, status, resource::text, tenant_id FROM {table} WHERE id = @id LIMIT 1;"
             c.Parameters.AddWithValue("id", id) |> ignore
             use reader = c.ExecuteReader()
 
@@ -59,6 +73,7 @@ type PostgresEnvelopeSession(connectionString: string) =
                     Ts = reader.GetFieldValue<DateTimeOffset>(2)
                     Status = reader.GetString(3)
                     BodyJson = reader.GetString(4)
+                    TenantId = reader.GetString(5)
                 }
             else
                 None
@@ -97,8 +112,8 @@ type PostgresEnvelopeSession(connectionString: string) =
             use c = cmd ()
 
             c.CommandText <-
-                $"INSERT INTO {history} (id, txid, cts, ts, resource_type, status, resource)
-                  VALUES (@id, @txid, @cts, @ts, @rtype, @status, @resource::jsonb);"
+                $"INSERT INTO {history} (id, txid, cts, ts, resource_type, status, resource, tenant_id)
+                  VALUES (@id, @txid, @cts, @ts, @rtype, @status, @resource::jsonb, @tenant_id);"
 
             c.Parameters.AddWithValue("id", id) |> ignore
             c.Parameters.AddWithValue("txid", row.Txid) |> ignore
@@ -107,6 +122,7 @@ type PostgresEnvelopeSession(connectionString: string) =
             c.Parameters.AddWithValue("rtype", resourceType) |> ignore
             c.Parameters.AddWithValue("status", row.Status) |> ignore
             c.Parameters.AddWithValue("resource", row.BodyJson) |> ignore
+            c.Parameters.AddWithValue("tenant_id", row.TenantId) |> ignore
             c.ExecuteNonQuery() |> ignore
 
         member _.UpdateCurrent(resourceType, id, txid, ts, bodyJson) =
@@ -127,8 +143,8 @@ type PostgresEnvelopeSession(connectionString: string) =
             use c = cmd ()
 
             c.CommandText <-
-                $"INSERT INTO {table} (id, txid, cts, ts, resource_type, status, resource)
-                  VALUES (@id, @txid, @cts, @ts, @rtype, 'created', @resource::jsonb);"
+                $"INSERT INTO {table} (id, txid, cts, ts, resource_type, status, resource, tenant_id)
+                  VALUES (@id, @txid, @cts, @ts, @rtype, 'created', @resource::jsonb, @tenant_id);"
 
             c.Parameters.AddWithValue("id", id) |> ignore
             c.Parameters.AddWithValue("txid", row.Txid) |> ignore
@@ -136,6 +152,7 @@ type PostgresEnvelopeSession(connectionString: string) =
             c.Parameters.AddWithValue("ts", row.Ts) |> ignore
             c.Parameters.AddWithValue("rtype", resourceType) |> ignore
             c.Parameters.AddWithValue("resource", row.BodyJson) |> ignore
+            c.Parameters.AddWithValue("tenant_id", row.TenantId) |> ignore
             c.ExecuteNonQuery() |> ignore
 
         member _.DeleteCurrent(resourceType, id) =
@@ -347,6 +364,11 @@ type PostgresEnvelopeSession(connectionString: string) =
         member _.Dispose() =
             match tx with
             | Some t ->
+                try
+                    t.Rollback()
+                with _ ->
+                    ()
+
                 t.Dispose()
                 tx <- None
             | None -> ()

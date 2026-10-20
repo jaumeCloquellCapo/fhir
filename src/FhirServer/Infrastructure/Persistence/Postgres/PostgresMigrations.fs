@@ -167,6 +167,88 @@ module PostgresMigrations =
                 UPDATE search_index_state SET backfilled = false WHERE id = 1;
                 """
         }
+        {
+            Version = 7
+            Name = "tenant_id_orgbac"
+            Script =
+                ResourceCatalog.supportedResourceTypes
+                |> List.map (fun resourceType ->
+                    let table = ResourceCatalog.tableName resourceType
+                    let history = ResourceCatalog.historyTableName resourceType
+                    let qTable = ResourceCatalog.quoteIdent table
+                    let qHistory = ResourceCatalog.quoteIdent history
+                    let qIdx = ResourceCatalog.quoteIdent $"idx_{table}_tenant"
+                    let qIdxHistory = ResourceCatalog.quoteIdent $"idx_{history}_tenant"
+
+                    $"""
+                    ALTER TABLE {qTable} ADD COLUMN IF NOT EXISTS tenant_id text NOT NULL DEFAULT '';
+                    ALTER TABLE {qHistory} ADD COLUMN IF NOT EXISTS tenant_id text NOT NULL DEFAULT '';
+                    CREATE INDEX IF NOT EXISTS {qIdx} ON {qTable} (tenant_id);
+                    CREATE INDEX IF NOT EXISTS {qIdxHistory} ON {qHistory} (tenant_id);
+                    """)
+                |> String.concat "\n"
+        }
+        {
+            Version = 8
+            Name = "tenant_rls"
+            Script =
+                // Empty app.tenant_id = unrestricted (admin). Otherwise row.tenant_id must match.
+                // Session sets: SELECT set_config('app.tenant_id', <org|''>, true) inside a transaction.
+                ResourceCatalog.supportedResourceTypes
+                |> List.map (fun resourceType ->
+                    let table = ResourceCatalog.tableName resourceType
+                    let history = ResourceCatalog.historyTableName resourceType
+                    let qTable = ResourceCatalog.quoteIdent table
+                    let qHistory = ResourceCatalog.quoteIdent history
+                    let pred =
+                        """(COALESCE(current_setting('app.tenant_id', true), '') = ''
+                            OR tenant_id = current_setting('app.tenant_id', true))"""
+
+                    $"""
+                    ALTER TABLE {qTable} ENABLE ROW LEVEL SECURITY;
+                    ALTER TABLE {qTable} FORCE ROW LEVEL SECURITY;
+                    DROP POLICY IF EXISTS tenant_isolation ON {qTable};
+                    CREATE POLICY tenant_isolation ON {qTable}
+                      FOR ALL
+                      USING {pred}
+                      WITH CHECK {pred};
+
+                    ALTER TABLE {qHistory} ENABLE ROW LEVEL SECURITY;
+                    ALTER TABLE {qHistory} FORCE ROW LEVEL SECURITY;
+                    DROP POLICY IF EXISTS tenant_isolation ON {qHistory};
+                    CREATE POLICY tenant_isolation ON {qHistory}
+                      FOR ALL
+                      USING {pred}
+                      WITH CHECK {pred};
+                    """)
+                |> String.concat "\n"
+        }
+        {
+            // Docker POSTGRES_USER is a superuser and bypasses RLS; sessions SET LOCAL ROLE fhir_app.
+            Version = 9
+            Name = "tenant_rls_app_role"
+            Script =
+                """
+                DO $$
+                BEGIN
+                  IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'fhir_app') THEN
+                    CREATE ROLE fhir_app NOSUPERUSER NOBYPASSRLS NOINHERIT;
+                  END IF;
+                END
+                $$;
+
+                GRANT USAGE ON SCHEMA public TO fhir_app;
+                GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO fhir_app;
+                GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO fhir_app;
+                ALTER DEFAULT PRIVILEGES IN SCHEMA public
+                  GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO fhir_app;
+                ALTER DEFAULT PRIVILEGES IN SCHEMA public
+                  GRANT USAGE, SELECT ON SEQUENCES TO fhir_app;
+
+                -- Allow the login role (often superuser) to assume fhir_app for RLS.
+                GRANT fhir_app TO CURRENT_USER;
+                """
+        }
     ]
 
     let migrate (connectionString: string) =

@@ -92,7 +92,7 @@ type SmartSubscriptionTests() =
             use doc = JsonDocument.Parse(tokenBody)
             let accessToken = doc.RootElement.GetProperty("access_token").GetString()
 
-            let! deniedStatus, _, _ = send authClient HttpMethod.Get "/Patient" None []
+            let! deniedStatus, _, _ = sendAnonymous authClient HttpMethod.Get "/Patient" None
 
             assertStatus HttpStatusCode.Unauthorized deniedStatus
 

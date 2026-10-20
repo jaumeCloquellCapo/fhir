@@ -98,6 +98,10 @@ Auth is enabled by default. API calls accept **Bearer** (SMART token) or **HTTP 
 
 Clients are configured under `Smart:Clients` (legacy `Smart:ClientId` / `ClientSecret` / `Scopes` still load as one client). Requested scopes are intersected with each client's `AllowedScopes`.
 
+### Organization-based access (ORGBAC MVP)
+
+Set `Smart:Clients[].OrganizationId` to bind a client to a tenant. Issued tokens include `organization`; create/update stamps `tenant_id` on envelopes. Isolation is enforced with **Postgres RLS**: each store op opens a transaction and `SET LOCAL app.tenant_id` (empty = unrestricted admin). HTTP Basic stays **unrestricted** unless `Auth:OrganizationId` is set. Resource ids are globally unique across tenants. Hierarchical org trees are not implemented yet.
+
 ## Subscriptions (MVP)
 
 Create an active `Subscription` with `channelType.code=rest-hook` and `endpoint` pointing at `/_hooks/{sinkId}` (or any URL). Resource create/update/delete/patch posts a `subscription-notification` Bundle.

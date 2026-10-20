@@ -328,7 +328,7 @@ module OpenApiDocs =
                 BearerFormat = "opaque",
                 In = ParameterLocation.Header,
                 Description =
-                    "SMART Bearer token from /auth/token. Enforces patient|user|system scopes (v2 c/r/u/d/s) and patient compartment when applicable."
+                    "SMART Bearer token from /auth/token. Enforces patient|user|system scopes (v2 c/r/u/d/s), patient compartment when applicable, and Organization tenant filter when the client has OrganizationId."
             )
 
         options.AddSecurityDefinition("basic", basicScheme)

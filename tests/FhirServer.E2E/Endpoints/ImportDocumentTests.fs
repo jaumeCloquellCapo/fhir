@@ -30,6 +30,7 @@ type ImportDocumentTests() =
 
             use request = new HttpRequestMessage(HttpMethod.Post, "/$import")
             request.Content <- new StringContent(ndjson, Encoding.UTF8, "application/fhir+ndjson")
+            applyE2EAuth request
 
             use! response = client.SendAsync(request)
             let! body = response.Content.ReadAsStringAsync()
@@ -62,6 +63,7 @@ type ImportDocumentTests() =
 
             use request = new HttpRequestMessage(HttpMethod.Post, "/$load")
             request.Content <- new StringContent(ndjson, Encoding.UTF8, "application/fhir+ndjson")
+            applyE2EAuth request
 
             use! response = client.SendAsync(request)
             let! body = response.Content.ReadAsStringAsync()

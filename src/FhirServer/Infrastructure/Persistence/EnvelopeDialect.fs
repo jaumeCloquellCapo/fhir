@@ -11,6 +11,8 @@ type EnvelopeRow = {
     Ts: DateTimeOffset
     Status: string
     BodyJson: string
+    /// ORGBAC owner Organization id; empty when written unrestricted.
+    TenantId: string
 }
 
 /// SQL envelope session. Owned by caller; dispose closes connection.

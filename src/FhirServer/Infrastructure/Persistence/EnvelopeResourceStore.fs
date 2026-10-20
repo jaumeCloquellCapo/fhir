@@ -10,9 +10,18 @@ open FhirServer.Domain.Types
 type EnvelopeResourceStore(dialect: IEnvelopeDialect) =
     let gate = obj ()
 
+    /// Every store op runs in a transaction so SET LOCAL app.tenant_id (RLS) applies.
     let withSession action =
         use session = dialect.OpenSession()
-        action session
+        session.BeginTransaction()
+
+        try
+            let result = action session
+            session.Commit()
+            result
+        with _ ->
+            session.Rollback()
+            reraise ()
 
     let indexResource (session: IEnvelopeSession) (resourceType: string) (resource: FhirResource) =
         let id = FhirJson.id resource
@@ -21,19 +30,12 @@ type EnvelopeResourceStore(dialect: IEnvelopeDialect) =
     let backfillSearchIndexes () =
         withSession (fun session ->
             if not (session.IsSearchIndexBackfilled()) then
-                session.BeginTransaction()
+                for resourceType in ResourceCatalog.supportedResourceTypes do
+                    for id, txid, ts, json in session.ListCurrent resourceType do
+                        let resource = EnvelopeCodec.hydrate resourceType id txid ts json
+                        indexResource session resourceType resource
 
-                try
-                    for resourceType in ResourceCatalog.supportedResourceTypes do
-                        for id, txid, ts, json in session.ListCurrent resourceType do
-                            let resource = EnvelopeCodec.hydrate resourceType id txid ts json
-                            indexResource session resourceType resource
-
-                    session.MarkSearchIndexBackfilled()
-                    session.Commit()
-                with _ ->
-                    session.Rollback()
-                    reraise ())
+                session.MarkSearchIndexBackfilled())
 
     do
         dialect.Migrate()
@@ -66,78 +68,64 @@ type EnvelopeResourceStore(dialect: IEnvelopeDialect) =
 
             lock gate (fun () ->
                 withSession (fun session ->
-                    session.BeginTransaction()
+                    let id = FhirJson.id resource
+                    let bodyJson = EnvelopeCodec.toBodyJson resource
+                    let now = DateTimeOffset.UtcNow
+                    let txid = session.NextTxid()
 
-                    try
-                        let id = FhirJson.id resource
-                        let bodyJson = EnvelopeCodec.toBodyJson resource
-                        let now = DateTimeOffset.UtcNow
-                        let txid = session.NextTxid()
-
-                        let stamped =
-                            match session.TryReadCurrent(resourceType, id) with
-                            | Some old ->
-                                session.InsertHistory(resourceType, id, old)
-                                session.UpdateCurrent(resourceType, id, txid, now, bodyJson)
-                                EnvelopeCodec.stamp resource txid now
-                            | None ->
-                                session.InsertCurrent(
-                                    resourceType,
-                                    id,
-                                    {
-                                        Txid = txid
-                                        Cts = now
-                                        Ts = now
-                                        Status = "created"
-                                        BodyJson = bodyJson
-                                    }
-                                )
-
-                                EnvelopeCodec.stamp resource txid now
-
-                        indexResource session resourceType stamped
-                        session.Commit()
-                        stamped
-                    with _ ->
-                        session.Rollback()
-                        reraise ()))
-
-        member _.Delete(resourceType, id) =
-            ResourceCatalog.ensureSupported resourceType
-
-            lock gate (fun () ->
-                withSession (fun session ->
-                    session.BeginTransaction()
-
-                    try
+                    let stamped =
                         match session.TryReadCurrent(resourceType, id) with
-                        | None ->
-                            session.Rollback()
-                            None
                         | Some old ->
                             session.InsertHistory(resourceType, id, old)
-                            let txid = session.NextTxid()
-                            let now = DateTimeOffset.UtcNow
-
-                            session.InsertHistory(
+                            session.UpdateCurrent(resourceType, id, txid, now, bodyJson)
+                            EnvelopeCodec.stamp resource txid now
+                        | None ->
+                            session.InsertCurrent(
                                 resourceType,
                                 id,
                                 {
                                     Txid = txid
                                     Cts = now
                                     Ts = now
-                                    Status = "deleted"
-                                    BodyJson = old.BodyJson
+                                    Status = "created"
+                                    BodyJson = bodyJson
+                                    TenantId = TenantContext.writeTenantId ()
                                 }
                             )
 
-                            session.DeleteCurrent(resourceType, id)
-                            session.ClearSearchIndex(resourceType, id)
-                            session.Commit()
-                            Some(EnvelopeCodec.hydrate resourceType id txid now old.BodyJson)
-                    with _ ->
-                        session.Rollback()
-                        reraise ()))
+                            EnvelopeCodec.stamp resource txid now
+
+                    indexResource session resourceType stamped
+                    stamped))
+
+        member _.Delete(resourceType, id) =
+            ResourceCatalog.ensureSupported resourceType
+
+            lock gate (fun () ->
+                withSession (fun session ->
+                    match session.TryReadCurrent(resourceType, id) with
+                    | None -> None
+                    | Some old ->
+                        session.InsertHistory(resourceType, id, old)
+                        let txid = session.NextTxid()
+                        let now = DateTimeOffset.UtcNow
+
+                        session.InsertHistory(
+                            resourceType,
+                            id,
+                            {
+                                Txid = txid
+                                Cts = now
+                                Ts = now
+                                Status = "deleted"
+                                BodyJson = old.BodyJson
+                                TenantId = old.TenantId
+                            }
+                        )
+
+                        session.DeleteCurrent(resourceType, id)
+                        session.ClearSearchIndex(resourceType, id)
+                        Some(EnvelopeCodec.hydrate resourceType id txid now old.BodyJson)))
 
         member _.ListByType(resourceType) =
             ResourceCatalog.ensureSupported resourceType

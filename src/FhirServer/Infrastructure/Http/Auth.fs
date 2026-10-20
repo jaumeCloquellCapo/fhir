@@ -9,6 +9,7 @@ open Microsoft.AspNetCore.Http
 open Microsoft.Extensions.Configuration
 open FhirServer.Application.Smart
 open FhirServer.Domain
+open FhirServer.Domain.Services
 open FhirServer.Domain.Types
 
 module Auth =
@@ -85,12 +86,20 @@ module Auth =
     let private basicAuthContext (config: IConfiguration) : SmartAuth.AuthContext =
         let scope = basicScopes config
 
+        // Basic is the local/admin escape hatch: unrestricted ORGBAC unless Auth:OrganizationId is set.
+        let organizationId =
+            match config.["Auth:OrganizationId"] with
+            | null
+            | "" -> None
+            | raw -> Some(TenantContext.normalizeOrgId raw)
+
         {
             ClientId = "basic-auth"
             Scope = scope
             PatientId = None
             FhirUser = None
             CompartmentPatientId = PatientCompartment.tryCompartmentPatientId scope None None
+            OrganizationId = organizationId
         }
 
     let private tryBearerRecord (header: string) =
@@ -170,8 +179,28 @@ module Auth =
                         $"Missing SMART scope for {needed} (token scope: {auth.Scope})"
             else
                 ctx.Items[SmartAuth.AuthContextItemKey] <- auth
+                SmartAuth.applyTenantContext ctx auth
                 return! Task.CompletedTask
         }
+
+    /// Clear tenant ambient state at the edges of every request.
+    let useTenantScope (app: WebApplication) =
+        app.Use(
+            Func<HttpContext, RequestDelegate, Task>(fun ctx next ->
+                task {
+                    TenantContext.clear ()
+                    ctx.Items.Remove(TenantContext.HttpItemKey) |> ignore
+
+                    try
+                        return! next.Invoke(ctx)
+                    finally
+                        TenantContext.clear ()
+                        ctx.Items.Remove(TenantContext.HttpItemKey) |> ignore
+                })
+        )
+        |> ignore
+
+        app
 
     /// Require Basic and/or SMART Bearer when Auth:Enabled=true.
     /// Basic uses Auth:BasicScopes (default system/*.cruds) — same scope checks as Bearer.

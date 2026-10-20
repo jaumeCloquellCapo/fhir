@@ -7,6 +7,7 @@ open System.Text
 open System.Text.Json.Nodes
 open Microsoft.Extensions.Configuration
 open FhirServer.Domain
+open FhirServer.Domain.Services
 
 /// SMART App Launch: discovery, auth codes + PKCE, opaque access tokens.
 module SmartAuth =
@@ -18,6 +19,7 @@ module SmartAuth =
         ExpiresAt: DateTimeOffset
         PatientId: string option
         FhirUser: string option
+        OrganizationId: string option
     }
 
     type AuthCodeRecord = {
@@ -107,6 +109,11 @@ module SmartAuth =
             | Some fu -> props @ [ "fhirUser", FhirJson.jStr fu ]
             | None -> props
 
+        let props =
+            match record.OrganizationId with
+            | Some orgId -> props @ [ "organization", FhirJson.jStr orgId ]
+            | None -> props
+
         FhirJson.mkObject props
 
     let issueAccessToken
@@ -115,6 +122,7 @@ module SmartAuth =
         (scope: string)
         (patientId: string option)
         (fhirUser: string option)
+        (organizationId: string option)
         =
         let token = newOpaque ()
         let minutes = tokenLifetimeMinutes config
@@ -127,6 +135,7 @@ module SmartAuth =
             ExpiresAt = expires
             PatientId = patientId |> Option.map PatientCompartment.normalizePatientId
             FhirUser = fhirUser
+            OrganizationId = organizationId |> Option.map TenantContext.normalizeOrgId
         }
 
         tokens[token] <- record
@@ -189,7 +198,15 @@ module SmartAuth =
             elif s256Challenge codeVerifier <> record.CodeChallenge then
                 Error "invalid_grant"
             else
-                Ok(issueAccessToken config client.ClientId record.Scope record.PatientId record.FhirUser)
+                Ok(
+                    issueAccessToken
+                        config
+                        client.ClientId
+                        record.Scope
+                        record.PatientId
+                        record.FhirUser
+                        client.OrganizationId
+                )
 
     let issueClientCredentials
         (config: IConfiguration)
@@ -205,7 +222,7 @@ module SmartAuth =
         elif not (SmartClients.allowsGrant client "client_credentials") then
             Error "unauthorized_client"
         else
-            Ok(issueAccessToken config client.ClientId scope None None)
+            Ok(issueAccessToken config client.ClientId scope None None client.OrganizationId)
 
     let parseClientCredentials (authorizationHeader: string option) (form: Map<string, string>) =
         let fromBasic =
@@ -231,13 +248,14 @@ module SmartAuth =
             | Some id, Some secret -> Some(id, secret)
             | _ -> None
 
-    /// Auth context attached to HttpContext.Items for downstream compartment checks.
+    /// Auth context attached to HttpContext.Items for downstream compartment / ORGBAC checks.
     type AuthContext = {
         ClientId: string
         Scope: string
         PatientId: string option
         FhirUser: string option
         CompartmentPatientId: string option
+        OrganizationId: string option
     }
 
     [<Literal>]
@@ -253,4 +271,16 @@ module SmartAuth =
             PatientId = record.PatientId
             FhirUser = record.FhirUser
             CompartmentPatientId = compartment
+            OrganizationId = record.OrganizationId
         }
+
+    let tenantAccessOf (auth: AuthContext) =
+        match auth.OrganizationId with
+        | Some orgId -> TenantAccess.Organization orgId
+        | None -> TenantAccess.Unrestricted
+
+    /// Bind ORGBAC tenant for this request (AsyncLocal + HttpContext.Items).
+    let applyTenantContext (ctx: Microsoft.AspNetCore.Http.HttpContext) (auth: AuthContext) =
+        let access = tenantAccessOf auth
+        TenantContext.set access
+        ctx.Items[TenantContext.HttpItemKey] <- access

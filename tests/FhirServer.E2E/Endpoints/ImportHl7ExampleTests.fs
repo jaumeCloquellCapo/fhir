@@ -19,6 +19,7 @@ type ImportHl7ExampleTests() =
         task {
             use request = new HttpRequestMessage(HttpMethod.Post, path)
             request.Content <- new StringContent(ndjson, Encoding.UTF8, "application/fhir+ndjson")
+            applyE2EAuth request
             use! response = client.SendAsync(request)
             let! body = response.Content.ReadAsStringAsync()
             return response.StatusCode, body

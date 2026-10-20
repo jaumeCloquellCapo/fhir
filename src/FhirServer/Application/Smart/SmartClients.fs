@@ -7,6 +7,7 @@ open System.Text
 open System.Text.Json.Nodes
 open Microsoft.Extensions.Configuration
 open FhirServer.Domain
+open FhirServer.Domain.Services
 
 /// Multi-client registry: config Clients[] (+ legacy keys) and in-memory dynamic registration.
 module SmartClients =
@@ -18,6 +19,8 @@ module SmartClients =
         GrantTypes: Set<string>
         RedirectUris: Set<string>
         ClientName: string option
+        /// When set, issued tokens are ORGBAC-scoped to this Organization id.
+        OrganizationId: string option
         Dynamic: bool
     }
 
@@ -84,6 +87,11 @@ module SmartClients =
 
             let secret = configString section "ClientSecret" ""
 
+            let organizationId =
+                match configString section "OrganizationId" "" with
+                | "" -> None
+                | raw -> Some(TenantContext.normalizeOrgId raw)
+
             if String.IsNullOrWhiteSpace secret then
                 None
             else
@@ -94,6 +102,7 @@ module SmartClients =
                     GrantTypes = splitGrantTypes grantsRaw
                     RedirectUris = readRedirectUris section
                     ClientName = None
+                    OrganizationId = organizationId
                     Dynamic = dynamic
                 }
 
@@ -116,6 +125,11 @@ module SmartClients =
                 GrantTypes = set [ "client_credentials"; "authorization_code" ]
                 RedirectUris = Set.empty
                 ClientName = Some "legacy"
+                OrganizationId =
+                    match config.["Smart:OrganizationId"] with
+                    | null
+                    | "" -> None
+                    | raw -> Some(TenantContext.normalizeOrgId raw)
                 Dynamic = false
             }
 
@@ -252,6 +266,7 @@ module SmartClients =
                 GrantTypes = grantTypes
                 RedirectUris = redirectUris
                 ClientName = clientName
+                OrganizationId = None
                 Dynamic = true
             }
 
