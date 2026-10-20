@@ -1,7 +1,9 @@
 namespace FhirServer.Infrastructure.Capability
 
+open System
 open System.Text.Json.Nodes
 open FhirServer.Domain
+open FhirServer.Schemas
 
 module Metadata =
 
@@ -15,27 +17,25 @@ module Metadata =
     let private interaction code =
         FhirJson.mkObject [ "code", FhirJson.jStr code ]
 
-    let private patientParams = [
-        searchParam "family" "string" "Family name"
-        searchParam "given" "string" "Given name"
-        searchParam "name" "string" "A portion of either family or given name"
-        searchParam "gender" "token" "Gender"
-        searchParam "birthdate" "date" "Birth date"
-        searchParam "identifier" "token" "Identifier"
-    ]
+    let private fhirSearchType =
+        function
+        | GeneratedSearchCatalog.IndexKind.String -> "string"
+        | GeneratedSearchCatalog.IndexKind.Token -> "token"
+        | GeneratedSearchCatalog.IndexKind.Ref -> "reference"
+        | GeneratedSearchCatalog.IndexKind.Date -> "date"
+        | GeneratedSearchCatalog.IndexKind.Quantity -> "quantity"
+        | GeneratedSearchCatalog.IndexKind.Composite -> "composite"
 
-    let private observationParams = [
-        searchParam "patient" "reference" "Subject patient"
-        searchParam "subject" "reference" "Subject"
-        searchParam "code" "token" "Code"
-        searchParam "status" "token" "Status"
-        searchParam "date" "date" "Effective date"
-    ]
+    let private catalogParamsFor (resourceType: string) =
+        GeneratedSearchCatalog.forResource resourceType
+        |> List.map (fun p ->
+            let doc =
+                if String.length p.Documentation > 200 then
+                    p.Documentation.Substring(0, 197) + "..."
+                else
+                    p.Documentation
 
-    let private patientRefParams = [
-        searchParam "patient" "reference" "Subject patient"
-        searchParam "subject" "reference" "Subject"
-    ]
+            searchParam p.Code (fhirSearchType p.Kind) doc)
 
     let private resourceOperations (resourceType: string) =
         let ops = JsonArray()
@@ -87,9 +87,14 @@ module Metadata =
         searchParams.Add(searchParam "_sort" "string" "Sort order")
         searchParams.Add(searchParam "_include" "string" "Include referenced resources")
         searchParams.Add(searchParam "_revinclude" "string" "Reverse include referencing resources")
+        searchParams.Add(
+            searchParam
+                "_filter"
+                "special"
+                "Subset of FHIR _filter grammar: and/or/not, eq/ne/gt/lt/ge/le/co/sw on indexed params"
+        )
 
         for p in extraParams do
-            // JsonNode can have only one parent — clone shared param templates.
             searchParams.Add(FhirJson.deepClone p)
 
         let interactions = JsonArray()
@@ -116,28 +121,8 @@ module Metadata =
     let build (baseUrl: string) : Types.FhirResource =
         let resources = JsonArray()
 
-        let clinicalWithPatient =
-            set [
-                "Encounter"
-                "Condition"
-                "AllergyIntolerance"
-                "MedicationRequest"
-                "Procedure"
-                "DiagnosticReport"
-                "Immunization"
-                "CarePlan"
-                "DocumentReference"
-            ]
-
         for resourceType in ResourceCatalog.supportedResourceTypes do
-            let extras =
-                match resourceType with
-                | "Patient" -> patientParams
-                | "Observation" -> observationParams
-                | rt when clinicalWithPatient.Contains rt -> patientRefParams
-                | _ -> []
-
-            resources.Add(resourceComponent resourceType extras)
+            resources.Add(resourceComponent resourceType (catalogParamsFor resourceType))
 
         let systemInteractions = JsonArray()
         systemInteractions.Add(interaction "transaction")

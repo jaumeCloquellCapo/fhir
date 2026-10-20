@@ -6,8 +6,9 @@ open System.Text.Json
 open System.Text.Json.Nodes
 open FhirServer.Domain
 open FhirServer.Domain.Types
+open FhirServer.Schemas
 
-/// Extract FHIR search index rows from a resource (mirrors SearchEngine plan coverage).
+/// Extract FHIR search index rows from a resource using GeneratedSearchCatalog extractors.
 module SearchIndexer =
 
     type StringRow = { Param: string; Value: string }
@@ -102,20 +103,6 @@ module SearchIndexer =
         refTargets reference
         |> List.fold (fun rows target -> { Param = param; Target = target } :: rows) acc
 
-    let private addRefFromFields (resource: FhirResource) (fields: string list) (params': string list) (acc: RefRow list) =
-        fields
-        |> List.fold
-            (fun rows field ->
-                match resource[field] with
-                | :? JsonObject as obj ->
-                    match str obj["reference"] with
-                    | Some reference ->
-                        params'
-                        |> List.fold (fun r p -> addRef p reference r) rows
-                    | None -> rows
-                | _ -> rows)
-            acc
-
     let private parseInstant (raw: string) =
         let toUtc (dto: DateTimeOffset) = dto.ToUniversalTime()
 
@@ -142,7 +129,6 @@ module SearchIndexer =
         match parseInstant raw with
         | None -> acc
         | Some startTs ->
-            // Day-precision strings get an exclusive end of next day when date-only.
             let endTs =
                 if raw.Length <= 10 then
                     startTs.AddDays 1.0
@@ -164,11 +150,29 @@ module SearchIndexer =
           Code = code |> Option.defaultValue "" }
         :: acc
 
-    let private observationDates (resource: FhirResource) =
+    let private navigate (root: JsonNode) (path: string list) : JsonNode list =
+        let rec go (nodes: JsonNode list) (remaining: string list) =
+            match remaining with
+            | [] -> nodes
+            | name :: rest ->
+                nodes
+                |> List.collect (fun node ->
+                    match node with
+                    | :? JsonObject as obj ->
+                        match obj[name] with
+                        | null -> []
+                        | :? JsonArray as arr -> arr |> Seq.choose (fun n -> if isNull n then None else Some n) |> Seq.toList
+                        | child -> [ child ]
+                    | _ -> [])
+                |> fun next -> go next rest
+
+        go [ root ] path
+
+    let private observationEffectiveDates (param: string) (resource: FhirResource) =
         let mutable dates: DateRow list = []
 
         match FhirJson.propString resource "effectiveDateTime" with
-        | Some raw -> dates <- addDateFromString "date" raw dates
+        | Some raw -> dates <- addDateFromString param raw dates
         | None -> ()
 
         match resource["effectivePeriod"] with
@@ -177,41 +181,36 @@ module SearchIndexer =
             let endTs = str period["end"] |> Option.bind parseInstant
 
             match startTs, endTs with
-            | Some s, Some e -> dates <- addDate "date" s e dates
-            | Some s, None -> dates <- addDate "date" s (s.AddDays 1.0) dates
-            | None, Some e -> dates <- addDate "date" e e dates
+            | Some s, Some e -> dates <- addDate param s e dates
+            | Some s, None -> dates <- addDate param s (s.AddDays 1.0) dates
+            | None, Some e -> dates <- addDate param e e dates
             | _ -> ()
         | _ -> ()
 
         match FhirJson.propString resource "effectiveInstant" with
-        | Some raw -> dates <- addDateFromString "date" raw dates
+        | Some raw -> dates <- addDateFromString param raw dates
         | None -> ()
 
         dates
 
-    let private observationQuantities (resource: FhirResource) =
-        match resource["valueQuantity"] with
-        | :? JsonObject as qty ->
-            match qty["value"] with
-            | null -> []
-            | node ->
-                let raw = node.ToJsonString().Trim('"')
+    let private applyExtractor
+        (resource: FhirResource)
+        (param: GeneratedSearchCatalog.ParamDef)
+        (acc: IndexRows)
+        : IndexRows =
+        let indexParam = param.IndexParam
 
-                match Decimal.TryParse(raw, NumberStyles.Float, CultureInfo.InvariantCulture) with
-                | true, value ->
-                    addQuantity "value-quantity" value (str qty["system"]) (str qty["code"]) []
-                | _ -> []
-        | _ -> []
+        match param.Extractor with
+        | GeneratedSearchCatalog.Extractor.Unsupported _
+        | GeneratedSearchCatalog.Extractor.Composite _ -> acc
 
-    let extract (resourceType: string) (resource: FhirResource) : IndexRows =
-        match resourceType with
-        | "Patient" ->
+        | GeneratedSearchCatalog.Extractor.HumanName part ->
             let names = propObjects resource "name"
 
             let strings =
                 names
                 |> List.fold
-                    (fun acc n ->
+                    (fun sAcc n ->
                         let family = str n["family"] |> Option.defaultValue ""
 
                         let givens =
@@ -219,114 +218,137 @@ module SearchIndexer =
                             | :? JsonArray as arr -> arr |> Seq.choose str |> Seq.toList
                             | _ -> []
 
-                        let withFamily = addString "family" family acc
+                        match part with
+                        | "family" -> addString indexParam family sAcc
+                        | "given" -> givens |> List.fold (fun a g -> addString indexParam g a) sAcc
+                        | _ ->
+                            let full = String.concat " " (family :: givens)
+                            let withFamily = addString "family" family sAcc
 
-                        let withGivens =
-                            givens |> List.fold (fun a g -> addString "given" g a) withFamily
+                            let withGivens =
+                                givens |> List.fold (fun a g -> addString "given" g a) withFamily
 
-                        let full = String.concat " " (family :: givens)
-                        addString "name" full withGivens)
-                    []
+                            addString indexParam full withGivens)
+                    acc.Strings
 
+            // When indexing `name`, also emit family/given for Patient.name SP
+            { acc with Strings = strings |> List.distinct }
+
+        | GeneratedSearchCatalog.Extractor.StringField path ->
             let strings =
-                match FhirJson.propString resource "gender" with
-                | Some g -> addString "gender" g strings
-                | None -> strings
+                navigate resource path
+                |> List.choose str
+                |> List.fold (fun a v -> addString indexParam v a) acc.Strings
 
-            let dates =
-                match FhirJson.propString resource "birthDate" with
-                | Some bd -> addDateFromString "birthdate" bd []
-                | None -> []
+            { acc with Strings = strings }
 
+        | GeneratedSearchCatalog.Extractor.Identifier path ->
             let tokens =
-                propObjects resource "identifier"
-                |> List.fold
-                    (fun acc item ->
-                        match str item["value"] with
-                        | Some value -> addToken "identifier" (str item["system"]) value acc
-                        | None -> acc)
-                    []
+                navigate resource path
+                |> List.collect (fun node ->
+                    match node with
+                    | :? JsonObject as obj ->
+                        match str obj["value"] with
+                        | Some value -> [ addToken indexParam (str obj["system"]) value [] ]
+                        | None -> []
+                    | :? JsonArray as arr ->
+                        objectsOf arr
+                        |> List.choose (fun obj ->
+                            match str obj["value"] with
+                            | Some value -> Some(addToken indexParam (str obj["system"]) value [])
+                            | None -> None)
+                    | _ -> [])
+                |> List.concat
 
-            let refs =
-                addRefFromFields
-                    resource
-                    [ "managingOrganization"; "organization" ]
-                    [ "organization"; "managingOrganization" ]
-                    []
+            { acc with Tokens = (tokens @ acc.Tokens) }
 
-            { Strings = strings |> List.distinct
-              Tokens = tokens |> List.distinct
-              Refs = refs |> List.distinct
-              Dates = dates |> List.distinct
-              Quantities = [] }
-
-        | "Organization" ->
-            let strings =
-                match FhirJson.propString resource "name" with
-                | Some name -> addString "name" name []
-                | None -> []
-
-            { Strings = strings |> List.distinct
-              Tokens = []
-              Refs = []
-              Dates = []
-              Quantities = [] }
-
-        | "Observation" ->
-            let strings =
-                match FhirJson.propString resource "status" with
-                | Some s -> addString "status" s []
-                | None -> []
-
+        | GeneratedSearchCatalog.Extractor.CodeableConcept path ->
             let tokens =
-                nestedObjects resource["code"] "coding"
-                |> List.fold
-                    (fun acc item ->
+                navigate resource path
+                |> List.collect (fun node ->
+                    nestedObjects node "coding"
+                    |> List.choose (fun item ->
                         match str item["code"] with
-                        | Some code -> addToken "code" (str item["system"]) code acc
-                        | None -> acc)
-                    []
+                        | Some code -> Some(addToken indexParam (str item["system"]) code [])
+                        | None -> None)
+                    |> List.concat)
 
+            { acc with Tokens = tokens @ acc.Tokens }
+
+        | GeneratedSearchCatalog.Extractor.Reference(fields, indexParams) ->
             let refs =
-                addRefFromFields resource [ "subject" ] [ "patient"; "subject" ] []
-                |> fun r -> addRefFromFields resource [ "encounter" ] [ "encounter" ] r
+                fields
+                |> List.fold
+                    (fun rows field ->
+                        match resource[field] with
+                        | :? JsonObject as obj ->
+                            match str obj["reference"] with
+                            | Some reference ->
+                                indexParams
+                                |> List.fold (fun r p -> addRef p reference r) rows
+                            | None -> rows
+                        | :? JsonArray as arr ->
+                            objectsOf arr
+                            |> List.fold
+                                (fun rows' obj ->
+                                    match str obj["reference"] with
+                                    | Some reference ->
+                                        indexParams
+                                        |> List.fold (fun r p -> addRef p reference r) rows'
+                                    | None -> rows')
+                                rows
+                        | _ -> rows)
+                    acc.Refs
 
-            { Strings = strings |> List.distinct
-              Tokens = tokens |> List.distinct
-              Refs = refs |> List.distinct
-              Dates = observationDates resource |> List.distinct
-              Quantities = observationQuantities resource |> List.distinct }
+            { acc with Refs = refs }
 
-        | "Encounter" ->
-            let strings =
-                match FhirJson.propString resource "status" with
-                | Some s -> addString "status" s []
-                | None -> []
+        | GeneratedSearchCatalog.Extractor.DateField path ->
+            let dates =
+                navigate resource path
+                |> List.choose str
+                |> List.fold (fun a raw -> addDateFromString indexParam raw a) acc.Dates
 
-            let refs =
-                addRefFromFields resource [ "subject"; "patient" ] [ "patient"; "subject" ] []
+            { acc with Dates = dates }
 
-            { Strings = strings |> List.distinct
-              Tokens = []
-              Refs = refs |> List.distinct
-              Dates = []
-              Quantities = [] }
+        | GeneratedSearchCatalog.Extractor.ObservationEffective ->
+            { acc with
+                Dates = observationEffectiveDates indexParam resource @ acc.Dates }
 
-        | "Condition"
-        | "AllergyIntolerance"
-        | "MedicationRequest"
-        | "Procedure"
-        | "DiagnosticReport"
-        | "Immunization"
-        | "CarePlan"
-        | "DocumentReference" ->
-            let refs =
-                addRefFromFields resource [ "subject"; "patient" ] [ "patient"; "subject" ] []
+        | GeneratedSearchCatalog.Extractor.QuantityValue ->
+            let quantities =
+                match resource["valueQuantity"] with
+                | :? JsonObject as qty ->
+                    match qty["value"] with
+                    | null -> []
+                    | node ->
+                        let raw = node.ToJsonString().Trim('"')
 
-            { Strings = []
-              Tokens = []
-              Refs = refs |> List.distinct
-              Dates = []
-              Quantities = [] }
+                        match Decimal.TryParse(raw, NumberStyles.Float, CultureInfo.InvariantCulture) with
+                        | true, value ->
+                            addQuantity indexParam value (str qty["system"]) (str qty["code"]) []
+                        | _ -> []
+                | _ -> []
 
-        | _ -> empty
+            { acc with Quantities = quantities @ acc.Quantities }
+
+    let extract (resourceType: string) (resource: FhirResource) : IndexRows =
+        let defs =
+            GeneratedSearchCatalog.forResource resourceType
+            |> List.filter (fun p ->
+                match p.Kind with
+                | GeneratedSearchCatalog.IndexKind.Composite -> false
+                | _ -> true)
+            // Prefer canonical index writes: skip query aliases that share IndexParam+Extractor
+            // with another def (e.g. patient alias of subject) to avoid duplicate work —
+            // still write all indexParams from Reference extractor.
+            |> List.distinctBy (fun p -> p.IndexParam, sprintf "%A" p.Extractor)
+
+        let rows =
+            defs
+            |> List.fold (fun acc p -> applyExtractor resource p acc) empty
+
+        { Strings = rows.Strings |> List.distinct
+          Tokens = rows.Tokens |> List.distinct
+          Refs = rows.Refs |> List.distinct
+          Dates = rows.Dates |> List.distinct
+          Quantities = rows.Quantities |> List.distinct }

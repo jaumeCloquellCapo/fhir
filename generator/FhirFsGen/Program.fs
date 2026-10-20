@@ -12,7 +12,8 @@ module Cli =
           Resources: string list
           All: bool
           RefreshTodo: bool
-          SchemaOnly: bool }
+          SchemaOnly: bool
+          SearchCatalogOnly: bool }
 
     let private usage () =
         """
@@ -30,6 +31,7 @@ Options:
   --resource <Name>     Generate one resource (repeatable). Default: Patient
   --all                 Generate every concrete resource in the package
   --schema-only         Write schemas/<Type>.schema.json only (parallel-safe)
+  --search-catalog      Emit GeneratedSearchCatalog.fs only from SearchParameter-*.json
   --todo                Rewrite generator/TODO-R5.md from existing schemas on disk
   --help                Show this help
 """
@@ -56,6 +58,7 @@ Options:
                 | "--all" -> loop (i + 1) { acc with All = true }
                 | "--todo" -> loop (i + 1) { acc with RefreshTodo = true }
                 | "--schema-only" -> loop (i + 1) { acc with SchemaOnly = true }
+                | "--search-catalog" -> loop (i + 1) { acc with SearchCatalogOnly = true }
                 | other -> failwith $"Unknown argument '{other}'. Use --help."
 
         let defaults =
@@ -65,11 +68,12 @@ Options:
               Resources = []
               All = false
               RefreshTodo = false
-              SchemaOnly = false }
+              SchemaOnly = false
+              SearchCatalogOnly = false }
 
         let opts = loop 0 defaults
 
-        if opts.All then opts
+        if opts.All || opts.SearchCatalogOnly then opts
         elif opts.Resources = [] && not opts.RefreshTodo then
             { opts with Resources = [ "Patient" ] }
         else
@@ -148,7 +152,12 @@ let main args =
         printfn "  -> %s (url=%s, type=%s)" schemaPath schema.Url schema.TypeName
         schema
 
-    if opts.RefreshTodo && not opts.All && opts.Resources = [] then
+    if opts.SearchCatalogOnly then
+        Directory.CreateDirectory outDir |> ignore
+        let searchParams = EmitSearchCatalog.build packageDir
+        EmitSearchCatalog.write searchParams (Path.Combine(outDir, "GeneratedSearchCatalog.fs"))
+        0
+    elif opts.RefreshTodo && not opts.All && opts.Resources = [] then
         let doneSet = schemaNamesOnDisk () |> Set.filter resourceTypeSet.Contains
         EmitFsharp.writeTodoMarkdown allResourceTypes doneSet todoPath
         printfn "Wrote %s (%d / %d)" todoPath doneSet.Count allResourceTypes.Length
@@ -219,6 +228,9 @@ let main args =
             EmitSchemaJson.writeManifest manifest (Path.Combine(outDir, "manifest.json"))
             EmitFsharp.writeCatalog manifest (Path.Combine(outDir, "GeneratedResourceCatalog.fs"))
             EmitValidator.writeSchemaValidatorFs (Path.Combine(outDir, "GeneratedSchemaValidator.fs"))
+
+            let searchParams = EmitSearchCatalog.build packageDir
+            EmitSearchCatalog.write searchParams (Path.Combine(outDir, "GeneratedSearchCatalog.fs"))
 
             let bindingUrls =
                 ValueSetLoader.collectRequiredBindings (

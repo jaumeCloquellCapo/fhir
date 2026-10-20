@@ -372,3 +372,88 @@ type SearchAdvancedTests() =
             Assert.Contains(childId, aboveBody) // :above includes self
             Assert.DoesNotContain(otherId, aboveBody)
         }
+
+    [<Fact>]
+    member _.``composite code-value-quantity matches both components``() : Task =
+        task {
+            let! _, patient, _ =
+                postJson
+                    client
+                    "/Patient"
+                    """{"resourceType":"Patient","name":[{"family":"Composite"}]}"""
+
+            let patientId = propString patient "id" |> Option.defaultValue ""
+
+            let! _, matchObs, _ =
+                postJson
+                    client
+                    "/Observation"
+                    $"""{{"resourceType":"Observation","status":"final","code":{{"coding":[{{"system":"http://loinc.org","code":"8480-6"}}]}},"subject":{{"reference":"Patient/{patientId}"}},"valueQuantity":{{"value":120,"system":"http://unitsofmeasure.org","code":"mm[Hg]"}}}}"""
+
+            let! _, wrongCode, _ =
+                postJson
+                    client
+                    "/Observation"
+                    $"""{{"resourceType":"Observation","status":"final","code":{{"coding":[{{"system":"http://loinc.org","code":"8462-4"}}]}},"subject":{{"reference":"Patient/{patientId}"}},"valueQuantity":{{"value":120,"system":"http://unitsofmeasure.org","code":"mm[Hg]"}}}}"""
+
+            let! _, wrongQty, _ =
+                postJson
+                    client
+                    "/Observation"
+                    $"""{{"resourceType":"Observation","status":"final","code":{{"coding":[{{"system":"http://loinc.org","code":"8480-6"}}]}},"subject":{{"reference":"Patient/{patientId}"}},"valueQuantity":{{"value":80,"system":"http://unitsofmeasure.org","code":"mm[Hg]"}}}}"""
+
+            let matchId = propString matchObs "id" |> Option.defaultValue ""
+            let wrongCodeId = propString wrongCode "id" |> Option.defaultValue ""
+            let wrongQtyId = propString wrongQty "id" |> Option.defaultValue ""
+
+            let! status, body =
+                get
+                    client
+                    "/Observation?code-value-quantity=http://loinc.org|8480-6$gt100|http://unitsofmeasure.org|mm[Hg]"
+
+            assertStatus HttpStatusCode.OK status
+            Assert.Contains(matchId, body)
+            Assert.DoesNotContain(wrongCodeId, body)
+            Assert.DoesNotContain(wrongQtyId, body)
+        }
+
+    [<Fact>]
+    member _.``_filter and/or/not on patient params``() : Task =
+        task {
+            let! _, matchPatient, _ =
+                postJson
+                    client
+                    "/Patient"
+                    """{"resourceType":"Patient","name":[{"family":"FilterGarcia","given":["Ana"]}],"gender":"female"}"""
+
+            let! _, otherGender, _ =
+                postJson
+                    client
+                    "/Patient"
+                    """{"resourceType":"Patient","name":[{"family":"FilterGarcia","given":["Luis"]}],"gender":"male"}"""
+
+            let! _, otherFamily, _ =
+                postJson
+                    client
+                    "/Patient"
+                    """{"resourceType":"Patient","name":[{"family":"FilterOther"}],"gender":"female"}"""
+
+            let matchId = propString matchPatient "id" |> Option.defaultValue ""
+            let otherGenderId = propString otherGender "id" |> Option.defaultValue ""
+            let otherFamilyId = propString otherFamily "id" |> Option.defaultValue ""
+
+            let! andStatus, andBody =
+                get client "/Patient?_filter=family%20eq%20FilterGarcia%20and%20gender%20eq%20female"
+
+            assertStatus HttpStatusCode.OK andStatus
+            Assert.Contains(matchId, andBody)
+            Assert.DoesNotContain(otherGenderId, andBody)
+            Assert.DoesNotContain(otherFamilyId, andBody)
+
+            let! notStatus, notBody =
+                get client "/Patient?_filter=not%20(gender%20eq%20male)&family=FilterGarcia"
+
+            assertStatus HttpStatusCode.OK notStatus
+            Assert.Contains(matchId, notBody)
+            Assert.DoesNotContain(otherGenderId, notBody)
+        }

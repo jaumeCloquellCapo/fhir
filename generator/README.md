@@ -213,6 +213,7 @@ packages.fhir.org / hl7.fhir.r5.core@5.0.0
   → valuesets.json                          # required bindings (resources + datatypes)
   → GeneratedSchemaValidator.fs             # from ValidatorTemplate.fs
   → GeneratedResourceCatalog.fs             # resources only
+  → GeneratedSearchCatalog.fs               # Supported SearchParameter extractors
 
 make sync-schemas / generate*:
   → packages/FhirServer.Schemas/Data + Generated/
@@ -230,6 +231,7 @@ make generate-todo     # refresh TODO from schemas on disk
 dotnet run --project generator/FhirFsGen -- --resource Patient --out generator/out/r5
 dotnet run --project generator/FhirFsGen -- --all --out generator/out/r5
 dotnet run --project generator/FhirFsGen -- --schema-only --resource Observation
+dotnet run --project generator/FhirFsGen -- --search-catalog --out generator/out/r5
 ```
 
 ## Schema shape

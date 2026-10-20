@@ -13,6 +13,8 @@
     <Compile Include="StructureLoader.fs" />
     <Compile Include="SnapshotToIr.fs" />
     <Compile Include="ValueSetLoader.fs" />
+    <Compile Include="SearchParamLoader.fs" />
+    <Compile Include="EmitSearchCatalog.fs" />
     <Compile Include="EmitSchemaJson.fs" />
     <Compile Include="EmitFsharp.fs" />
     <Compile Include="EmitValidator.fs" />

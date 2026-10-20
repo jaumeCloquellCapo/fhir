@@ -309,21 +309,54 @@ module ResourceHandlers =
 
             let expandSearch = searchList 0
 
-            let filterQuery =
+            let baseQuery =
                 query
                 |> Map.remove "_include"
                 |> Map.remove "_revinclude"
-                |> SearchEngine.expandChainedQuery expandSearch
-                |> SearchEngine.expandHasQuery expandSearch
 
-            let page, total = store.Search(resourceType, filterQuery)
-            let includes =
-                SearchEngine.resolveIncludes (fun (rt, id) -> store.Get(rt, id)) resourceType includeTokens page
+            match SearchFilter.expand baseQuery with
+            | SearchFilter.Expansion.Invalid reason -> Error(BadRequest reason)
+            | expansion ->
+                let runSearch (q: Map<string, string list>) =
+                    let filterQuery =
+                        q
+                        |> SearchEngine.expandChainedQuery expandSearch
+                        |> SearchEngine.expandHasQuery expandSearch
 
-            let revincludes =
-                SearchEngine.resolveRevincludes expandSearch resourceType revIncludeTokens page
+                    store.Search(resourceType, filterQuery)
 
-            Ok(toSearchBundle resourceType page (includes @ revincludes) total))
+                let page, total =
+                    match expansion with
+                    | SearchFilter.Expansion.Unchanged q
+                    | SearchFilter.Expansion.Single q -> runSearch q
+                    | SearchFilter.Expansion.Alternatives alts ->
+                        let ids =
+                            alts
+                            |> List.collect (fun alt ->
+                                let q = alt |> Map.add "_count" [ "10000" ]
+                                runSearch q |> fst |> List.map FhirJson.id)
+                            |> List.distinct
+
+                        let idQuery =
+                            if List.isEmpty ids then
+                                baseQuery
+                                |> Map.remove "_filter"
+                                |> Map.add "_id" [ "__filter_nomatch__" ]
+                            else
+                                baseQuery
+                                |> Map.remove "_filter"
+                                |> Map.add "_id" ids
+
+                        runSearch idQuery
+                    | SearchFilter.Expansion.Invalid _ -> [], 0
+
+                let includes =
+                    SearchEngine.resolveIncludes (fun (rt, id) -> store.Get(rt, id)) resourceType includeTokens page
+
+                let revincludes =
+                    SearchEngine.resolveRevincludes expandSearch resourceType revIncludeTokens page
+
+                Ok(toSearchBundle resourceType page (includes @ revincludes) total))
 
     let patientEverything (store: IResourceStore) (id: string) : FhirResult<FhirResource> =
         ensureKnownResourceType "Patient"

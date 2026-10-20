@@ -58,22 +58,22 @@ Base URL (local default): `http://localhost:5050`
 
 Indexed in SQL (`search_string` / `search_token` / `search_ref` / `search_date` / `search_quantity`) on write; queries use SQL filters + `COUNT`/`LIMIT`/`OFFSET`.
 
+Param definitions come from R5 `SearchParameter` resources via `make generate-r5-all` / `--search-catalog` → `GeneratedSearchCatalog.fs` (Supported extractor subset). Engine, indexer, and `/metadata` share that catalog.
+
 | Feature | Examples / notes |
 |---------|------------------|
 | Common | `_id`, `_lastUpdated` (`ge`/`le`/… on envelope `ts`), `_count`, `_sort` |
-| Patient | `family`, `given`, `name`, `gender`, `birthdate`, `identifier`, `organization` |
-| Organization | `name` |
-| Observation | `status`, `code`, `patient` / `subject`, `encounter`, `date`, `value-quantity` |
-| Encounter | `status`, `patient` / `subject` |
-| Clinical set | `patient` / `subject` (Condition, …) |
+| Catalog | Supported params for Patient, Organization, Observation, Encounter, clinical set, … (see `/metadata`) |
 | Modifiers | `:exact`, `:contains`, `:missing`, token `:not` / `:above` / `:below` |
 | Date / quantity | prefixes `eq`/`ne`/`gt`/`lt`/`ge`/`le`/`sa`/`eb`/`ap` (±10%, dates ±12h floor) |
+| Composites | e.g. `Observation?code-value-quantity=loinc\|8480-6$gt100\|…` (`$`-joined components) |
+| `_filter` | subset: `and` / `or` / `not (…)` / `eq|ne|gt|lt|ge|le|co|sw` on indexed params |
 | `_include` | `Observation?_include=Observation:patient` |
 | `_revinclude` | `Patient?_revinclude=Observation:patient` |
 | Chaining | multi-hop e.g. `Observation?subject.organization.name=…` |
 | `_has` | nested e.g. `Organization?_has:Patient:organization:_has:Observation:patient:code=…` |
 
-Resource-specific search parameters are advertised in `/metadata` where implemented. Composites / full `_filter` grammar remain **out of scope**.
+Unsupported SearchParameter expressions are omitted from `/metadata`. Full `_filter` paths (`param[filter].chain`, `_has:` inside `_filter`) remain out of scope.
 
 ## Validation
 
@@ -117,4 +117,5 @@ Create an active `Subscription` with `channelType.code=rest-hook` and `endpoint`
 - EHR launch token handshake / JWT access tokens / refresh tokens
 - Persisting dynamically registered clients across restarts
 - External webhook reliability (retries, signing)
+- Full FHIRPath search extractors / `_filter` embedded chain & `_has`
 - XML (`application/fhir+xml`) as a first-class format

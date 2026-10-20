@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <Compile Include="Generated/GeneratedResourceCatalog.fs" />
+    <Compile Include="Generated/GeneratedSearchCatalog.fs" />
     <Compile Include="SchemaPackage.fs" />
   </ItemGroup>
 

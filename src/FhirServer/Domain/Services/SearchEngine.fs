@@ -6,6 +6,7 @@ open System.Text.Json
 open System.Text.Json.Nodes
 open FhirServer.Domain
 open FhirServer.Domain.Types
+open FhirServer.Schemas
 
 module SearchEngine =
 
@@ -684,115 +685,118 @@ module SearchEngine =
             Some(cmp, value, system, code)
         | _ -> None
 
+    let private catalogParams (resourceType: string) =
+        GeneratedSearchCatalog.forResource resourceType
+
+    let private toIndexKind =
+        function
+        | GeneratedSearchCatalog.IndexKind.String -> IndexKind.String
+        | GeneratedSearchCatalog.IndexKind.Token -> IndexKind.Token
+        | GeneratedSearchCatalog.IndexKind.Ref -> IndexKind.Ref
+        | GeneratedSearchCatalog.IndexKind.Date -> IndexKind.Date
+        | GeneratedSearchCatalog.IndexKind.Quantity -> IndexKind.Quantity
+        | GeneratedSearchCatalog.IndexKind.Composite -> IndexKind.String // unused for filters
+
+    let private toStringMatch =
+        function
+        | GeneratedSearchCatalog.StringMatch.Contains -> StringMatch.Contains
+        | GeneratedSearchCatalog.StringMatch.Exact -> StringMatch.Exact
+
     let private stringParamSpecs (resourceType: string) =
-        match resourceType with
-        | "Patient" ->
-            [
-                "family", StringMatch.Contains, IndexKind.String
-                "given", StringMatch.Contains, IndexKind.String
-                "name", StringMatch.Contains, IndexKind.String
-                "gender", StringMatch.Exact, IndexKind.String
-            ]
-        | "Observation" -> [ "status", StringMatch.Exact, IndexKind.String ]
-        | "Encounter" -> [ "status", StringMatch.Exact, IndexKind.String ]
-        | "Organization" ->
-            [
-                "name", StringMatch.Contains, IndexKind.String
-            ]
-        | _ -> []
+        catalogParams resourceType
+        |> List.choose (fun p ->
+            match p.Kind with
+            | GeneratedSearchCatalog.IndexKind.String ->
+                Some(p.Code, p.IndexParam, toStringMatch p.StringMatch, IndexKind.String)
+            | _ -> None)
 
     let private tokenParamSpecs (resourceType: string) =
-        match resourceType with
-        | "Patient" -> [ "identifier", IndexKind.Token ]
-        | "Observation" -> [ "code", IndexKind.Token ]
-        | _ -> []
+        catalogParams resourceType
+        |> List.choose (fun p ->
+            match p.Kind with
+            | GeneratedSearchCatalog.IndexKind.Token -> Some(p.Code, p.IndexParam, IndexKind.Token)
+            | _ -> None)
 
     let private refParamSpecs (resourceType: string) =
-        match resourceType with
-        | "Patient" ->
-            [
-                "organization", "organization"
-                "managingOrganization", "managingOrganization"
-            ]
-        | "Observation" ->
-            [
-                "patient", "subject"
-                "subject", "subject"
-                "encounter", "encounter"
-            ]
-        | "Encounter"
-        | "Condition"
-        | "AllergyIntolerance"
-        | "MedicationRequest"
-        | "Procedure"
-        | "DiagnosticReport"
-        | "Immunization"
-        | "CarePlan"
-        | "DocumentReference" -> [ "patient", "patient"; "subject", "patient" ]
-        | _ -> []
+        catalogParams resourceType
+        |> List.choose (fun p ->
+            match p.Kind with
+            | GeneratedSearchCatalog.IndexKind.Ref -> Some(p.Code, p.IndexParam)
+            | _ -> None)
 
     let private dateParamSpecs (resourceType: string) =
-        match resourceType with
-        | "Patient" -> [ "birthdate" ]
-        | "Observation" -> [ "date" ]
-        | _ -> []
+        catalogParams resourceType
+        |> List.choose (fun p ->
+            match p.Kind with
+            | GeneratedSearchCatalog.IndexKind.Date -> Some(p.Code, p.IndexParam)
+            | _ -> None)
 
     let private quantityParamSpecs (resourceType: string) =
-        match resourceType with
-        | "Observation" -> [ "value-quantity" ]
-        | _ -> []
+        catalogParams resourceType
+        |> List.choose (fun p ->
+            match p.Kind with
+            | GeneratedSearchCatalog.IndexKind.Quantity -> Some(p.Code, p.IndexParam)
+            | _ -> None)
+
+    let private compositeParamSpecs (resourceType: string) =
+        catalogParams resourceType
+        |> List.choose (fun p ->
+            match p.Kind, p.Extractor with
+            | GeneratedSearchCatalog.IndexKind.Composite, GeneratedSearchCatalog.Extractor.Composite components ->
+                Some(p.Code, components)
+            | _ -> None)
 
     let private stringFilters (resourceType: string) (query: Map<string, string list>) =
         stringParamSpecs resourceType
-        |> List.collect (fun (param, defaultMatch, _) ->
-            entriesFor query param
+        |> List.collect (fun (code, indexParam, defaultMatch, _) ->
+            entriesFor query code
             |> List.choose (fun (modifier, values) ->
                 match modifier with
                 | Some "missing" -> None
                 | Some "exact" ->
                     Some {
-                        Param = param
+                        Param = indexParam
                         Match = StringMatch.Exact
                         Values = values |> List.map (fun s -> s.ToLowerInvariant())
                     }
                 | Some "contains" ->
                     Some {
-                        Param = param
+                        Param = indexParam
                         Match = StringMatch.Contains
                         Values = values |> List.map (fun s -> s.ToLowerInvariant())
                     }
                 | Some _ -> None
                 | None ->
                     Some {
-                        Param = param
+                        Param = indexParam
                         Match = defaultMatch
                         Values = values |> List.map (fun s -> s.ToLowerInvariant())
                     }))
 
     let private tokenFilters (resourceType: string) (query: Map<string, string list>) : TokenFilter list =
         tokenParamSpecs resourceType
-        |> List.collect (fun (param, _) ->
-            entriesFor query param
+        |> List.collect (fun (code, indexParam, _) ->
+            entriesFor query code
             |> List.choose (fun (modifier, values) ->
                 match modifier with
                 | Some "missing" -> None
                 | Some "not" ->
                     Some {
-                        Param = param
+                        Param = indexParam
                         Negated = true
                         Match = TokenMatch.Exact
                         Values = parseTokenValues values
                     }
                 | Some "above" ->
                     Some {
-                        Param = param
+                        Param = indexParam
                         Negated = false
                         Match = TokenMatch.Above
                         Values = parseTokenValues values
                     }
                 | Some "below" ->
                     Some {
-                        Param = param
+                        Param = indexParam
                         Negated = false
                         Match = TokenMatch.Below
                         Values = parseTokenValues values
@@ -800,7 +804,7 @@ module SearchEngine =
                 | Some _ -> None
                 | None ->
                     Some {
-                        Param = param
+                        Param = indexParam
                         Negated = false
                         Match = TokenMatch.Exact
                         Values = parseTokenValues values
@@ -822,39 +826,50 @@ module SearchEngine =
         })
 
     let private missingFilters (resourceType: string) (query: Map<string, string list>) : MissingFilter list =
-        let specs =
-            [
-                for param, _, kind in stringParamSpecs resourceType do
-                    yield param, kind
-                for param, kind in tokenParamSpecs resourceType do
-                    yield param, kind
-                for queryParam, indexParam in refParamSpecs resourceType do
-                    yield queryParam, IndexKind.Ref
-                    yield indexParam, IndexKind.Ref
-                for param in dateParamSpecs resourceType do
-                    yield param, IndexKind.Date
-                for param in quantityParamSpecs resourceType do
-                    yield param, IndexKind.Quantity
-            ]
-            |> List.distinctBy fst
-
-        specs
-        |> List.collect (fun (param, kind) ->
-            entriesFor query param
+        catalogParams resourceType
+        |> List.filter (fun p ->
+            match p.Kind with
+            | GeneratedSearchCatalog.IndexKind.Composite -> false
+            | _ -> true)
+        |> List.collect (fun p ->
+            entriesFor query p.Code
             |> List.choose (fun (modifier, values) ->
                 match modifier with
                 | Some "missing" ->
                     parseMissingFlag values
                     |> Option.map (fun missing -> {
-                        Param =
-                            match kind, param with
-                            | IndexKind.Ref, "patient" when resourceType = "Observation" -> "subject"
-                            | IndexKind.Ref, "subject" when resourceType <> "Observation" -> "patient"
-                            | _ -> param
-                        Kind = kind
+                        Param = p.IndexParam
+                        Kind = toIndexKind p.Kind
                         Missing = missing
                     })
                 | _ -> None))
+
+    /// Expand `code-value-quantity=loinc|x$gt100|u` into component query entries (AND).
+    let private expandCompositeQuery (resourceType: string) (query: Map<string, string list>) =
+        compositeParamSpecs resourceType
+        |> List.fold
+            (fun (acc: Map<string, string list>) (code, components) ->
+                match acc |> Map.tryFind code with
+                | None -> acc
+                | Some values ->
+                    let without = acc |> Map.remove code
+
+                    values
+                    |> List.fold
+                        (fun m raw ->
+                            let parts = raw.Split('$')
+
+                            if parts.Length <> components.Length then
+                                m
+                            else
+                                List.zip components (Array.toList parts)
+                                |> List.fold
+                                    (fun m' ((compCode, _), part) ->
+                                        let existing = m' |> Map.tryFind compCode |> Option.defaultValue []
+                                        m' |> Map.add compCode (existing @ [ part ]))
+                                    m)
+                        without)
+            query
 
     let private toDateFilter (param: string) (cmp: DateComparator) (dto: DateTimeOffset) =
         match cmp with
@@ -877,8 +892,8 @@ module SearchEngine =
 
     let private dateFilters (resourceType: string) (query: Map<string, string list>) : DateFilter list =
         dateParamSpecs resourceType
-        |> List.collect (fun param ->
-            entriesFor query param
+        |> List.collect (fun (code, indexParam) ->
+            entriesFor query code
             |> List.collect (fun (modifier, values) ->
                 match modifier with
                 | Some "missing" -> []
@@ -890,7 +905,7 @@ module SearchEngine =
                         | None -> None
                         | Some(cmp, rest) ->
                             match parseInstant rest with
-                            | Some dto -> Some(toDateFilter param cmp dto)
+                            | Some dto -> Some(toDateFilter indexParam cmp dto)
                             | None ->
                                 match
                                     DateTimeOffset.TryParse(
@@ -899,13 +914,13 @@ module SearchEngine =
                                         DateTimeStyles.AssumeUniversal ||| DateTimeStyles.AdjustToUniversal
                                     )
                                 with
-                                | true, dto -> Some(toDateFilter param cmp (dto.ToUniversalTime()))
+                                | true, dto -> Some(toDateFilter indexParam cmp (dto.ToUniversalTime()))
                                 | _ -> None)))
 
     let private quantityFilters (resourceType: string) (query: Map<string, string list>) : QuantityFilter list =
         quantityParamSpecs resourceType
-        |> List.collect (fun param ->
-            entriesFor query param
+        |> List.collect (fun (code, indexParam) ->
+            entriesFor query code
             |> List.collect (fun (modifier, values) ->
                 match modifier with
                 | Some "missing" -> []
@@ -915,7 +930,7 @@ module SearchEngine =
                     |> List.choose (fun raw ->
                         match parseQuantityValue raw with
                         | None -> None
-                        | Some(cmp, value, system, code) ->
+                        | Some(cmp, value, system, codeVal) ->
                             let valueHi =
                                 match cmp with
                                 | QuantityComparator.Ap ->
@@ -931,15 +946,15 @@ module SearchEngine =
                                 | _ -> value
 
                             Some {
-                                Param = param
+                                Param = indexParam
                                 Comparator = cmp
                                 Value = valueLo
                                 ValueHi = valueHi
                                 System = system
-                                Code = code
-                            })))
-    /// Build a search plan from a FHIR query map (indexed params only; others ignored).
+                                Code = codeVal
+                            })))    /// Build a search plan from a FHIR query map (indexed params only; others ignored).
     let toSearchPlan (resourceType: string) (query: Map<string, string list>) : SearchPlan =
+        let query = expandCompositeQuery resourceType query
         let offset, count = parsePaging query
         let ge, le = parseLastUpdated (valuesOf query "_lastUpdated")
 

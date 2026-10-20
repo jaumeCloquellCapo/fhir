@@ -158,6 +158,15 @@ module PostgresMigrations =
                 UPDATE search_index_state SET backfilled = false WHERE id = 1;
                 """
         }
+        {
+            Version = 6
+            Name = "search_catalog_reindex"
+            Script =
+                """
+                -- Regenerate search_* rows after GeneratedSearchCatalog extractors.
+                UPDATE search_index_state SET backfilled = false WHERE id = 1;
+                """
+        }
     ]
 
     let migrate (connectionString: string) =

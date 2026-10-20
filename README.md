@@ -16,7 +16,7 @@ The goal is a small, readable codebase that developers can run locally, extend, 
 
 - **FHIR R5** resources and `CapabilityStatement` from a generated catalog
 - **REST API** — CRUD, history, Bundle transaction/batch, `$validate`, `$everything`, `$document`, `$lastn`, `$dump`, `$export` / `$import`
-- **Search (SQL-indexed)** — `_include` / `_revinclude`, multi-hop chaining, nested `_has`, modifiers (`:exact` / `:contains` / `:missing` / `:not` / `:above` / `:below`), date & quantity prefixes (incl. `ap`)
+- **Search (SQL-indexed)** — catalog from R5 `SearchParameter` codegen; `_include` / `_revinclude`, multi-hop chaining, nested `_has`, composites, `_filter` subset, modifiers (`:exact` / `:contains` / `:missing` / `:not` / `:above` / `:below`), date & quantity prefixes (incl. `ap`)
 - **Terminology MVP** — `$expand`, `$lookup`, `$validate-code` over stored `ValueSet` / `CodeSystem`
 - **SMART App Launch MVP** — discovery + `/auth/token` (`client_credentials`); Bearer **system** scopes when `Auth:Enabled=true`
 - **Subscriptions MVP** — rest-hook notifications + local `/_hooks/{id}` capture sink
@@ -103,9 +103,9 @@ compose.yaml             Postgres for local development
 
 This project is an **MVP**. It is useful for learning, demos, and as a foundation for a custom FHIR service. It is **not** a certified, production-hardened clinical platform out of the box.
 
-**In scope today (see [docs/Features.md](docs/Features.md)):** R5 CRUD + SQL search (incl. modifiers / `_has` / date·quantity), terminology ops, SMART authorize + PKCE + `client_credentials` with patient/user/system scopes (v2 c/r/u/d/s), multi-client + ephemeral DCR, Subscriptions rest-hook, core profile + constraint validation from `make generate-r5-all`.
+**In scope today (see [docs/Features.md](docs/Features.md)):** R5 CRUD + SQL search (SearchParameter catalog, modifiers / `_has` / composites / `_filter` subset / date·quantity), terminology ops, SMART authorize + PKCE + `client_credentials` with patient/user/system scopes (v2 c/r/u/d/s), multi-client + ephemeral DCR, Subscriptions rest-hook, core profile + constraint validation from `make generate-r5-all`.
 
-**Not yet:** EHR `launch` handshake / JWT access tokens; subscription webhook retries/signing; composites / `_filter` grammar; packaging arbitrary external IGs beyond R5 core profiles.
+**Not yet:** EHR `launch` handshake / JWT access tokens; subscription webhook retries/signing; full FHIRPath search extractors; packaging arbitrary external IGs beyond R5 core profiles.
 
 Contributions that move those areas forward are welcome—see [CONTRIBUTING.md](CONTRIBUTING.md).
 
