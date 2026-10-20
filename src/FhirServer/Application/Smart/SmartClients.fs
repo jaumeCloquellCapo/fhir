@@ -23,11 +23,30 @@ module SmartClients =
 
     let private dynamicClients = ConcurrentDictionary<string, ClientRecord>(StringComparer.Ordinal)
 
+    /// Scopes DCR may grant — never system/* (open registration must not mint admin tokens).
+    let private isAllowedDcrScopeToken (token: string) =
+        let t = token.Trim()
+
+        t.Equals("openid", StringComparison.Ordinal)
+        || t.Equals("fhirUser", StringComparison.Ordinal)
+        || t.Equals("launch/patient", StringComparison.Ordinal)
+        || t.Equals("offline_access", StringComparison.Ordinal)
+        || t.StartsWith("patient/", StringComparison.Ordinal)
+        || t.StartsWith("user/", StringComparison.Ordinal)
+
+    let private fixedTimeEquals (left: string) (right: string) =
+        let a = SHA256.HashData(Encoding.UTF8.GetBytes(left))
+        let b = SHA256.HashData(Encoding.UTF8.GetBytes(right))
+        CryptographicOperations.FixedTimeEquals(a.AsSpan(), b.AsSpan())
+
     let private configString (section: IConfiguration) (key: string) (fallback: string) =
         match section.[key] with
         | null
         | "" -> fallback
         | value -> value
+
+    let isDcrEnabled (config: IConfiguration) =
+        config.GetValue<bool>("Smart:EnableDcr", false)
 
     let private splitSpace (value: string) =
         value.Split([| ' '; ',' |], StringSplitOptions.RemoveEmptyEntries)
@@ -63,31 +82,32 @@ module SmartClients =
             let grantsRaw = configString section "GrantTypes" "client_credentials authorization_code"
             let scopes = configString section "AllowedScopes" (configString section "Scopes" "system/*.cruds")
 
-            Some {
-                ClientId = id
-                ClientSecret = configString section "ClientSecret" "change-me"
-                AllowedScopes = scopes
-                GrantTypes = splitGrantTypes grantsRaw
-                RedirectUris = readRedirectUris section
-                ClientName = None
-                Dynamic = dynamic
-            }
+            let secret = configString section "ClientSecret" ""
+
+            if String.IsNullOrWhiteSpace secret then
+                None
+            else
+                Some {
+                    ClientId = id
+                    ClientSecret = secret
+                    AllowedScopes = scopes
+                    GrantTypes = splitGrantTypes grantsRaw
+                    RedirectUris = readRedirectUris section
+                    ClientName = None
+                    Dynamic = dynamic
+                }
 
     let private legacyClient (config: IConfiguration) =
         let id = config.["Smart:ClientId"]
         let secret = config.["Smart:ClientSecret"]
         let scopes = config.["Smart:Scopes"]
 
-        if String.IsNullOrWhiteSpace id then
+        if String.IsNullOrWhiteSpace id || String.IsNullOrWhiteSpace secret then
             None
         else
             Some {
                 ClientId = id
-                ClientSecret =
-                    if String.IsNullOrWhiteSpace secret then
-                        "change-me"
-                    else
-                        secret
+                ClientSecret = secret
                 AllowedScopes =
                     if String.IsNullOrWhiteSpace scopes then
                         "system/*.read system/*.write openid fhirUser"
@@ -109,18 +129,7 @@ module SmartClients =
         | [] ->
             match legacyClient config with
             | Some c -> [ c ]
-            | None ->
-                [
-                    {
-                        ClientId = "fhir-client"
-                        ClientSecret = "change-me"
-                        AllowedScopes = "system/*.read system/*.write openid fhirUser"
-                        GrantTypes = set [ "client_credentials"; "authorization_code" ]
-                        RedirectUris = Set.empty
-                        ClientName = Some "default"
-                        Dynamic = false
-                    }
-                ]
+            | None -> []
         | xs -> xs
 
     let tryFind (config: IConfiguration) (clientId: string) =
@@ -130,7 +139,7 @@ module SmartClients =
 
     let validate (config: IConfiguration) (clientId: string) (secret: string) =
         match tryFind config clientId with
-        | Some c when c.ClientSecret = secret -> Some c
+        | Some c when fixedTimeEquals c.ClientSecret secret -> Some c
         | _ -> None
 
     let allowsGrant (client: ClientRecord) (grant: string) =
@@ -177,7 +186,13 @@ module SmartClients =
     let private newSecret () =
         Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)).TrimEnd('=').Replace('+', '-').Replace('/', '_')
 
+    let private sanitizeDcrScope (requested: string) =
+        splitSpace requested
+        |> Array.filter isAllowedDcrScopeToken
+        |> String.concat " "
+
     /// RFC 7591-style dynamic client registration (in-memory; lost on restart).
+    /// Only patient/user/openid scopes — never system/*. Requires Smart:EnableDcr=true at the HTTP layer.
     let register (body: JsonObject) =
         let clientName = FhirJson.propString body "client_name"
 
@@ -212,13 +227,20 @@ module SmartClients =
             else
                 grantTypes
 
+        // DCR must not issue client_credentials (system-style) clients.
+        let grantTypes = grantTypes |> Set.remove "client_credentials"
+
         let scope =
             match FhirJson.propString body "scope" with
-            | Some s when not (String.IsNullOrWhiteSpace s) -> s
+            | Some s when not (String.IsNullOrWhiteSpace s) -> sanitizeDcrScope s
             | _ -> "openid fhirUser launch/patient patient/*.rs"
 
-        if grantTypes.Contains "authorization_code" && redirectUris.IsEmpty then
+        if grantTypes.IsEmpty then
+            Error "grant_types must include authorization_code (client_credentials not allowed for DCR)"
+        elif grantTypes.Contains "authorization_code" && redirectUris.IsEmpty then
             Error "redirect_uris required for authorization_code"
+        elif String.IsNullOrWhiteSpace scope then
+            Error "scope must include patient/, user/, openid, fhirUser, or launch/patient (system/* not allowed)"
         else
             let clientId = $"dcr-{newId ()}"
             let secret = newSecret ()
@@ -257,6 +279,5 @@ module SmartClients =
                     "scope", FhirJson.jStr scope
                 ]
             )
-
     /// Test helper: clear dynamic clients between runs if needed.
     let clearDynamic () = dynamicClients.Clear()

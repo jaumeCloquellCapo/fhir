@@ -65,7 +65,7 @@ module BulkExport =
         FhirJson.mkObject [
             "transactionTime", FhirJson.jStr (job.RequestedAt.ToUniversalTime().ToString("o"))
             "request", FhirJson.jStr $"{baseUrl.TrimEnd('/')}/$export"
-            "requiresAccessToken", FhirJson.jBool false
+            "requiresAccessToken", FhirJson.jBool true
             "output", output
             "error", JsonArray()
         ]

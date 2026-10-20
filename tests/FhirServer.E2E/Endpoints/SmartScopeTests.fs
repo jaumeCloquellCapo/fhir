@@ -89,7 +89,7 @@ type SmartScopeTests() =
         }
 
     [<Fact>]
-    member _.``Basic auth bypasses scope checks``() : Task =
+    member _.``Basic auth uses configured system scopes``() : Task =
         task {
             let basic = Convert.ToBase64String(Encoding.UTF8.GetBytes("fhir:secret"))
 

@@ -236,6 +236,20 @@ module AppHost =
                         do! ctx.Response.WriteAsync(authorizeHtml (hiddenFields withUser) "Enter the Patient id for this launch.")
                     }
 
+                let authEnabled = config.GetValue<bool>("Auth:Enabled", true)
+
+                let requireAuthorizeLogin =
+                    config.GetValue<bool>("Smart:RequireAuthorizeLogin", authEnabled)
+
+                if requireAuthorizeLogin then
+                    let header = ctx.Request.Headers.Authorization.ToString()
+
+                    if not (Auth.validateBasic config header) then
+                        ctx.Response.StatusCode <- StatusCodes.Status401Unauthorized
+                        ctx.Response.Headers.WWWAuthenticate <- "Basic realm=\"FhirServer Authorize\""
+                        do! ctx.Response.WriteAsync("Authorize requires HTTP Basic (operator login)")
+                        return ()
+
                 match SmartClients.tryFind config clientId with
                 | None -> return! failRedirect "invalid_client" "Unknown client_id"
                 | Some client when not (SmartClients.allowsGrant client "authorization_code") ->
@@ -273,24 +287,50 @@ module AppHost =
                     elif SmartScopes.needsFhirUser scope && fhirUserParam.IsNone && patientParam.IsNone then
                         return! failRedirect "invalid_request" "fhirUser required for user/ scopes"
                     else
-                        let fhirUser =
-                            match fhirUserParam with
-                            | Some fu when not (String.IsNullOrWhiteSpace fu) -> Some fu
-                            | _ when SmartScopes.hasUserClinicalScopes scope && patientParam.IsSome ->
-                                Some($"Patient/{PatientCompartment.normalizePatientId patientParam.Value}")
-                            | _ -> None
+                        match patientParam with
+                        | Some rawPid when SmartScopes.needsPatientLaunch scope ->
+                            let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
+                            let pid = PatientCompartment.normalizePatientId rawPid
 
-                        let code =
-                            SmartAuth.createAuthCode
-                                config
-                                client.ClientId
-                                redirectUri
-                                scope
-                                codeChallenge
-                                patientParam
-                                fhirUser
+                            match store.Get("Patient", pid) with
+                            | None ->
+                                return! failRedirect "invalid_request" $"Unknown patient '{pid}'"
+                            | Some _ ->
+                                let fhirUser =
+                                    match fhirUserParam with
+                                    | Some fu when not (String.IsNullOrWhiteSpace fu) -> Some fu
+                                    | _ when SmartScopes.hasUserClinicalScopes scope ->
+                                        Some($"Patient/{pid}")
+                                    | _ -> None
 
-                        return! redirectOAuth ctx redirectUri state [ "code", code ]
+                                let code =
+                                    SmartAuth.createAuthCode
+                                        config
+                                        client.ClientId
+                                        redirectUri
+                                        scope
+                                        codeChallenge
+                                        (Some pid)
+                                        fhirUser
+
+                                return! redirectOAuth ctx redirectUri state [ "code", code ]
+                        | _ ->
+                            let fhirUser =
+                                match fhirUserParam with
+                                | Some fu when not (String.IsNullOrWhiteSpace fu) -> Some fu
+                                | _ -> None
+
+                            let code =
+                                SmartAuth.createAuthCode
+                                    config
+                                    client.ClientId
+                                    redirectUri
+                                    scope
+                                    codeChallenge
+                                    patientParam
+                                    fhirUser
+
+                            return! redirectOAuth ctx redirectUri state [ "code", code ]
             }
 
         app.MapMethods(
@@ -313,7 +353,7 @@ module AppHost =
         |> OpenApiDocs.documentJson
             [| OpenApiDocs.TagSystem |]
             "OAuth authorize"
-            "SMART authorization_code + PKCE (S256). Pass patient= for standalone launch; otherwise an HTML form is shown."
+            "SMART authorization_code + PKCE (S256). When Auth:Enabled, requires HTTP Basic (Smart:RequireAuthorizeLogin). patient= must exist; otherwise an HTML form is shown."
         |> ignore
 
         app.MapPost(
@@ -375,26 +415,41 @@ module AppHost =
             "/auth/register",
             Func<HttpContext, Task<unit>>(fun ctx ->
                 task {
-                    let! body = readBody ctx
+                    let config = ctx.RequestServices.GetRequiredService<IConfiguration>()
 
-                    match FhirJson.parse body with
-                    | Error msg ->
-                        return! oauthErrorJson ctx StatusCodes.Status400BadRequest "invalid_client_metadata" (Some msg)
-                    | Ok doc ->
-                        match SmartClients.register doc with
+                    if not (SmartClients.isDcrEnabled config) then
+                        ctx.Response.StatusCode <- StatusCodes.Status404NotFound
+                        do! ctx.Response.WriteAsync("Dynamic client registration is disabled")
+                    else
+                        let! body = readBody ctx
+
+                        match FhirJson.parse body with
                         | Error msg ->
                             return!
-                                oauthErrorJson ctx StatusCodes.Status400BadRequest "invalid_client_metadata" (Some msg)
-                        | Ok created ->
-                            ctx.Response.StatusCode <- StatusCodes.Status201Created
-                            ctx.Response.ContentType <- "application/json"
-                            do! ctx.Response.WriteAsync(FhirJson.toJson created)
+                                oauthErrorJson
+                                    ctx
+                                    StatusCodes.Status400BadRequest
+                                    "invalid_client_metadata"
+                                    (Some msg)
+                        | Ok doc ->
+                            match SmartClients.register doc with
+                            | Error msg ->
+                                return!
+                                    oauthErrorJson
+                                        ctx
+                                        StatusCodes.Status400BadRequest
+                                        "invalid_client_metadata"
+                                        (Some msg)
+                            | Ok created ->
+                                ctx.Response.StatusCode <- StatusCodes.Status201Created
+                                ctx.Response.ContentType <- "application/json"
+                                do! ctx.Response.WriteAsync(FhirJson.toJson created)
                 })
         )
         |> OpenApiDocs.documentJson
             [| OpenApiDocs.TagSystem |]
             "OAuth register"
-            "Dynamic client registration (RFC 7591-style). Clients are in-memory and lost on restart."
+            "Dynamic client registration (RFC 7591-style). Disabled unless Smart:EnableDcr=true. Scopes limited to patient/user/openid (no system/*). In-memory only."
         |> ignore
 
         app.MapPost(
@@ -1040,6 +1095,8 @@ module AppHost =
         builder.Services.AddSwaggerGen(Action<_> OpenApiDocs.configureSwagger) |> ignore
 
         let app = builder.Build()
+
+        SubscriptionNotifier.configure app.Configuration
 
         app.UseSwagger() |> ignore
 

@@ -1,6 +1,7 @@
 namespace FhirServer.Infrastructure.Http
 
 open System
+open System.Security.Cryptography
 open System.Text
 open System.Threading.Tasks
 open Microsoft.AspNetCore.Builder
@@ -30,23 +31,36 @@ module Auth =
             do! ctx.Response.WriteAsync(FhirJson.toJson oo)
         }
 
-    let private isPublicPath (path: string) =
+    let private fixedTimeEquals (left: string) (right: string) =
+        let a = SHA256.HashData(Encoding.UTF8.GetBytes(left))
+        let b = SHA256.HashData(Encoding.UTF8.GetBytes(right))
+        CryptographicOperations.FixedTimeEquals(a.AsSpan(), b.AsSpan())
+
+    let private isPublicPath (config: IConfiguration) (authEnabled: bool) (path: string) =
+        let allowPublicHooks =
+            config.GetValue<bool>("Subscriptions:AllowPublicHooks", not authEnabled)
+
+        let enableDcr = config.GetValue<bool>("Smart:EnableDcr", false)
+
         path = "/health"
         || path = "/"
         || path = "/.well-known/smart-configuration"
         || path = "/auth/token"
         || path = "/auth/authorize"
-        || path = "/auth/register"
+        || (path = "/auth/register" && enableDcr)
         || (path <> null
             && (path.StartsWith("/swagger", StringComparison.OrdinalIgnoreCase)
                 || path.StartsWith("/openapi", StringComparison.OrdinalIgnoreCase)
-                || path.StartsWith("/_hooks/", StringComparison.OrdinalIgnoreCase)))
+                || (allowPublicHooks
+                    && path.StartsWith("/_hooks/", StringComparison.OrdinalIgnoreCase))))
 
-    let private validateBasic (config: IConfiguration) (header: string) =
+    let validateBasic (config: IConfiguration) (header: string) =
         let user = config.["Auth:Username"]
         let pass = config.["Auth:Password"]
 
-        if String.IsNullOrWhiteSpace user then
+        if String.IsNullOrWhiteSpace user || String.IsNullOrWhiteSpace pass then
+            false
+        elif String.IsNullOrWhiteSpace header then
             false
         elif not (header.StartsWith("Basic ", StringComparison.OrdinalIgnoreCase)) then
             false
@@ -55,9 +69,29 @@ module Auth =
                 let encoded = header.Substring(6).Trim()
                 let decoded = Encoding.UTF8.GetString(Convert.FromBase64String(encoded))
                 let parts = decoded.Split(':', 2)
-                parts.Length = 2 && parts.[0] = user && parts.[1] = pass
+
+                parts.Length = 2
+                && fixedTimeEquals parts.[0] user
+                && fixedTimeEquals parts.[1] pass
             with _ ->
                 false
+
+    let private basicScopes (config: IConfiguration) =
+        match config.["Auth:BasicScopes"] with
+        | null
+        | "" -> "system/*.cruds"
+        | value -> value.Trim()
+
+    let private basicAuthContext (config: IConfiguration) : SmartAuth.AuthContext =
+        let scope = basicScopes config
+
+        {
+            ClientId = "basic-auth"
+            Scope = scope
+            PatientId = None
+            FhirUser = None
+            CompartmentPatientId = PatientCompartment.tryCompartmentPatientId scope None None
+        }
 
     let private tryBearerRecord (header: string) =
         if not (header.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase)) then
@@ -118,10 +152,31 @@ module Auth =
             | None -> Ok()
         | None -> Ok()
 
+    let private enforceScopes (ctx: HttpContext) (auth: SmartAuth.AuthContext) =
+        task {
+            let interaction, resourceType =
+                SmartScopes.resolveInteraction ctx.Request.Method (ctx.Request.Path.Value)
+
+            if SmartScopes.hasUserClinicalScopes auth.Scope && auth.FhirUser.IsNone then
+                return! forbidden ctx "user/ scopes require fhirUser on the access token"
+            elif SmartScopes.hasPatientClinicalScopes auth.Scope && auth.PatientId.IsNone then
+                return! forbidden ctx "patient/ scopes require patient context on the access token"
+            elif not (SmartScopes.allows auth.Scope resourceType interaction) then
+                let needed = SmartScopes.describeNeeded resourceType interaction
+
+                return!
+                    forbidden
+                        ctx
+                        $"Missing SMART scope for {needed} (token scope: {auth.Scope})"
+            else
+                ctx.Items[SmartAuth.AuthContextItemKey] <- auth
+                return! Task.CompletedTask
+        }
+
     /// Require Basic and/or SMART Bearer when Auth:Enabled=true.
-    /// Basic = full access. Bearer scopes enforced per SMART v2 interaction (c/r/u/d/s).
+    /// Basic uses Auth:BasicScopes (default system/*.cruds) — same scope checks as Bearer.
     let useAuth (app: WebApplication) =
-        let enabled = app.Configuration.GetValue<bool>("Auth:Enabled", false)
+        let enabled = app.Configuration.GetValue<bool>("Auth:Enabled", true)
 
         if not enabled then
             app
@@ -130,37 +185,31 @@ module Auth =
                 Func<HttpContext, RequestDelegate, Task>(fun ctx next ->
                     task {
                         let path = ctx.Request.Path.Value
+                        let config = app.Configuration
 
-                        if isPublicPath path then
+                        if isPublicPath config true path then
                             return! next.Invoke(ctx)
                         else
                             let header = ctx.Request.Headers.Authorization.ToString()
 
-                            if validateBasic app.Configuration header then
-                                return! next.Invoke(ctx)
+                            if validateBasic config header then
+                                let auth = basicAuthContext config
+                                do! enforceScopes ctx auth
+
+                                if ctx.Response.HasStarted || ctx.Response.StatusCode >= 400 then
+                                    return ()
+                                else
+                                    return! next.Invoke(ctx)
                             else
                                 match tryBearerRecord header with
                                 | None -> return! unauthorized ctx "Bearer, Basic realm=\"FhirServer\""
                                 | Some record ->
-                                    let interaction, resourceType =
-                                        SmartScopes.resolveInteraction ctx.Request.Method path
+                                    let auth = SmartAuth.toAuthContext record
+                                    do! enforceScopes ctx auth
 
-                                    if SmartScopes.hasUserClinicalScopes record.Scope && record.FhirUser.IsNone then
-                                        return! forbidden ctx "user/ scopes require fhirUser on the access token"
-                                    elif
-                                        SmartScopes.hasPatientClinicalScopes record.Scope
-                                        && record.PatientId.IsNone
-                                    then
-                                        return! forbidden ctx "patient/ scopes require patient context on the access token"
-                                    elif not (SmartScopes.allows record.Scope resourceType interaction) then
-                                        let needed = SmartScopes.describeNeeded resourceType interaction
-
-                                        return!
-                                            forbidden
-                                                ctx
-                                                $"Missing SMART scope for {needed} (token scope: {record.Scope})"
+                                    if ctx.Response.HasStarted || ctx.Response.StatusCode >= 400 then
+                                        return ()
                                     else
-                                        ctx.Items[SmartAuth.AuthContextItemKey] <- SmartAuth.toAuthContext record
                                         return! next.Invoke(ctx)
                     })
             )

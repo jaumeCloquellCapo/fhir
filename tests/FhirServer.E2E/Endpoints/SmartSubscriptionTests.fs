@@ -52,6 +52,8 @@ type SmartSubscriptionTests() =
             Assert.Contains("token_endpoint", body)
             Assert.Contains("/auth/token", body)
             Assert.Contains("client_credentials", body)
+            // DCR is off by default — registration_endpoint must not be advertised.
+            Assert.DoesNotContain("registration_endpoint", body)
         }
 
     [<Fact>]

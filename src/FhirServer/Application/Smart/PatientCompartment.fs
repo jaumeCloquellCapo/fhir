@@ -43,11 +43,12 @@ module PatientCompartment =
                 | _ -> false)
         | _ -> false
 
-    /// Resource types that participate via patient/subject references (MVP subset).
+    /// Resource types that participate via patient/subject references (explicit allow-list).
+    /// Unknown types are outside the compartment (deny) — never assume patient/subject.
     let private compartmentFields (resourceType: string) =
         match resourceType with
-        | "Patient" -> []
-        | "Observation" -> [ "subject"; "patient" ]
+        | "Patient" -> Some []
+        | "Observation" -> Some [ "subject"; "patient" ]
         | "Encounter"
         | "Condition"
         | "AllergyIntolerance"
@@ -57,18 +58,18 @@ module PatientCompartment =
         | "Immunization"
         | "CarePlan"
         | "DocumentReference"
-        | "Composition" -> [ "patient"; "subject" ]
-        | _ -> [ "patient"; "subject" ]
+        | "Composition" -> Some [ "patient"; "subject" ]
+        | _ -> None
 
     let belongsTo (patientId: string) (resource: FhirResource) =
         let id = normalizePatientId patientId
         let rt = FhirJson.resourceType resource
 
-        if rt.Equals("Patient", StringComparison.OrdinalIgnoreCase) then
+        match compartmentFields rt with
+        | None -> false
+        | Some _ when rt.Equals("Patient", StringComparison.OrdinalIgnoreCase) ->
             FhirJson.id resource = id
-        else
-            let fields = compartmentFields rt
-            fields |> List.exists (fun f -> refFieldOk resource f id)
+        | Some fields -> fields |> List.exists (fun f -> refFieldOk resource f id)
 
     let private queryValues (query: Map<string, string list>) (key: string) =
         match Map.tryFind key query with
@@ -93,9 +94,10 @@ module PatientCompartment =
         let id = normalizePatientId patientId
         let expected = patientReference id
 
-        if resourceType.Equals("Patient", StringComparison.OrdinalIgnoreCase) then
-            let existing = queryValues query "_id" @ queryValues query "identifier"
-
+        match compartmentFields resourceType with
+        | None ->
+            Error $"Resource type '{resourceType}' is not in the patient compartment allow-list"
+        | Some _ when resourceType.Equals("Patient", StringComparison.OrdinalIgnoreCase) ->
             // Prefer _id binding for Patient type search.
             let conflicting =
                 queryValues query "_id"
@@ -105,7 +107,7 @@ module PatientCompartment =
                 Error $"Search patient scope conflict: token patient is {expected}"
             else
                 Ok(query |> Map.add "_id" [ id ])
-        else
+        | Some _ ->
             let patientVals = queryValues query "patient"
             let subjectVals = queryValues query "subject"
 

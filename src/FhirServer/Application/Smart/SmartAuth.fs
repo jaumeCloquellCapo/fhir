@@ -62,11 +62,10 @@ module SmartAuth =
         let root = baseUrl.TrimEnd('/')
         let scopes = SmartClients.allSupportedScopes config
 
-        FhirJson.mkObject [
+        let props = [
             "issuer", FhirJson.jStr root
             "authorization_endpoint", FhirJson.jStr $"{root}/auth/authorize"
             "token_endpoint", FhirJson.jStr $"{root}/auth/token"
-            "registration_endpoint", FhirJson.jStr $"{root}/auth/register"
             "capabilities",
             stringArray [
                 "client-confidential-symmetric"
@@ -81,6 +80,14 @@ module SmartAuth =
             "response_types_supported", stringArray [ "code" ]
             "token_endpoint_auth_methods_supported", stringArray [ "client_secret_basic"; "client_secret_post" ]
         ]
+
+        let props =
+            if SmartClients.isDcrEnabled config then
+                props @ [ "registration_endpoint", FhirJson.jStr $"{root}/auth/register" ]
+            else
+                props
+
+        FhirJson.mkObject props
 
     let private tokenResponse (record: TokenRecord) (expiresInSeconds: int) =
         let props = [

@@ -76,11 +76,11 @@ Interactive OpenAPI docs for every FHIR endpoint (CRUD, search, history, `$valid
 | **Swagger UI** | [http://localhost:5050/swagger](http://localhost:5050/swagger) |
 | OpenAPI JSON | [http://localhost:5050/swagger/v1/swagger.json](http://localhost:5050/swagger/v1/swagger.json) |
 
-`dotnet run` opens Swagger in the browser by default (`launchUrl: swagger`). Use **Authorize** in the UI when `Auth:Enabled=true` (HTTP Basic).
+`dotnet run` opens Swagger in the browser by default (`launchUrl: swagger`). Auth is **on** by default — use **Authorize** in the UI (HTTP Basic `fhir` / `change-me`) or a SMART Bearer from `/auth/token`.
 
 ```bash
-curl -s http://localhost:5050/metadata | jq .software
-curl -s -X POST http://localhost:5050/Patient \
+curl -s -u fhir:change-me http://localhost:5050/metadata | jq .software
+curl -s -u fhir:change-me -X POST http://localhost:5050/Patient \
   -H 'Content-Type: application/fhir+json' \
   -d '{"resourceType":"Patient","name":[{"family":"Garcia","given":["Ana"]}],"gender":"female"}' \
   | jq .
@@ -103,7 +103,7 @@ compose.yaml             Postgres for local development
 
 This project is an **MVP**. It is useful for learning, demos, and as a foundation for a custom FHIR service. It is **not** a certified, production-hardened clinical platform out of the box.
 
-**In scope today (see [docs/Features.md](docs/Features.md)):** R5 CRUD + SQL search (SearchParameter catalog, modifiers / `_has` / composites / `_filter` subset / date·quantity), terminology ops, SMART authorize + PKCE + `client_credentials` with patient/user/system scopes (v2 c/r/u/d/s), multi-client + ephemeral DCR, Subscriptions rest-hook, core profile + constraint validation from `make generate-r5-all`.
+**In scope today (see [docs/Features.md](docs/Features.md)):** R5 CRUD + SQL search (SearchParameter catalog, modifiers / `_has` / composites / `_filter` subset / date·quantity), terminology ops, SMART authorize + PKCE + `client_credentials` with patient/user/system scopes (v2 c/r/u/d/s), multi-client + optional ephemeral DCR (`Smart:EnableDcr`), Subscriptions rest-hook (loopback/`/_hooks` only by default), core profile + constraint validation from `make generate-r5-all`.
 
 **Not yet:** EHR `launch` handshake / JWT access tokens; subscription webhook retries/signing; full FHIRPath search extractors; packaging arbitrary external IGs beyond R5 core profiles.
 

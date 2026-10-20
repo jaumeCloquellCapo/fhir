@@ -23,6 +23,8 @@ type SmartFlowFactory() =
             .UseSetting("Auth:Enabled", "true")
             .UseSetting("Auth:Username", "fhir")
             .UseSetting("Auth:Password", "secret")
+            .UseSetting("Smart:EnableDcr", "true")
+            .UseSetting("Smart:RequireAuthorizeLogin", "true")
             .UseSetting("Smart:Clients:0:ClientId", "fhir-client")
             .UseSetting("Smart:Clients:0:ClientSecret", "smart-secret")
             .UseSetting(
@@ -110,7 +112,10 @@ type SmartAuthFlowTests() =
                    | None -> [])
                 |> String.concat "&"
 
-            use! response = client.GetAsync($"/auth/authorize?{qs}")
+            use request = new HttpRequestMessage(HttpMethod.Get, $"/auth/authorize?{qs}")
+            let basic = basicAuth "fhir" "secret"
+            request.Headers.TryAddWithoutValidation("Authorization", $"Basic {basic}") |> ignore
+            use! response = client.SendAsync(request)
             Assert.True(
                 response.StatusCode = HttpStatusCode.Redirect
                 || response.StatusCode = HttpStatusCode.Found

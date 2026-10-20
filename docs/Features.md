@@ -94,7 +94,7 @@ When `Audit:Enabled=true`, the server records BALP-oriented `AuditEvent` resourc
 | POST | `/auth/token` | `client_credentials` (system scopes only) or `authorization_code` + `code_verifier` |
 | POST | `/auth/register` | Dynamic client registration (in-memory; lost on restart) |
 
-When `Auth:Enabled=true`, API calls accept **Bearer** (SMART token) or **HTTP Basic**. Bearer tokens enforce **patient/**, **user/**, and **system/** scopes with SMART v2 permissions (`c`/`r`/`u`/`d`/`s`; aliases `read`→`rs`, `write`→`cud`). Patient-context tokens filter the Patient compartment on search/read/write. Basic keeps full access.
+Auth is enabled by default. API calls accept **Bearer** (SMART token) or **HTTP Basic**. Bearer tokens enforce **patient/**, **user/**, and **system/** scopes with SMART v2 permissions (`c`/`r`/`u`/`d`/`s`; aliases `read`→`rs`, `write`→`cud`). Patient-context tokens filter the Patient compartment on search/read/write. Basic uses `Auth:BasicScopes` (default `system/*.cruds`) with the same scope checks.
 
 Clients are configured under `Smart:Clients` (legacy `Smart:ClientId` / `ClientSecret` / `Scopes` still load as one client). Requested scopes are intersected with each client's `AllowedScopes`.
 

@@ -267,7 +267,9 @@ module SearchEngine =
             | "CarePlan"
             | "DocumentReference" ->
                 patientRefOk resource [ "subject"; "patient" ] (values "patient" @ values "subject")
-            | _ -> true
+            | _ ->
+                // Unknown types: still honor patient/subject/_id filters; never silently match all.
+                patientRefOk resource [ "subject"; "patient" ] (values "patient" @ values "subject")
 
     /// Parse `_include=SourceType:param` into (sourceType, json reference field names).
     let parseIncludeToken (token: string) : (string * string list) option =

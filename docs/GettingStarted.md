@@ -48,24 +48,26 @@ export PATH="/opt/homebrew/opt/dotnet/bin:$PATH"
 
 ## Verify with curl
 
+Auth is on by default (`fhir` / `change-me`). `/metadata` and clinical routes require credentials; `/health` and Swagger do not.
+
 ```bash
 # CapabilityStatement
-curl -s http://localhost:5050/metadata | jq .
+curl -s -u fhir:change-me http://localhost:5050/metadata | jq .
 
 # Create a Patient
-curl -s -X POST http://localhost:5050/Patient \
+curl -s -u fhir:change-me -X POST http://localhost:5050/Patient \
   -H 'Content-Type: application/fhir+json' \
   -d '{"resourceType":"Patient","name":[{"family":"Garcia","given":["Ana"]}],"gender":"female"}' \
   | jq .
 
 # Read (replace <id>)
-curl -s http://localhost:5050/Patient/<id> | jq .
+curl -s -u fhir:change-me http://localhost:5050/Patient/<id> | jq .
 
 # Search
-curl -s 'http://localhost:5050/Patient?family=Garcia' | jq .
+curl -s -u fhir:change-me 'http://localhost:5050/Patient?family=Garcia' | jq .
 
 # Validate without persisting
-curl -s -X POST 'http://localhost:5050/Patient/$validate' \
+curl -s -u fhir:change-me -X POST 'http://localhost:5050/Patient/$validate' \
   -H 'Content-Type: application/fhir+json' \
   -d '{"resourceType":"Patient","name":[{"family":"Garcia"}]}' \
   | jq .

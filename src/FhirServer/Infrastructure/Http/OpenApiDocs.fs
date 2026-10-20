@@ -316,7 +316,8 @@ module OpenApiDocs =
                 Type = SecuritySchemeType.Http,
                 Scheme = "basic",
                 In = ParameterLocation.Header,
-                Description = "HTTP Basic (when Auth:Enabled=true) — full access bypass"
+                Description =
+                    "HTTP Basic (when Auth:Enabled=true) — uses Auth:BasicScopes (default system/*.cruds); same SMART scope checks as Bearer"
             )
 
         let bearerScheme =
