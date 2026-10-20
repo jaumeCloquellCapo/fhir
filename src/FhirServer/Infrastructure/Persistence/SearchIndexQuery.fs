@@ -105,13 +105,13 @@ module SearchIndexQuery =
                     let codePred =
                         match filter.Match with
                         | SearchEngine.TokenMatch.Exact -> $"tk.code = {codePh}"
-                        // Ancestor: indexed code is a prefix of the query code.
+                        // Ancestor-or-self: indexed code is a prefix of (or equal to) the query code.
                         | SearchEngine.TokenMatch.Above ->
                             codePh
-                            + " LIKE tk.code || '%' AND LENGTH(tk.code) > 0 AND LENGTH(tk.code) < LENGTH("
+                            + " LIKE tk.code || '%' AND LENGTH(tk.code) > 0 AND LENGTH(tk.code) <= LENGTH("
                             + codePh
                             + ")"
-                        // Descendant: indexed code starts with the query code.
+                        // Descendant-or-self: indexed code starts with the query code.
                         | SearchEngine.TokenMatch.Below -> "tk.code LIKE " + codePh + " || '%'"
 
                     match system with

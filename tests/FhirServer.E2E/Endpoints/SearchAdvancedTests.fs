@@ -369,6 +369,6 @@ type SearchAdvancedTests() =
 
             assertStatus HttpStatusCode.OK aboveStatus
             Assert.Contains(parentId, aboveBody)
-            Assert.DoesNotContain(childId, aboveBody)
+            Assert.Contains(childId, aboveBody) // :above includes self
             Assert.DoesNotContain(otherId, aboveBody)
         }

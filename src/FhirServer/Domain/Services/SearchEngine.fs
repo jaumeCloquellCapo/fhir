@@ -455,26 +455,32 @@ module SearchEngine =
                     ->
                     let found = search (revType, Map.ofList [ nestedKey, values ])
 
+                    let extracted =
+                        found
+                        |> List.collect (fun r -> refIdsFromResource r refParam)
+                        |> List.distinct
+
                     let ids =
-                        if List.isEmpty found then
+                        if List.isEmpty found || List.isEmpty extracted then
                             [ "__has_nomatch__" ]
                         else
-                            found
-                            |> List.collect (fun r -> refIdsFromResource r refParam)
-                            |> List.distinct
+                            extracted
 
                     let existing = acc |> Map.tryFind "_id" |> Option.defaultValue []
                     acc |> Map.add "_id" (existing @ ids)
                 | [| revType; refParam |] when not (String.IsNullOrWhiteSpace revType) ->
                     let found = search (revType, Map.ofList [ refParam, values ])
 
+                    let extracted =
+                        found
+                        |> List.collect (fun r -> refIdsFromResource r refParam)
+                        |> List.distinct
+
                     let ids =
-                        if List.isEmpty found then
+                        if List.isEmpty found || List.isEmpty extracted then
                             [ "__has_nomatch__" ]
                         else
-                            found
-                            |> List.collect (fun r -> refIdsFromResource r refParam)
-                            |> List.distinct
+                            extracted
 
                     let existing = acc |> Map.tryFind "_id" |> Option.defaultValue []
                     acc |> Map.add "_id" (existing @ ids)
@@ -501,7 +507,8 @@ module SearchEngine =
             firstQuery query "_count"
             |> Option.bind (fun s ->
                 match Int32.TryParse s with
-                | true, n when n > 0 -> Some(min n 200)
+                // Allow up to 10k so internal chain/_has expansion is not silently truncated at 200.
+                | true, n when n > 0 -> Some(min n 10_000)
                 | _ -> None)
             |> Option.defaultValue 50
 

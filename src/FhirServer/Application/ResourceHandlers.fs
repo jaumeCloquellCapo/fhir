@@ -293,31 +293,35 @@ module ResourceHandlers =
             let includeTokens = query |> Map.tryFind "_include" |> Option.defaultValue []
             let revIncludeTokens = query |> Map.tryFind "_revinclude" |> Option.defaultValue []
 
-            let rec searchList (rt: string, q: Map<string, string list>) =
-                if not (ResourceCatalog.isSupported rt) then
+            let rec searchList (depth: int) (rt: string, q: Map<string, string list>) =
+                if depth > 5 || not (ResourceCatalog.isSupported rt) then
                     []
                 else
+                    let nested = searchList (depth + 1)
+
                     let expanded =
                         q
                         |> Map.add "_count" [ "10000" ]
-                        |> SearchEngine.expandChainedQuery searchList
-                        |> SearchEngine.expandHasQuery searchList
+                        |> SearchEngine.expandChainedQuery nested
+                        |> SearchEngine.expandHasQuery nested
 
                     store.Search(rt, expanded) |> fst
+
+            let expandSearch = searchList 0
 
             let filterQuery =
                 query
                 |> Map.remove "_include"
                 |> Map.remove "_revinclude"
-                |> SearchEngine.expandChainedQuery searchList
-                |> SearchEngine.expandHasQuery searchList
+                |> SearchEngine.expandChainedQuery expandSearch
+                |> SearchEngine.expandHasQuery expandSearch
 
             let page, total = store.Search(resourceType, filterQuery)
             let includes =
                 SearchEngine.resolveIncludes (fun (rt, id) -> store.Get(rt, id)) resourceType includeTokens page
 
             let revincludes =
-                SearchEngine.resolveRevincludes searchList resourceType revIncludeTokens page
+                SearchEngine.resolveRevincludes expandSearch resourceType revIncludeTokens page
 
             Ok(toSearchBundle resourceType page (includes @ revincludes) total))
 
@@ -530,25 +534,29 @@ module ResourceHandlers =
                     | _ -> None)
                 |> Option.defaultValue 1
 
-            let rec chainSearch (rt: string, q: Map<string, string list>) =
-                if not (ResourceCatalog.isSupported rt) then
+            let rec chainSearch (depth: int) (rt: string, q: Map<string, string list>) =
+                if depth > 5 || not (ResourceCatalog.isSupported rt) then
                     []
                 else
+                    let nested = chainSearch (depth + 1)
+
                     let expanded =
                         q
                         |> Map.add "_count" [ "10000" ]
-                        |> SearchEngine.expandChainedQuery chainSearch
-                        |> SearchEngine.expandHasQuery chainSearch
+                        |> SearchEngine.expandChainedQuery nested
+                        |> SearchEngine.expandHasQuery nested
 
                     store.Search(rt, expanded) |> fst
+
+            let expandSearch = chainSearch 0
 
             let filterQuery =
                 query
                 |> Map.remove "max"
                 |> Map.remove "_count"
                 |> Map.remove "_offset"
-                |> SearchEngine.expandChainedQuery chainSearch
-                |> SearchEngine.expandHasQuery chainSearch
+                |> SearchEngine.expandChainedQuery expandSearch
+                |> SearchEngine.expandHasQuery expandSearch
 
             let all =
                 store.Search("Observation", filterQuery |> Map.add "_count" [ "10000" ])
