@@ -33,6 +33,7 @@ module Types =
         | Deleted
         | Recreated
 
+    [<NoComparison>]
     type HistoryEntry = {
         ResourceType: string
         Id: string
@@ -55,6 +56,7 @@ module Types =
         | ReturnMinimal
         | ReturnOutcome
 
+    [<NoComparison>]
     type Interaction =
         | Read of resourceType: string * id: string
         | VRead of resourceType: string * id: string * vid: string

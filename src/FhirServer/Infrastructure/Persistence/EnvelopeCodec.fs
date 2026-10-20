@@ -30,10 +30,13 @@ module EnvelopeCodec =
         node.ToJsonString()
 
     let hydrate (resourceType: string) (id: string) (txid: int64) (ts: DateTimeOffset) (json: string) : FhirResource =
-        let node = JsonNode.Parse(json) :?> JsonObject
-        node["resourceType"] <- resourceType
-        node["id"] <- id
-        FhirJson.stampMeta node txid ts
+        match JsonNode.Parse(json) with
+        | :? JsonObject as node ->
+            node["resourceType"] <- resourceType
+            node["id"] <- id
+            FhirJson.stampMeta node txid ts
+        | _ ->
+            invalidArg (nameof json) $"Envelope body for {resourceType}/{id} must be a JSON object."
 
     let hydrateTs (resourceType: string) (id: string) (txid: int64) (ts: string) (json: string) =
         hydrate resourceType id txid (parseTs ts) json

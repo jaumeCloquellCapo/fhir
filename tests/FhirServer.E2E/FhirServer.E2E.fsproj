@@ -25,7 +25,9 @@
     <Compile Include="Endpoints/SmartScopeTests.fs" />
     <Compile Include="Endpoints/SmartAuthFlowTests.fs" />
     <Compile Include="Endpoints/OrgBacIsolationTests.fs" />
+    <Compile Include="Endpoints/OrgBacHierarchyTests.fs" />
     <Compile Include="Endpoints/TerminologyTests.fs" />
+    <Compile Include="Endpoints/JsonbWhereTests.fs" />
     <Compile Include="Endpoints/AuditTests.fs" />
   </ItemGroup>
 

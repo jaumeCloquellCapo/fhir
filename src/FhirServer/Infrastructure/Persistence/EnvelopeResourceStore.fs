@@ -108,7 +108,7 @@ type EnvelopeResourceStore(dialect: IEnvelopeDialect) =
                         stamped
                     | None ->
                         let mode, tenantId =
-                            match OrganizationHierarchy.resolveCreateStamp resource with
+                            match OrganizationHierarchy.resolveCreateStamp resource None with
                             | Error msg -> raise (TenantStampException msg)
                             | Ok pair -> pair
 
@@ -171,6 +171,21 @@ type EnvelopeResourceStore(dialect: IEnvelopeDialect) =
             withSession (fun session ->
                 session.ListCurrent resourceType
                 |> List.map (fun (id, txid, ts, json) -> EnvelopeCodec.hydrate resourceType id txid ts json))
+
+        member _.ListByTypeWhere(resourceType, filters, limit) =
+            ResourceCatalog.ensureSupported resourceType
+
+            withSession (fun session ->
+                session.ListCurrentByJsonbContainment(resourceType, filters, limit)
+                |> List.map (fun (id, txid, ts, json) -> EnvelopeCodec.hydrate resourceType id txid ts json))
+
+        member _.TryFindByTypeWhere(resourceType, filters) =
+            ResourceCatalog.ensureSupported resourceType
+
+            withSession (fun session ->
+                session.ListCurrentByJsonbContainment(resourceType, filters, 1)
+                |> List.tryHead
+                |> Option.map (fun (id, txid, ts, json) -> EnvelopeCodec.hydrate resourceType id txid ts json))
 
         member _.Search(resourceType, query) =
             ResourceCatalog.ensureSupported resourceType

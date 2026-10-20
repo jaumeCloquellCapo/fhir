@@ -101,6 +101,7 @@ Fix: What to change
 
 For detailed .NET patterns, see skill: `dotnet-patterns`.
 For testing guidelines, see skill: `fsharp-testing`.
+For FHIR store/list/search/bundle/bulk anti-patterns, see skill: `fhir-perf-correctness` (MUST when touching persistence or AppHost).
 
 ---
 

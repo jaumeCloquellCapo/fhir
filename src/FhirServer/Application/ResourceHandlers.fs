@@ -225,29 +225,55 @@ module ResourceHandlers =
 
     let create (store: IResourceStore) (resourceType: string) (body: FhirResource) : FhirResult<FhirResource> =
         ensureKnownResourceType resourceType
-        |> Result.bind (fun () -> ResourceValidator.ensureValid (Some resourceType) body)
         |> Result.bind (fun () ->
-            match OrganizationHierarchy.resolveCreateStamp body with
+            let requestedMode = OrganizationHierarchy.tryResourceMode body
+            OrganizationHierarchy.stripTenantExtensions body |> ignore
+
+            ResourceValidator.ensureValid (Some resourceType) body
+            |> Result.bind (fun () ->
+                match OrganizationHierarchy.resolveCreateStamp body requestedMode with
+                | Error msg -> Error(BadRequest msg)
+                | Ok _ ->
+                    let id =
+                        let current = FhirJson.id body
+
+                        if String.IsNullOrWhiteSpace current then
+                            Guid.NewGuid().ToString("N")
+                        else
+                            current
+
+                    match store.Get(resourceType, id) with
+                    | Some _ -> Error(Conflict $"Resource {resourceType}/{id} already exists.")
+                    | None ->
+                        body["resourceType"] <- resourceType
+                        FhirJson.setId body id |> ignore
+
+                        tryUpsert store body
+                        |> Result.map (fun created ->
+                            SubscriptionNotifier.notifyChange store "create" created
+                            created)))
+
+    let private prepareTenantMetaForWrite
+        (existing: FhirResource option)
+        (body: FhirResource)
+        (requestedMode: TenantMode option)
+        : FhirResult<unit> =
+        match existing with
+        | None ->
+            match OrganizationHierarchy.resolveCreateStamp body requestedMode with
             | Error msg -> Error(BadRequest msg)
-            | Ok _ ->
-                let id =
-                    let current = FhirJson.id body
+            | Ok _ -> Ok()
+        | Some ex ->
+            // Mode/tenant ownership are immutable on update — do not trust client meta.
+            match OrganizationHierarchy.tryTenantOrganizationId ex with
+            | Some oid -> OrganizationHierarchy.ensureTenantOrganizationExtension body oid |> ignore
+            | None -> ()
 
-                    if String.IsNullOrWhiteSpace current then
-                        Guid.NewGuid().ToString("N")
-                    else
-                        current
+            let mode =
+                OrganizationHierarchy.tryResourceMode ex |> Option.defaultValue TenantMode.Owned
 
-                match store.Get(resourceType, id) with
-                | Some _ -> Error(Conflict $"Resource {resourceType}/{id} already exists.")
-                | None ->
-                    body["resourceType"] <- resourceType
-                    FhirJson.setId body id |> ignore
-
-                    tryUpsert store body
-                    |> Result.map (fun created ->
-                        SubscriptionNotifier.notifyChange store "create" created
-                        created))
+            OrganizationHierarchy.ensureTenantModeExtension body mode |> ignore
+            Ok()
 
     let update
         (store: IResourceStore)
@@ -256,6 +282,9 @@ module ResourceHandlers =
         (body: FhirResource)
         (ifMatch: string option)
         : FhirResult<FhirResource> =
+        let requestedMode = OrganizationHierarchy.tryResourceMode body
+        OrganizationHierarchy.stripTenantExtensions body |> ignore
+
         ensureKnownResourceType resourceType
         |> Result.bind (fun () -> ResourceValidator.ensureValid (Some resourceType) body)
         |> Result.bind (fun () ->
@@ -268,15 +297,16 @@ module ResourceHandlers =
                     match OrganizationHierarchy.ensureMutationAllowed ex with
                     | Error msg -> Error(Forbidden msg)
                     | Ok() -> Ok()
-                | None -> Ok()
-                |> Result.bind (fun () ->
-                    body["resourceType"] <- resourceType
-                    FhirJson.setId body id |> ignore
+                | None -> Ok())
+            |> Result.bind (fun () -> prepareTenantMetaForWrite existing body requestedMode)
+            |> Result.bind (fun () ->
+                body["resourceType"] <- resourceType
+                FhirJson.setId body id |> ignore
 
-                    tryUpsert store body
-                    |> Result.map (fun updated ->
-                        SubscriptionNotifier.notifyChange store "update" updated
-                        updated))))
+                tryUpsert store body
+                |> Result.map (fun updated ->
+                    SubscriptionNotifier.notifyChange store "update" updated
+                    updated)))
 
     let validateRaw (resourceType: string option) (body: string) : FhirResult<FhirResource> =
         match resourceType with

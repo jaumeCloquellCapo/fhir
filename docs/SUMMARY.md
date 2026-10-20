@@ -33,7 +33,7 @@
 * [SMART on FHIR](Features.md#smart-on-fhir)
   * Discovery, authorize (PKCE), token, DCR
 * [HTTP Basic](Configuration.md#auth-basic--smart-bearer)
-* [Organization / tenant access (ORGBAC)](Features.md#organization-based-access-orgbac-mvp)
+* [Organization / tenant access (ORGBAC)](Features.md#organization-based-access-orgbac)
 * [Audit (BALP)](Features.md#audit-optional)
 * [Auth & SMART settings](Configuration.md#auth-basic--smart-bearer)
 
@@ -41,7 +41,7 @@
 
 * [Envelope storage model](Architecture.md#database)
 * [Connection string](Configuration.md#store-postgresql)
-* [Multi-tenancy / RLS](Configuration.md#multi-tenancy-orgbac-mvp)
+* [Multi-tenancy / RLS](Configuration.md#multi-tenancy-orgbac)
 
 ## FHIR configuration & validation
 

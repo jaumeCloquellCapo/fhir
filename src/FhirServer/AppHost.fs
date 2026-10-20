@@ -6,8 +6,11 @@ open System.Text.Json.Nodes
 open System.Threading.Tasks
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Http
+open Microsoft.AspNetCore.Server.Kestrel.Core
 open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.DependencyInjection
+open Microsoft.Extensions.Hosting
+open Microsoft.Extensions.Logging
 open FhirServer.Infrastructure.Capability
 open FhirServer.Domain
 open FhirServer.Domain.Services
@@ -24,8 +27,12 @@ open FhirServer.Infrastructure.Persistence.Postgres
 /// Composition root helpers (also used by E2E WebApplicationFactory).
 module AppHost =
 
+    /// Default max body (32 MiB). Bulk import can raise per-endpoint later.
+    let private maxRequestBodyBytes = 32L * 1024L * 1024L
+
     let private readBody (ctx: HttpContext) =
         task {
+            // Oversized bodies are rejected by Kestrel (MaxRequestBodySize) before handlers run.
             use reader = new StreamReader(ctx.Request.Body)
             return! reader.ReadToEndAsync()
         }
@@ -75,7 +82,9 @@ module AppHost =
         let cs =
             match config.["ConnectionStrings:Fhir"] with
             | null
-            | "" -> "Host=localhost;Port=5432;Database=fhir;Username=fhir;Password=fhir"
+            | "" ->
+                invalidOp
+                    "ConnectionStrings:Fhir is required. Set it in .env.dev / .env (ConnectionStrings__Fhir) or configuration."
             | value -> value
 
         EnvelopeResourceStore(PostgresEnvelopeDialect(cs)) :> IResourceStore
@@ -1319,11 +1328,23 @@ module AppHost =
         app
 
     let create (args: string[]) =
+        // Repo root (…/src/FhirServer → …/) then content root after builder exists.
+        let startDir = Directory.GetCurrentDirectory()
+        DotEnv.loadFromDirectory startDir
+        DotEnv.loadFromDirectory (Path.GetFullPath(Path.Combine(startDir, "../..")))
+
         let builder = WebApplication.CreateBuilder(args)
+
+        DotEnv.loadFromDirectory builder.Environment.ContentRootPath
+
+        builder.Services.Configure<KestrelServerOptions>(fun (options: KestrelServerOptions) ->
+            options.Limits.MaxRequestBodySize <- maxRequestBodyBytes)
+        |> ignore
 
         builder.Services.AddHttpContextAccessor() |> ignore
 
-        builder.Services.AddSingleton<IResourceStore>(fun sp -> createStore (sp.GetRequiredService<IConfiguration>()))
+        builder.Services.AddSingleton<IResourceStore>(fun sp ->
+            createStore (sp.GetRequiredService<IConfiguration>()))
         |> ignore
 
         builder.Services.AddEndpointsApiExplorer() |> ignore
@@ -1341,15 +1362,19 @@ module AppHost =
                 | true, (:? TenantAccess as access) -> Some access
                 | _ -> None)
 
-        SubscriptionNotifier.configure app.Configuration
+        let subscriptionLog =
+            app.Services.GetRequiredService<ILoggerFactory>().CreateLogger("FhirServer.Subscriptions")
 
-        app.UseSwagger() |> ignore
+        SubscriptionNotifier.configure app.Configuration subscriptionLog
 
-        app.UseSwaggerUI(fun options ->
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "FhirServer v1")
-            options.DocumentTitle <- "FhirServer API"
-            options.RoutePrefix <- "swagger")
-        |> ignore
+        if app.Environment.IsDevelopment() then
+            app.UseSwagger() |> ignore
+
+            app.UseSwaggerUI(fun options ->
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "FhirServer v1")
+                options.DocumentTitle <- "FhirServer API"
+                options.RoutePrefix <- "swagger")
+            |> ignore
 
         Auth.useTenantScope app |> ignore
         Auth.useAuth app |> ignore

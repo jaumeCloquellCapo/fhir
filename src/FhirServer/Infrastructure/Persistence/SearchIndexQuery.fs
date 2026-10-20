@@ -7,6 +7,7 @@ open FhirServer.Domain.Services
 /// SQL fragment builder for search_index queries (`@p` placeholders).
 module SearchIndexQuery =
 
+    [<NoComparison>]
     type BuiltQuery =
         { WhereClause: string
           OrderBy: string

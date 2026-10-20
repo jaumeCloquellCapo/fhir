@@ -25,15 +25,7 @@ export PATH="/opt/homebrew/opt/dotnet/bin:$PATH"
 
    Compose starts Postgres 18 on `localhost:5432` with user/db/password `fhir` / `fhir` / `fhir` (local only—change for any shared environment).
 
-2. Connection string (already the default in `src/FhirServer/appsettings.json`):
-
-   ```json
-   {
-     "ConnectionStrings": {
-       "Fhir": "Host=localhost;Port=5432;Database=fhir;Username=fhir;Password=fhir"
-     }
-   }
-   ```
+2. Connection string: [`.env.dev`](../.env.dev) is loaded for local Compose. Template: [`.env.example`](../.env.example) — copy to a gitignored `.env` to override.
 
 3. Run the server:
 

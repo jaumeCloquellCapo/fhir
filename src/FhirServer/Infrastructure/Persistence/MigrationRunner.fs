@@ -11,6 +11,7 @@ module MigrationRunner =
         Script: string
     }
 
+    [<NoComparison; NoEquality>]
     type Journal = {
         Ensure: unit -> unit
         AppliedVersions: unit -> Set<int>

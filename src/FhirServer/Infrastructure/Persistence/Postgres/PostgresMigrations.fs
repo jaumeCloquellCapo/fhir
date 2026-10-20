@@ -361,6 +361,21 @@ module PostgresMigrations =
                 {rls}
                 """
         }
+        {
+            // Aidbox-style expression indexes for internal jsonb equality lookups
+            // (Subscription status, terminology url) — not full SearchCatalog coverage.
+            Version = 11
+            Name = "jsonb_hot_path_expression_indexes"
+            Script =
+                """
+                CREATE INDEX IF NOT EXISTS idx_subscription_resource_status
+                    ON subscription ((resource->>'status'));
+                CREATE INDEX IF NOT EXISTS idx_codesystem_resource_url
+                    ON codesystem ((resource->>'url'));
+                CREATE INDEX IF NOT EXISTS idx_valueset_resource_url
+                    ON valueset ((resource->>'url'));
+                """
+        }
     ]
 
     let migrate (connectionString: string) =

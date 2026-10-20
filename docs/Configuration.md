@@ -1,24 +1,16 @@
 # Configuration
 
-Settings live in `src/FhirServer/appsettings.json`, with optional overrides via `appsettings.Development.json`, environment variables, or [.NET user secrets](https://learn.microsoft.com/aspnet/core/security/app-secrets).
+Settings live in `src/FhirServer/appsettings.json`, with optional overrides via `appsettings.Development.json`, `.env.dev` / `.env`, environment variables, or [.NET user secrets](https://learn.microsoft.com/aspnet/core/security/app-secrets).
 
-Environment variable form uses `__` for nesting, e.g. `ConnectionStrings__Fhir=...`.
+Environment variable form uses `__` for nesting, e.g. `ConnectionStrings__Fhir=...`. At startup the server loads `.env.dev` then `.env` from the repo root (and content root) without overwriting variables already set in the process.
 
 ## Store (PostgreSQL)
 
 | Key | Description |
 |-----|-------------|
-| `ConnectionStrings:Fhir` | Npgsql connection string |
+| `ConnectionStrings:Fhir` | Npgsql connection string (`ConnectionStrings__Fhir` in env files) |
 
-```json
-{
-  "ConnectionStrings": {
-    "Fhir": "Host=localhost;Port=5432;Database=fhir;Username=fhir;Password=fhir"
-  }
-}
-```
-
-Local Compose defaults (`make db-up`) match the credentials above. **Do not** reuse them outside a disposable local machine. Migrations run automatically on startup.
+Local defaults are in [`.env.dev`](../.env.dev) (matches `make db-up`). Public template: [`.env.example`](../.env.example) — copy to a gitignored `.env` for machine-specific secrets. **Do not** reuse Compose credentials outside a disposable local machine. Migrations run automatically on startup.
 
 ## Auth (basic + SMART Bearer)
 
@@ -52,14 +44,14 @@ Each client entry:
 
 Legacy single-client keys `Smart:ClientId`, `Smart:ClientSecret`, `Smart:Scopes`, and `Smart:OrganizationId` are still accepted when `Smart:Clients` is empty (secret required).
 
-## Multi-tenancy (ORGBAC MVP)
+## Multi-tenancy (ORGBAC)
 
 | Key | Description |
 |-----|-------------|
 | `Smart:Clients[].OrganizationId` | Scopes a confidential client to one Organization id |
 | `Auth:OrganizationId` | Optional; when set, HTTP Basic is also tenant-scoped (default Basic is **unrestricted** admin) |
 
-Envelopes store `tenant_id` (empty when the writer was unrestricted). Postgres RLS policies filter on `current_setting('app.tenant_id')` (set per store transaction via `SET LOCAL`). Resource ids remain globally unique across tenants.
+Envelopes store `tenant_id` and `tenant_mode` (`owned` \| `shared` \| `system-shared`). Empty `tenant_id` when the writer was unrestricted or the resource is system-shared. Organization trees use `Organization.partOf` and `organization_closure`. Prefer `/Organization/{orgId}/fhir/...` for hierarchical access; root routes keep exact-tenant filtering for org-bound tokens. RLS uses `app.tenant_id` + `app.orgbac_mode` (`exact` \| `hierarchy`). Resource ids remain globally unique across tenants.
 
 `POST /auth/register` is off unless `Smart:EnableDcr=true`. Registered clients are ephemeral (process memory) and cannot request `system/*` or `client_credentials`.
 

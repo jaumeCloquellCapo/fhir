@@ -6,8 +6,10 @@ open System.Net.Http
 open System.Net.Sockets
 open System.Text
 open System.Text.Json.Nodes
+open System.Threading
 open System.Threading.Tasks
 open Microsoft.Extensions.Configuration
+open Microsoft.Extensions.Logging
 open FhirServer.Domain
 open FhirServer.Domain.Ports
 open FhirServer.Domain.Types
@@ -25,12 +27,27 @@ module SubscriptionNotifier =
     /// Set from composition root (optional). When None, remote hooks are denied.
     let mutable private allowRemoteHooks = false
 
-    let configure (config: IConfiguration) =
+    let mutable private logger: ILogger = null
+
+    let private activeSubscriptionLimit = 500
+
+    let configure (config: IConfiguration) (log: ILogger) =
         allowRemoteHooks <- config.GetValue<bool>("Subscriptions:AllowRemoteHooks", false)
+        logger <- log
+
+    let private logWarning (ex: exn) (message: string) =
+        if not (isNull logger) then
+            logger.LogWarning(ex, message)
+
+    let private logWarningMsg (message: string) =
+        if not (isNull logger) then
+            logger.LogWarning(message)
 
     let captureHook (sinkId: string) (body: string) =
         let bag = hookCapture.GetOrAdd(sinkId, fun _ -> ConcurrentBag<string>())
-        bag.Add(body)
+        // Cap capture bags to avoid unbounded growth in tests/dev.
+        if bag.Count < 100 then
+            bag.Add(body)
 
     let listCaptured (sinkId: string) =
         match hookCapture.TryGetValue sinkId with
@@ -147,26 +164,26 @@ module SubscriptionNotifier =
 
         bundle
 
-    let private deliver (endpoint: string) (payload: string) =
-        match tryHookSinkId endpoint with
-        | Some id ->
-            captureHook id payload
-            true
-        | None when not allowRemoteHooks -> false
-        | None when not (isSafeRemoteEndpoint endpoint) -> false
-        | None ->
-            try
-                use content = new StringContent(payload, Encoding.UTF8, "application/fhir+json")
-                // Local MVP: short timeout; remote non-loopback already rejected.
-                http.PostAsync(endpoint, content).GetAwaiter().GetResult().IsSuccessStatusCode
-            with
-            | :? HttpRequestException
-            | :? TaskCanceledException
-            | :? SocketException -> false
-            | _ -> false
+    let private deliverAsync (endpoint: string) (payload: string) (ct: CancellationToken) =
+        task {
+            match tryHookSinkId endpoint with
+            | Some id ->
+                captureHook id payload
+                return true
+            | None when not allowRemoteHooks -> return false
+            | None when not (isSafeRemoteEndpoint endpoint) -> return false
+            | None ->
+                try
+                    use content = new StringContent(payload, Encoding.UTF8, "application/fhir+json")
+                    use! response = http.PostAsync(endpoint, content, ct)
+                    return response.IsSuccessStatusCode
+                with
+                | :? HttpRequestException
+                | :? TaskCanceledException
+                | :? SocketException -> return false
+        }
 
-    /// Notify active rest-hook subscriptions whose topic matches the resource type.
-    let notifyChange (store: IResourceStore) (interaction: string) (resource: FhirResource) =
+    let private notifyChangeCore (store: IResourceStore) (interaction: string) (resource: FhirResource) =
         if not (ResourceCatalog.isSupported "Subscription") then
             ()
         else
@@ -178,8 +195,7 @@ module SubscriptionNotifier =
             else
                 try
                     let subscriptions =
-                        store.ListByType "Subscription"
-                        |> List.filter (fun s -> FhirJson.propString s "status" = Some "active")
+                        store.ListByTypeWhere("Subscription", [ "status", "active" ], activeSubscriptionLimit)
 
                     for subscription in subscriptions do
                         let topic = FhirJson.propString subscription "topic" |> Option.defaultValue ""
@@ -190,6 +206,23 @@ module SubscriptionNotifier =
                             | Some "" -> ()
                             | Some endpoint ->
                                 let notification = buildNotification subscription interaction resource
-                                deliver endpoint (FhirJson.toJson notification) |> ignore
-                with _ ->
-                    ()
+                                let payload = FhirJson.toJson notification
+
+                                deliverAsync endpoint payload CancellationToken.None
+                                |> Async.AwaitTask
+                                |> Async.RunSynchronously
+                                |> ignore
+                with ex ->
+                    logWarning ex "Subscription notification fan-out failed"
+
+    /// Notify active rest-hook subscriptions whose topic matches the resource type.
+    /// Runs off the request thread so writes are not blocked on HTTP delivery.
+    let notifyChange (store: IResourceStore) (interaction: string) (resource: FhirResource) =
+        let snapshot = FhirJson.deepClone resource
+
+        Task.Run(fun () ->
+            try
+                notifyChangeCore store interaction snapshot
+            with ex ->
+                logWarning ex "Background subscription notify failed")
+        |> ignore

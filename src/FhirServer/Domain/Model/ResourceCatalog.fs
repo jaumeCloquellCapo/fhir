@@ -1,18 +1,25 @@
 namespace FhirServer.Domain
 
+open System
+open System.Collections.Generic
 open FhirServer.Domain.Types
 open FhirServer.Schemas
 
 /// Catalog of supported FHIR types and envelope table naming.
 module ResourceCatalog =
 
-    let parseStatus =
+    let tryParseStatus =
         function
-        | "created" -> Created
-        | "updated" -> Updated
-        | "deleted" -> Deleted
-        | "recreated" -> Recreated
-        | other -> failwith $"Unknown resource status '{other}'"
+        | "created" -> Some Created
+        | "updated" -> Some Updated
+        | "deleted" -> Some Deleted
+        | "recreated" -> Some Recreated
+        | _ -> None
+
+    let parseStatus status =
+        match tryParseStatus status with
+        | Some s -> s
+        | None -> invalidArg (nameof status) $"Unknown resource status '{status}'"
 
     let statusString =
         function
@@ -34,11 +41,12 @@ module ResourceCatalog =
     /// Keep migrations in sync via CREATE TABLE IF NOT EXISTS for the full list.
     let supportedResourceTypes = GeneratedResourceCatalog.supportedResourceTypes
 
+    let private supportedSet =
+        HashSet<string>(supportedResourceTypes, StringComparer.Ordinal)
+
     let fhirVersion = GeneratedResourceCatalog.fhirVersion
 
-    let isSupported (resourceType: string) =
-        supportedResourceTypes
-        |> List.exists (fun t -> t.Equals(resourceType, System.StringComparison.Ordinal))
+    let isSupported (resourceType: string) = supportedSet.Contains(resourceType)
 
     let ensureSupported (resourceType: string) =
         if isSupported resourceType then

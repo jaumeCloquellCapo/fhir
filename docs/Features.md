@@ -110,11 +110,17 @@ Auth is enabled by default. API calls accept **Bearer** (SMART token) or **HTTP 
 
 Clients are configured under `Smart:Clients` (legacy `Smart:ClientId` / `ClientSecret` / `Scopes` still load as one client). Requested scopes are intersected with each client's `AllowedScopes`.
 
-### Organization-based access (ORGBAC MVP)
+### Organization-based access (ORGBAC)
 
-Set `Smart:Clients[].OrganizationId` to bind a client to a tenant. Issued tokens include `organization`; create/update stamps `tenant_id` on envelopes. Isolation is enforced with **Postgres RLS**: each store op opens a transaction, `SET LOCAL ROLE fhir_app` (so Docker superuser logins still obey RLS), and `SET LOCAL app.tenant_id` (empty = unrestricted admin). HTTP Basic stays **unrestricted** unless `Auth:OrganizationId` is set. Resource ids are globally unique across tenants.
+Aidbox-compatible hierarchical organization access, enforced with **Postgres RLS** (`SET LOCAL ROLE fhir_app`, `app.tenant_id`, `app.orgbac_mode`):
 
-Organization trees use `Organization.partOf` (closure table). Exact tenant match is the default for SMART clients; hierarchical parent/child + shared visibility is available when the request runs in hierarchy OrgBAC mode (`app.orgbac_mode=hierarchy`).
+- **Root API** (`/Patient`, …): token `organization` (from `Smart:Clients[].OrganizationId`) uses **exact** tenant isolation.
+- **Org-scoped API** (`/Organization/{orgId}/fhir/...`): hierarchical visibility via `Organization.partOf` (parent sees own + descendants). Token `organization` must match `{orgId}` (Basic admin / unrestricted may use any org path).
+- **Modes** (envelope `tenant_mode` + Aidbox meta extensions):
+  - `owned` (default) — visible to owning org and ancestors on the org API
+  - `shared` — `https://aidbox.app/tenant-resource-mode` = `shared`; readable by descendant org APIs; writable only from the owning org API
+  - `system-shared` — create on **root** API only; readable from every org API; read-only there
+- Creates under an org API stamp `https://aidbox.app/tenant-organization-id`. HTTP Basic stays **unrestricted** unless `Auth:OrganizationId` is set. Resource ids are globally unique across tenants.
 
 ## Subscriptions (MVP)
 

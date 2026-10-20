@@ -1,6 +1,7 @@
 namespace FhirServer.Infrastructure.Persistence.Postgres
 
 open System
+open System.Text.Json.Nodes
 open Npgsql
 open FhirServer.Domain
 open FhirServer.Domain.Services
@@ -192,6 +193,50 @@ type PostgresEnvelopeSession(connectionString: string) =
             let table = ResourceCatalog.quoteIdent (ResourceCatalog.tableName resourceType)
             use c = cmd ()
             c.CommandText <- $"SELECT id, txid, ts, resource::text FROM {table} ORDER BY id;"
+            use reader = c.ExecuteReader()
+
+            [
+                while reader.Read() do
+                    yield
+                        reader.GetString(0),
+                        reader.GetInt64(1),
+                        reader.GetFieldValue<DateTimeOffset>(2),
+                        reader.GetString(3)
+            ]
+
+        member _.ListCurrentByJsonbContainment(resourceType, filters, limit) =
+            let capped = max 1 (min limit 10_000)
+            let table = ResourceCatalog.quoteIdent (ResourceCatalog.tableName resourceType)
+
+            let safeKey (key: string) =
+                if
+                    String.IsNullOrWhiteSpace key
+                    || key.Length > 64
+                    || not (key |> Seq.forall (fun ch -> Char.IsLetterOrDigit ch || ch = '_'))
+                then
+                    invalidArg (nameof filters) "JSON property name must be a short alphanumeric identifier."
+
+            use c = cmd ()
+
+            match filters with
+            | [] ->
+                c.CommandText <- $"SELECT id, txid, ts, resource::text FROM {table} ORDER BY id LIMIT @limit;"
+            | _ ->
+                let clauses =
+                    filters
+                    |> List.mapi (fun i (key, value) ->
+                        safeKey key
+                        let patchName = $"patch{i}"
+                        let patch = JsonObject()
+                        patch[key] <- JsonValue.Create(value)
+                        c.Parameters.AddWithValue(patchName, patch.ToJsonString()) |> ignore
+                        $"resource @> @{patchName}::jsonb")
+                    |> String.concat " AND "
+
+                c.CommandText <-
+                    $"SELECT id, txid, ts, resource::text FROM {table} WHERE {clauses} ORDER BY id LIMIT @limit;"
+
+            c.Parameters.AddWithValue("limit", capped) |> ignore
             use reader = c.ExecuteReader()
 
             [

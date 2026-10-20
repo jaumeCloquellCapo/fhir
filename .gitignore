@@ -2,6 +2,7 @@
 .env
 .env.*
 !.env.example
+!.env.dev
 
 # .NET / F#
 [Bb]in/

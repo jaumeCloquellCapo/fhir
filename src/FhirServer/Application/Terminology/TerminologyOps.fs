@@ -61,8 +61,7 @@ module TerminologyOps =
         fromBody |> Option.orElse fromQuery
 
     let private findCodeSystemByUrl (store: IResourceStore) (url: string) =
-        store.ListByType "CodeSystem"
-        |> List.tryFind (fun cs -> FhirJson.propString cs "url" = Some url)
+        store.TryFindByTypeWhere("CodeSystem", [ "url", url ])
 
     let rec private conceptCodings (system: string) (conceptNode: JsonNode) : Coding list =
         match conceptNode with
@@ -208,10 +207,7 @@ module TerminologyOps =
             | None ->
                 match url with
                 | Some u ->
-                    match
-                        store.ListByType "ValueSet"
-                        |> List.tryFind (fun vs -> FhirJson.propString vs "url" = Some u)
-                    with
+                    match store.TryFindByTypeWhere("ValueSet", [ "url", u ]) with
                     | Some vs -> Ok vs
                     | None -> Error(BadRequest $"ValueSet url '{u}' not found.")
                 | None -> Error(BadRequest "ValueSet id, url, or ValueSet body is required.")

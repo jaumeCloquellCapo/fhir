@@ -52,6 +52,42 @@ module OrganizationHierarchy =
             | _ -> None
         | None -> None
 
+    /// Remove Aidbox tenant extensions so FHIR schema validation (ext-1) does not reject them.
+    let stripTenantExtensions (resource: JsonObject) =
+        match resource["meta"] with
+        | :? JsonObject as meta ->
+            match meta["extension"] with
+            | :? JsonArray as arr ->
+                let kept =
+                    arr
+                    |> Seq.filter (fun node ->
+                        match node with
+                        | :? JsonObject as ext ->
+                            match ext["url"] with
+                            | u when not (isNull u) && u.GetValueKind() = JsonValueKind.String ->
+                                let url = u.GetValue<string>()
+
+                                url <> TenantMode.ExtensionUrl
+                                && url <> TenantMode.OrganizationExtensionUrl
+                            | _ -> true
+                        | _ -> true)
+                    |> Seq.toArray
+
+                arr.Clear()
+
+                for node in kept do
+                    arr.Add(node.DeepClone())
+
+                if arr.Count = 0 then
+                    meta.Remove("extension") |> ignore
+
+                if meta.Count = 0 then
+                    resource.Remove("meta") |> ignore
+            | _ -> ()
+        | _ -> ()
+
+        resource
+
     let tryTenantOrganizationId (resource: JsonObject) : string option =
         match findExtension resource TenantMode.OrganizationExtensionUrl with
         | Some ext ->
@@ -160,9 +196,14 @@ module OrganizationHierarchy =
 
         resource
 
-    /// Resolve create stamp: mode from meta extension + validation against tenant context.
-    let resolveCreateStamp (resource: JsonObject) : Result<TenantMode * string, string> =
-        let mode = tryResourceMode resource |> Option.defaultValue TenantMode.Owned
+    /// Resolve create stamp: mode (from arg or meta) + validation against tenant context.
+    /// Re-applies Aidbox tenant meta extensions after schema validation has run.
+    let resolveCreateStamp (resource: JsonObject) (requestedMode: TenantMode option) : Result<TenantMode * string, string> =
+        let mode =
+            requestedMode
+            |> Option.orElseWith (fun () -> tryResourceMode resource)
+            |> Option.defaultValue TenantMode.Owned
+
         let orgId = TenantContext.tryOrganizationId ()
 
         match mode, orgId with

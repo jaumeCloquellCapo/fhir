@@ -38,6 +38,13 @@ type IEnvelopeSession =
     abstract member WasDeleted: resourceType: string * id: string -> bool
     abstract member ListCurrent: resourceType: string -> (string * int64 * DateTimeOffset * string) list
 
+    /// AND of `resource @> @patch::jsonb` for each top-level string filter; LIMIT applied in SQL.
+    abstract member ListCurrentByJsonbContainment:
+        resourceType: string
+            * filters: (string * string) list
+            * limit: int
+            -> (string * int64 * DateTimeOffset * string) list
+
     abstract member QueryHistory:
         filter: HistoryFilter -> (string * string * int64 * DateTimeOffset * string * string) list
 
