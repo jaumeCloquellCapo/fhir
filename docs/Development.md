@@ -59,7 +59,7 @@ Commit regenerated `packages/` artifacts when the generator or package version c
 ## Project layout tips
 
 - Prefer changes in **Domain** / **Application** before touching HTTP adapters
-- New persistence behavior: implement once in `EnvelopeResourceStore` or the Postgres dialect—avoid duplicating store logic
+- New persistence behavior: implement once in `EnvelopeResourceStore` or `SqlEnvelopeSession`—avoid duplicating store logic
 - New FHIR interactions: add a handler, route in `AppHost`, and an E2E test under `Endpoints/`
 
 ## Pull requests

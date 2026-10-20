@@ -13,7 +13,7 @@ type EnvelopeRow = {
     BodyJson: string
 }
 
-/// Postgres envelope session. Owned by caller; dispose closes connection.
+/// SQL envelope session. Owned by caller; dispose closes connection.
 type IEnvelopeSession =
     inherit IDisposable
     abstract member BeginTransaction: unit -> unit
@@ -49,7 +49,7 @@ type IEnvelopeSession =
     abstract member IsSearchIndexBackfilled: unit -> bool
     abstract member MarkSearchIndexBackfilled: unit -> unit
 
-/// Outbound adapter factory for Postgres.
+/// Outbound adapter factory for the SQL store.
 type IEnvelopeDialect =
     abstract member Migrate: unit -> unit
     abstract member OpenSession: unit -> IEnvelopeSession

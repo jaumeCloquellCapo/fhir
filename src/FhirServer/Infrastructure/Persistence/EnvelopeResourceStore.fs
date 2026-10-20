@@ -6,7 +6,7 @@ open FhirServer.Domain.Ports
 open FhirServer.Domain.Services
 open FhirServer.Domain.Types
 
-/// Single envelope store implementation; Postgres dialect supplies persistence.
+/// Single envelope store implementation; SQL dialect supplies persistence.
 type EnvelopeResourceStore(dialect: IEnvelopeDialect) =
     let gate = obj ()
 

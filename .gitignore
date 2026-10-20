@@ -30,7 +30,7 @@ packages/**/[Oo]bj/
 *.DotSettings.user
 .nuget/
 
-# Local SQLite / DB files
+# Local DB files
 *.db
 *.db-shm
 *.db-wal

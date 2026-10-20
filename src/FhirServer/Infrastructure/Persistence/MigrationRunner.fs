@@ -2,7 +2,7 @@ namespace FhirServer.Infrastructure.Persistence
 
 open System
 
-/// Shared schema-migration journal runner for Postgres.
+/// Shared schema-migration journal runner for the SQL store.
 module MigrationRunner =
 
     type Migration = {

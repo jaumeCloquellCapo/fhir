@@ -31,7 +31,7 @@ Hosting / composition   AppHost.fs, Program.fs
 HTTP adapters           CapabilityStatement, Codec, Auth, Audit middleware
 Application             ResourceHandlers (use cases)
 Domain                  types, SearchEngine, ResourceValidator, IResourceStore
-Persistence             EnvelopeResourceStore + Postgres dialect
+Persistence             EnvelopeResourceStore + SQL dialect (Postgres)
 Schemas & validation    packages/FhirServer.Schemas · FhirServer.Validation
 ```
 

@@ -26,7 +26,7 @@ module ResourceCatalog =
 
     let historyTableName (resourceType: string) = $"{tableName resourceType}_history"
 
-    /// Quote Postgres identifiers (FHIR types like Group collide with reserved words).
+    /// Quote SQL identifiers (FHIR types like Group collide with reserved words).
     let quoteIdent (name: string) =
         "\"" + name.Replace("\"", "\"\"") + "\""
 
