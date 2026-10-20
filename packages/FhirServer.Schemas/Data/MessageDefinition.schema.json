@@ -1,0 +1,474 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/MessageDefinition",
+  "type": "MessageDefinition",
+  "name": "MessageDefinition",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "date",
+    "status"
+  ],
+  "elements": {
+    "allowedResponse": {
+      "path": "MessageDefinition.allowedResponse",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "MessageDefinition.allowedResponse.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MessageDefinition.allowedResponse.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "message": {
+          "path": "MessageDefinition.allowedResponse.message",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "canonical"
+          ]
+        },
+        "modifierExtension": {
+          "path": "MessageDefinition.allowedResponse.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "situation": {
+          "path": "MessageDefinition.allowedResponse.situation",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        }
+      }
+    },
+    "base": {
+      "path": "MessageDefinition.base",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "canonical"
+      ]
+    },
+    "category": {
+      "path": "MessageDefinition.category",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/message-significance-category|5.0.0"
+      }
+    },
+    "contact": {
+      "path": "MessageDefinition.contact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "contained": {
+      "path": "MessageDefinition.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "copyright": {
+      "path": "MessageDefinition.copyright",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "copyrightLabel": {
+      "path": "MessageDefinition.copyrightLabel",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "date": {
+      "path": "MessageDefinition.date",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "description": {
+      "path": "MessageDefinition.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "event": {
+      "path": "MessageDefinition.event[x]",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Coding",
+        "uri"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/message-events"
+      },
+      "choices": [
+        "eventCoding",
+        "eventUri"
+      ]
+    },
+    "experimental": {
+      "path": "MessageDefinition.experimental",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "extension": {
+      "path": "MessageDefinition.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "focus": {
+      "path": "MessageDefinition.focus",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "code": {
+          "path": "MessageDefinition.focus.code",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/resource-types|5.0.0"
+          }
+        },
+        "extension": {
+          "path": "MessageDefinition.focus.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MessageDefinition.focus.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "max": {
+          "path": "MessageDefinition.focus.max",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "min": {
+          "path": "MessageDefinition.focus.min",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "unsignedInt"
+          ]
+        },
+        "modifierExtension": {
+          "path": "MessageDefinition.focus.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "profile": {
+          "path": "MessageDefinition.focus.profile",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "canonical"
+          ]
+        }
+      }
+    },
+    "graph": {
+      "path": "MessageDefinition.graph",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "canonical"
+      ]
+    },
+    "id": {
+      "path": "MessageDefinition.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "MessageDefinition.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "MessageDefinition.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "jurisdiction": {
+      "path": "MessageDefinition.jurisdiction",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
+      }
+    },
+    "language": {
+      "path": "MessageDefinition.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "MessageDefinition.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "MessageDefinition.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "MessageDefinition.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "parent": {
+      "path": "MessageDefinition.parent",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "canonical"
+      ]
+    },
+    "publisher": {
+      "path": "MessageDefinition.publisher",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "purpose": {
+      "path": "MessageDefinition.purpose",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "replaces": {
+      "path": "MessageDefinition.replaces",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "canonical"
+      ]
+    },
+    "responseRequired": {
+      "path": "MessageDefinition.responseRequired",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/messageheader-response-request|5.0.0"
+      }
+    },
+    "status": {
+      "path": "MessageDefinition.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+      }
+    },
+    "text": {
+      "path": "MessageDefinition.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "title": {
+      "path": "MessageDefinition.title",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "url": {
+      "path": "MessageDefinition.url",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "useContext": {
+      "path": "MessageDefinition.useContext",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "UsageContext"
+      ]
+    },
+    "version": {
+      "path": "MessageDefinition.version",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "versionAlgorithm": {
+      "path": "MessageDefinition.versionAlgorithm[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string",
+        "Coding"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/version-algorithm"
+      },
+      "choices": [
+        "versionAlgorithmString",
+        "versionAlgorithmCoding"
+      ]
+    }
+  }
+}

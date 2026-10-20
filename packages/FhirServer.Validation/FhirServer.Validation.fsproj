@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>FhirServer.Validation</RootNamespace>
+    <Description>Firely-free FHIR Schema validation engine (loads schemas from FhirServer.Schemas).</Description>
+    <IsPackable>true</IsPackable>
+    <Version>5.0.0</Version>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Generated/GeneratedSchemaValidator.fs" />
+    <Compile Include="SchemaEngine.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FhirServer.Schemas\FhirServer.Schemas.fsproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,661 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/ConditionDefinition",
+  "type": "ConditionDefinition",
+  "name": "ConditionDefinition",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "code",
+    "status"
+  ],
+  "elements": {
+    "bodySite": {
+      "path": "ConditionDefinition.bodySite",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/body-site"
+      }
+    },
+    "code": {
+      "path": "ConditionDefinition.code",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/condition-code"
+      }
+    },
+    "contact": {
+      "path": "ConditionDefinition.contact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "contained": {
+      "path": "ConditionDefinition.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "date": {
+      "path": "ConditionDefinition.date",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "definition": {
+      "path": "ConditionDefinition.definition",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "uri"
+      ]
+    },
+    "description": {
+      "path": "ConditionDefinition.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "experimental": {
+      "path": "ConditionDefinition.experimental",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "extension": {
+      "path": "ConditionDefinition.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "hasBodySite": {
+      "path": "ConditionDefinition.hasBodySite",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "hasSeverity": {
+      "path": "ConditionDefinition.hasSeverity",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "hasStage": {
+      "path": "ConditionDefinition.hasStage",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "id": {
+      "path": "ConditionDefinition.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "ConditionDefinition.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "ConditionDefinition.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "jurisdiction": {
+      "path": "ConditionDefinition.jurisdiction",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
+      }
+    },
+    "language": {
+      "path": "ConditionDefinition.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "medication": {
+      "path": "ConditionDefinition.medication",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "category": {
+          "path": "ConditionDefinition.medication.category",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://terminology.hl7.org/ValueSet/medicationrequest-category"
+          }
+        },
+        "code": {
+          "path": "ConditionDefinition.medication.code",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/medication-codes"
+          }
+        },
+        "extension": {
+          "path": "ConditionDefinition.medication.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ConditionDefinition.medication.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ConditionDefinition.medication.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "meta": {
+      "path": "ConditionDefinition.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "ConditionDefinition.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "ConditionDefinition.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "observation": {
+      "path": "ConditionDefinition.observation",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "category": {
+          "path": "ConditionDefinition.observation.category",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "preferred",
+            "valueSet": "http://hl7.org/fhir/ValueSet/observation-category"
+          }
+        },
+        "code": {
+          "path": "ConditionDefinition.observation.code",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/observation-codes"
+          }
+        },
+        "extension": {
+          "path": "ConditionDefinition.observation.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ConditionDefinition.observation.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ConditionDefinition.observation.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "plan": {
+      "path": "ConditionDefinition.plan",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "ConditionDefinition.plan.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ConditionDefinition.plan.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ConditionDefinition.plan.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "reference": {
+          "path": "ConditionDefinition.plan.reference",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "role": {
+          "path": "ConditionDefinition.plan.role",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        }
+      }
+    },
+    "precondition": {
+      "path": "ConditionDefinition.precondition",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "code": {
+          "path": "ConditionDefinition.precondition.code",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/observation-codes"
+          }
+        },
+        "extension": {
+          "path": "ConditionDefinition.precondition.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ConditionDefinition.precondition.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ConditionDefinition.precondition.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "ConditionDefinition.precondition.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/condition-precondition-type|5.0.0"
+          }
+        },
+        "value": {
+          "path": "ConditionDefinition.precondition.value[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept",
+            "Quantity"
+          ],
+          "choices": [
+            "valueCodeableConcept",
+            "valueQuantity"
+          ]
+        }
+      }
+    },
+    "publisher": {
+      "path": "ConditionDefinition.publisher",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "questionnaire": {
+      "path": "ConditionDefinition.questionnaire",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "ConditionDefinition.questionnaire.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ConditionDefinition.questionnaire.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ConditionDefinition.questionnaire.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "purpose": {
+          "path": "ConditionDefinition.questionnaire.purpose",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/condition-questionnaire-purpose|5.0.0"
+          }
+        },
+        "reference": {
+          "path": "ConditionDefinition.questionnaire.reference",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    },
+    "severity": {
+      "path": "ConditionDefinition.severity",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/condition-severity"
+      }
+    },
+    "stage": {
+      "path": "ConditionDefinition.stage",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/condition-stage"
+      }
+    },
+    "status": {
+      "path": "ConditionDefinition.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+      }
+    },
+    "subtitle": {
+      "path": "ConditionDefinition.subtitle",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "team": {
+      "path": "ConditionDefinition.team",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "text": {
+      "path": "ConditionDefinition.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "title": {
+      "path": "ConditionDefinition.title",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "url": {
+      "path": "ConditionDefinition.url",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "useContext": {
+      "path": "ConditionDefinition.useContext",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "UsageContext"
+      ]
+    },
+    "version": {
+      "path": "ConditionDefinition.version",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "versionAlgorithm": {
+      "path": "ConditionDefinition.versionAlgorithm[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string",
+        "Coding"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/version-algorithm"
+      },
+      "choices": [
+        "versionAlgorithmString",
+        "versionAlgorithmCoding"
+      ]
+    }
+  }
+}

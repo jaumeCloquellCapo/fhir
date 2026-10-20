@@ -1,0 +1,298 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/BiologicallyDerivedProductDispense",
+  "type": "BiologicallyDerivedProductDispense",
+  "name": "BiologicallyDerivedProductDispense",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "patient",
+    "product",
+    "status"
+  ],
+  "elements": {
+    "basedOn": {
+      "path": "BiologicallyDerivedProductDispense.basedOn",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "contained": {
+      "path": "BiologicallyDerivedProductDispense.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "destination": {
+      "path": "BiologicallyDerivedProductDispense.destination",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "extension": {
+      "path": "BiologicallyDerivedProductDispense.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "BiologicallyDerivedProductDispense.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "BiologicallyDerivedProductDispense.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "BiologicallyDerivedProductDispense.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "BiologicallyDerivedProductDispense.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "location": {
+      "path": "BiologicallyDerivedProductDispense.location",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "matchStatus": {
+      "path": "BiologicallyDerivedProductDispense.matchStatus",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/biologicallyderivedproductdispense-match-status"
+      }
+    },
+    "meta": {
+      "path": "BiologicallyDerivedProductDispense.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "BiologicallyDerivedProductDispense.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "note": {
+      "path": "BiologicallyDerivedProductDispense.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "originRelationshipType": {
+      "path": "BiologicallyDerivedProductDispense.originRelationshipType",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/biologicallyderivedproductdispense-origin-relationship"
+      }
+    },
+    "partOf": {
+      "path": "BiologicallyDerivedProductDispense.partOf",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "patient": {
+      "path": "BiologicallyDerivedProductDispense.patient",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "performer": {
+      "path": "BiologicallyDerivedProductDispense.performer",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "actor": {
+          "path": "BiologicallyDerivedProductDispense.performer.actor",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "extension": {
+          "path": "BiologicallyDerivedProductDispense.performer.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "function": {
+          "path": "BiologicallyDerivedProductDispense.performer.function",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/biologicallyderivedproductdispense-performer-function"
+          }
+        },
+        "id": {
+          "path": "BiologicallyDerivedProductDispense.performer.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "BiologicallyDerivedProductDispense.performer.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "preparedDate": {
+      "path": "BiologicallyDerivedProductDispense.preparedDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "product": {
+      "path": "BiologicallyDerivedProductDispense.product",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "quantity": {
+      "path": "BiologicallyDerivedProductDispense.quantity",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Quantity"
+      ]
+    },
+    "status": {
+      "path": "BiologicallyDerivedProductDispense.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/biologicallyderivedproductdispense-status|5.0.0"
+      }
+    },
+    "text": {
+      "path": "BiologicallyDerivedProductDispense.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "usageInstruction": {
+      "path": "BiologicallyDerivedProductDispense.usageInstruction",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "whenHandedOver": {
+      "path": "BiologicallyDerivedProductDispense.whenHandedOver",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    }
+  }
+}

@@ -1,0 +1,211 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Slot",
+  "type": "Slot",
+  "name": "Slot",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "end",
+    "schedule",
+    "start",
+    "status"
+  ],
+  "elements": {
+    "appointmentType": {
+      "path": "Slot.appointmentType",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://terminology.hl7.org/ValueSet/v2-0276"
+      }
+    },
+    "comment": {
+      "path": "Slot.comment",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "contained": {
+      "path": "Slot.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "end": {
+      "path": "Slot.end",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "instant"
+      ]
+    },
+    "extension": {
+      "path": "Slot.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "Slot.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Slot.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "Slot.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "Slot.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "Slot.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "Slot.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "overbooked": {
+      "path": "Slot.overbooked",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "schedule": {
+      "path": "Slot.schedule",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "serviceCategory": {
+      "path": "Slot.serviceCategory",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/service-category"
+      }
+    },
+    "serviceType": {
+      "path": "Slot.serviceType",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/service-type"
+      }
+    },
+    "specialty": {
+      "path": "Slot.specialty",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/c80-practice-codes"
+      }
+    },
+    "start": {
+      "path": "Slot.start",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "instant"
+      ]
+    },
+    "status": {
+      "path": "Slot.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/slotstatus|5.0.0"
+      }
+    },
+    "text": {
+      "path": "Slot.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

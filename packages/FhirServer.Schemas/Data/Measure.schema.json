@@ -1,0 +1,1125 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Measure",
+  "type": "Measure",
+  "name": "Measure",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "status"
+  ],
+  "elements": {
+    "approvalDate": {
+      "path": "Measure.approvalDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "author": {
+      "path": "Measure.author",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "basis": {
+      "path": "Measure.basis",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/fhir-types|5.0.0"
+      }
+    },
+    "clinicalRecommendationStatement": {
+      "path": "Measure.clinicalRecommendationStatement",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "compositeScoring": {
+      "path": "Measure.compositeScoring",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/composite-measure-scoring"
+      }
+    },
+    "contact": {
+      "path": "Measure.contact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "contained": {
+      "path": "Measure.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "copyright": {
+      "path": "Measure.copyright",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "copyrightLabel": {
+      "path": "Measure.copyrightLabel",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "date": {
+      "path": "Measure.date",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "description": {
+      "path": "Measure.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "disclaimer": {
+      "path": "Measure.disclaimer",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "editor": {
+      "path": "Measure.editor",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "effectivePeriod": {
+      "path": "Measure.effectivePeriod",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ]
+    },
+    "endorser": {
+      "path": "Measure.endorser",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "experimental": {
+      "path": "Measure.experimental",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "extension": {
+      "path": "Measure.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "group": {
+      "path": "Measure.group",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "basis": {
+          "path": "Measure.group.basis",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/fhir-types|5.0.0"
+          }
+        },
+        "code": {
+          "path": "Measure.group.code",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/measure-group-example"
+          }
+        },
+        "description": {
+          "path": "Measure.group.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "extension": {
+          "path": "Measure.group.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Measure.group.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "improvementNotation": {
+          "path": "Measure.group.improvementNotation",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/measure-improvement-notation|5.0.0"
+          }
+        },
+        "library": {
+          "path": "Measure.group.library",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "canonical"
+          ]
+        },
+        "linkId": {
+          "path": "Measure.group.linkId",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Measure.group.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "population": {
+          "path": "Measure.group.population",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "aggregateMethod": {
+              "path": "Measure.group.population.aggregateMethod",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/measure-aggregate-method"
+              }
+            },
+            "code": {
+              "path": "Measure.group.population.code",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/measure-population"
+              }
+            },
+            "criteria": {
+              "path": "Measure.group.population.criteria",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Expression"
+              ]
+            },
+            "description": {
+              "path": "Measure.group.population.description",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "markdown"
+              ]
+            },
+            "extension": {
+              "path": "Measure.group.population.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "groupDefinition": {
+              "path": "Measure.group.population.groupDefinition",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            },
+            "id": {
+              "path": "Measure.group.population.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "inputPopulationId": {
+              "path": "Measure.group.population.inputPopulationId",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "linkId": {
+              "path": "Measure.group.population.linkId",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Measure.group.population.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            }
+          }
+        },
+        "rateAggregation": {
+          "path": "Measure.group.rateAggregation",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "scoring": {
+          "path": "Measure.group.scoring",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://terminology.hl7.org/ValueSet/measure-scoring"
+          }
+        },
+        "scoringUnit": {
+          "path": "Measure.group.scoringUnit",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/measure-scoring-unit"
+          }
+        },
+        "stratifier": {
+          "path": "Measure.group.stratifier",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "code": {
+              "path": "Measure.group.stratifier.code",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/measure-stratifier-example"
+              }
+            },
+            "component": {
+              "path": "Measure.group.stratifier.component",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "code": {
+                  "path": "Measure.group.stratifier.component.code",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/measure-stratifier-example"
+                  }
+                },
+                "criteria": {
+                  "path": "Measure.group.stratifier.component.criteria",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Expression"
+                  ]
+                },
+                "description": {
+                  "path": "Measure.group.stratifier.component.description",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "markdown"
+                  ]
+                },
+                "extension": {
+                  "path": "Measure.group.stratifier.component.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "groupDefinition": {
+                  "path": "Measure.group.stratifier.component.groupDefinition",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Reference"
+                  ]
+                },
+                "id": {
+                  "path": "Measure.group.stratifier.component.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "linkId": {
+                  "path": "Measure.group.stratifier.component.linkId",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "Measure.group.stratifier.component.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                }
+              }
+            },
+            "criteria": {
+              "path": "Measure.group.stratifier.criteria",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Expression"
+              ]
+            },
+            "description": {
+              "path": "Measure.group.stratifier.description",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "markdown"
+              ]
+            },
+            "extension": {
+              "path": "Measure.group.stratifier.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "groupDefinition": {
+              "path": "Measure.group.stratifier.groupDefinition",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            },
+            "id": {
+              "path": "Measure.group.stratifier.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "linkId": {
+              "path": "Measure.group.stratifier.linkId",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Measure.group.stratifier.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            }
+          }
+        },
+        "subject": {
+          "path": "Measure.group.subject[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept",
+            "Reference"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/participant-resource-types"
+          },
+          "choices": [
+            "subjectCodeableConcept",
+            "subjectReference"
+          ]
+        },
+        "type": {
+          "path": "Measure.group.type",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/measure-type"
+          }
+        }
+      }
+    },
+    "guidance": {
+      "path": "Measure.guidance",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "id": {
+      "path": "Measure.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Measure.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "Measure.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "improvementNotation": {
+      "path": "Measure.improvementNotation",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/measure-improvement-notation|5.0.0"
+      }
+    },
+    "jurisdiction": {
+      "path": "Measure.jurisdiction",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
+      }
+    },
+    "language": {
+      "path": "Measure.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "lastReviewDate": {
+      "path": "Measure.lastReviewDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "library": {
+      "path": "Measure.library",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "canonical"
+      ]
+    },
+    "meta": {
+      "path": "Measure.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "Measure.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "Measure.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "publisher": {
+      "path": "Measure.publisher",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "purpose": {
+      "path": "Measure.purpose",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "rateAggregation": {
+      "path": "Measure.rateAggregation",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "rationale": {
+      "path": "Measure.rationale",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "relatedArtifact": {
+      "path": "Measure.relatedArtifact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "RelatedArtifact"
+      ]
+    },
+    "reviewer": {
+      "path": "Measure.reviewer",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "riskAdjustment": {
+      "path": "Measure.riskAdjustment",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "scoring": {
+      "path": "Measure.scoring",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://terminology.hl7.org/ValueSet/measure-scoring"
+      }
+    },
+    "scoringUnit": {
+      "path": "Measure.scoringUnit",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/measure-scoring-unit"
+      }
+    },
+    "status": {
+      "path": "Measure.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+      }
+    },
+    "subject": {
+      "path": "Measure.subject[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept",
+        "Reference"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/participant-resource-types"
+      },
+      "choices": [
+        "subjectCodeableConcept",
+        "subjectReference"
+      ]
+    },
+    "subtitle": {
+      "path": "Measure.subtitle",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "supplementalData": {
+      "path": "Measure.supplementalData",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "code": {
+          "path": "Measure.supplementalData.code",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/measure-supplemental-data-example"
+          }
+        },
+        "criteria": {
+          "path": "Measure.supplementalData.criteria",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Expression"
+          ]
+        },
+        "description": {
+          "path": "Measure.supplementalData.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "extension": {
+          "path": "Measure.supplementalData.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Measure.supplementalData.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "linkId": {
+          "path": "Measure.supplementalData.linkId",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Measure.supplementalData.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "usage": {
+          "path": "Measure.supplementalData.usage",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/measure-data-usage"
+          }
+        }
+      }
+    },
+    "term": {
+      "path": "Measure.term",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "code": {
+          "path": "Measure.term.code",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/measure-definition-example"
+          }
+        },
+        "definition": {
+          "path": "Measure.term.definition",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "extension": {
+          "path": "Measure.term.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Measure.term.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Measure.term.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "text": {
+      "path": "Measure.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "title": {
+      "path": "Measure.title",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "topic": {
+      "path": "Measure.topic",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/definition-topic"
+      }
+    },
+    "type": {
+      "path": "Measure.type",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/measure-type"
+      }
+    },
+    "url": {
+      "path": "Measure.url",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "usage": {
+      "path": "Measure.usage",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "useContext": {
+      "path": "Measure.useContext",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "UsageContext"
+      ]
+    },
+    "version": {
+      "path": "Measure.version",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "versionAlgorithm": {
+      "path": "Measure.versionAlgorithm[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string",
+        "Coding"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/version-algorithm"
+      },
+      "choices": [
+        "versionAlgorithmString",
+        "versionAlgorithmCoding"
+      ]
+    }
+  }
+}

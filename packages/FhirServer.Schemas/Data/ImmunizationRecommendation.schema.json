@@ -1,0 +1,344 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/ImmunizationRecommendation",
+  "type": "ImmunizationRecommendation",
+  "name": "ImmunizationRecommendation",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "date",
+    "patient",
+    "recommendation"
+  ],
+  "elements": {
+    "authority": {
+      "path": "ImmunizationRecommendation.authority",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "contained": {
+      "path": "ImmunizationRecommendation.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "date": {
+      "path": "ImmunizationRecommendation.date",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "extension": {
+      "path": "ImmunizationRecommendation.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "ImmunizationRecommendation.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "ImmunizationRecommendation.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "ImmunizationRecommendation.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "ImmunizationRecommendation.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "ImmunizationRecommendation.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "ImmunizationRecommendation.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "patient": {
+      "path": "ImmunizationRecommendation.patient",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "recommendation": {
+      "path": "ImmunizationRecommendation.recommendation",
+      "min": 1,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "contraindicatedVaccineCode": {
+          "path": "ImmunizationRecommendation.recommendation.contraindicatedVaccineCode",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/vaccine-code"
+          }
+        },
+        "dateCriterion": {
+          "path": "ImmunizationRecommendation.recommendation.dateCriterion",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "code": {
+              "path": "ImmunizationRecommendation.recommendation.dateCriterion.code",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/immunization-recommendation-date-criterion"
+              }
+            },
+            "extension": {
+              "path": "ImmunizationRecommendation.recommendation.dateCriterion.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ImmunizationRecommendation.recommendation.dateCriterion.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ImmunizationRecommendation.recommendation.dateCriterion.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "value": {
+              "path": "ImmunizationRecommendation.recommendation.dateCriterion.value",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "dateTime"
+              ]
+            }
+          }
+        },
+        "description": {
+          "path": "ImmunizationRecommendation.recommendation.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "doseNumber": {
+          "path": "ImmunizationRecommendation.recommendation.doseNumber",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "extension": {
+          "path": "ImmunizationRecommendation.recommendation.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "forecastReason": {
+          "path": "ImmunizationRecommendation.recommendation.forecastReason",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/immunization-recommendation-reason"
+          }
+        },
+        "forecastStatus": {
+          "path": "ImmunizationRecommendation.recommendation.forecastStatus",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/immunization-recommendation-status"
+          }
+        },
+        "id": {
+          "path": "ImmunizationRecommendation.recommendation.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ImmunizationRecommendation.recommendation.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "series": {
+          "path": "ImmunizationRecommendation.recommendation.series",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "seriesDoses": {
+          "path": "ImmunizationRecommendation.recommendation.seriesDoses",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "supportingImmunization": {
+          "path": "ImmunizationRecommendation.recommendation.supportingImmunization",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "supportingPatientInformation": {
+          "path": "ImmunizationRecommendation.recommendation.supportingPatientInformation",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "targetDisease": {
+          "path": "ImmunizationRecommendation.recommendation.targetDisease",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/immunization-target-disease"
+          }
+        },
+        "vaccineCode": {
+          "path": "ImmunizationRecommendation.recommendation.vaccineCode",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/vaccine-code"
+          }
+        }
+      }
+    },
+    "text": {
+      "path": "ImmunizationRecommendation.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

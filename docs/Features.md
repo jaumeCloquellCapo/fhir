@@ -72,9 +72,27 @@ Resource-specific search parameters are advertised in `/metadata` where implemen
 
 When `Audit:Enabled=true`, the server records BALP-oriented `AuditEvent` resources for REST operations (skips `/AuditEvent` to avoid loops). See [Configuration.md](Configuration.md).
 
+## SMART on FHIR (MVP)
+
+| Method | Path | Notes |
+|--------|------|-------|
+| GET | `/.well-known/smart-configuration` | Discovery document |
+| POST | `/auth/token` | `client_credentials` (Basic or form client_id/secret) |
+| GET | `/auth/authorize` | Stub **501** (use client_credentials) |
+
+When `Auth:Enabled=true`, API calls accept **Bearer** (SMART token) or **HTTP Basic**.
+
+## Subscriptions (MVP)
+
+Create an active `Subscription` with `channelType.code=rest-hook` and `endpoint` pointing at `/_hooks/{sinkId}` (or any URL). Resource create/update/delete/patch posts a `subscription-notification` Bundle.
+
+| Method | Path | Notes |
+|--------|------|-------|
+| POST/GET/DELETE | `/_hooks/{sinkId}` | Local capture sink for e2e / demos |
+
 ## Out of scope (roadmap)
 
 - Full IG / profile StructureDefinition conformance
-- SMART on FHIR
-- Subscriptions
+- Full SMART authorize / PKCE / EHR launch UX
+- External webhook reliability (retries, signing)
 - XML (`application/fhir+xml`) as a first-class format

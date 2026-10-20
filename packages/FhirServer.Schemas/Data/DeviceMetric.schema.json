@@ -1,0 +1,256 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/DeviceMetric",
+  "type": "DeviceMetric",
+  "name": "DeviceMetric",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "category",
+    "device",
+    "type"
+  ],
+  "elements": {
+    "calibration": {
+      "path": "DeviceMetric.calibration",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "DeviceMetric.calibration.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "DeviceMetric.calibration.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "DeviceMetric.calibration.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "state": {
+          "path": "DeviceMetric.calibration.state",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/metric-calibration-state|5.0.0"
+          }
+        },
+        "time": {
+          "path": "DeviceMetric.calibration.time",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "instant"
+          ]
+        },
+        "type": {
+          "path": "DeviceMetric.calibration.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/metric-calibration-type|5.0.0"
+          }
+        }
+      }
+    },
+    "category": {
+      "path": "DeviceMetric.category",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/metric-category|5.0.0"
+      }
+    },
+    "color": {
+      "path": "DeviceMetric.color",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/color-codes|5.0.0"
+      }
+    },
+    "contained": {
+      "path": "DeviceMetric.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "device": {
+      "path": "DeviceMetric.device",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "extension": {
+      "path": "DeviceMetric.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "DeviceMetric.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "DeviceMetric.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "DeviceMetric.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "DeviceMetric.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "measurementFrequency": {
+      "path": "DeviceMetric.measurementFrequency",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Quantity"
+      ]
+    },
+    "meta": {
+      "path": "DeviceMetric.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "DeviceMetric.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "operationalStatus": {
+      "path": "DeviceMetric.operationalStatus",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/metric-operational-status|5.0.0"
+      }
+    },
+    "text": {
+      "path": "DeviceMetric.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "type": {
+      "path": "DeviceMetric.type",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/devicemetric-type"
+      }
+    },
+    "unit": {
+      "path": "DeviceMetric.unit",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/ucum-units"
+      }
+    }
+  }
+}

@@ -13,7 +13,16 @@ open FhirServer.Domain.Ports
 
 module AuditMiddleware =
 
-    let private systemPaths = set [ "/"; "/health"; "/$version"; "/metadata" ]
+    let private systemPaths =
+        set [
+            "/"
+            "/health"
+            "/$version"
+            "/metadata"
+            "/.well-known/smart-configuration"
+            "/auth/token"
+            "/auth/authorize"
+        ]
 
     let private splitPath (path: string) =
         path.Trim('/').Split('/', StringSplitOptions.RemoveEmptyEntries)
@@ -26,6 +35,7 @@ module AuditMiddleware =
         systemPaths.Contains path
         || (match firstSegment path with
             | Some "AuditEvent" -> true
+            | Some "_hooks" -> true
             | _ -> false)
 
     let private agentDisplay (ctx: HttpContext) =

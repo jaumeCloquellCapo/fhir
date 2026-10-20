@@ -22,20 +22,20 @@ concurrency:
 jobs:
   smoke:
     name: Build & smoke generate
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 25
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: "10.0.x"
 
       - name: Cache FHIR package
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: generator/cache
           key: fhir-r5-core-5.0.0

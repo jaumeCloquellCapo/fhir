@@ -18,14 +18,14 @@ FhirServer uses a hexagonal / DDD-style layout so HTTP, persistence, and validat
          ▼                              ▼
    FhirServer.Validation         IResourceStore
    FhirServer.Schemas            EnvelopeResourceStore
-                                 + Postgres / SQLite dialect
+                                 + Postgres dialect
 ```
 
 | Area | Responsibility |
 |------|----------------|
 | **Domain** | FHIR resource JSON model helpers, catalog, search logic, `IResourceStore` port, validation facade |
 | **Application** | Use cases (`create`, `read`, `search`, Bundle, …) and BALP audit event building |
-| **Infrastructure** | ASP.NET endpoints, auth, audit middleware, SQL dialects + migrations |
+| **Infrastructure** | ASP.NET endpoints, auth, audit middleware, Postgres persistence + migrations |
 | **Packages** | Embedded `*.schema.json`, valuesets, generated catalog and schema validator |
 | **Generator** | Offline tool: HL7 package → IR → schemas + F# validator source |
 
@@ -36,9 +36,9 @@ Resources are stored as **envelopes**, not as fully relational FHIR element colu
 - One **current** table per resource type (e.g. `patient`)
 - One **history** table (e.g. `patient_history`) with PK `(id, txid)`
 - Global `txid_counter` → FHIR `meta.versionId` / ETag
-- Body column holds JSON (`jsonb` on Postgres; text on SQLite), omitting duplicated id / meta / resourceType where the codec owns those fields
+- Body column holds JSON (`jsonb`), omitting duplicated id / meta / resourceType where the codec owns those fields
 
-`EnvelopeResourceStore` implements `IResourceStore` once. `IEnvelopeDialect` / `IEnvelopeSession` supply dialect-specific SQL. Migrations share `MigrationRunner` (`PostgresMigrations` / `SqliteMigrations`).
+`EnvelopeResourceStore` implements `IResourceStore` once. `IEnvelopeDialect` / `IEnvelopeSession` supply Postgres access. Migrations use `MigrationRunner` + `PostgresMigrations`.
 
 ```mermaid
 erDiagram
@@ -109,6 +109,6 @@ sequenceDiagram
 ## Design principles
 
 - Prefer **small modules and explicit ports** over a large framework surface
-- Keep **one store implementation**; dialects are SQL-only
+- Keep **one store implementation**; the dialect owns Postgres access
 - Generate **schemas from HL7 packages** instead of hand-maintaining hundreds of resource shapes
 - Stay **Firely-free** at runtime so the validation story is owned in-repo

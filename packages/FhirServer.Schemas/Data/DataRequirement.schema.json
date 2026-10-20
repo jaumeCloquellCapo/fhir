@@ -1,0 +1,344 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/DataRequirement",
+  "type": "DataRequirement",
+  "name": "DataRequirement",
+  "kind": "complex-type",
+  "derivation": "specialization",
+  "required": [
+    "type"
+  ],
+  "elements": {
+    "codeFilter": {
+      "path": "DataRequirement.codeFilter",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Element"
+      ],
+      "elements": {
+        "code": {
+          "path": "DataRequirement.codeFilter.code",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Coding"
+          ]
+        },
+        "extension": {
+          "path": "DataRequirement.codeFilter.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "DataRequirement.codeFilter.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "path": {
+          "path": "DataRequirement.codeFilter.path",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "searchParam": {
+          "path": "DataRequirement.codeFilter.searchParam",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "valueSet": {
+          "path": "DataRequirement.codeFilter.valueSet",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "canonical"
+          ]
+        }
+      }
+    },
+    "dateFilter": {
+      "path": "DataRequirement.dateFilter",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Element"
+      ],
+      "elements": {
+        "extension": {
+          "path": "DataRequirement.dateFilter.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "DataRequirement.dateFilter.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "path": {
+          "path": "DataRequirement.dateFilter.path",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "searchParam": {
+          "path": "DataRequirement.dateFilter.searchParam",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "value": {
+          "path": "DataRequirement.dateFilter.value[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "dateTime",
+            "Period",
+            "Duration"
+          ],
+          "choices": [
+            "valueDateTime",
+            "valuePeriod",
+            "valueDuration"
+          ]
+        }
+      }
+    },
+    "extension": {
+      "path": "DataRequirement.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "DataRequirement.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "limit": {
+      "path": "DataRequirement.limit",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "positiveInt"
+      ]
+    },
+    "mustSupport": {
+      "path": "DataRequirement.mustSupport",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "string"
+      ]
+    },
+    "profile": {
+      "path": "DataRequirement.profile",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "canonical"
+      ]
+    },
+    "sort": {
+      "path": "DataRequirement.sort",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Element"
+      ],
+      "elements": {
+        "direction": {
+          "path": "DataRequirement.sort.direction",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/sort-direction|5.0.0"
+          }
+        },
+        "extension": {
+          "path": "DataRequirement.sort.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "DataRequirement.sort.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "path": {
+          "path": "DataRequirement.sort.path",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        }
+      }
+    },
+    "subject": {
+      "path": "DataRequirement.subject[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept",
+        "Reference"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/participant-resource-types"
+      },
+      "choices": [
+        "subjectCodeableConcept",
+        "subjectReference"
+      ]
+    },
+    "type": {
+      "path": "DataRequirement.type",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/fhir-types|5.0.0"
+      }
+    },
+    "valueFilter": {
+      "path": "DataRequirement.valueFilter",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Element"
+      ],
+      "elements": {
+        "comparator": {
+          "path": "DataRequirement.valueFilter.comparator",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/value-filter-comparator|5.0.0"
+          }
+        },
+        "extension": {
+          "path": "DataRequirement.valueFilter.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "DataRequirement.valueFilter.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "path": {
+          "path": "DataRequirement.valueFilter.path",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "searchParam": {
+          "path": "DataRequirement.valueFilter.searchParam",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "value": {
+          "path": "DataRequirement.valueFilter.value[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "dateTime",
+            "Period",
+            "Duration"
+          ],
+          "choices": [
+            "valueDateTime",
+            "valuePeriod",
+            "valueDuration"
+          ]
+        }
+      }
+    }
+  }
+}

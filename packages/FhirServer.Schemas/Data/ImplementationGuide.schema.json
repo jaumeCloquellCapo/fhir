@@ -1,0 +1,1053 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/ImplementationGuide",
+  "type": "ImplementationGuide",
+  "name": "ImplementationGuide",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "fhirVersion",
+    "name",
+    "packageId",
+    "status",
+    "url"
+  ],
+  "elements": {
+    "contact": {
+      "path": "ImplementationGuide.contact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "contained": {
+      "path": "ImplementationGuide.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "copyright": {
+      "path": "ImplementationGuide.copyright",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "copyrightLabel": {
+      "path": "ImplementationGuide.copyrightLabel",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "date": {
+      "path": "ImplementationGuide.date",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "definition": {
+      "path": "ImplementationGuide.definition",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "ImplementationGuide.definition.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "grouping": {
+          "path": "ImplementationGuide.definition.grouping",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "description": {
+              "path": "ImplementationGuide.definition.grouping.description",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "markdown"
+              ]
+            },
+            "extension": {
+              "path": "ImplementationGuide.definition.grouping.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ImplementationGuide.definition.grouping.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ImplementationGuide.definition.grouping.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "name": {
+              "path": "ImplementationGuide.definition.grouping.name",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "id": {
+          "path": "ImplementationGuide.definition.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ImplementationGuide.definition.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "page": {
+          "path": "ImplementationGuide.definition.page",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "ImplementationGuide.definition.page.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "generation": {
+              "path": "ImplementationGuide.definition.page.generation",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/guide-page-generation|5.0.0"
+              }
+            },
+            "id": {
+              "path": "ImplementationGuide.definition.page.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ImplementationGuide.definition.page.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "name": {
+              "path": "ImplementationGuide.definition.page.name",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "url"
+              ]
+            },
+            "page": {
+              "path": "ImplementationGuide.definition.page.page",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [],
+              "contentReference": "#ImplementationGuide.definition.page"
+            },
+            "source": {
+              "path": "ImplementationGuide.definition.page.source[x]",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "url",
+                "string",
+                "markdown"
+              ],
+              "choices": [
+                "sourceUrl",
+                "sourceString",
+                "sourceMarkdown"
+              ]
+            },
+            "title": {
+              "path": "ImplementationGuide.definition.page.title",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "parameter": {
+          "path": "ImplementationGuide.definition.parameter",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "code": {
+              "path": "ImplementationGuide.definition.parameter.code",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Coding"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/guide-parameter-code"
+              }
+            },
+            "extension": {
+              "path": "ImplementationGuide.definition.parameter.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ImplementationGuide.definition.parameter.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ImplementationGuide.definition.parameter.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "value": {
+              "path": "ImplementationGuide.definition.parameter.value",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "resource": {
+          "path": "ImplementationGuide.definition.resource",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "description": {
+              "path": "ImplementationGuide.definition.resource.description",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "markdown"
+              ]
+            },
+            "extension": {
+              "path": "ImplementationGuide.definition.resource.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "fhirVersion": {
+              "path": "ImplementationGuide.definition.resource.fhirVersion",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/FHIR-version|5.0.0"
+              }
+            },
+            "groupingId": {
+              "path": "ImplementationGuide.definition.resource.groupingId",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "id"
+              ]
+            },
+            "id": {
+              "path": "ImplementationGuide.definition.resource.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "isExample": {
+              "path": "ImplementationGuide.definition.resource.isExample",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ImplementationGuide.definition.resource.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "name": {
+              "path": "ImplementationGuide.definition.resource.name",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "profile": {
+              "path": "ImplementationGuide.definition.resource.profile",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "canonical"
+              ]
+            },
+            "reference": {
+              "path": "ImplementationGuide.definition.resource.reference",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            }
+          }
+        },
+        "template": {
+          "path": "ImplementationGuide.definition.template",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "code": {
+              "path": "ImplementationGuide.definition.template.code",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ]
+            },
+            "extension": {
+              "path": "ImplementationGuide.definition.template.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ImplementationGuide.definition.template.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ImplementationGuide.definition.template.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "scope": {
+              "path": "ImplementationGuide.definition.template.scope",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "source": {
+              "path": "ImplementationGuide.definition.template.source",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "dependsOn": {
+      "path": "ImplementationGuide.dependsOn",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "ImplementationGuide.dependsOn.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ImplementationGuide.dependsOn.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ImplementationGuide.dependsOn.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "packageId": {
+          "path": "ImplementationGuide.dependsOn.packageId",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "id"
+          ]
+        },
+        "reason": {
+          "path": "ImplementationGuide.dependsOn.reason",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "uri": {
+          "path": "ImplementationGuide.dependsOn.uri",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "canonical"
+          ]
+        },
+        "version": {
+          "path": "ImplementationGuide.dependsOn.version",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        }
+      }
+    },
+    "description": {
+      "path": "ImplementationGuide.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "experimental": {
+      "path": "ImplementationGuide.experimental",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "extension": {
+      "path": "ImplementationGuide.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "fhirVersion": {
+      "path": "ImplementationGuide.fhirVersion",
+      "min": 1,
+      "max": "*",
+      "array": true,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/FHIR-version|5.0.0"
+      }
+    },
+    "global": {
+      "path": "ImplementationGuide.global",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "ImplementationGuide.global.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ImplementationGuide.global.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ImplementationGuide.global.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "profile": {
+          "path": "ImplementationGuide.global.profile",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "canonical"
+          ]
+        },
+        "type": {
+          "path": "ImplementationGuide.global.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/resource-types|5.0.0"
+          }
+        }
+      }
+    },
+    "id": {
+      "path": "ImplementationGuide.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "ImplementationGuide.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "ImplementationGuide.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "jurisdiction": {
+      "path": "ImplementationGuide.jurisdiction",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
+      }
+    },
+    "language": {
+      "path": "ImplementationGuide.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "license": {
+      "path": "ImplementationGuide.license",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/spdx-license|5.0.0"
+      }
+    },
+    "manifest": {
+      "path": "ImplementationGuide.manifest",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "ImplementationGuide.manifest.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ImplementationGuide.manifest.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "image": {
+          "path": "ImplementationGuide.manifest.image",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "string"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ImplementationGuide.manifest.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "other": {
+          "path": "ImplementationGuide.manifest.other",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "string"
+          ]
+        },
+        "page": {
+          "path": "ImplementationGuide.manifest.page",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "anchor": {
+              "path": "ImplementationGuide.manifest.page.anchor",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "string"
+              ]
+            },
+            "extension": {
+              "path": "ImplementationGuide.manifest.page.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ImplementationGuide.manifest.page.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ImplementationGuide.manifest.page.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "name": {
+              "path": "ImplementationGuide.manifest.page.name",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "title": {
+              "path": "ImplementationGuide.manifest.page.title",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "rendering": {
+          "path": "ImplementationGuide.manifest.rendering",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "url"
+          ]
+        },
+        "resource": {
+          "path": "ImplementationGuide.manifest.resource",
+          "min": 1,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "ImplementationGuide.manifest.resource.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ImplementationGuide.manifest.resource.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "isExample": {
+              "path": "ImplementationGuide.manifest.resource.isExample",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ImplementationGuide.manifest.resource.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "profile": {
+              "path": "ImplementationGuide.manifest.resource.profile",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "canonical"
+              ]
+            },
+            "reference": {
+              "path": "ImplementationGuide.manifest.resource.reference",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            },
+            "relativePath": {
+              "path": "ImplementationGuide.manifest.resource.relativePath",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "url"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "meta": {
+      "path": "ImplementationGuide.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "ImplementationGuide.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "ImplementationGuide.name",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "packageId": {
+      "path": "ImplementationGuide.packageId",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "id"
+      ]
+    },
+    "publisher": {
+      "path": "ImplementationGuide.publisher",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "purpose": {
+      "path": "ImplementationGuide.purpose",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "status": {
+      "path": "ImplementationGuide.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+      }
+    },
+    "text": {
+      "path": "ImplementationGuide.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "title": {
+      "path": "ImplementationGuide.title",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "url": {
+      "path": "ImplementationGuide.url",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "useContext": {
+      "path": "ImplementationGuide.useContext",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "UsageContext"
+      ]
+    },
+    "version": {
+      "path": "ImplementationGuide.version",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "versionAlgorithm": {
+      "path": "ImplementationGuide.versionAlgorithm[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string",
+        "Coding"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/version-algorithm"
+      },
+      "choices": [
+        "versionAlgorithmString",
+        "versionAlgorithmCoding"
+      ]
+    }
+  }
+}

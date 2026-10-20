@@ -1,0 +1,826 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Task",
+  "type": "Task",
+  "name": "Task",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "intent",
+    "status"
+  ],
+  "elements": {
+    "authoredOn": {
+      "path": "Task.authoredOn",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "basedOn": {
+      "path": "Task.basedOn",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "businessStatus": {
+      "path": "Task.businessStatus",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "code": {
+      "path": "Task.code",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/task-code"
+      }
+    },
+    "contained": {
+      "path": "Task.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "description": {
+      "path": "Task.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "doNotPerform": {
+      "path": "Task.doNotPerform",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "encounter": {
+      "path": "Task.encounter",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "executionPeriod": {
+      "path": "Task.executionPeriod",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ]
+    },
+    "extension": {
+      "path": "Task.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "focus": {
+      "path": "Task.focus",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "for": {
+      "path": "Task.for",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "groupIdentifier": {
+      "path": "Task.groupIdentifier",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "id": {
+      "path": "Task.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Task.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "Task.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "input": {
+      "path": "Task.input",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Task.input.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Task.input.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Task.input.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "Task.input.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "value": {
+          "path": "Task.input.value[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "base64Binary",
+            "boolean",
+            "canonical",
+            "code",
+            "date",
+            "dateTime",
+            "decimal",
+            "id",
+            "instant",
+            "integer",
+            "integer64",
+            "markdown",
+            "oid",
+            "positiveInt",
+            "string",
+            "time",
+            "unsignedInt",
+            "uri",
+            "url",
+            "uuid",
+            "Address",
+            "Age",
+            "Annotation",
+            "Attachment",
+            "CodeableConcept",
+            "CodeableReference",
+            "Coding",
+            "ContactPoint",
+            "Count",
+            "Distance",
+            "Duration",
+            "HumanName",
+            "Identifier",
+            "Money",
+            "Period",
+            "Quantity",
+            "Range",
+            "Ratio",
+            "RatioRange",
+            "Reference",
+            "SampledData",
+            "Signature",
+            "Timing",
+            "ContactDetail",
+            "DataRequirement",
+            "Expression",
+            "ParameterDefinition",
+            "RelatedArtifact",
+            "TriggerDefinition",
+            "UsageContext",
+            "Availability",
+            "ExtendedContactDetail",
+            "Dosage",
+            "Meta"
+          ],
+          "choices": [
+            "valueBase64Binary",
+            "valueBoolean",
+            "valueCanonical",
+            "valueCode",
+            "valueDate",
+            "valueDateTime",
+            "valueDecimal",
+            "valueId",
+            "valueInstant",
+            "valueInteger",
+            "valueInteger64",
+            "valueMarkdown",
+            "valueOid",
+            "valuePositiveInt",
+            "valueString",
+            "valueTime",
+            "valueUnsignedInt",
+            "valueUri",
+            "valueUrl",
+            "valueUuid",
+            "valueAddress",
+            "valueAge",
+            "valueAnnotation",
+            "valueAttachment",
+            "valueCodeableConcept",
+            "valueCodeableReference",
+            "valueCoding",
+            "valueContactPoint",
+            "valueCount",
+            "valueDistance",
+            "valueDuration",
+            "valueHumanName",
+            "valueIdentifier",
+            "valueMoney",
+            "valuePeriod",
+            "valueQuantity",
+            "valueRange",
+            "valueRatio",
+            "valueRatioRange",
+            "valueReference",
+            "valueSampledData",
+            "valueSignature",
+            "valueTiming",
+            "valueContactDetail",
+            "valueDataRequirement",
+            "valueExpression",
+            "valueParameterDefinition",
+            "valueRelatedArtifact",
+            "valueTriggerDefinition",
+            "valueUsageContext",
+            "valueAvailability",
+            "valueExtendedContactDetail",
+            "valueDosage",
+            "valueMeta"
+          ]
+        }
+      }
+    },
+    "instantiatesCanonical": {
+      "path": "Task.instantiatesCanonical",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "canonical"
+      ]
+    },
+    "instantiatesUri": {
+      "path": "Task.instantiatesUri",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "insurance": {
+      "path": "Task.insurance",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "intent": {
+      "path": "Task.intent",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/task-intent|5.0.0"
+      }
+    },
+    "language": {
+      "path": "Task.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "lastModified": {
+      "path": "Task.lastModified",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "location": {
+      "path": "Task.location",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "meta": {
+      "path": "Task.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "Task.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "note": {
+      "path": "Task.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "output": {
+      "path": "Task.output",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Task.output.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Task.output.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Task.output.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "Task.output.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "value": {
+          "path": "Task.output.value[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "base64Binary",
+            "boolean",
+            "canonical",
+            "code",
+            "date",
+            "dateTime",
+            "decimal",
+            "id",
+            "instant",
+            "integer",
+            "integer64",
+            "markdown",
+            "oid",
+            "positiveInt",
+            "string",
+            "time",
+            "unsignedInt",
+            "uri",
+            "url",
+            "uuid",
+            "Address",
+            "Age",
+            "Annotation",
+            "Attachment",
+            "CodeableConcept",
+            "CodeableReference",
+            "Coding",
+            "ContactPoint",
+            "Count",
+            "Distance",
+            "Duration",
+            "HumanName",
+            "Identifier",
+            "Money",
+            "Period",
+            "Quantity",
+            "Range",
+            "Ratio",
+            "RatioRange",
+            "Reference",
+            "SampledData",
+            "Signature",
+            "Timing",
+            "ContactDetail",
+            "DataRequirement",
+            "Expression",
+            "ParameterDefinition",
+            "RelatedArtifact",
+            "TriggerDefinition",
+            "UsageContext",
+            "Availability",
+            "ExtendedContactDetail",
+            "Dosage",
+            "Meta"
+          ],
+          "choices": [
+            "valueBase64Binary",
+            "valueBoolean",
+            "valueCanonical",
+            "valueCode",
+            "valueDate",
+            "valueDateTime",
+            "valueDecimal",
+            "valueId",
+            "valueInstant",
+            "valueInteger",
+            "valueInteger64",
+            "valueMarkdown",
+            "valueOid",
+            "valuePositiveInt",
+            "valueString",
+            "valueTime",
+            "valueUnsignedInt",
+            "valueUri",
+            "valueUrl",
+            "valueUuid",
+            "valueAddress",
+            "valueAge",
+            "valueAnnotation",
+            "valueAttachment",
+            "valueCodeableConcept",
+            "valueCodeableReference",
+            "valueCoding",
+            "valueContactPoint",
+            "valueCount",
+            "valueDistance",
+            "valueDuration",
+            "valueHumanName",
+            "valueIdentifier",
+            "valueMoney",
+            "valuePeriod",
+            "valueQuantity",
+            "valueRange",
+            "valueRatio",
+            "valueRatioRange",
+            "valueReference",
+            "valueSampledData",
+            "valueSignature",
+            "valueTiming",
+            "valueContactDetail",
+            "valueDataRequirement",
+            "valueExpression",
+            "valueParameterDefinition",
+            "valueRelatedArtifact",
+            "valueTriggerDefinition",
+            "valueUsageContext",
+            "valueAvailability",
+            "valueExtendedContactDetail",
+            "valueDosage",
+            "valueMeta"
+          ]
+        }
+      }
+    },
+    "owner": {
+      "path": "Task.owner",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "partOf": {
+      "path": "Task.partOf",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "performer": {
+      "path": "Task.performer",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "actor": {
+          "path": "Task.performer.actor",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "extension": {
+          "path": "Task.performer.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "function": {
+          "path": "Task.performer.function",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "id": {
+          "path": "Task.performer.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Task.performer.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "priority": {
+      "path": "Task.priority",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/request-priority|5.0.0"
+      }
+    },
+    "reason": {
+      "path": "Task.reason",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ]
+    },
+    "relevantHistory": {
+      "path": "Task.relevantHistory",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "requestedPerformer": {
+      "path": "Task.requestedPerformer",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/performer-role"
+      }
+    },
+    "requestedPeriod": {
+      "path": "Task.requestedPeriod",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ]
+    },
+    "requester": {
+      "path": "Task.requester",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "restriction": {
+      "path": "Task.restriction",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Task.restriction.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Task.restriction.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Task.restriction.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "period": {
+          "path": "Task.restriction.period",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Period"
+          ]
+        },
+        "recipient": {
+          "path": "Task.restriction.recipient",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "repetitions": {
+          "path": "Task.restriction.repetitions",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "positiveInt"
+          ]
+        }
+      }
+    },
+    "status": {
+      "path": "Task.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/task-status|5.0.0"
+      }
+    },
+    "statusReason": {
+      "path": "Task.statusReason",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableReference"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/task-status-reason"
+      }
+    },
+    "text": {
+      "path": "Task.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

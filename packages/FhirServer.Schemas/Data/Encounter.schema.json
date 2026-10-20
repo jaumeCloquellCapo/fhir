@@ -1,0 +1,715 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Encounter",
+  "type": "Encounter",
+  "name": "Encounter",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "status"
+  ],
+  "elements": {
+    "account": {
+      "path": "Encounter.account",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "actualPeriod": {
+      "path": "Encounter.actualPeriod",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ]
+    },
+    "admission": {
+      "path": "Encounter.admission",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "admitSource": {
+          "path": "Encounter.admission.admitSource",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "preferred",
+            "valueSet": "http://hl7.org/fhir/ValueSet/encounter-admit-source"
+          }
+        },
+        "destination": {
+          "path": "Encounter.admission.destination",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "dischargeDisposition": {
+          "path": "Encounter.admission.dischargeDisposition",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/encounter-discharge-disposition"
+          }
+        },
+        "extension": {
+          "path": "Encounter.admission.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Encounter.admission.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Encounter.admission.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "origin": {
+          "path": "Encounter.admission.origin",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "preAdmissionIdentifier": {
+          "path": "Encounter.admission.preAdmissionIdentifier",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "reAdmission": {
+          "path": "Encounter.admission.reAdmission",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://terminology.hl7.org/ValueSet/v2-0092"
+          }
+        }
+      }
+    },
+    "appointment": {
+      "path": "Encounter.appointment",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "basedOn": {
+      "path": "Encounter.basedOn",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "careTeam": {
+      "path": "Encounter.careTeam",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "class": {
+      "path": "Encounter.class",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://terminology.hl7.org/ValueSet/encounter-class"
+      }
+    },
+    "contained": {
+      "path": "Encounter.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "diagnosis": {
+      "path": "Encounter.diagnosis",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "condition": {
+          "path": "Encounter.diagnosis.condition",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableReference"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/condition-code"
+          }
+        },
+        "extension": {
+          "path": "Encounter.diagnosis.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Encounter.diagnosis.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Encounter.diagnosis.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "use": {
+          "path": "Encounter.diagnosis.use",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "preferred",
+            "valueSet": "http://hl7.org/fhir/ValueSet/encounter-diagnosis-use"
+          }
+        }
+      }
+    },
+    "dietPreference": {
+      "path": "Encounter.dietPreference",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/encounter-diet"
+      }
+    },
+    "episodeOfCare": {
+      "path": "Encounter.episodeOfCare",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "extension": {
+      "path": "Encounter.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "Encounter.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Encounter.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "Encounter.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "Encounter.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "length": {
+      "path": "Encounter.length",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Duration"
+      ]
+    },
+    "location": {
+      "path": "Encounter.location",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Encounter.location.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "form": {
+          "path": "Encounter.location.form",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/location-form"
+          }
+        },
+        "id": {
+          "path": "Encounter.location.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "location": {
+          "path": "Encounter.location.location",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Encounter.location.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "period": {
+          "path": "Encounter.location.period",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Period"
+          ]
+        },
+        "status": {
+          "path": "Encounter.location.status",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/encounter-location-status|5.0.0"
+          }
+        }
+      }
+    },
+    "meta": {
+      "path": "Encounter.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "Encounter.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "partOf": {
+      "path": "Encounter.partOf",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "participant": {
+      "path": "Encounter.participant",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "actor": {
+          "path": "Encounter.participant.actor",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "extension": {
+          "path": "Encounter.participant.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Encounter.participant.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Encounter.participant.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "period": {
+          "path": "Encounter.participant.period",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Period"
+          ]
+        },
+        "type": {
+          "path": "Encounter.participant.type",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/encounter-participant-type"
+          }
+        }
+      }
+    },
+    "plannedEndDate": {
+      "path": "Encounter.plannedEndDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "plannedStartDate": {
+      "path": "Encounter.plannedStartDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "priority": {
+      "path": "Encounter.priority",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://terminology.hl7.org/ValueSet/v3-ActPriority"
+      }
+    },
+    "reason": {
+      "path": "Encounter.reason",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Encounter.reason.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Encounter.reason.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Encounter.reason.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "use": {
+          "path": "Encounter.reason.use",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/encounter-reason-use"
+          }
+        },
+        "value": {
+          "path": "Encounter.reason.value",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableReference"
+          ],
+          "binding": {
+            "strength": "preferred",
+            "valueSet": "http://hl7.org/fhir/ValueSet/encounter-reason"
+          }
+        }
+      }
+    },
+    "serviceProvider": {
+      "path": "Encounter.serviceProvider",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "serviceType": {
+      "path": "Encounter.serviceType",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/service-type"
+      }
+    },
+    "specialArrangement": {
+      "path": "Encounter.specialArrangement",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/encounter-special-arrangements"
+      }
+    },
+    "specialCourtesy": {
+      "path": "Encounter.specialCourtesy",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/encounter-special-courtesy"
+      }
+    },
+    "status": {
+      "path": "Encounter.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/encounter-status|5.0.0"
+      }
+    },
+    "subject": {
+      "path": "Encounter.subject",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "subjectStatus": {
+      "path": "Encounter.subjectStatus",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/encounter-subject-status"
+      }
+    },
+    "text": {
+      "path": "Encounter.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "type": {
+      "path": "Encounter.type",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/encounter-type"
+      }
+    },
+    "virtualService": {
+      "path": "Encounter.virtualService",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "VirtualServiceDetail"
+      ]
+    }
+  }
+}

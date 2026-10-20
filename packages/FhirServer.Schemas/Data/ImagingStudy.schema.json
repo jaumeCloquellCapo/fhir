@@ -1,0 +1,537 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/ImagingStudy",
+  "type": "ImagingStudy",
+  "name": "ImagingStudy",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "status",
+    "subject"
+  ],
+  "elements": {
+    "basedOn": {
+      "path": "ImagingStudy.basedOn",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "contained": {
+      "path": "ImagingStudy.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "description": {
+      "path": "ImagingStudy.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "encounter": {
+      "path": "ImagingStudy.encounter",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "endpoint": {
+      "path": "ImagingStudy.endpoint",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "extension": {
+      "path": "ImagingStudy.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "ImagingStudy.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "ImagingStudy.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "ImagingStudy.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "ImagingStudy.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "location": {
+      "path": "ImagingStudy.location",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "meta": {
+      "path": "ImagingStudy.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modality": {
+      "path": "ImagingStudy.modality",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_33.html"
+      }
+    },
+    "modifierExtension": {
+      "path": "ImagingStudy.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "note": {
+      "path": "ImagingStudy.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "numberOfInstances": {
+      "path": "ImagingStudy.numberOfInstances",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "unsignedInt"
+      ]
+    },
+    "numberOfSeries": {
+      "path": "ImagingStudy.numberOfSeries",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "unsignedInt"
+      ]
+    },
+    "partOf": {
+      "path": "ImagingStudy.partOf",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "procedure": {
+      "path": "ImagingStudy.procedure",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://loinc.org/vs/loinc-rsna-radiology-playbook"
+      }
+    },
+    "reason": {
+      "path": "ImagingStudy.reason",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/procedure-reason"
+      }
+    },
+    "referrer": {
+      "path": "ImagingStudy.referrer",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "series": {
+      "path": "ImagingStudy.series",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "bodySite": {
+          "path": "ImagingStudy.series.bodySite",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableReference"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/body-site"
+          }
+        },
+        "description": {
+          "path": "ImagingStudy.series.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "endpoint": {
+          "path": "ImagingStudy.series.endpoint",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "extension": {
+          "path": "ImagingStudy.series.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ImagingStudy.series.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "instance": {
+          "path": "ImagingStudy.series.instance",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "ImagingStudy.series.instance.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ImagingStudy.series.instance.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ImagingStudy.series.instance.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "number": {
+              "path": "ImagingStudy.series.instance.number",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "unsignedInt"
+              ]
+            },
+            "sopClass": {
+              "path": "ImagingStudy.series.instance.sopClass",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Coding"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://dicom.nema.org/medical/dicom/current/output/chtml/part04/sect_B.5.html#table_B.5-1"
+              }
+            },
+            "title": {
+              "path": "ImagingStudy.series.instance.title",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "uid": {
+              "path": "ImagingStudy.series.instance.uid",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "id"
+              ]
+            }
+          }
+        },
+        "laterality": {
+          "path": "ImagingStudy.series.laterality",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_244.html"
+          }
+        },
+        "modality": {
+          "path": "ImagingStudy.series.modality",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_33.html"
+          }
+        },
+        "modifierExtension": {
+          "path": "ImagingStudy.series.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "number": {
+          "path": "ImagingStudy.series.number",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "unsignedInt"
+          ]
+        },
+        "numberOfInstances": {
+          "path": "ImagingStudy.series.numberOfInstances",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "unsignedInt"
+          ]
+        },
+        "performer": {
+          "path": "ImagingStudy.series.performer",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "actor": {
+              "path": "ImagingStudy.series.performer.actor",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            },
+            "extension": {
+              "path": "ImagingStudy.series.performer.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "function": {
+              "path": "ImagingStudy.series.performer.function",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/series-performer-function"
+              }
+            },
+            "id": {
+              "path": "ImagingStudy.series.performer.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ImagingStudy.series.performer.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            }
+          }
+        },
+        "specimen": {
+          "path": "ImagingStudy.series.specimen",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "started": {
+          "path": "ImagingStudy.series.started",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "dateTime"
+          ]
+        },
+        "uid": {
+          "path": "ImagingStudy.series.uid",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "id"
+          ]
+        }
+      }
+    },
+    "started": {
+      "path": "ImagingStudy.started",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "status": {
+      "path": "ImagingStudy.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/imagingstudy-status|5.0.0"
+      }
+    },
+    "subject": {
+      "path": "ImagingStudy.subject",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "text": {
+      "path": "ImagingStudy.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

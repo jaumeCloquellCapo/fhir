@@ -5,7 +5,7 @@ Run FhirServer locally and call the FHIR API in a few minutes.
 ## Prerequisites
 
 - [.NET 10 SDK](https://dotnet.microsoft.com/download)
-- [Docker](https://docs.docker.com/get-docker/) (if you use Postgres via Compose)
+- [Docker](https://docs.docker.com/get-docker/) (Postgres via Compose)
 - Optional: [jq](https://jqlang.github.io/jq/) for pretty JSON in the shell
 
 On Homebrew macOS you may need:
@@ -15,7 +15,7 @@ export DOTNET_ROOT="/opt/homebrew/opt/dotnet/libexec"
 export PATH="/opt/homebrew/opt/dotnet/bin:$PATH"
 ```
 
-## Option A — PostgreSQL (recommended)
+## Run with PostgreSQL
 
 1. Start the database:
 
@@ -25,11 +25,10 @@ export PATH="/opt/homebrew/opt/dotnet/bin:$PATH"
 
    Compose starts Postgres 18 on `localhost:5432` with user/db/password `fhir` / `fhir` / `fhir` (local only—change for any shared environment).
 
-2. Point the API at Postgres in `src/FhirServer/appsettings.json` (or environment / user secrets):
+2. Connection string (already the default in `src/FhirServer/appsettings.json`):
 
    ```json
    {
-     "Store": { "Provider": "postgres" },
      "ConnectionStrings": {
        "Fhir": "Host=localhost;Port=5432;Database=fhir;Username=fhir;Password=fhir"
      }
@@ -46,23 +45,6 @@ export PATH="/opt/homebrew/opt/dotnet/bin:$PATH"
 
 5. Explore the API in **Swagger UI**: [http://localhost:5050/swagger](http://localhost:5050/swagger)  
    OpenAPI JSON: `http://localhost:5050/swagger/v1/swagger.json`
-
-## Option B — SQLite (zero Docker)
-
-Default configuration uses SQLite at `src/FhirServer/data/fhir.db`:
-
-```json
-{
-  "Store": { "Provider": "sqlite" },
-  "ConnectionStrings": {
-    "Fhir": "Data Source=data/fhir.db"
-  }
-}
-```
-
-```bash
-dotnet run --project src/FhirServer
-```
 
 ## Verify with curl
 

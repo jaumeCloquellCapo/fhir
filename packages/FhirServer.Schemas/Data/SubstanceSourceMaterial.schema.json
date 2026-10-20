@@ -1,0 +1,585 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/SubstanceSourceMaterial",
+  "type": "SubstanceSourceMaterial",
+  "name": "SubstanceSourceMaterial",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "contained": {
+      "path": "SubstanceSourceMaterial.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "countryOfOrigin": {
+      "path": "SubstanceSourceMaterial.countryOfOrigin",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "developmentStage": {
+      "path": "SubstanceSourceMaterial.developmentStage",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "extension": {
+      "path": "SubstanceSourceMaterial.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "fractionDescription": {
+      "path": "SubstanceSourceMaterial.fractionDescription",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "SubstanceSourceMaterial.fractionDescription.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "fraction": {
+          "path": "SubstanceSourceMaterial.fractionDescription.fraction",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "id": {
+          "path": "SubstanceSourceMaterial.fractionDescription.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "materialType": {
+          "path": "SubstanceSourceMaterial.fractionDescription.materialType",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "modifierExtension": {
+          "path": "SubstanceSourceMaterial.fractionDescription.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "geographicalLocation": {
+      "path": "SubstanceSourceMaterial.geographicalLocation",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "string"
+      ]
+    },
+    "id": {
+      "path": "SubstanceSourceMaterial.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "implicitRules": {
+      "path": "SubstanceSourceMaterial.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "SubstanceSourceMaterial.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "SubstanceSourceMaterial.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "SubstanceSourceMaterial.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "organism": {
+      "path": "SubstanceSourceMaterial.organism",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "author": {
+          "path": "SubstanceSourceMaterial.organism.author",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "authorDescription": {
+              "path": "SubstanceSourceMaterial.organism.author.authorDescription",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "authorType": {
+              "path": "SubstanceSourceMaterial.organism.author.authorType",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ]
+            },
+            "extension": {
+              "path": "SubstanceSourceMaterial.organism.author.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "SubstanceSourceMaterial.organism.author.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "SubstanceSourceMaterial.organism.author.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            }
+          }
+        },
+        "extension": {
+          "path": "SubstanceSourceMaterial.organism.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "family": {
+          "path": "SubstanceSourceMaterial.organism.family",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "genus": {
+          "path": "SubstanceSourceMaterial.organism.genus",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "hybrid": {
+          "path": "SubstanceSourceMaterial.organism.hybrid",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "SubstanceSourceMaterial.organism.hybrid.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "hybridType": {
+              "path": "SubstanceSourceMaterial.organism.hybrid.hybridType",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ]
+            },
+            "id": {
+              "path": "SubstanceSourceMaterial.organism.hybrid.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "maternalOrganismId": {
+              "path": "SubstanceSourceMaterial.organism.hybrid.maternalOrganismId",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "maternalOrganismName": {
+              "path": "SubstanceSourceMaterial.organism.hybrid.maternalOrganismName",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "modifierExtension": {
+              "path": "SubstanceSourceMaterial.organism.hybrid.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "paternalOrganismId": {
+              "path": "SubstanceSourceMaterial.organism.hybrid.paternalOrganismId",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "paternalOrganismName": {
+              "path": "SubstanceSourceMaterial.organism.hybrid.paternalOrganismName",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "id": {
+          "path": "SubstanceSourceMaterial.organism.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "intraspecificDescription": {
+          "path": "SubstanceSourceMaterial.organism.intraspecificDescription",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "intraspecificType": {
+          "path": "SubstanceSourceMaterial.organism.intraspecificType",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "modifierExtension": {
+          "path": "SubstanceSourceMaterial.organism.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "organismGeneral": {
+          "path": "SubstanceSourceMaterial.organism.organismGeneral",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "class": {
+              "path": "SubstanceSourceMaterial.organism.organismGeneral.class",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ]
+            },
+            "extension": {
+              "path": "SubstanceSourceMaterial.organism.organismGeneral.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "SubstanceSourceMaterial.organism.organismGeneral.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "kingdom": {
+              "path": "SubstanceSourceMaterial.organism.organismGeneral.kingdom",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ]
+            },
+            "modifierExtension": {
+              "path": "SubstanceSourceMaterial.organism.organismGeneral.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "order": {
+              "path": "SubstanceSourceMaterial.organism.organismGeneral.order",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ]
+            },
+            "phylum": {
+              "path": "SubstanceSourceMaterial.organism.organismGeneral.phylum",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ]
+            }
+          }
+        },
+        "species": {
+          "path": "SubstanceSourceMaterial.organism.species",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        }
+      }
+    },
+    "organismId": {
+      "path": "SubstanceSourceMaterial.organismId",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "organismName": {
+      "path": "SubstanceSourceMaterial.organismName",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "parentSubstanceId": {
+      "path": "SubstanceSourceMaterial.parentSubstanceId",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "parentSubstanceName": {
+      "path": "SubstanceSourceMaterial.parentSubstanceName",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "string"
+      ]
+    },
+    "partDescription": {
+      "path": "SubstanceSourceMaterial.partDescription",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "SubstanceSourceMaterial.partDescription.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "SubstanceSourceMaterial.partDescription.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "SubstanceSourceMaterial.partDescription.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "part": {
+          "path": "SubstanceSourceMaterial.partDescription.part",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "partLocation": {
+          "path": "SubstanceSourceMaterial.partDescription.partLocation",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        }
+      }
+    },
+    "sourceMaterialClass": {
+      "path": "SubstanceSourceMaterial.sourceMaterialClass",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "sourceMaterialState": {
+      "path": "SubstanceSourceMaterial.sourceMaterialState",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "sourceMaterialType": {
+      "path": "SubstanceSourceMaterial.sourceMaterialType",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "text": {
+      "path": "SubstanceSourceMaterial.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

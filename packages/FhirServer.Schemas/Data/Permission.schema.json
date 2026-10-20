@@ -1,0 +1,465 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Permission",
+  "type": "Permission",
+  "name": "Permission",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "combining",
+    "status"
+  ],
+  "elements": {
+    "asserter": {
+      "path": "Permission.asserter",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "combining": {
+      "path": "Permission.combining",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/permission-rule-combining|5.0.0"
+      }
+    },
+    "contained": {
+      "path": "Permission.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "date": {
+      "path": "Permission.date",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "extension": {
+      "path": "Permission.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "Permission.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "implicitRules": {
+      "path": "Permission.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "justification": {
+      "path": "Permission.justification",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "basis": {
+          "path": "Permission.justification.basis",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/consent-policy"
+          }
+        },
+        "evidence": {
+          "path": "Permission.justification.evidence",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "extension": {
+          "path": "Permission.justification.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Permission.justification.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Permission.justification.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "language": {
+      "path": "Permission.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "Permission.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "Permission.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "rule": {
+      "path": "Permission.rule",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "activity": {
+          "path": "Permission.rule.activity",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "action": {
+              "path": "Permission.rule.activity.action",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/consent-action"
+              }
+            },
+            "actor": {
+              "path": "Permission.rule.activity.actor",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Reference"
+              ]
+            },
+            "extension": {
+              "path": "Permission.rule.activity.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Permission.rule.activity.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Permission.rule.activity.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "purpose": {
+              "path": "Permission.rule.activity.purpose",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "preferred",
+                "valueSet": "http://terminology.hl7.org/ValueSet/v3-PurposeOfUse"
+              }
+            }
+          }
+        },
+        "data": {
+          "path": "Permission.rule.data",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "expression": {
+              "path": "Permission.rule.data.expression",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Expression"
+              ]
+            },
+            "extension": {
+              "path": "Permission.rule.data.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Permission.rule.data.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Permission.rule.data.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "period": {
+              "path": "Permission.rule.data.period",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Period"
+              ]
+            },
+            "resource": {
+              "path": "Permission.rule.data.resource",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "extension": {
+                  "path": "Permission.rule.data.resource.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "Permission.rule.data.resource.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "meaning": {
+                  "path": "Permission.rule.data.resource.meaning",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "code"
+                  ],
+                  "binding": {
+                    "strength": "required",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/consent-data-meaning|5.0.0"
+                  }
+                },
+                "modifierExtension": {
+                  "path": "Permission.rule.data.resource.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "reference": {
+                  "path": "Permission.rule.data.resource.reference",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Reference"
+                  ]
+                }
+              }
+            },
+            "security": {
+              "path": "Permission.rule.data.security",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Coding"
+              ]
+            }
+          }
+        },
+        "extension": {
+          "path": "Permission.rule.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Permission.rule.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "limit": {
+          "path": "Permission.rule.limit",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/security-label-event-examples"
+          }
+        },
+        "modifierExtension": {
+          "path": "Permission.rule.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "Permission.rule.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/consent-provision-type|5.0.0"
+          }
+        }
+      }
+    },
+    "status": {
+      "path": "Permission.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/permission-status|5.0.0"
+      }
+    },
+    "text": {
+      "path": "Permission.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "validity": {
+      "path": "Permission.validity",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ]
+    }
+  }
+}

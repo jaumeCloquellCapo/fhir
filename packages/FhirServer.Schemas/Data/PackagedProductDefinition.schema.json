@@ -1,0 +1,532 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/PackagedProductDefinition",
+  "type": "PackagedProductDefinition",
+  "name": "PackagedProductDefinition",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "attachedDocument": {
+      "path": "PackagedProductDefinition.attachedDocument",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "characteristic": {
+      "path": "PackagedProductDefinition.characteristic",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [],
+      "contentReference": "#PackagedProductDefinition.packaging.property"
+    },
+    "contained": {
+      "path": "PackagedProductDefinition.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "containedItemQuantity": {
+      "path": "PackagedProductDefinition.containedItemQuantity",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Quantity"
+      ]
+    },
+    "copackagedIndicator": {
+      "path": "PackagedProductDefinition.copackagedIndicator",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "description": {
+      "path": "PackagedProductDefinition.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "extension": {
+      "path": "PackagedProductDefinition.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "PackagedProductDefinition.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "PackagedProductDefinition.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "PackagedProductDefinition.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "PackagedProductDefinition.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "legalStatusOfSupply": {
+      "path": "PackagedProductDefinition.legalStatusOfSupply",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "code": {
+          "path": "PackagedProductDefinition.legalStatusOfSupply.code",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/legal-status-of-supply"
+          }
+        },
+        "extension": {
+          "path": "PackagedProductDefinition.legalStatusOfSupply.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "PackagedProductDefinition.legalStatusOfSupply.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "jurisdiction": {
+          "path": "PackagedProductDefinition.legalStatusOfSupply.jurisdiction",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
+          }
+        },
+        "modifierExtension": {
+          "path": "PackagedProductDefinition.legalStatusOfSupply.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "manufacturer": {
+      "path": "PackagedProductDefinition.manufacturer",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "marketingStatus": {
+      "path": "PackagedProductDefinition.marketingStatus",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "MarketingStatus"
+      ]
+    },
+    "meta": {
+      "path": "PackagedProductDefinition.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "PackagedProductDefinition.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "PackagedProductDefinition.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "packageFor": {
+      "path": "PackagedProductDefinition.packageFor",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "packaging": {
+      "path": "PackagedProductDefinition.packaging",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "alternateMaterial": {
+          "path": "PackagedProductDefinition.packaging.alternateMaterial",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/package-material"
+          }
+        },
+        "componentPart": {
+          "path": "PackagedProductDefinition.packaging.componentPart",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "containedItem": {
+          "path": "PackagedProductDefinition.packaging.containedItem",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "amount": {
+              "path": "PackagedProductDefinition.packaging.containedItem.amount",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Quantity"
+              ]
+            },
+            "extension": {
+              "path": "PackagedProductDefinition.packaging.containedItem.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "PackagedProductDefinition.packaging.containedItem.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "item": {
+              "path": "PackagedProductDefinition.packaging.containedItem.item",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableReference"
+              ]
+            },
+            "modifierExtension": {
+              "path": "PackagedProductDefinition.packaging.containedItem.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            }
+          }
+        },
+        "extension": {
+          "path": "PackagedProductDefinition.packaging.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "PackagedProductDefinition.packaging.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "identifier": {
+          "path": "PackagedProductDefinition.packaging.identifier",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "manufacturer": {
+          "path": "PackagedProductDefinition.packaging.manufacturer",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "material": {
+          "path": "PackagedProductDefinition.packaging.material",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/package-material"
+          }
+        },
+        "modifierExtension": {
+          "path": "PackagedProductDefinition.packaging.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "packaging": {
+          "path": "PackagedProductDefinition.packaging.packaging",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#PackagedProductDefinition.packaging"
+        },
+        "property": {
+          "path": "PackagedProductDefinition.packaging.property",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "PackagedProductDefinition.packaging.property.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "PackagedProductDefinition.packaging.property.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "PackagedProductDefinition.packaging.property.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "type": {
+              "path": "PackagedProductDefinition.packaging.property.type",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/product-characteristic-codes"
+              }
+            },
+            "value": {
+              "path": "PackagedProductDefinition.packaging.property.value[x]",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept",
+                "Quantity",
+                "date",
+                "boolean",
+                "Attachment"
+              ],
+              "choices": [
+                "valueCodeableConcept",
+                "valueQuantity",
+                "valueDate",
+                "valueBoolean",
+                "valueAttachment"
+              ]
+            }
+          }
+        },
+        "quantity": {
+          "path": "PackagedProductDefinition.packaging.quantity",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "integer"
+          ]
+        },
+        "shelfLifeStorage": {
+          "path": "PackagedProductDefinition.packaging.shelfLifeStorage",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "ProductShelfLife"
+          ]
+        },
+        "type": {
+          "path": "PackagedProductDefinition.packaging.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/packaging-type"
+          }
+        }
+      }
+    },
+    "status": {
+      "path": "PackagedProductDefinition.status",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status"
+      }
+    },
+    "statusDate": {
+      "path": "PackagedProductDefinition.statusDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "text": {
+      "path": "PackagedProductDefinition.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "type": {
+      "path": "PackagedProductDefinition.type",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/package-type"
+      }
+    }
+  }
+}

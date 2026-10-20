@@ -1,0 +1,508 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/VerificationResult",
+  "type": "VerificationResult",
+  "name": "VerificationResult",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "status"
+  ],
+  "elements": {
+    "attestation": {
+      "path": "VerificationResult.attestation",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "communicationMethod": {
+          "path": "VerificationResult.attestation.communicationMethod",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/verificationresult-communication-method"
+          }
+        },
+        "date": {
+          "path": "VerificationResult.attestation.date",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "date"
+          ]
+        },
+        "extension": {
+          "path": "VerificationResult.attestation.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "VerificationResult.attestation.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "VerificationResult.attestation.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "onBehalfOf": {
+          "path": "VerificationResult.attestation.onBehalfOf",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "proxyIdentityCertificate": {
+          "path": "VerificationResult.attestation.proxyIdentityCertificate",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "proxySignature": {
+          "path": "VerificationResult.attestation.proxySignature",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Signature"
+          ]
+        },
+        "sourceIdentityCertificate": {
+          "path": "VerificationResult.attestation.sourceIdentityCertificate",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "sourceSignature": {
+          "path": "VerificationResult.attestation.sourceSignature",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Signature"
+          ]
+        },
+        "who": {
+          "path": "VerificationResult.attestation.who",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    },
+    "contained": {
+      "path": "VerificationResult.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "extension": {
+      "path": "VerificationResult.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "failureAction": {
+      "path": "VerificationResult.failureAction",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/verificationresult-failure-action"
+      }
+    },
+    "frequency": {
+      "path": "VerificationResult.frequency",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Timing"
+      ]
+    },
+    "id": {
+      "path": "VerificationResult.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "implicitRules": {
+      "path": "VerificationResult.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "VerificationResult.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "lastPerformed": {
+      "path": "VerificationResult.lastPerformed",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "meta": {
+      "path": "VerificationResult.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "VerificationResult.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "need": {
+      "path": "VerificationResult.need",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/verificationresult-need"
+      }
+    },
+    "nextScheduled": {
+      "path": "VerificationResult.nextScheduled",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "primarySource": {
+      "path": "VerificationResult.primarySource",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "canPushUpdates": {
+          "path": "VerificationResult.primarySource.canPushUpdates",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "preferred",
+            "valueSet": "http://hl7.org/fhir/ValueSet/verificationresult-can-push-updates"
+          }
+        },
+        "communicationMethod": {
+          "path": "VerificationResult.primarySource.communicationMethod",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/verificationresult-communication-method"
+          }
+        },
+        "extension": {
+          "path": "VerificationResult.primarySource.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "VerificationResult.primarySource.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "VerificationResult.primarySource.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "pushTypeAvailable": {
+          "path": "VerificationResult.primarySource.pushTypeAvailable",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "preferred",
+            "valueSet": "http://hl7.org/fhir/ValueSet/verificationresult-push-type-available"
+          }
+        },
+        "type": {
+          "path": "VerificationResult.primarySource.type",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/verificationresult-primary-source-type"
+          }
+        },
+        "validationDate": {
+          "path": "VerificationResult.primarySource.validationDate",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "dateTime"
+          ]
+        },
+        "validationStatus": {
+          "path": "VerificationResult.primarySource.validationStatus",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "preferred",
+            "valueSet": "http://hl7.org/fhir/ValueSet/verificationresult-validation-status"
+          }
+        },
+        "who": {
+          "path": "VerificationResult.primarySource.who",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    },
+    "status": {
+      "path": "VerificationResult.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/verificationresult-status|5.0.0"
+      }
+    },
+    "statusDate": {
+      "path": "VerificationResult.statusDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "target": {
+      "path": "VerificationResult.target",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "targetLocation": {
+      "path": "VerificationResult.targetLocation",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "string"
+      ]
+    },
+    "text": {
+      "path": "VerificationResult.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "validationProcess": {
+      "path": "VerificationResult.validationProcess",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/verificationresult-validation-process"
+      }
+    },
+    "validationType": {
+      "path": "VerificationResult.validationType",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/verificationresult-validation-type"
+      }
+    },
+    "validator": {
+      "path": "VerificationResult.validator",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "attestationSignature": {
+          "path": "VerificationResult.validator.attestationSignature",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Signature"
+          ]
+        },
+        "extension": {
+          "path": "VerificationResult.validator.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "VerificationResult.validator.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "identityCertificate": {
+          "path": "VerificationResult.validator.identityCertificate",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "modifierExtension": {
+          "path": "VerificationResult.validator.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "organization": {
+          "path": "VerificationResult.validator.organization",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    }
+  }
+}

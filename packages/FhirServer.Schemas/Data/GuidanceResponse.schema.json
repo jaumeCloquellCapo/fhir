@@ -1,0 +1,230 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/GuidanceResponse",
+  "type": "GuidanceResponse",
+  "name": "GuidanceResponse",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "status"
+  ],
+  "elements": {
+    "contained": {
+      "path": "GuidanceResponse.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "dataRequirement": {
+      "path": "GuidanceResponse.dataRequirement",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "DataRequirement"
+      ]
+    },
+    "encounter": {
+      "path": "GuidanceResponse.encounter",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "evaluationMessage": {
+      "path": "GuidanceResponse.evaluationMessage",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "extension": {
+      "path": "GuidanceResponse.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "GuidanceResponse.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "GuidanceResponse.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "GuidanceResponse.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "GuidanceResponse.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "GuidanceResponse.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "GuidanceResponse.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "module": {
+      "path": "GuidanceResponse.module[x]",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri",
+        "canonical",
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/guidance-module-code"
+      },
+      "choices": [
+        "moduleUri",
+        "moduleCanonical",
+        "moduleCodeableConcept"
+      ]
+    },
+    "note": {
+      "path": "GuidanceResponse.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "occurrenceDateTime": {
+      "path": "GuidanceResponse.occurrenceDateTime",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "outputParameters": {
+      "path": "GuidanceResponse.outputParameters",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "performer": {
+      "path": "GuidanceResponse.performer",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "reason": {
+      "path": "GuidanceResponse.reason",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ]
+    },
+    "requestIdentifier": {
+      "path": "GuidanceResponse.requestIdentifier",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "result": {
+      "path": "GuidanceResponse.result",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "status": {
+      "path": "GuidanceResponse.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/guidance-response-status|5.0.0"
+      }
+    },
+    "subject": {
+      "path": "GuidanceResponse.subject",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "text": {
+      "path": "GuidanceResponse.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

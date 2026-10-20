@@ -1,0 +1,315 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Practitioner",
+  "type": "Practitioner",
+  "name": "Practitioner",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "active": {
+      "path": "Practitioner.active",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "address": {
+      "path": "Practitioner.address",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Address"
+      ]
+    },
+    "birthDate": {
+      "path": "Practitioner.birthDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "communication": {
+      "path": "Practitioner.communication",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Practitioner.communication.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Practitioner.communication.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "language": {
+          "path": "Practitioner.communication.language",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+          }
+        },
+        "modifierExtension": {
+          "path": "Practitioner.communication.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "preferred": {
+          "path": "Practitioner.communication.preferred",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        }
+      }
+    },
+    "contained": {
+      "path": "Practitioner.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "deceased": {
+      "path": "Practitioner.deceased[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean",
+        "dateTime"
+      ],
+      "choices": [
+        "deceasedBoolean",
+        "deceasedDateTime"
+      ]
+    },
+    "extension": {
+      "path": "Practitioner.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "gender": {
+      "path": "Practitioner.gender",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/administrative-gender|5.0.0"
+      }
+    },
+    "id": {
+      "path": "Practitioner.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Practitioner.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "Practitioner.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "Practitioner.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "Practitioner.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "Practitioner.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "Practitioner.name",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "HumanName"
+      ]
+    },
+    "photo": {
+      "path": "Practitioner.photo",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Attachment"
+      ]
+    },
+    "qualification": {
+      "path": "Practitioner.qualification",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "code": {
+          "path": "Practitioner.qualification.code",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://terminology.hl7.org/ValueSet/v2-0360"
+          }
+        },
+        "extension": {
+          "path": "Practitioner.qualification.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Practitioner.qualification.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "identifier": {
+          "path": "Practitioner.qualification.identifier",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "issuer": {
+          "path": "Practitioner.qualification.issuer",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Practitioner.qualification.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "period": {
+          "path": "Practitioner.qualification.period",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Period"
+          ]
+        }
+      }
+    },
+    "telecom": {
+      "path": "Practitioner.telecom",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactPoint"
+      ]
+    },
+    "text": {
+      "path": "Practitioner.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

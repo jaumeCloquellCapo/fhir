@@ -1,0 +1,1306 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/DeviceDefinition",
+  "type": "DeviceDefinition",
+  "name": "DeviceDefinition",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "chargeItem": {
+      "path": "DeviceDefinition.chargeItem",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "chargeItemCode": {
+          "path": "DeviceDefinition.chargeItem.chargeItemCode",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableReference"
+          ]
+        },
+        "count": {
+          "path": "DeviceDefinition.chargeItem.count",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity"
+          ]
+        },
+        "effectivePeriod": {
+          "path": "DeviceDefinition.chargeItem.effectivePeriod",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Period"
+          ]
+        },
+        "extension": {
+          "path": "DeviceDefinition.chargeItem.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "DeviceDefinition.chargeItem.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "DeviceDefinition.chargeItem.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "useContext": {
+          "path": "DeviceDefinition.chargeItem.useContext",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "UsageContext"
+          ]
+        }
+      }
+    },
+    "classification": {
+      "path": "DeviceDefinition.classification",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "DeviceDefinition.classification.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "DeviceDefinition.classification.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "justification": {
+          "path": "DeviceDefinition.classification.justification",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "RelatedArtifact"
+          ]
+        },
+        "modifierExtension": {
+          "path": "DeviceDefinition.classification.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "DeviceDefinition.classification.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/device-type"
+          }
+        }
+      }
+    },
+    "conformsTo": {
+      "path": "DeviceDefinition.conformsTo",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "category": {
+          "path": "DeviceDefinition.conformsTo.category",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/device-specification-category"
+          }
+        },
+        "extension": {
+          "path": "DeviceDefinition.conformsTo.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "DeviceDefinition.conformsTo.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "DeviceDefinition.conformsTo.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "source": {
+          "path": "DeviceDefinition.conformsTo.source",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "RelatedArtifact"
+          ]
+        },
+        "specification": {
+          "path": "DeviceDefinition.conformsTo.specification",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/device-specification-type"
+          }
+        },
+        "version": {
+          "path": "DeviceDefinition.conformsTo.version",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "string"
+          ]
+        }
+      }
+    },
+    "contact": {
+      "path": "DeviceDefinition.contact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactPoint"
+      ]
+    },
+    "contained": {
+      "path": "DeviceDefinition.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "correctiveAction": {
+      "path": "DeviceDefinition.correctiveAction",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "DeviceDefinition.correctiveAction.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "DeviceDefinition.correctiveAction.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "DeviceDefinition.correctiveAction.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "period": {
+          "path": "DeviceDefinition.correctiveAction.period",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Period"
+          ]
+        },
+        "recall": {
+          "path": "DeviceDefinition.correctiveAction.recall",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "scope": {
+          "path": "DeviceDefinition.correctiveAction.scope",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/device-correctiveactionscope|5.0.0"
+          }
+        }
+      }
+    },
+    "description": {
+      "path": "DeviceDefinition.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "deviceName": {
+      "path": "DeviceDefinition.deviceName",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "DeviceDefinition.deviceName.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "DeviceDefinition.deviceName.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "DeviceDefinition.deviceName.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "name": {
+          "path": "DeviceDefinition.deviceName.name",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "type": {
+          "path": "DeviceDefinition.deviceName.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/device-nametype|5.0.0"
+          }
+        }
+      }
+    },
+    "extension": {
+      "path": "DeviceDefinition.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "guideline": {
+      "path": "DeviceDefinition.guideline",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "contraindication": {
+          "path": "DeviceDefinition.guideline.contraindication",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "extension": {
+          "path": "DeviceDefinition.guideline.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "DeviceDefinition.guideline.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "indication": {
+          "path": "DeviceDefinition.guideline.indication",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "intendedUse": {
+          "path": "DeviceDefinition.guideline.intendedUse",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "modifierExtension": {
+          "path": "DeviceDefinition.guideline.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "relatedArtifact": {
+          "path": "DeviceDefinition.guideline.relatedArtifact",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "RelatedArtifact"
+          ]
+        },
+        "usageInstruction": {
+          "path": "DeviceDefinition.guideline.usageInstruction",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "useContext": {
+          "path": "DeviceDefinition.guideline.useContext",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "UsageContext"
+          ]
+        },
+        "warning": {
+          "path": "DeviceDefinition.guideline.warning",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ]
+        }
+      }
+    },
+    "hasPart": {
+      "path": "DeviceDefinition.hasPart",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "count": {
+          "path": "DeviceDefinition.hasPart.count",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "integer"
+          ]
+        },
+        "extension": {
+          "path": "DeviceDefinition.hasPart.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "DeviceDefinition.hasPart.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "DeviceDefinition.hasPart.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "reference": {
+          "path": "DeviceDefinition.hasPart.reference",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    },
+    "id": {
+      "path": "DeviceDefinition.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "DeviceDefinition.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "DeviceDefinition.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "DeviceDefinition.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "languageCode": {
+      "path": "DeviceDefinition.languageCode",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "link": {
+      "path": "DeviceDefinition.link",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "DeviceDefinition.link.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "DeviceDefinition.link.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "DeviceDefinition.link.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "relatedDevice": {
+          "path": "DeviceDefinition.link.relatedDevice",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableReference"
+          ]
+        },
+        "relation": {
+          "path": "DeviceDefinition.link.relation",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Coding"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/devicedefinition-relationtype"
+          }
+        }
+      }
+    },
+    "manufacturer": {
+      "path": "DeviceDefinition.manufacturer",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "material": {
+      "path": "DeviceDefinition.material",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "allergenicIndicator": {
+          "path": "DeviceDefinition.material.allergenicIndicator",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "alternate": {
+          "path": "DeviceDefinition.material.alternate",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "extension": {
+          "path": "DeviceDefinition.material.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "DeviceDefinition.material.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "DeviceDefinition.material.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "substance": {
+          "path": "DeviceDefinition.material.substance",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        }
+      }
+    },
+    "meta": {
+      "path": "DeviceDefinition.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modelNumber": {
+      "path": "DeviceDefinition.modelNumber",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "modifierExtension": {
+      "path": "DeviceDefinition.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "note": {
+      "path": "DeviceDefinition.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "owner": {
+      "path": "DeviceDefinition.owner",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "packaging": {
+      "path": "DeviceDefinition.packaging",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "count": {
+          "path": "DeviceDefinition.packaging.count",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "integer"
+          ]
+        },
+        "distributor": {
+          "path": "DeviceDefinition.packaging.distributor",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "DeviceDefinition.packaging.distributor.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "DeviceDefinition.packaging.distributor.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "DeviceDefinition.packaging.distributor.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "name": {
+              "path": "DeviceDefinition.packaging.distributor.name",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "organizationReference": {
+              "path": "DeviceDefinition.packaging.distributor.organizationReference",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Reference"
+              ]
+            }
+          }
+        },
+        "extension": {
+          "path": "DeviceDefinition.packaging.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "DeviceDefinition.packaging.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "identifier": {
+          "path": "DeviceDefinition.packaging.identifier",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "modifierExtension": {
+          "path": "DeviceDefinition.packaging.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "packaging": {
+          "path": "DeviceDefinition.packaging.packaging",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#DeviceDefinition.packaging"
+        },
+        "type": {
+          "path": "DeviceDefinition.packaging.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "udiDeviceIdentifier": {
+          "path": "DeviceDefinition.packaging.udiDeviceIdentifier",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#DeviceDefinition.udiDeviceIdentifier"
+        }
+      }
+    },
+    "partNumber": {
+      "path": "DeviceDefinition.partNumber",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "productionIdentifierInUDI": {
+      "path": "DeviceDefinition.productionIdentifierInUDI",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/device-productidentifierinudi|5.0.0"
+      }
+    },
+    "property": {
+      "path": "DeviceDefinition.property",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "DeviceDefinition.property.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "DeviceDefinition.property.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "DeviceDefinition.property.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "DeviceDefinition.property.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/device-property-type"
+          }
+        },
+        "value": {
+          "path": "DeviceDefinition.property.value[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity",
+            "CodeableConcept",
+            "string",
+            "boolean",
+            "integer",
+            "Range",
+            "Attachment"
+          ],
+          "choices": [
+            "valueQuantity",
+            "valueCodeableConcept",
+            "valueString",
+            "valueBoolean",
+            "valueInteger",
+            "valueRange",
+            "valueAttachment"
+          ]
+        }
+      }
+    },
+    "regulatoryIdentifier": {
+      "path": "DeviceDefinition.regulatoryIdentifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "deviceIdentifier": {
+          "path": "DeviceDefinition.regulatoryIdentifier.deviceIdentifier",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "extension": {
+          "path": "DeviceDefinition.regulatoryIdentifier.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "DeviceDefinition.regulatoryIdentifier.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "issuer": {
+          "path": "DeviceDefinition.regulatoryIdentifier.issuer",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "uri"
+          ]
+        },
+        "jurisdiction": {
+          "path": "DeviceDefinition.regulatoryIdentifier.jurisdiction",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "uri"
+          ]
+        },
+        "modifierExtension": {
+          "path": "DeviceDefinition.regulatoryIdentifier.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "DeviceDefinition.regulatoryIdentifier.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/devicedefinition-regulatory-identifier-type|5.0.0"
+          }
+        }
+      }
+    },
+    "safety": {
+      "path": "DeviceDefinition.safety",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/device-safety"
+      }
+    },
+    "shelfLifeStorage": {
+      "path": "DeviceDefinition.shelfLifeStorage",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ProductShelfLife"
+      ]
+    },
+    "text": {
+      "path": "DeviceDefinition.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "udiDeviceIdentifier": {
+      "path": "DeviceDefinition.udiDeviceIdentifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "deviceIdentifier": {
+          "path": "DeviceDefinition.udiDeviceIdentifier.deviceIdentifier",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "extension": {
+          "path": "DeviceDefinition.udiDeviceIdentifier.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "DeviceDefinition.udiDeviceIdentifier.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "issuer": {
+          "path": "DeviceDefinition.udiDeviceIdentifier.issuer",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "uri"
+          ]
+        },
+        "jurisdiction": {
+          "path": "DeviceDefinition.udiDeviceIdentifier.jurisdiction",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "uri"
+          ]
+        },
+        "marketDistribution": {
+          "path": "DeviceDefinition.udiDeviceIdentifier.marketDistribution",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "DeviceDefinition.udiDeviceIdentifier.marketDistribution.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "DeviceDefinition.udiDeviceIdentifier.marketDistribution.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "marketPeriod": {
+              "path": "DeviceDefinition.udiDeviceIdentifier.marketDistribution.marketPeriod",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Period"
+              ]
+            },
+            "modifierExtension": {
+              "path": "DeviceDefinition.udiDeviceIdentifier.marketDistribution.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "subJurisdiction": {
+              "path": "DeviceDefinition.udiDeviceIdentifier.marketDistribution.subJurisdiction",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "uri"
+              ]
+            }
+          }
+        },
+        "modifierExtension": {
+          "path": "DeviceDefinition.udiDeviceIdentifier.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "version": {
+      "path": "DeviceDefinition.version",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "component": {
+          "path": "DeviceDefinition.version.component",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "extension": {
+          "path": "DeviceDefinition.version.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "DeviceDefinition.version.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "DeviceDefinition.version.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "DeviceDefinition.version.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "value": {
+          "path": "DeviceDefinition.version.value",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,322 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/MedicationStatement",
+  "type": "MedicationStatement",
+  "name": "MedicationStatement",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "medication",
+    "status",
+    "subject"
+  ],
+  "elements": {
+    "adherence": {
+      "path": "MedicationStatement.adherence",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "code": {
+          "path": "MedicationStatement.adherence.code",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/medication-statement-adherence"
+          }
+        },
+        "extension": {
+          "path": "MedicationStatement.adherence.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MedicationStatement.adherence.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "MedicationStatement.adherence.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "reason": {
+          "path": "MedicationStatement.adherence.reason",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/reason-medication-status-codes"
+          }
+        }
+      }
+    },
+    "category": {
+      "path": "MedicationStatement.category",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medicationrequest-admin-location"
+      }
+    },
+    "contained": {
+      "path": "MedicationStatement.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "dateAsserted": {
+      "path": "MedicationStatement.dateAsserted",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "derivedFrom": {
+      "path": "MedicationStatement.derivedFrom",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "dosage": {
+      "path": "MedicationStatement.dosage",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Dosage"
+      ]
+    },
+    "effective": {
+      "path": "MedicationStatement.effective[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime",
+        "Period",
+        "Timing"
+      ],
+      "choices": [
+        "effectiveDateTime",
+        "effectivePeriod",
+        "effectiveTiming"
+      ]
+    },
+    "encounter": {
+      "path": "MedicationStatement.encounter",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "extension": {
+      "path": "MedicationStatement.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "MedicationStatement.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "MedicationStatement.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "MedicationStatement.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "informationSource": {
+      "path": "MedicationStatement.informationSource",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "language": {
+      "path": "MedicationStatement.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "medication": {
+      "path": "MedicationStatement.medication",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableReference"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medication-codes"
+      }
+    },
+    "meta": {
+      "path": "MedicationStatement.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "MedicationStatement.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "note": {
+      "path": "MedicationStatement.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "partOf": {
+      "path": "MedicationStatement.partOf",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "reason": {
+      "path": "MedicationStatement.reason",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/condition-code"
+      }
+    },
+    "relatedClinicalInformation": {
+      "path": "MedicationStatement.relatedClinicalInformation",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "renderedDosageInstruction": {
+      "path": "MedicationStatement.renderedDosageInstruction",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "status": {
+      "path": "MedicationStatement.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medication-statement-status|5.0.0"
+      }
+    },
+    "subject": {
+      "path": "MedicationStatement.subject",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "text": {
+      "path": "MedicationStatement.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

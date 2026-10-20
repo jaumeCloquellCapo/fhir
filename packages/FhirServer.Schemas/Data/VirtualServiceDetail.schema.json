@@ -1,0 +1,87 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/VirtualServiceDetail",
+  "type": "VirtualServiceDetail",
+  "name": "VirtualServiceDetail",
+  "kind": "complex-type",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "additionalInfo": {
+      "path": "VirtualServiceDetail.additionalInfo",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "url"
+      ]
+    },
+    "address": {
+      "path": "VirtualServiceDetail.address[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "url",
+        "string",
+        "ContactPoint",
+        "ExtendedContactDetail"
+      ],
+      "choices": [
+        "addressUrl",
+        "addressString",
+        "addressContactPoint",
+        "addressExtendedContactDetail"
+      ]
+    },
+    "channelType": {
+      "path": "VirtualServiceDetail.channelType",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Coding"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/virtual-service-type"
+      }
+    },
+    "extension": {
+      "path": "VirtualServiceDetail.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "VirtualServiceDetail.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "maxParticipants": {
+      "path": "VirtualServiceDetail.maxParticipants",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "positiveInt"
+      ]
+    },
+    "sessionKey": {
+      "path": "VirtualServiceDetail.sessionKey",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    }
+  }
+}

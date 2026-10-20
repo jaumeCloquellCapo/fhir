@@ -1,0 +1,247 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Dosage",
+  "type": "Dosage",
+  "name": "Dosage",
+  "kind": "complex-type",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "additionalInstruction": {
+      "path": "Dosage.additionalInstruction",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/additional-instruction-codes"
+      }
+    },
+    "asNeeded": {
+      "path": "Dosage.asNeeded",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "asNeededFor": {
+      "path": "Dosage.asNeededFor",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medication-as-needed-reason"
+      }
+    },
+    "doseAndRate": {
+      "path": "Dosage.doseAndRate",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Element"
+      ],
+      "elements": {
+        "dose": {
+          "path": "Dosage.doseAndRate.dose[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Range",
+            "Quantity"
+          ],
+          "choices": [
+            "doseRange",
+            "doseQuantity"
+          ]
+        },
+        "extension": {
+          "path": "Dosage.doseAndRate.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Dosage.doseAndRate.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "rate": {
+          "path": "Dosage.doseAndRate.rate[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Ratio",
+            "Range",
+            "Quantity"
+          ],
+          "choices": [
+            "rateRatio",
+            "rateRange",
+            "rateQuantity"
+          ]
+        },
+        "type": {
+          "path": "Dosage.doseAndRate.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://terminology.hl7.org/ValueSet/dose-rate-type"
+          }
+        }
+      }
+    },
+    "extension": {
+      "path": "Dosage.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "Dosage.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "maxDosePerAdministration": {
+      "path": "Dosage.maxDosePerAdministration",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Quantity"
+      ]
+    },
+    "maxDosePerLifetime": {
+      "path": "Dosage.maxDosePerLifetime",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Quantity"
+      ]
+    },
+    "maxDosePerPeriod": {
+      "path": "Dosage.maxDosePerPeriod",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Ratio"
+      ]
+    },
+    "method": {
+      "path": "Dosage.method",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/administration-method-codes"
+      }
+    },
+    "modifierExtension": {
+      "path": "Dosage.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "patientInstruction": {
+      "path": "Dosage.patientInstruction",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "route": {
+      "path": "Dosage.route",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/route-codes"
+      }
+    },
+    "sequence": {
+      "path": "Dosage.sequence",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "integer"
+      ]
+    },
+    "site": {
+      "path": "Dosage.site",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/approach-site-codes"
+      }
+    },
+    "text": {
+      "path": "Dosage.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "timing": {
+      "path": "Dosage.timing",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Timing"
+      ]
+    }
+  }
+}

@@ -1,12 +1,49 @@
 namespace FhirServer.Domain.Services
 
 open System
+open System.Globalization
 open System.Text.Json
 open System.Text.Json.Nodes
 open FhirServer.Domain
 open FhirServer.Domain.Types
 
 module SearchEngine =
+
+    [<RequireQualifiedAccess>]
+    type StringMatch =
+        | Contains
+        | Exact
+        | Prefix
+
+    type StringFilter =
+        { Param: string
+          Match: StringMatch
+          Values: string list }
+
+    type TokenFilter =
+        { Param: string
+          /// (system option, code) — None system matches any system.
+          Values: (string option * string) list }
+
+    type RefFilter = { Param: string; Values: string list }
+
+    [<RequireQualifiedAccess>]
+    type SortField =
+        | IdAsc
+        | IdDesc
+        | TsAsc
+        | TsDesc
+
+    type SearchPlan =
+        { Ids: string list
+          LastUpdatedGe: DateTimeOffset option
+          LastUpdatedLe: DateTimeOffset option
+          Strings: StringFilter list
+          Tokens: TokenFilter list
+          Refs: RefFilter list
+          Sort: SortField
+          Offset: int
+          Count: int }
 
     let private str (node: JsonNode) =
         if isNull node || node.GetValueKind() = JsonValueKind.Null then
@@ -304,25 +341,16 @@ module SearchEngine =
                 | _ -> acc)
             plain
 
-    let applyPagingSort (query: Map<string, string list>) (items: FhirResource list) =
-        let first key =
-            query |> Map.tryFind key |> Option.bind List.tryHead
+    let private firstQuery (query: Map<string, string list>) key =
+        query |> Map.tryFind key |> Option.bind List.tryHead
 
-        let sorted =
-            match first "_sort" with
-            | Some "-_lastUpdated" ->
-                items
-                |> List.sortByDescending (fun r ->
-                    FhirJson.lastUpdated r |> Option.defaultValue DateTimeOffset.MinValue)
-            | Some "_lastUpdated" ->
-                items
-                |> List.sortBy (fun r -> FhirJson.lastUpdated r |> Option.defaultValue DateTimeOffset.MinValue)
-            | Some "-_id" -> items |> List.sortByDescending FhirJson.id
-            | _ -> items |> List.sortBy FhirJson.id
+    let private valuesOf (query: Map<string, string list>) key =
+        query |> Map.tryFind key |> Option.defaultValue []
 
+    let private parsePaging (query: Map<string, string list>) =
         let offset =
-            first "_offset"
-            |> Option.orElse (first "_getpagesoffset")
+            firstQuery query "_offset"
+            |> Option.orElse (firstQuery query "_getpagesoffset")
             |> Option.bind (fun s ->
                 match Int32.TryParse s with
                 | true, n when n >= 0 -> Some n
@@ -330,11 +358,209 @@ module SearchEngine =
             |> Option.defaultValue 0
 
         let count =
-            first "_count"
+            firstQuery query "_count"
             |> Option.bind (fun s ->
                 match Int32.TryParse s with
                 | true, n when n > 0 -> Some(min n 200)
                 | _ -> None)
             |> Option.defaultValue 50
 
+        offset, count
+
+    let private parseSort (query: Map<string, string list>) =
+        match firstQuery query "_sort" with
+        | Some "-_lastUpdated" -> SortField.TsDesc
+        | Some "_lastUpdated" -> SortField.TsAsc
+        | Some "-_id" -> SortField.IdDesc
+        | _ -> SortField.IdAsc
+
+    let private parseInstant (raw: string) =
+        match DateTimeOffset.TryParse(raw, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind) with
+        | true, dto -> Some dto
+        | _ ->
+            match DateTimeOffset.TryParse(raw, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal) with
+            | true, dto -> Some dto
+            | _ -> None
+
+    /// Parse FHIR date search prefixes on `_lastUpdated` (ge/gt/le/lt/eq or bare → ge).
+    let private parseLastUpdated (values: string list) =
+        let mutable ge: DateTimeOffset option = None
+        let mutable le: DateTimeOffset option = None
+
+        for raw in values do
+            let prefix, rest =
+                if raw.Length >= 2 && (raw.StartsWith("ge", StringComparison.Ordinal) || raw.StartsWith("gt", StringComparison.Ordinal) || raw.StartsWith("le", StringComparison.Ordinal) || raw.StartsWith("lt", StringComparison.Ordinal) || raw.StartsWith("eq", StringComparison.Ordinal)) then
+                    raw.Substring(0, 2), raw.Substring(2)
+                else
+                    "ge", raw
+
+            match parseInstant rest with
+            | None -> ()
+            | Some dto ->
+                match prefix with
+                | "ge"
+                | "gt" ->
+                    ge <-
+                        match ge with
+                        | Some existing when existing >= dto -> Some existing
+                        | _ -> Some dto
+                | "le"
+                | "lt" ->
+                    le <-
+                        match le with
+                        | Some existing when existing <= dto -> Some existing
+                        | _ -> Some dto
+                | "eq" ->
+                    ge <- Some dto
+                    le <- Some(dto.AddSeconds 1.0)
+                | _ -> ge <- Some dto
+
+        ge, le
+
+    let private parseTokenValues (filters: string list) =
+        filters
+        |> List.map (fun token ->
+            match token.Split('|', 2) with
+            | [| system; value |] when system <> "" -> Some system, value
+            | [| value |] -> None, value
+            | _ -> None, token)
+
+    let private stringFilters (resourceType: string) (query: Map<string, string list>) =
+        match resourceType with
+        | "Patient" ->
+            [
+                let family = valuesOf query "family"
+                if family <> [] then
+                    yield
+                        { Param = "family"
+                          Match = StringMatch.Contains
+                          Values = family |> List.map (fun s -> s.ToLowerInvariant()) }
+
+                let given = valuesOf query "given"
+                if given <> [] then
+                    yield
+                        { Param = "given"
+                          Match = StringMatch.Contains
+                          Values = given |> List.map (fun s -> s.ToLowerInvariant()) }
+
+                let name = valuesOf query "name"
+                if name <> [] then
+                    yield
+                        { Param = "name"
+                          Match = StringMatch.Contains
+                          Values = name |> List.map (fun s -> s.ToLowerInvariant()) }
+
+                let gender = valuesOf query "gender"
+                if gender <> [] then
+                    yield
+                        { Param = "gender"
+                          Match = StringMatch.Exact
+                          Values = gender |> List.map (fun s -> s.ToLowerInvariant()) }
+
+                let birth = valuesOf query "birthdate"
+                if birth <> [] then
+                    yield
+                        { Param = "birthdate"
+                          Match = StringMatch.Prefix
+                          Values = birth }
+            ]
+        | "Observation" ->
+            [
+                let status = valuesOf query "status"
+                if status <> [] then
+                    yield
+                        { Param = "status"
+                          Match = StringMatch.Exact
+                          Values = status |> List.map (fun s -> s.ToLowerInvariant()) }
+            ]
+        | _ -> []
+
+    let private tokenFilters (resourceType: string) (query: Map<string, string list>) : TokenFilter list =
+        match resourceType with
+        | "Patient" ->
+            let ids = valuesOf query "identifier"
+
+            if ids = [] then
+                []
+            else
+                [ {
+                      Param = "identifier"
+                      Values = parseTokenValues ids
+                  } ]
+        | "Observation" ->
+            let codes = valuesOf query "code"
+
+            if codes = [] then
+                []
+            else
+                [ {
+                      Param = "code"
+                      Values = parseTokenValues codes
+                  } ]
+        | _ -> []
+
+    let private refFilters (resourceType: string) (query: Map<string, string list>) : RefFilter list =
+        let patientVals = valuesOf query "patient"
+        let subjectVals = valuesOf query "subject"
+
+        match resourceType with
+        | "Observation" ->
+            let combined = patientVals @ subjectVals
+
+            if combined = [] then
+                []
+            else
+                [ {
+                      Param = "subject"
+                      Values = combined
+                  } ]
+        | "Encounter"
+        | "Condition"
+        | "AllergyIntolerance"
+        | "MedicationRequest"
+        | "Procedure"
+        | "DiagnosticReport"
+        | "Immunization"
+        | "CarePlan"
+        | "DocumentReference" ->
+            let combined = patientVals @ subjectVals
+
+            if combined = [] then
+                []
+            else
+                [ {
+                      Param = "patient"
+                      Values = combined
+                  } ]
+        | _ -> []
+
+    /// Build a search plan from a FHIR query map (indexed params only; others ignored).
+    let toSearchPlan (resourceType: string) (query: Map<string, string list>) : SearchPlan =
+        let offset, count = parsePaging query
+        let ge, le = parseLastUpdated (valuesOf query "_lastUpdated")
+
+        { Ids = valuesOf query "_id"
+          LastUpdatedGe = ge
+          LastUpdatedLe = le
+          Strings = stringFilters resourceType query
+          Tokens = tokenFilters resourceType query
+          Refs = refFilters resourceType query
+          Sort = parseSort query
+          Offset = offset
+          Count = count }
+
+    let applyPagingSort (query: Map<string, string list>) (items: FhirResource list) =
+        let sorted =
+            match parseSort query with
+            | SortField.TsDesc ->
+                items
+                |> List.sortByDescending (fun r ->
+                    FhirJson.lastUpdated r |> Option.defaultValue DateTimeOffset.MinValue)
+            | SortField.TsAsc ->
+                items
+                |> List.sortBy (fun r -> FhirJson.lastUpdated r |> Option.defaultValue DateTimeOffset.MinValue)
+            | SortField.IdDesc -> items |> List.sortByDescending FhirJson.id
+            | SortField.IdAsc -> items |> List.sortBy FhirJson.id
+
+        let offset, count = parsePaging query
         sorted |> List.skip (min offset sorted.Length) |> List.truncate count, sorted.Length

@@ -1,0 +1,585 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/InventoryItem",
+  "type": "InventoryItem",
+  "name": "InventoryItem",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "status"
+  ],
+  "elements": {
+    "association": {
+      "path": "InventoryItem.association",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "associationType": {
+          "path": "InventoryItem.association.associationType",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "extension": {
+          "path": "InventoryItem.association.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "InventoryItem.association.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "InventoryItem.association.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "quantity": {
+          "path": "InventoryItem.association.quantity",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Ratio"
+          ]
+        },
+        "relatedItem": {
+          "path": "InventoryItem.association.relatedItem",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    },
+    "baseUnit": {
+      "path": "InventoryItem.baseUnit",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "category": {
+      "path": "InventoryItem.category",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "characteristic": {
+      "path": "InventoryItem.characteristic",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "characteristicType": {
+          "path": "InventoryItem.characteristic.characteristicType",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "extension": {
+          "path": "InventoryItem.characteristic.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "InventoryItem.characteristic.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "InventoryItem.characteristic.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "value": {
+          "path": "InventoryItem.characteristic.value[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string",
+            "integer",
+            "decimal",
+            "boolean",
+            "url",
+            "dateTime",
+            "Quantity",
+            "Range",
+            "Ratio",
+            "Annotation",
+            "Address",
+            "Duration",
+            "CodeableConcept"
+          ],
+          "choices": [
+            "valueString",
+            "valueInteger",
+            "valueDecimal",
+            "valueBoolean",
+            "valueUrl",
+            "valueDateTime",
+            "valueQuantity",
+            "valueRange",
+            "valueRatio",
+            "valueAnnotation",
+            "valueAddress",
+            "valueDuration",
+            "valueCodeableConcept"
+          ]
+        }
+      }
+    },
+    "code": {
+      "path": "InventoryItem.code",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "contained": {
+      "path": "InventoryItem.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "description": {
+      "path": "InventoryItem.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "description": {
+          "path": "InventoryItem.description.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "extension": {
+          "path": "InventoryItem.description.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "InventoryItem.description.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "language": {
+          "path": "InventoryItem.description.language",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/languages|5.0.0"
+          }
+        },
+        "modifierExtension": {
+          "path": "InventoryItem.description.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "extension": {
+      "path": "InventoryItem.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "InventoryItem.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "InventoryItem.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "InventoryItem.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "instance": {
+      "path": "InventoryItem.instance",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "expiry": {
+          "path": "InventoryItem.instance.expiry",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "dateTime"
+          ]
+        },
+        "extension": {
+          "path": "InventoryItem.instance.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "InventoryItem.instance.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "identifier": {
+          "path": "InventoryItem.instance.identifier",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "location": {
+          "path": "InventoryItem.instance.location",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "lotNumber": {
+          "path": "InventoryItem.instance.lotNumber",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "modifierExtension": {
+          "path": "InventoryItem.instance.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "subject": {
+          "path": "InventoryItem.instance.subject",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    },
+    "inventoryStatus": {
+      "path": "InventoryItem.inventoryStatus",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "language": {
+      "path": "InventoryItem.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "InventoryItem.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "InventoryItem.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "InventoryItem.name",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "InventoryItem.name.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "InventoryItem.name.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "language": {
+          "path": "InventoryItem.name.language",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/languages|5.0.0"
+          }
+        },
+        "modifierExtension": {
+          "path": "InventoryItem.name.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "name": {
+          "path": "InventoryItem.name.name",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "nameType": {
+          "path": "InventoryItem.name.nameType",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Coding"
+          ],
+          "binding": {
+            "strength": "preferred",
+            "valueSet": "http://hl7.org/fhir/ValueSet/inventoryitem-nametype"
+          }
+        }
+      }
+    },
+    "netContent": {
+      "path": "InventoryItem.netContent",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Quantity"
+      ]
+    },
+    "productReference": {
+      "path": "InventoryItem.productReference",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "responsibleOrganization": {
+      "path": "InventoryItem.responsibleOrganization",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "InventoryItem.responsibleOrganization.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "InventoryItem.responsibleOrganization.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "InventoryItem.responsibleOrganization.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "organization": {
+          "path": "InventoryItem.responsibleOrganization.organization",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "role": {
+          "path": "InventoryItem.responsibleOrganization.role",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        }
+      }
+    },
+    "status": {
+      "path": "InventoryItem.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/inventoryitem-status|5.0.0"
+      }
+    },
+    "text": {
+      "path": "InventoryItem.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

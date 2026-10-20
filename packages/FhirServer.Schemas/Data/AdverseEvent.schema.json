@@ -1,0 +1,693 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/AdverseEvent",
+  "type": "AdverseEvent",
+  "name": "AdverseEvent",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "actuality",
+    "status",
+    "subject"
+  ],
+  "elements": {
+    "actuality": {
+      "path": "AdverseEvent.actuality",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/adverse-event-actuality|5.0.0"
+      }
+    },
+    "category": {
+      "path": "AdverseEvent.category",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/adverse-event-category"
+      }
+    },
+    "code": {
+      "path": "AdverseEvent.code",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/adverse-event-type"
+      }
+    },
+    "contained": {
+      "path": "AdverseEvent.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "contributingFactor": {
+      "path": "AdverseEvent.contributingFactor",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "AdverseEvent.contributingFactor.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "AdverseEvent.contributingFactor.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "item": {
+          "path": "AdverseEvent.contributingFactor.item[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference",
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/adverse-event-contributing-factor"
+          },
+          "choices": [
+            "itemReference",
+            "itemCodeableConcept"
+          ]
+        },
+        "modifierExtension": {
+          "path": "AdverseEvent.contributingFactor.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "detected": {
+      "path": "AdverseEvent.detected",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "encounter": {
+      "path": "AdverseEvent.encounter",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "expectedInResearchStudy": {
+      "path": "AdverseEvent.expectedInResearchStudy",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "extension": {
+      "path": "AdverseEvent.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "AdverseEvent.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "AdverseEvent.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "AdverseEvent.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "AdverseEvent.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "location": {
+      "path": "AdverseEvent.location",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "meta": {
+      "path": "AdverseEvent.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "mitigatingAction": {
+      "path": "AdverseEvent.mitigatingAction",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "AdverseEvent.mitigatingAction.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "AdverseEvent.mitigatingAction.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "item": {
+          "path": "AdverseEvent.mitigatingAction.item[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference",
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/adverse-event-mitigating-action"
+          },
+          "choices": [
+            "itemReference",
+            "itemCodeableConcept"
+          ]
+        },
+        "modifierExtension": {
+          "path": "AdverseEvent.mitigatingAction.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "modifierExtension": {
+      "path": "AdverseEvent.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "note": {
+      "path": "AdverseEvent.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "occurrence": {
+      "path": "AdverseEvent.occurrence[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime",
+        "Period",
+        "Timing"
+      ],
+      "choices": [
+        "occurrenceDateTime",
+        "occurrencePeriod",
+        "occurrenceTiming"
+      ]
+    },
+    "outcome": {
+      "path": "AdverseEvent.outcome",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/adverse-event-outcome"
+      }
+    },
+    "participant": {
+      "path": "AdverseEvent.participant",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "actor": {
+          "path": "AdverseEvent.participant.actor",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "extension": {
+          "path": "AdverseEvent.participant.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "function": {
+          "path": "AdverseEvent.participant.function",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/adverse-event-participant-function"
+          }
+        },
+        "id": {
+          "path": "AdverseEvent.participant.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "AdverseEvent.participant.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "preventiveAction": {
+      "path": "AdverseEvent.preventiveAction",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "AdverseEvent.preventiveAction.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "AdverseEvent.preventiveAction.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "item": {
+          "path": "AdverseEvent.preventiveAction.item[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference",
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/adverse-event-preventive-action"
+          },
+          "choices": [
+            "itemReference",
+            "itemCodeableConcept"
+          ]
+        },
+        "modifierExtension": {
+          "path": "AdverseEvent.preventiveAction.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "recordedDate": {
+      "path": "AdverseEvent.recordedDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "recorder": {
+      "path": "AdverseEvent.recorder",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "resultingEffect": {
+      "path": "AdverseEvent.resultingEffect",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "seriousness": {
+      "path": "AdverseEvent.seriousness",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/adverse-event-seriousness"
+      }
+    },
+    "status": {
+      "path": "AdverseEvent.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/adverse-event-status|5.0.0"
+      }
+    },
+    "study": {
+      "path": "AdverseEvent.study",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "subject": {
+      "path": "AdverseEvent.subject",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "supportingInfo": {
+      "path": "AdverseEvent.supportingInfo",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "AdverseEvent.supportingInfo.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "AdverseEvent.supportingInfo.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "item": {
+          "path": "AdverseEvent.supportingInfo.item[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference",
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/adverse-event-supporting-info"
+          },
+          "choices": [
+            "itemReference",
+            "itemCodeableConcept"
+          ]
+        },
+        "modifierExtension": {
+          "path": "AdverseEvent.supportingInfo.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "suspectEntity": {
+      "path": "AdverseEvent.suspectEntity",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "causality": {
+          "path": "AdverseEvent.suspectEntity.causality",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "assessmentMethod": {
+              "path": "AdverseEvent.suspectEntity.causality.assessmentMethod",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/adverse-event-causality-method"
+              }
+            },
+            "author": {
+              "path": "AdverseEvent.suspectEntity.causality.author",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            },
+            "entityRelatedness": {
+              "path": "AdverseEvent.suspectEntity.causality.entityRelatedness",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/adverse-event-causality-assess"
+              }
+            },
+            "extension": {
+              "path": "AdverseEvent.suspectEntity.causality.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "AdverseEvent.suspectEntity.causality.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "AdverseEvent.suspectEntity.causality.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            }
+          }
+        },
+        "extension": {
+          "path": "AdverseEvent.suspectEntity.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "AdverseEvent.suspectEntity.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "instance": {
+          "path": "AdverseEvent.suspectEntity.instance[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept",
+            "Reference"
+          ],
+          "choices": [
+            "instanceCodeableConcept",
+            "instanceReference"
+          ]
+        },
+        "modifierExtension": {
+          "path": "AdverseEvent.suspectEntity.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "text": {
+      "path": "AdverseEvent.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

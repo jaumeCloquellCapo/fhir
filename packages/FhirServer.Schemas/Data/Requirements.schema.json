@@ -1,0 +1,418 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Requirements",
+  "type": "Requirements",
+  "name": "Requirements",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "status"
+  ],
+  "elements": {
+    "actor": {
+      "path": "Requirements.actor",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "canonical"
+      ]
+    },
+    "contact": {
+      "path": "Requirements.contact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "contained": {
+      "path": "Requirements.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "copyright": {
+      "path": "Requirements.copyright",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "copyrightLabel": {
+      "path": "Requirements.copyrightLabel",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "date": {
+      "path": "Requirements.date",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "derivedFrom": {
+      "path": "Requirements.derivedFrom",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "canonical"
+      ]
+    },
+    "description": {
+      "path": "Requirements.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "experimental": {
+      "path": "Requirements.experimental",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "extension": {
+      "path": "Requirements.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "Requirements.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Requirements.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "Requirements.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "jurisdiction": {
+      "path": "Requirements.jurisdiction",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
+      }
+    },
+    "language": {
+      "path": "Requirements.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "Requirements.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "Requirements.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "Requirements.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "publisher": {
+      "path": "Requirements.publisher",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "purpose": {
+      "path": "Requirements.purpose",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "reference": {
+      "path": "Requirements.reference",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "url"
+      ]
+    },
+    "statement": {
+      "path": "Requirements.statement",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "conditionality": {
+          "path": "Requirements.statement.conditionality",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "conformance": {
+          "path": "Requirements.statement.conformance",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/conformance-expectation|5.0.0"
+          }
+        },
+        "derivedFrom": {
+          "path": "Requirements.statement.derivedFrom",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "extension": {
+          "path": "Requirements.statement.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Requirements.statement.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "key": {
+          "path": "Requirements.statement.key",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "id"
+          ]
+        },
+        "label": {
+          "path": "Requirements.statement.label",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Requirements.statement.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "parent": {
+          "path": "Requirements.statement.parent",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "reference": {
+          "path": "Requirements.statement.reference",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "url"
+          ]
+        },
+        "requirement": {
+          "path": "Requirements.statement.requirement",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "satisfiedBy": {
+          "path": "Requirements.statement.satisfiedBy",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "url"
+          ]
+        },
+        "source": {
+          "path": "Requirements.statement.source",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    },
+    "status": {
+      "path": "Requirements.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+      }
+    },
+    "text": {
+      "path": "Requirements.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "title": {
+      "path": "Requirements.title",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "url": {
+      "path": "Requirements.url",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "useContext": {
+      "path": "Requirements.useContext",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "UsageContext"
+      ]
+    },
+    "version": {
+      "path": "Requirements.version",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "versionAlgorithm": {
+      "path": "Requirements.versionAlgorithm[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string",
+        "Coding"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/version-algorithm"
+      },
+      "choices": [
+        "versionAlgorithmString",
+        "versionAlgorithmCoding"
+      ]
+    }
+  }
+}

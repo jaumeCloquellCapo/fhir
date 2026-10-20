@@ -1,0 +1,348 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Goal",
+  "type": "Goal",
+  "name": "Goal",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "description",
+    "lifecycleStatus",
+    "subject"
+  ],
+  "elements": {
+    "achievementStatus": {
+      "path": "Goal.achievementStatus",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/goal-achievement"
+      }
+    },
+    "addresses": {
+      "path": "Goal.addresses",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "category": {
+      "path": "Goal.category",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/goal-category"
+      }
+    },
+    "contained": {
+      "path": "Goal.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "continuous": {
+      "path": "Goal.continuous",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "description": {
+      "path": "Goal.description",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/clinical-findings"
+      }
+    },
+    "extension": {
+      "path": "Goal.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "Goal.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Goal.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "Goal.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "Goal.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "lifecycleStatus": {
+      "path": "Goal.lifecycleStatus",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/goal-status|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "Goal.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "Goal.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "note": {
+      "path": "Goal.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "outcome": {
+      "path": "Goal.outcome",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/clinical-findings"
+      }
+    },
+    "priority": {
+      "path": "Goal.priority",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/goal-priority"
+      }
+    },
+    "source": {
+      "path": "Goal.source",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "start": {
+      "path": "Goal.start[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date",
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/goal-start-event"
+      },
+      "choices": [
+        "startDate",
+        "startCodeableConcept"
+      ]
+    },
+    "statusDate": {
+      "path": "Goal.statusDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "statusReason": {
+      "path": "Goal.statusReason",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "subject": {
+      "path": "Goal.subject",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "target": {
+      "path": "Goal.target",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "detail": {
+          "path": "Goal.target.detail[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity",
+            "Range",
+            "CodeableConcept",
+            "string",
+            "boolean",
+            "integer",
+            "Ratio"
+          ],
+          "choices": [
+            "detailQuantity",
+            "detailRange",
+            "detailCodeableConcept",
+            "detailString",
+            "detailBoolean",
+            "detailInteger",
+            "detailRatio"
+          ]
+        },
+        "due": {
+          "path": "Goal.target.due[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "date",
+            "Duration"
+          ],
+          "choices": [
+            "dueDate",
+            "dueDuration"
+          ]
+        },
+        "extension": {
+          "path": "Goal.target.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Goal.target.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "measure": {
+          "path": "Goal.target.measure",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/observation-codes"
+          }
+        },
+        "modifierExtension": {
+          "path": "Goal.target.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "text": {
+      "path": "Goal.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/ExtendedContactDetail",
+  "type": "ExtendedContactDetail",
+  "name": "ExtendedContactDetail",
+  "kind": "complex-type",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "address": {
+      "path": "ExtendedContactDetail.address",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Address"
+      ]
+    },
+    "extension": {
+      "path": "ExtendedContactDetail.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "ExtendedContactDetail.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "name": {
+      "path": "ExtendedContactDetail.name",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "HumanName"
+      ]
+    },
+    "organization": {
+      "path": "ExtendedContactDetail.organization",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "period": {
+      "path": "ExtendedContactDetail.period",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ]
+    },
+    "purpose": {
+      "path": "ExtendedContactDetail.purpose",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://terminology.hl7.org/ValueSet/contactentity-type"
+      }
+    },
+    "telecom": {
+      "path": "ExtendedContactDetail.telecom",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactPoint"
+      ]
+    }
+  }
+}

@@ -1,0 +1,1399 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/ElementDefinition",
+  "type": "ElementDefinition",
+  "name": "ElementDefinition",
+  "kind": "complex-type",
+  "derivation": "specialization",
+  "required": [
+    "path"
+  ],
+  "elements": {
+    "alias": {
+      "path": "ElementDefinition.alias",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "string"
+      ]
+    },
+    "base": {
+      "path": "ElementDefinition.base",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Element"
+      ],
+      "elements": {
+        "extension": {
+          "path": "ElementDefinition.base.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ElementDefinition.base.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "max": {
+          "path": "ElementDefinition.base.max",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "min": {
+          "path": "ElementDefinition.base.min",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "unsignedInt"
+          ]
+        },
+        "path": {
+          "path": "ElementDefinition.base.path",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        }
+      }
+    },
+    "binding": {
+      "path": "ElementDefinition.binding",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Element"
+      ],
+      "elements": {
+        "additional": {
+          "path": "ElementDefinition.binding.additional",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Element"
+          ],
+          "elements": {
+            "any": {
+              "path": "ElementDefinition.binding.additional.any",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "documentation": {
+              "path": "ElementDefinition.binding.additional.documentation",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "markdown"
+              ]
+            },
+            "extension": {
+              "path": "ElementDefinition.binding.additional.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ElementDefinition.binding.additional.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "purpose": {
+              "path": "ElementDefinition.binding.additional.purpose",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/additional-binding-purpose|5.0.0"
+              }
+            },
+            "shortDoco": {
+              "path": "ElementDefinition.binding.additional.shortDoco",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "usage": {
+              "path": "ElementDefinition.binding.additional.usage",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "UsageContext"
+              ]
+            },
+            "valueSet": {
+              "path": "ElementDefinition.binding.additional.valueSet",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "canonical"
+              ]
+            }
+          }
+        },
+        "description": {
+          "path": "ElementDefinition.binding.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "extension": {
+          "path": "ElementDefinition.binding.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ElementDefinition.binding.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "strength": {
+          "path": "ElementDefinition.binding.strength",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/binding-strength|5.0.0"
+          }
+        },
+        "valueSet": {
+          "path": "ElementDefinition.binding.valueSet",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "canonical"
+          ]
+        }
+      }
+    },
+    "code": {
+      "path": "ElementDefinition.code",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Coding"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://loinc.org/vs"
+      }
+    },
+    "comment": {
+      "path": "ElementDefinition.comment",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "condition": {
+      "path": "ElementDefinition.condition",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "id"
+      ]
+    },
+    "constraint": {
+      "path": "ElementDefinition.constraint",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Element"
+      ],
+      "elements": {
+        "expression": {
+          "path": "ElementDefinition.constraint.expression",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "extension": {
+          "path": "ElementDefinition.constraint.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "human": {
+          "path": "ElementDefinition.constraint.human",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "id": {
+          "path": "ElementDefinition.constraint.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "key": {
+          "path": "ElementDefinition.constraint.key",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "id"
+          ]
+        },
+        "requirements": {
+          "path": "ElementDefinition.constraint.requirements",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "severity": {
+          "path": "ElementDefinition.constraint.severity",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/constraint-severity|5.0.0"
+          }
+        },
+        "source": {
+          "path": "ElementDefinition.constraint.source",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "canonical"
+          ]
+        },
+        "suppress": {
+          "path": "ElementDefinition.constraint.suppress",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        }
+      }
+    },
+    "contentReference": {
+      "path": "ElementDefinition.contentReference",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "defaultValue": {
+      "path": "ElementDefinition.defaultValue[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "base64Binary",
+        "boolean",
+        "canonical",
+        "code",
+        "date",
+        "dateTime",
+        "decimal",
+        "id",
+        "instant",
+        "integer",
+        "integer64",
+        "markdown",
+        "oid",
+        "positiveInt",
+        "string",
+        "time",
+        "unsignedInt",
+        "uri",
+        "url",
+        "uuid",
+        "Address",
+        "Age",
+        "Annotation",
+        "Attachment",
+        "CodeableConcept",
+        "CodeableReference",
+        "Coding",
+        "ContactPoint",
+        "Count",
+        "Distance",
+        "Duration",
+        "HumanName",
+        "Identifier",
+        "Money",
+        "Period",
+        "Quantity",
+        "Range",
+        "Ratio",
+        "RatioRange",
+        "Reference",
+        "SampledData",
+        "Signature",
+        "Timing",
+        "ContactDetail",
+        "DataRequirement",
+        "Expression",
+        "ParameterDefinition",
+        "RelatedArtifact",
+        "TriggerDefinition",
+        "UsageContext",
+        "Availability",
+        "ExtendedContactDetail",
+        "Dosage",
+        "Meta"
+      ],
+      "choices": [
+        "defaultValueBase64Binary",
+        "defaultValueBoolean",
+        "defaultValueCanonical",
+        "defaultValueCode",
+        "defaultValueDate",
+        "defaultValueDateTime",
+        "defaultValueDecimal",
+        "defaultValueId",
+        "defaultValueInstant",
+        "defaultValueInteger",
+        "defaultValueInteger64",
+        "defaultValueMarkdown",
+        "defaultValueOid",
+        "defaultValuePositiveInt",
+        "defaultValueString",
+        "defaultValueTime",
+        "defaultValueUnsignedInt",
+        "defaultValueUri",
+        "defaultValueUrl",
+        "defaultValueUuid",
+        "defaultValueAddress",
+        "defaultValueAge",
+        "defaultValueAnnotation",
+        "defaultValueAttachment",
+        "defaultValueCodeableConcept",
+        "defaultValueCodeableReference",
+        "defaultValueCoding",
+        "defaultValueContactPoint",
+        "defaultValueCount",
+        "defaultValueDistance",
+        "defaultValueDuration",
+        "defaultValueHumanName",
+        "defaultValueIdentifier",
+        "defaultValueMoney",
+        "defaultValuePeriod",
+        "defaultValueQuantity",
+        "defaultValueRange",
+        "defaultValueRatio",
+        "defaultValueRatioRange",
+        "defaultValueReference",
+        "defaultValueSampledData",
+        "defaultValueSignature",
+        "defaultValueTiming",
+        "defaultValueContactDetail",
+        "defaultValueDataRequirement",
+        "defaultValueExpression",
+        "defaultValueParameterDefinition",
+        "defaultValueRelatedArtifact",
+        "defaultValueTriggerDefinition",
+        "defaultValueUsageContext",
+        "defaultValueAvailability",
+        "defaultValueExtendedContactDetail",
+        "defaultValueDosage",
+        "defaultValueMeta"
+      ]
+    },
+    "definition": {
+      "path": "ElementDefinition.definition",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "example": {
+      "path": "ElementDefinition.example",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Element"
+      ],
+      "elements": {
+        "extension": {
+          "path": "ElementDefinition.example.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ElementDefinition.example.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "label": {
+          "path": "ElementDefinition.example.label",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "value": {
+          "path": "ElementDefinition.example.value[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "base64Binary",
+            "boolean",
+            "canonical",
+            "code",
+            "date",
+            "dateTime",
+            "decimal",
+            "id",
+            "instant",
+            "integer",
+            "integer64",
+            "markdown",
+            "oid",
+            "positiveInt",
+            "string",
+            "time",
+            "unsignedInt",
+            "uri",
+            "url",
+            "uuid",
+            "Address",
+            "Age",
+            "Annotation",
+            "Attachment",
+            "CodeableConcept",
+            "CodeableReference",
+            "Coding",
+            "ContactPoint",
+            "Count",
+            "Distance",
+            "Duration",
+            "HumanName",
+            "Identifier",
+            "Money",
+            "Period",
+            "Quantity",
+            "Range",
+            "Ratio",
+            "RatioRange",
+            "Reference",
+            "SampledData",
+            "Signature",
+            "Timing",
+            "ContactDetail",
+            "DataRequirement",
+            "Expression",
+            "ParameterDefinition",
+            "RelatedArtifact",
+            "TriggerDefinition",
+            "UsageContext",
+            "Availability",
+            "ExtendedContactDetail",
+            "Dosage",
+            "Meta"
+          ],
+          "choices": [
+            "valueBase64Binary",
+            "valueBoolean",
+            "valueCanonical",
+            "valueCode",
+            "valueDate",
+            "valueDateTime",
+            "valueDecimal",
+            "valueId",
+            "valueInstant",
+            "valueInteger",
+            "valueInteger64",
+            "valueMarkdown",
+            "valueOid",
+            "valuePositiveInt",
+            "valueString",
+            "valueTime",
+            "valueUnsignedInt",
+            "valueUri",
+            "valueUrl",
+            "valueUuid",
+            "valueAddress",
+            "valueAge",
+            "valueAnnotation",
+            "valueAttachment",
+            "valueCodeableConcept",
+            "valueCodeableReference",
+            "valueCoding",
+            "valueContactPoint",
+            "valueCount",
+            "valueDistance",
+            "valueDuration",
+            "valueHumanName",
+            "valueIdentifier",
+            "valueMoney",
+            "valuePeriod",
+            "valueQuantity",
+            "valueRange",
+            "valueRatio",
+            "valueRatioRange",
+            "valueReference",
+            "valueSampledData",
+            "valueSignature",
+            "valueTiming",
+            "valueContactDetail",
+            "valueDataRequirement",
+            "valueExpression",
+            "valueParameterDefinition",
+            "valueRelatedArtifact",
+            "valueTriggerDefinition",
+            "valueUsageContext",
+            "valueAvailability",
+            "valueExtendedContactDetail",
+            "valueDosage",
+            "valueMeta"
+          ]
+        }
+      }
+    },
+    "extension": {
+      "path": "ElementDefinition.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "fixed": {
+      "path": "ElementDefinition.fixed[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "base64Binary",
+        "boolean",
+        "canonical",
+        "code",
+        "date",
+        "dateTime",
+        "decimal",
+        "id",
+        "instant",
+        "integer",
+        "integer64",
+        "markdown",
+        "oid",
+        "positiveInt",
+        "string",
+        "time",
+        "unsignedInt",
+        "uri",
+        "url",
+        "uuid",
+        "Address",
+        "Age",
+        "Annotation",
+        "Attachment",
+        "CodeableConcept",
+        "CodeableReference",
+        "Coding",
+        "ContactPoint",
+        "Count",
+        "Distance",
+        "Duration",
+        "HumanName",
+        "Identifier",
+        "Money",
+        "Period",
+        "Quantity",
+        "Range",
+        "Ratio",
+        "RatioRange",
+        "Reference",
+        "SampledData",
+        "Signature",
+        "Timing",
+        "ContactDetail",
+        "DataRequirement",
+        "Expression",
+        "ParameterDefinition",
+        "RelatedArtifact",
+        "TriggerDefinition",
+        "UsageContext",
+        "Availability",
+        "ExtendedContactDetail",
+        "Dosage",
+        "Meta"
+      ],
+      "choices": [
+        "fixedBase64Binary",
+        "fixedBoolean",
+        "fixedCanonical",
+        "fixedCode",
+        "fixedDate",
+        "fixedDateTime",
+        "fixedDecimal",
+        "fixedId",
+        "fixedInstant",
+        "fixedInteger",
+        "fixedInteger64",
+        "fixedMarkdown",
+        "fixedOid",
+        "fixedPositiveInt",
+        "fixedString",
+        "fixedTime",
+        "fixedUnsignedInt",
+        "fixedUri",
+        "fixedUrl",
+        "fixedUuid",
+        "fixedAddress",
+        "fixedAge",
+        "fixedAnnotation",
+        "fixedAttachment",
+        "fixedCodeableConcept",
+        "fixedCodeableReference",
+        "fixedCoding",
+        "fixedContactPoint",
+        "fixedCount",
+        "fixedDistance",
+        "fixedDuration",
+        "fixedHumanName",
+        "fixedIdentifier",
+        "fixedMoney",
+        "fixedPeriod",
+        "fixedQuantity",
+        "fixedRange",
+        "fixedRatio",
+        "fixedRatioRange",
+        "fixedReference",
+        "fixedSampledData",
+        "fixedSignature",
+        "fixedTiming",
+        "fixedContactDetail",
+        "fixedDataRequirement",
+        "fixedExpression",
+        "fixedParameterDefinition",
+        "fixedRelatedArtifact",
+        "fixedTriggerDefinition",
+        "fixedUsageContext",
+        "fixedAvailability",
+        "fixedExtendedContactDetail",
+        "fixedDosage",
+        "fixedMeta"
+      ]
+    },
+    "id": {
+      "path": "ElementDefinition.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "isModifier": {
+      "path": "ElementDefinition.isModifier",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "isModifierReason": {
+      "path": "ElementDefinition.isModifierReason",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "isSummary": {
+      "path": "ElementDefinition.isSummary",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "label": {
+      "path": "ElementDefinition.label",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "mapping": {
+      "path": "ElementDefinition.mapping",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Element"
+      ],
+      "elements": {
+        "comment": {
+          "path": "ElementDefinition.mapping.comment",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "extension": {
+          "path": "ElementDefinition.mapping.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ElementDefinition.mapping.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "identity": {
+          "path": "ElementDefinition.mapping.identity",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "id"
+          ]
+        },
+        "language": {
+          "path": "ElementDefinition.mapping.language",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/mimetypes|5.0.0"
+          }
+        },
+        "map": {
+          "path": "ElementDefinition.mapping.map",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        }
+      }
+    },
+    "max": {
+      "path": "ElementDefinition.max",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "maxLength": {
+      "path": "ElementDefinition.maxLength",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "integer"
+      ]
+    },
+    "maxValue": {
+      "path": "ElementDefinition.maxValue[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date",
+        "dateTime",
+        "instant",
+        "time",
+        "decimal",
+        "integer",
+        "integer64",
+        "positiveInt",
+        "unsignedInt",
+        "Quantity"
+      ],
+      "choices": [
+        "maxValueDate",
+        "maxValueDateTime",
+        "maxValueInstant",
+        "maxValueTime",
+        "maxValueDecimal",
+        "maxValueInteger",
+        "maxValueInteger64",
+        "maxValuePositiveInt",
+        "maxValueUnsignedInt",
+        "maxValueQuantity"
+      ]
+    },
+    "meaningWhenMissing": {
+      "path": "ElementDefinition.meaningWhenMissing",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "min": {
+      "path": "ElementDefinition.min",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "unsignedInt"
+      ]
+    },
+    "minValue": {
+      "path": "ElementDefinition.minValue[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date",
+        "dateTime",
+        "instant",
+        "time",
+        "decimal",
+        "integer",
+        "integer64",
+        "positiveInt",
+        "unsignedInt",
+        "Quantity"
+      ],
+      "choices": [
+        "minValueDate",
+        "minValueDateTime",
+        "minValueInstant",
+        "minValueTime",
+        "minValueDecimal",
+        "minValueInteger",
+        "minValueInteger64",
+        "minValuePositiveInt",
+        "minValueUnsignedInt",
+        "minValueQuantity"
+      ]
+    },
+    "modifierExtension": {
+      "path": "ElementDefinition.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "mustHaveValue": {
+      "path": "ElementDefinition.mustHaveValue",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "mustSupport": {
+      "path": "ElementDefinition.mustSupport",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "orderMeaning": {
+      "path": "ElementDefinition.orderMeaning",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "path": {
+      "path": "ElementDefinition.path",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "pattern": {
+      "path": "ElementDefinition.pattern[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "base64Binary",
+        "boolean",
+        "canonical",
+        "code",
+        "date",
+        "dateTime",
+        "decimal",
+        "id",
+        "instant",
+        "integer",
+        "integer64",
+        "markdown",
+        "oid",
+        "positiveInt",
+        "string",
+        "time",
+        "unsignedInt",
+        "uri",
+        "url",
+        "uuid",
+        "Address",
+        "Age",
+        "Annotation",
+        "Attachment",
+        "CodeableConcept",
+        "CodeableReference",
+        "Coding",
+        "ContactPoint",
+        "Count",
+        "Distance",
+        "Duration",
+        "HumanName",
+        "Identifier",
+        "Money",
+        "Period",
+        "Quantity",
+        "Range",
+        "Ratio",
+        "RatioRange",
+        "Reference",
+        "SampledData",
+        "Signature",
+        "Timing",
+        "ContactDetail",
+        "DataRequirement",
+        "Expression",
+        "ParameterDefinition",
+        "RelatedArtifact",
+        "TriggerDefinition",
+        "UsageContext",
+        "Availability",
+        "ExtendedContactDetail",
+        "Dosage",
+        "Meta"
+      ],
+      "choices": [
+        "patternBase64Binary",
+        "patternBoolean",
+        "patternCanonical",
+        "patternCode",
+        "patternDate",
+        "patternDateTime",
+        "patternDecimal",
+        "patternId",
+        "patternInstant",
+        "patternInteger",
+        "patternInteger64",
+        "patternMarkdown",
+        "patternOid",
+        "patternPositiveInt",
+        "patternString",
+        "patternTime",
+        "patternUnsignedInt",
+        "patternUri",
+        "patternUrl",
+        "patternUuid",
+        "patternAddress",
+        "patternAge",
+        "patternAnnotation",
+        "patternAttachment",
+        "patternCodeableConcept",
+        "patternCodeableReference",
+        "patternCoding",
+        "patternContactPoint",
+        "patternCount",
+        "patternDistance",
+        "patternDuration",
+        "patternHumanName",
+        "patternIdentifier",
+        "patternMoney",
+        "patternPeriod",
+        "patternQuantity",
+        "patternRange",
+        "patternRatio",
+        "patternRatioRange",
+        "patternReference",
+        "patternSampledData",
+        "patternSignature",
+        "patternTiming",
+        "patternContactDetail",
+        "patternDataRequirement",
+        "patternExpression",
+        "patternParameterDefinition",
+        "patternRelatedArtifact",
+        "patternTriggerDefinition",
+        "patternUsageContext",
+        "patternAvailability",
+        "patternExtendedContactDetail",
+        "patternDosage",
+        "patternMeta"
+      ]
+    },
+    "representation": {
+      "path": "ElementDefinition.representation",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/property-representation|5.0.0"
+      }
+    },
+    "requirements": {
+      "path": "ElementDefinition.requirements",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "short": {
+      "path": "ElementDefinition.short",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "sliceIsConstraining": {
+      "path": "ElementDefinition.sliceIsConstraining",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "sliceName": {
+      "path": "ElementDefinition.sliceName",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "slicing": {
+      "path": "ElementDefinition.slicing",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Element"
+      ],
+      "elements": {
+        "description": {
+          "path": "ElementDefinition.slicing.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "discriminator": {
+          "path": "ElementDefinition.slicing.discriminator",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Element"
+          ],
+          "elements": {
+            "extension": {
+              "path": "ElementDefinition.slicing.discriminator.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ElementDefinition.slicing.discriminator.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "path": {
+              "path": "ElementDefinition.slicing.discriminator.path",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "type": {
+              "path": "ElementDefinition.slicing.discriminator.type",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/discriminator-type|5.0.0"
+              }
+            }
+          }
+        },
+        "extension": {
+          "path": "ElementDefinition.slicing.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ElementDefinition.slicing.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "ordered": {
+          "path": "ElementDefinition.slicing.ordered",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "rules": {
+          "path": "ElementDefinition.slicing.rules",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/resource-slicing-rules|5.0.0"
+          }
+        }
+      }
+    },
+    "type": {
+      "path": "ElementDefinition.type",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Element"
+      ],
+      "elements": {
+        "aggregation": {
+          "path": "ElementDefinition.type.aggregation",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/resource-aggregation-mode|5.0.0"
+          }
+        },
+        "code": {
+          "path": "ElementDefinition.type.code",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "uri"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/elementdefinition-types"
+          }
+        },
+        "extension": {
+          "path": "ElementDefinition.type.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ElementDefinition.type.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "profile": {
+          "path": "ElementDefinition.type.profile",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "canonical"
+          ]
+        },
+        "targetProfile": {
+          "path": "ElementDefinition.type.targetProfile",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "canonical"
+          ]
+        },
+        "versioning": {
+          "path": "ElementDefinition.type.versioning",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/reference-version-rules|5.0.0"
+          }
+        }
+      }
+    },
+    "valueAlternatives": {
+      "path": "ElementDefinition.valueAlternatives",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "canonical"
+      ]
+    }
+  }
+}

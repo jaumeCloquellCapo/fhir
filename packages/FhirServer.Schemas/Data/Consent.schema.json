@@ -1,0 +1,654 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Consent",
+  "type": "Consent",
+  "name": "Consent",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "status"
+  ],
+  "elements": {
+    "category": {
+      "path": "Consent.category",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/consent-category"
+      }
+    },
+    "contained": {
+      "path": "Consent.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "controller": {
+      "path": "Consent.controller",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "date": {
+      "path": "Consent.date",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "decision": {
+      "path": "Consent.decision",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/consent-provision-type|5.0.0"
+      }
+    },
+    "extension": {
+      "path": "Consent.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "grantee": {
+      "path": "Consent.grantee",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "grantor": {
+      "path": "Consent.grantor",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "id": {
+      "path": "Consent.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Consent.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "Consent.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "Consent.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "manager": {
+      "path": "Consent.manager",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "meta": {
+      "path": "Consent.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "Consent.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "period": {
+      "path": "Consent.period",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ]
+    },
+    "policyBasis": {
+      "path": "Consent.policyBasis",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Consent.policyBasis.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Consent.policyBasis.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Consent.policyBasis.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "reference": {
+          "path": "Consent.policyBasis.reference",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "url": {
+          "path": "Consent.policyBasis.url",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "url"
+          ]
+        }
+      }
+    },
+    "policyText": {
+      "path": "Consent.policyText",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "provision": {
+      "path": "Consent.provision",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "action": {
+          "path": "Consent.provision.action",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/consent-action"
+          }
+        },
+        "actor": {
+          "path": "Consent.provision.actor",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "Consent.provision.actor.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Consent.provision.actor.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Consent.provision.actor.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "reference": {
+              "path": "Consent.provision.actor.reference",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            },
+            "role": {
+              "path": "Consent.provision.actor.role",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/participation-role-type"
+              }
+            }
+          }
+        },
+        "code": {
+          "path": "Consent.provision.code",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/consent-content-code"
+          }
+        },
+        "data": {
+          "path": "Consent.provision.data",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "Consent.provision.data.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Consent.provision.data.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "meaning": {
+              "path": "Consent.provision.data.meaning",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/consent-data-meaning|5.0.0"
+              }
+            },
+            "modifierExtension": {
+              "path": "Consent.provision.data.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "reference": {
+              "path": "Consent.provision.data.reference",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            }
+          }
+        },
+        "dataPeriod": {
+          "path": "Consent.provision.dataPeriod",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Period"
+          ]
+        },
+        "documentType": {
+          "path": "Consent.provision.documentType",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Coding"
+          ],
+          "binding": {
+            "strength": "preferred",
+            "valueSet": "http://hl7.org/fhir/ValueSet/consent-content-class"
+          }
+        },
+        "expression": {
+          "path": "Consent.provision.expression",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Expression"
+          ]
+        },
+        "extension": {
+          "path": "Consent.provision.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Consent.provision.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Consent.provision.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "period": {
+          "path": "Consent.provision.period",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Period"
+          ]
+        },
+        "provision": {
+          "path": "Consent.provision.provision",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#Consent.provision"
+        },
+        "purpose": {
+          "path": "Consent.provision.purpose",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Coding"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://terminology.hl7.org/ValueSet/v3-PurposeOfUse"
+          }
+        },
+        "resourceType": {
+          "path": "Consent.provision.resourceType",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Coding"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/resource-types"
+          }
+        },
+        "securityLabel": {
+          "path": "Consent.provision.securityLabel",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Coding"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/security-label-examples"
+          }
+        }
+      }
+    },
+    "regulatoryBasis": {
+      "path": "Consent.regulatoryBasis",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/consent-policy"
+      }
+    },
+    "sourceAttachment": {
+      "path": "Consent.sourceAttachment",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Attachment"
+      ]
+    },
+    "sourceReference": {
+      "path": "Consent.sourceReference",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "status": {
+      "path": "Consent.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/consent-state-codes|5.0.0"
+      }
+    },
+    "subject": {
+      "path": "Consent.subject",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "text": {
+      "path": "Consent.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "verification": {
+      "path": "Consent.verification",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Consent.verification.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Consent.verification.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Consent.verification.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "verificationDate": {
+          "path": "Consent.verification.verificationDate",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "dateTime"
+          ]
+        },
+        "verificationType": {
+          "path": "Consent.verification.verificationType",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/consent-verification"
+          }
+        },
+        "verified": {
+          "path": "Consent.verification.verified",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "verifiedBy": {
+          "path": "Consent.verification.verifiedBy",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "verifiedWith": {
+          "path": "Consent.verification.verifiedWith",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    }
+  }
+}

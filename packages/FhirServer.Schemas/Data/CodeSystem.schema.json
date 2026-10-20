@@ -1,0 +1,811 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/CodeSystem",
+  "type": "CodeSystem",
+  "name": "CodeSystem",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "content",
+    "status"
+  ],
+  "elements": {
+    "approvalDate": {
+      "path": "CodeSystem.approvalDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "author": {
+      "path": "CodeSystem.author",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "caseSensitive": {
+      "path": "CodeSystem.caseSensitive",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "compositional": {
+      "path": "CodeSystem.compositional",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "concept": {
+      "path": "CodeSystem.concept",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "code": {
+          "path": "CodeSystem.concept.code",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ]
+        },
+        "concept": {
+          "path": "CodeSystem.concept.concept",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#CodeSystem.concept"
+        },
+        "definition": {
+          "path": "CodeSystem.concept.definition",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "designation": {
+          "path": "CodeSystem.concept.designation",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "additionalUse": {
+              "path": "CodeSystem.concept.designation.additionalUse",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Coding"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/designation-use"
+              }
+            },
+            "extension": {
+              "path": "CodeSystem.concept.designation.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "CodeSystem.concept.designation.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "language": {
+              "path": "CodeSystem.concept.designation.language",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+              }
+            },
+            "modifierExtension": {
+              "path": "CodeSystem.concept.designation.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "use": {
+              "path": "CodeSystem.concept.designation.use",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Coding"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/designation-use"
+              }
+            },
+            "value": {
+              "path": "CodeSystem.concept.designation.value",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "display": {
+          "path": "CodeSystem.concept.display",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "extension": {
+          "path": "CodeSystem.concept.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "CodeSystem.concept.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "CodeSystem.concept.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "property": {
+          "path": "CodeSystem.concept.property",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "code": {
+              "path": "CodeSystem.concept.property.code",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ]
+            },
+            "extension": {
+              "path": "CodeSystem.concept.property.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "CodeSystem.concept.property.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "CodeSystem.concept.property.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "value": {
+              "path": "CodeSystem.concept.property.value[x]",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code",
+                "Coding",
+                "string",
+                "integer",
+                "boolean",
+                "dateTime",
+                "decimal"
+              ],
+              "choices": [
+                "valueCode",
+                "valueCoding",
+                "valueString",
+                "valueInteger",
+                "valueBoolean",
+                "valueDateTime",
+                "valueDecimal"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "contact": {
+      "path": "CodeSystem.contact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "contained": {
+      "path": "CodeSystem.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "content": {
+      "path": "CodeSystem.content",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/codesystem-content-mode|5.0.0"
+      }
+    },
+    "copyright": {
+      "path": "CodeSystem.copyright",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "copyrightLabel": {
+      "path": "CodeSystem.copyrightLabel",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "count": {
+      "path": "CodeSystem.count",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "unsignedInt"
+      ]
+    },
+    "date": {
+      "path": "CodeSystem.date",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "description": {
+      "path": "CodeSystem.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "editor": {
+      "path": "CodeSystem.editor",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "effectivePeriod": {
+      "path": "CodeSystem.effectivePeriod",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ]
+    },
+    "endorser": {
+      "path": "CodeSystem.endorser",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "experimental": {
+      "path": "CodeSystem.experimental",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "extension": {
+      "path": "CodeSystem.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "filter": {
+      "path": "CodeSystem.filter",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "code": {
+          "path": "CodeSystem.filter.code",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ]
+        },
+        "description": {
+          "path": "CodeSystem.filter.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "extension": {
+          "path": "CodeSystem.filter.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "CodeSystem.filter.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "CodeSystem.filter.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "operator": {
+          "path": "CodeSystem.filter.operator",
+          "min": 1,
+          "max": "*",
+          "array": true,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/filter-operator|5.0.0"
+          }
+        },
+        "value": {
+          "path": "CodeSystem.filter.value",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        }
+      }
+    },
+    "hierarchyMeaning": {
+      "path": "CodeSystem.hierarchyMeaning",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/codesystem-hierarchy-meaning|5.0.0"
+      }
+    },
+    "id": {
+      "path": "CodeSystem.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "CodeSystem.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "CodeSystem.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "jurisdiction": {
+      "path": "CodeSystem.jurisdiction",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
+      }
+    },
+    "language": {
+      "path": "CodeSystem.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "lastReviewDate": {
+      "path": "CodeSystem.lastReviewDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "meta": {
+      "path": "CodeSystem.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "CodeSystem.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "CodeSystem.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "property": {
+      "path": "CodeSystem.property",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "code": {
+          "path": "CodeSystem.property.code",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ]
+        },
+        "description": {
+          "path": "CodeSystem.property.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "extension": {
+          "path": "CodeSystem.property.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "CodeSystem.property.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "CodeSystem.property.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "CodeSystem.property.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/concept-property-type|5.0.0"
+          }
+        },
+        "uri": {
+          "path": "CodeSystem.property.uri",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "uri"
+          ]
+        }
+      }
+    },
+    "publisher": {
+      "path": "CodeSystem.publisher",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "purpose": {
+      "path": "CodeSystem.purpose",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "relatedArtifact": {
+      "path": "CodeSystem.relatedArtifact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "RelatedArtifact"
+      ]
+    },
+    "reviewer": {
+      "path": "CodeSystem.reviewer",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "status": {
+      "path": "CodeSystem.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+      }
+    },
+    "supplements": {
+      "path": "CodeSystem.supplements",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "canonical"
+      ]
+    },
+    "text": {
+      "path": "CodeSystem.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "title": {
+      "path": "CodeSystem.title",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "topic": {
+      "path": "CodeSystem.topic",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/definition-topic"
+      }
+    },
+    "url": {
+      "path": "CodeSystem.url",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "useContext": {
+      "path": "CodeSystem.useContext",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "UsageContext"
+      ]
+    },
+    "valueSet": {
+      "path": "CodeSystem.valueSet",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "canonical"
+      ]
+    },
+    "version": {
+      "path": "CodeSystem.version",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "versionAlgorithm": {
+      "path": "CodeSystem.versionAlgorithm[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string",
+        "Coding"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/version-algorithm"
+      },
+      "choices": [
+        "versionAlgorithmString",
+        "versionAlgorithmCoding"
+      ]
+    },
+    "versionNeeded": {
+      "path": "CodeSystem.versionNeeded",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    }
+  }
+}

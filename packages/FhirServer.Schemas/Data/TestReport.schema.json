@@ -1,0 +1,700 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/TestReport",
+  "type": "TestReport",
+  "name": "TestReport",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "result",
+    "status",
+    "testScript"
+  ],
+  "elements": {
+    "contained": {
+      "path": "TestReport.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "extension": {
+      "path": "TestReport.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "TestReport.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "TestReport.identifier",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "TestReport.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "issued": {
+      "path": "TestReport.issued",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "language": {
+      "path": "TestReport.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "TestReport.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "TestReport.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "TestReport.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "participant": {
+      "path": "TestReport.participant",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "display": {
+          "path": "TestReport.participant.display",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "extension": {
+          "path": "TestReport.participant.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "TestReport.participant.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "TestReport.participant.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "TestReport.participant.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/report-participant-type|5.0.0"
+          }
+        },
+        "uri": {
+          "path": "TestReport.participant.uri",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "uri"
+          ]
+        }
+      }
+    },
+    "result": {
+      "path": "TestReport.result",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/report-result-codes|5.0.0"
+      }
+    },
+    "score": {
+      "path": "TestReport.score",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "decimal"
+      ]
+    },
+    "setup": {
+      "path": "TestReport.setup",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "action": {
+          "path": "TestReport.setup.action",
+          "min": 1,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "assert": {
+              "path": "TestReport.setup.action.assert",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "detail": {
+                  "path": "TestReport.setup.action.assert.detail",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "extension": {
+                  "path": "TestReport.setup.action.assert.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "TestReport.setup.action.assert.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "message": {
+                  "path": "TestReport.setup.action.assert.message",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "markdown"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "TestReport.setup.action.assert.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "requirement": {
+                  "path": "TestReport.setup.action.assert.requirement",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "BackboneElement"
+                  ],
+                  "elements": {
+                    "extension": {
+                      "path": "TestReport.setup.action.assert.requirement.extension",
+                      "min": 0,
+                      "max": "*",
+                      "array": true,
+                      "type": [
+                        "Extension"
+                      ]
+                    },
+                    "id": {
+                      "path": "TestReport.setup.action.assert.requirement.id",
+                      "min": 0,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "http://hl7.org/fhirpath/System.String"
+                      ]
+                    },
+                    "link": {
+                      "path": "TestReport.setup.action.assert.requirement.link[x]",
+                      "min": 0,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "uri",
+                        "canonical"
+                      ],
+                      "choices": [
+                        "linkUri",
+                        "linkCanonical"
+                      ]
+                    },
+                    "modifierExtension": {
+                      "path": "TestReport.setup.action.assert.requirement.modifierExtension",
+                      "min": 0,
+                      "max": "*",
+                      "array": true,
+                      "type": [
+                        "Extension"
+                      ]
+                    }
+                  }
+                },
+                "result": {
+                  "path": "TestReport.setup.action.assert.result",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "code"
+                  ],
+                  "binding": {
+                    "strength": "required",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/report-action-result-codes|5.0.0"
+                  }
+                }
+              }
+            },
+            "extension": {
+              "path": "TestReport.setup.action.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "TestReport.setup.action.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "TestReport.setup.action.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "operation": {
+              "path": "TestReport.setup.action.operation",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "detail": {
+                  "path": "TestReport.setup.action.operation.detail",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "uri"
+                  ]
+                },
+                "extension": {
+                  "path": "TestReport.setup.action.operation.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "TestReport.setup.action.operation.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "message": {
+                  "path": "TestReport.setup.action.operation.message",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "markdown"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "TestReport.setup.action.operation.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "result": {
+                  "path": "TestReport.setup.action.operation.result",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "code"
+                  ],
+                  "binding": {
+                    "strength": "required",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/report-action-result-codes|5.0.0"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "extension": {
+          "path": "TestReport.setup.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "TestReport.setup.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "TestReport.setup.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "status": {
+      "path": "TestReport.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/report-status-codes|5.0.0"
+      }
+    },
+    "teardown": {
+      "path": "TestReport.teardown",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "action": {
+          "path": "TestReport.teardown.action",
+          "min": 1,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "TestReport.teardown.action.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "TestReport.teardown.action.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "TestReport.teardown.action.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "operation": {
+              "path": "TestReport.teardown.action.operation",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [],
+              "contentReference": "#TestReport.setup.action.operation"
+            }
+          }
+        },
+        "extension": {
+          "path": "TestReport.teardown.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "TestReport.teardown.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "TestReport.teardown.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "test": {
+      "path": "TestReport.test",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "action": {
+          "path": "TestReport.test.action",
+          "min": 1,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "assert": {
+              "path": "TestReport.test.action.assert",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [],
+              "contentReference": "#TestReport.setup.action.assert"
+            },
+            "extension": {
+              "path": "TestReport.test.action.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "TestReport.test.action.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "TestReport.test.action.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "operation": {
+              "path": "TestReport.test.action.operation",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [],
+              "contentReference": "#TestReport.setup.action.operation"
+            }
+          }
+        },
+        "description": {
+          "path": "TestReport.test.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "extension": {
+          "path": "TestReport.test.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "TestReport.test.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "TestReport.test.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "name": {
+          "path": "TestReport.test.name",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        }
+      }
+    },
+    "testScript": {
+      "path": "TestReport.testScript",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "canonical"
+      ]
+    },
+    "tester": {
+      "path": "TestReport.tester",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "text": {
+      "path": "TestReport.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

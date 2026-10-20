@@ -1,0 +1,909 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/ExampleScenario",
+  "type": "ExampleScenario",
+  "name": "ExampleScenario",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "status"
+  ],
+  "elements": {
+    "actor": {
+      "path": "ExampleScenario.actor",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "description": {
+          "path": "ExampleScenario.actor.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "extension": {
+          "path": "ExampleScenario.actor.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ExampleScenario.actor.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "key": {
+          "path": "ExampleScenario.actor.key",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ExampleScenario.actor.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "title": {
+          "path": "ExampleScenario.actor.title",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "type": {
+          "path": "ExampleScenario.actor.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/examplescenario-actor-type|5.0.0"
+          }
+        }
+      }
+    },
+    "contact": {
+      "path": "ExampleScenario.contact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "contained": {
+      "path": "ExampleScenario.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "copyright": {
+      "path": "ExampleScenario.copyright",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "copyrightLabel": {
+      "path": "ExampleScenario.copyrightLabel",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "date": {
+      "path": "ExampleScenario.date",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "description": {
+      "path": "ExampleScenario.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "experimental": {
+      "path": "ExampleScenario.experimental",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "extension": {
+      "path": "ExampleScenario.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "ExampleScenario.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "ExampleScenario.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "ExampleScenario.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "instance": {
+      "path": "ExampleScenario.instance",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "containedInstance": {
+          "path": "ExampleScenario.instance.containedInstance",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "ExampleScenario.instance.containedInstance.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ExampleScenario.instance.containedInstance.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "instanceReference": {
+              "path": "ExampleScenario.instance.containedInstance.instanceReference",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ExampleScenario.instance.containedInstance.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "versionReference": {
+              "path": "ExampleScenario.instance.containedInstance.versionReference",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "content": {
+          "path": "ExampleScenario.instance.content",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "description": {
+          "path": "ExampleScenario.instance.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "extension": {
+          "path": "ExampleScenario.instance.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ExampleScenario.instance.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "key": {
+          "path": "ExampleScenario.instance.key",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ExampleScenario.instance.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "structureProfile": {
+          "path": "ExampleScenario.instance.structureProfile[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "canonical",
+            "uri"
+          ],
+          "choices": [
+            "structureProfileCanonical",
+            "structureProfileUri"
+          ]
+        },
+        "structureType": {
+          "path": "ExampleScenario.instance.structureType",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Coding"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/examplescenario-instance-type"
+          }
+        },
+        "structureVersion": {
+          "path": "ExampleScenario.instance.structureVersion",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "title": {
+          "path": "ExampleScenario.instance.title",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "version": {
+          "path": "ExampleScenario.instance.version",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "content": {
+              "path": "ExampleScenario.instance.version.content",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            },
+            "description": {
+              "path": "ExampleScenario.instance.version.description",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "markdown"
+              ]
+            },
+            "extension": {
+              "path": "ExampleScenario.instance.version.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ExampleScenario.instance.version.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "key": {
+              "path": "ExampleScenario.instance.version.key",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ExampleScenario.instance.version.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "title": {
+              "path": "ExampleScenario.instance.version.title",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "jurisdiction": {
+      "path": "ExampleScenario.jurisdiction",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
+      }
+    },
+    "language": {
+      "path": "ExampleScenario.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "ExampleScenario.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "ExampleScenario.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "ExampleScenario.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "process": {
+      "path": "ExampleScenario.process",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "description": {
+          "path": "ExampleScenario.process.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "extension": {
+          "path": "ExampleScenario.process.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ExampleScenario.process.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ExampleScenario.process.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "postConditions": {
+          "path": "ExampleScenario.process.postConditions",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "preConditions": {
+          "path": "ExampleScenario.process.preConditions",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "step": {
+          "path": "ExampleScenario.process.step",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "alternative": {
+              "path": "ExampleScenario.process.step.alternative",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "description": {
+                  "path": "ExampleScenario.process.step.alternative.description",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "markdown"
+                  ]
+                },
+                "extension": {
+                  "path": "ExampleScenario.process.step.alternative.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "ExampleScenario.process.step.alternative.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "ExampleScenario.process.step.alternative.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "step": {
+                  "path": "ExampleScenario.process.step.alternative.step",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [],
+                  "contentReference": "#ExampleScenario.process.step"
+                },
+                "title": {
+                  "path": "ExampleScenario.process.step.alternative.title",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                }
+              }
+            },
+            "extension": {
+              "path": "ExampleScenario.process.step.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ExampleScenario.process.step.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ExampleScenario.process.step.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "number": {
+              "path": "ExampleScenario.process.step.number",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "operation": {
+              "path": "ExampleScenario.process.step.operation",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "description": {
+                  "path": "ExampleScenario.process.step.operation.description",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "markdown"
+                  ]
+                },
+                "extension": {
+                  "path": "ExampleScenario.process.step.operation.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "ExampleScenario.process.step.operation.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "initiator": {
+                  "path": "ExampleScenario.process.step.operation.initiator",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "initiatorActive": {
+                  "path": "ExampleScenario.process.step.operation.initiatorActive",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "boolean"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "ExampleScenario.process.step.operation.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "receiver": {
+                  "path": "ExampleScenario.process.step.operation.receiver",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "receiverActive": {
+                  "path": "ExampleScenario.process.step.operation.receiverActive",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "boolean"
+                  ]
+                },
+                "request": {
+                  "path": "ExampleScenario.process.step.operation.request",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [],
+                  "contentReference": "#ExampleScenario.instance.containedInstance"
+                },
+                "response": {
+                  "path": "ExampleScenario.process.step.operation.response",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [],
+                  "contentReference": "#ExampleScenario.instance.containedInstance"
+                },
+                "title": {
+                  "path": "ExampleScenario.process.step.operation.title",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "type": {
+                  "path": "ExampleScenario.process.step.operation.type",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Coding"
+                  ],
+                  "binding": {
+                    "strength": "extensible",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/testscript-operation-codes"
+                  }
+                }
+              }
+            },
+            "pause": {
+              "path": "ExampleScenario.process.step.pause",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "process": {
+              "path": "ExampleScenario.process.step.process",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [],
+              "contentReference": "#ExampleScenario.process"
+            },
+            "workflow": {
+              "path": "ExampleScenario.process.step.workflow",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "canonical"
+              ]
+            }
+          }
+        },
+        "title": {
+          "path": "ExampleScenario.process.title",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        }
+      }
+    },
+    "publisher": {
+      "path": "ExampleScenario.publisher",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "purpose": {
+      "path": "ExampleScenario.purpose",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "status": {
+      "path": "ExampleScenario.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+      }
+    },
+    "text": {
+      "path": "ExampleScenario.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "title": {
+      "path": "ExampleScenario.title",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "url": {
+      "path": "ExampleScenario.url",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "useContext": {
+      "path": "ExampleScenario.useContext",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "UsageContext"
+      ]
+    },
+    "version": {
+      "path": "ExampleScenario.version",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "versionAlgorithm": {
+      "path": "ExampleScenario.versionAlgorithm[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string",
+        "Coding"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/version-algorithm"
+      },
+      "choices": [
+        "versionAlgorithmString",
+        "versionAlgorithmCoding"
+      ]
+    }
+  }
+}

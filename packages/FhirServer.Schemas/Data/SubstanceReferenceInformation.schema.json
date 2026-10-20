@@ -1,0 +1,343 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/SubstanceReferenceInformation",
+  "type": "SubstanceReferenceInformation",
+  "name": "SubstanceReferenceInformation",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "comment": {
+      "path": "SubstanceReferenceInformation.comment",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "contained": {
+      "path": "SubstanceReferenceInformation.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "extension": {
+      "path": "SubstanceReferenceInformation.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "gene": {
+      "path": "SubstanceReferenceInformation.gene",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "SubstanceReferenceInformation.gene.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "gene": {
+          "path": "SubstanceReferenceInformation.gene.gene",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "geneSequenceOrigin": {
+          "path": "SubstanceReferenceInformation.gene.geneSequenceOrigin",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "id": {
+          "path": "SubstanceReferenceInformation.gene.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "SubstanceReferenceInformation.gene.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "source": {
+          "path": "SubstanceReferenceInformation.gene.source",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    },
+    "geneElement": {
+      "path": "SubstanceReferenceInformation.geneElement",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "element": {
+          "path": "SubstanceReferenceInformation.geneElement.element",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "extension": {
+          "path": "SubstanceReferenceInformation.geneElement.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "SubstanceReferenceInformation.geneElement.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "SubstanceReferenceInformation.geneElement.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "source": {
+          "path": "SubstanceReferenceInformation.geneElement.source",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "type": {
+          "path": "SubstanceReferenceInformation.geneElement.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        }
+      }
+    },
+    "id": {
+      "path": "SubstanceReferenceInformation.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "implicitRules": {
+      "path": "SubstanceReferenceInformation.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "SubstanceReferenceInformation.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "SubstanceReferenceInformation.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "SubstanceReferenceInformation.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "target": {
+      "path": "SubstanceReferenceInformation.target",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "amount": {
+          "path": "SubstanceReferenceInformation.target.amount[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity",
+            "Range",
+            "string"
+          ],
+          "choices": [
+            "amountQuantity",
+            "amountRange",
+            "amountString"
+          ]
+        },
+        "amountType": {
+          "path": "SubstanceReferenceInformation.target.amountType",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "extension": {
+          "path": "SubstanceReferenceInformation.target.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "SubstanceReferenceInformation.target.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "interaction": {
+          "path": "SubstanceReferenceInformation.target.interaction",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "modifierExtension": {
+          "path": "SubstanceReferenceInformation.target.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "organism": {
+          "path": "SubstanceReferenceInformation.target.organism",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "organismType": {
+          "path": "SubstanceReferenceInformation.target.organismType",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "source": {
+          "path": "SubstanceReferenceInformation.target.source",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "target": {
+          "path": "SubstanceReferenceInformation.target.target",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "type": {
+          "path": "SubstanceReferenceInformation.target.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        }
+      }
+    },
+    "text": {
+      "path": "SubstanceReferenceInformation.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

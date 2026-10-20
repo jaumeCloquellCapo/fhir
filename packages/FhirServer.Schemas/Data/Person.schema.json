@@ -1,0 +1,319 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Person",
+  "type": "Person",
+  "name": "Person",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "active": {
+      "path": "Person.active",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "address": {
+      "path": "Person.address",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Address"
+      ]
+    },
+    "birthDate": {
+      "path": "Person.birthDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "communication": {
+      "path": "Person.communication",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Person.communication.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Person.communication.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "language": {
+          "path": "Person.communication.language",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+          }
+        },
+        "modifierExtension": {
+          "path": "Person.communication.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "preferred": {
+          "path": "Person.communication.preferred",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        }
+      }
+    },
+    "contained": {
+      "path": "Person.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "deceased": {
+      "path": "Person.deceased[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean",
+        "dateTime"
+      ],
+      "choices": [
+        "deceasedBoolean",
+        "deceasedDateTime"
+      ]
+    },
+    "extension": {
+      "path": "Person.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "gender": {
+      "path": "Person.gender",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/administrative-gender|5.0.0"
+      }
+    },
+    "id": {
+      "path": "Person.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Person.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "Person.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "Person.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "link": {
+      "path": "Person.link",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "assurance": {
+          "path": "Person.link.assurance",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/identity-assuranceLevel|5.0.0"
+          }
+        },
+        "extension": {
+          "path": "Person.link.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Person.link.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Person.link.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "target": {
+          "path": "Person.link.target",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    },
+    "managingOrganization": {
+      "path": "Person.managingOrganization",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "maritalStatus": {
+      "path": "Person.maritalStatus",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/marital-status"
+      }
+    },
+    "meta": {
+      "path": "Person.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "Person.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "Person.name",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "HumanName"
+      ]
+    },
+    "photo": {
+      "path": "Person.photo",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Attachment"
+      ]
+    },
+    "telecom": {
+      "path": "Person.telecom",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactPoint"
+      ]
+    },
+    "text": {
+      "path": "Person.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

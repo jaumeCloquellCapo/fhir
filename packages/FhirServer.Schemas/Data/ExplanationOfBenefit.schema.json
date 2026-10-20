@@ -1,0 +1,3272 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/ExplanationOfBenefit",
+  "type": "ExplanationOfBenefit",
+  "name": "ExplanationOfBenefit",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "created",
+    "outcome",
+    "patient",
+    "status",
+    "type",
+    "use"
+  ],
+  "elements": {
+    "accident": {
+      "path": "ExplanationOfBenefit.accident",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "date": {
+          "path": "ExplanationOfBenefit.accident.date",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "date"
+          ]
+        },
+        "extension": {
+          "path": "ExplanationOfBenefit.accident.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ExplanationOfBenefit.accident.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "location": {
+          "path": "ExplanationOfBenefit.accident.location[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Address",
+            "Reference"
+          ],
+          "choices": [
+            "locationAddress",
+            "locationReference"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ExplanationOfBenefit.accident.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "ExplanationOfBenefit.accident.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://terminology.hl7.org/ValueSet/v3-ActIncidentCode"
+          }
+        }
+      }
+    },
+    "addItem": {
+      "path": "ExplanationOfBenefit.addItem",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "adjudication": {
+          "path": "ExplanationOfBenefit.addItem.adjudication",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#ExplanationOfBenefit.item.adjudication"
+        },
+        "bodySite": {
+          "path": "ExplanationOfBenefit.addItem.bodySite",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "ExplanationOfBenefit.addItem.bodySite.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ExplanationOfBenefit.addItem.bodySite.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ExplanationOfBenefit.addItem.bodySite.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "site": {
+              "path": "ExplanationOfBenefit.addItem.bodySite.site",
+              "min": 1,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableReference"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/tooth"
+              }
+            },
+            "subSite": {
+              "path": "ExplanationOfBenefit.addItem.bodySite.subSite",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/surface"
+              }
+            }
+          }
+        },
+        "detail": {
+          "path": "ExplanationOfBenefit.addItem.detail",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "adjudication": {
+              "path": "ExplanationOfBenefit.addItem.detail.adjudication",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [],
+              "contentReference": "#ExplanationOfBenefit.item.adjudication"
+            },
+            "extension": {
+              "path": "ExplanationOfBenefit.addItem.detail.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "factor": {
+              "path": "ExplanationOfBenefit.addItem.detail.factor",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "decimal"
+              ]
+            },
+            "id": {
+              "path": "ExplanationOfBenefit.addItem.detail.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifier": {
+              "path": "ExplanationOfBenefit.addItem.detail.modifier",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/claim-modifiers"
+              }
+            },
+            "modifierExtension": {
+              "path": "ExplanationOfBenefit.addItem.detail.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "net": {
+              "path": "ExplanationOfBenefit.addItem.detail.net",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Money"
+              ]
+            },
+            "noteNumber": {
+              "path": "ExplanationOfBenefit.addItem.detail.noteNumber",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "positiveInt"
+              ]
+            },
+            "patientPaid": {
+              "path": "ExplanationOfBenefit.addItem.detail.patientPaid",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Money"
+              ]
+            },
+            "productOrService": {
+              "path": "ExplanationOfBenefit.addItem.detail.productOrService",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
+              }
+            },
+            "productOrServiceEnd": {
+              "path": "ExplanationOfBenefit.addItem.detail.productOrServiceEnd",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
+              }
+            },
+            "quantity": {
+              "path": "ExplanationOfBenefit.addItem.detail.quantity",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Quantity"
+              ]
+            },
+            "revenue": {
+              "path": "ExplanationOfBenefit.addItem.detail.revenue",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/ex-revenue-center"
+              }
+            },
+            "reviewOutcome": {
+              "path": "ExplanationOfBenefit.addItem.detail.reviewOutcome",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [],
+              "contentReference": "#ExplanationOfBenefit.item.reviewOutcome"
+            },
+            "subDetail": {
+              "path": "ExplanationOfBenefit.addItem.detail.subDetail",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "adjudication": {
+                  "path": "ExplanationOfBenefit.addItem.detail.subDetail.adjudication",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [],
+                  "contentReference": "#ExplanationOfBenefit.item.adjudication"
+                },
+                "extension": {
+                  "path": "ExplanationOfBenefit.addItem.detail.subDetail.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "factor": {
+                  "path": "ExplanationOfBenefit.addItem.detail.subDetail.factor",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "decimal"
+                  ]
+                },
+                "id": {
+                  "path": "ExplanationOfBenefit.addItem.detail.subDetail.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifier": {
+                  "path": "ExplanationOfBenefit.addItem.detail.subDetail.modifier",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/claim-modifiers"
+                  }
+                },
+                "modifierExtension": {
+                  "path": "ExplanationOfBenefit.addItem.detail.subDetail.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "net": {
+                  "path": "ExplanationOfBenefit.addItem.detail.subDetail.net",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Money"
+                  ]
+                },
+                "noteNumber": {
+                  "path": "ExplanationOfBenefit.addItem.detail.subDetail.noteNumber",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "positiveInt"
+                  ]
+                },
+                "patientPaid": {
+                  "path": "ExplanationOfBenefit.addItem.detail.subDetail.patientPaid",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Money"
+                  ]
+                },
+                "productOrService": {
+                  "path": "ExplanationOfBenefit.addItem.detail.subDetail.productOrService",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
+                  }
+                },
+                "productOrServiceEnd": {
+                  "path": "ExplanationOfBenefit.addItem.detail.subDetail.productOrServiceEnd",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
+                  }
+                },
+                "quantity": {
+                  "path": "ExplanationOfBenefit.addItem.detail.subDetail.quantity",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Quantity"
+                  ]
+                },
+                "revenue": {
+                  "path": "ExplanationOfBenefit.addItem.detail.subDetail.revenue",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/ex-revenue-center"
+                  }
+                },
+                "reviewOutcome": {
+                  "path": "ExplanationOfBenefit.addItem.detail.subDetail.reviewOutcome",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [],
+                  "contentReference": "#ExplanationOfBenefit.item.reviewOutcome"
+                },
+                "tax": {
+                  "path": "ExplanationOfBenefit.addItem.detail.subDetail.tax",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Money"
+                  ]
+                },
+                "traceNumber": {
+                  "path": "ExplanationOfBenefit.addItem.detail.subDetail.traceNumber",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Identifier"
+                  ]
+                },
+                "unitPrice": {
+                  "path": "ExplanationOfBenefit.addItem.detail.subDetail.unitPrice",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Money"
+                  ]
+                }
+              }
+            },
+            "tax": {
+              "path": "ExplanationOfBenefit.addItem.detail.tax",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Money"
+              ]
+            },
+            "traceNumber": {
+              "path": "ExplanationOfBenefit.addItem.detail.traceNumber",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Identifier"
+              ]
+            },
+            "unitPrice": {
+              "path": "ExplanationOfBenefit.addItem.detail.unitPrice",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Money"
+              ]
+            }
+          }
+        },
+        "detailSequence": {
+          "path": "ExplanationOfBenefit.addItem.detailSequence",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "extension": {
+          "path": "ExplanationOfBenefit.addItem.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "factor": {
+          "path": "ExplanationOfBenefit.addItem.factor",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "decimal"
+          ]
+        },
+        "id": {
+          "path": "ExplanationOfBenefit.addItem.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "itemSequence": {
+          "path": "ExplanationOfBenefit.addItem.itemSequence",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "location": {
+          "path": "ExplanationOfBenefit.addItem.location[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept",
+            "Address",
+            "Reference"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/service-place"
+          },
+          "choices": [
+            "locationCodeableConcept",
+            "locationAddress",
+            "locationReference"
+          ]
+        },
+        "modifier": {
+          "path": "ExplanationOfBenefit.addItem.modifier",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/claim-modifiers"
+          }
+        },
+        "modifierExtension": {
+          "path": "ExplanationOfBenefit.addItem.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "net": {
+          "path": "ExplanationOfBenefit.addItem.net",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Money"
+          ]
+        },
+        "noteNumber": {
+          "path": "ExplanationOfBenefit.addItem.noteNumber",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "patientPaid": {
+          "path": "ExplanationOfBenefit.addItem.patientPaid",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Money"
+          ]
+        },
+        "productOrService": {
+          "path": "ExplanationOfBenefit.addItem.productOrService",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
+          }
+        },
+        "productOrServiceEnd": {
+          "path": "ExplanationOfBenefit.addItem.productOrServiceEnd",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
+          }
+        },
+        "programCode": {
+          "path": "ExplanationOfBenefit.addItem.programCode",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/ex-program-code"
+          }
+        },
+        "provider": {
+          "path": "ExplanationOfBenefit.addItem.provider",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "quantity": {
+          "path": "ExplanationOfBenefit.addItem.quantity",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity"
+          ]
+        },
+        "request": {
+          "path": "ExplanationOfBenefit.addItem.request",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "revenue": {
+          "path": "ExplanationOfBenefit.addItem.revenue",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/ex-revenue-center"
+          }
+        },
+        "reviewOutcome": {
+          "path": "ExplanationOfBenefit.addItem.reviewOutcome",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [],
+          "contentReference": "#ExplanationOfBenefit.item.reviewOutcome"
+        },
+        "serviced": {
+          "path": "ExplanationOfBenefit.addItem.serviced[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "date",
+            "Period"
+          ],
+          "choices": [
+            "servicedDate",
+            "servicedPeriod"
+          ]
+        },
+        "subDetailSequence": {
+          "path": "ExplanationOfBenefit.addItem.subDetailSequence",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "tax": {
+          "path": "ExplanationOfBenefit.addItem.tax",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Money"
+          ]
+        },
+        "traceNumber": {
+          "path": "ExplanationOfBenefit.addItem.traceNumber",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "unitPrice": {
+          "path": "ExplanationOfBenefit.addItem.unitPrice",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Money"
+          ]
+        }
+      }
+    },
+    "adjudication": {
+      "path": "ExplanationOfBenefit.adjudication",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [],
+      "contentReference": "#ExplanationOfBenefit.item.adjudication"
+    },
+    "benefitBalance": {
+      "path": "ExplanationOfBenefit.benefitBalance",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "category": {
+          "path": "ExplanationOfBenefit.benefitBalance.category",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/ex-benefitcategory"
+          }
+        },
+        "description": {
+          "path": "ExplanationOfBenefit.benefitBalance.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "excluded": {
+          "path": "ExplanationOfBenefit.benefitBalance.excluded",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "extension": {
+          "path": "ExplanationOfBenefit.benefitBalance.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "financial": {
+          "path": "ExplanationOfBenefit.benefitBalance.financial",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "allowed": {
+              "path": "ExplanationOfBenefit.benefitBalance.financial.allowed[x]",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "unsignedInt",
+                "string",
+                "Money"
+              ],
+              "choices": [
+                "allowedUnsignedInt",
+                "allowedString",
+                "allowedMoney"
+              ]
+            },
+            "extension": {
+              "path": "ExplanationOfBenefit.benefitBalance.financial.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ExplanationOfBenefit.benefitBalance.financial.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ExplanationOfBenefit.benefitBalance.financial.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "type": {
+              "path": "ExplanationOfBenefit.benefitBalance.financial.type",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/benefit-type"
+              }
+            },
+            "used": {
+              "path": "ExplanationOfBenefit.benefitBalance.financial.used[x]",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "unsignedInt",
+                "Money"
+              ],
+              "choices": [
+                "usedUnsignedInt",
+                "usedMoney"
+              ]
+            }
+          }
+        },
+        "id": {
+          "path": "ExplanationOfBenefit.benefitBalance.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ExplanationOfBenefit.benefitBalance.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "name": {
+          "path": "ExplanationOfBenefit.benefitBalance.name",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "network": {
+          "path": "ExplanationOfBenefit.benefitBalance.network",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/benefit-network"
+          }
+        },
+        "term": {
+          "path": "ExplanationOfBenefit.benefitBalance.term",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/benefit-term"
+          }
+        },
+        "unit": {
+          "path": "ExplanationOfBenefit.benefitBalance.unit",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/benefit-unit"
+          }
+        }
+      }
+    },
+    "benefitPeriod": {
+      "path": "ExplanationOfBenefit.benefitPeriod",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ]
+    },
+    "billablePeriod": {
+      "path": "ExplanationOfBenefit.billablePeriod",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ]
+    },
+    "careTeam": {
+      "path": "ExplanationOfBenefit.careTeam",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "ExplanationOfBenefit.careTeam.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ExplanationOfBenefit.careTeam.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ExplanationOfBenefit.careTeam.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "provider": {
+          "path": "ExplanationOfBenefit.careTeam.provider",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "responsible": {
+          "path": "ExplanationOfBenefit.careTeam.responsible",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "role": {
+          "path": "ExplanationOfBenefit.careTeam.role",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/claim-careteamrole"
+          }
+        },
+        "sequence": {
+          "path": "ExplanationOfBenefit.careTeam.sequence",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "specialty": {
+          "path": "ExplanationOfBenefit.careTeam.specialty",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/provider-qualification"
+          }
+        }
+      }
+    },
+    "claim": {
+      "path": "ExplanationOfBenefit.claim",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "claimResponse": {
+      "path": "ExplanationOfBenefit.claimResponse",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "contained": {
+      "path": "ExplanationOfBenefit.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "created": {
+      "path": "ExplanationOfBenefit.created",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "decision": {
+      "path": "ExplanationOfBenefit.decision",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/claim-decision"
+      }
+    },
+    "diagnosis": {
+      "path": "ExplanationOfBenefit.diagnosis",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "diagnosis": {
+          "path": "ExplanationOfBenefit.diagnosis.diagnosis[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept",
+            "Reference"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/icd-10"
+          },
+          "choices": [
+            "diagnosisCodeableConcept",
+            "diagnosisReference"
+          ]
+        },
+        "extension": {
+          "path": "ExplanationOfBenefit.diagnosis.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ExplanationOfBenefit.diagnosis.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ExplanationOfBenefit.diagnosis.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "onAdmission": {
+          "path": "ExplanationOfBenefit.diagnosis.onAdmission",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/ex-diagnosis-on-admission"
+          }
+        },
+        "sequence": {
+          "path": "ExplanationOfBenefit.diagnosis.sequence",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "type": {
+          "path": "ExplanationOfBenefit.diagnosis.type",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/ex-diagnosistype"
+          }
+        }
+      }
+    },
+    "diagnosisRelatedGroup": {
+      "path": "ExplanationOfBenefit.diagnosisRelatedGroup",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/ex-diagnosisrelatedgroup"
+      }
+    },
+    "disposition": {
+      "path": "ExplanationOfBenefit.disposition",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "encounter": {
+      "path": "ExplanationOfBenefit.encounter",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "enterer": {
+      "path": "ExplanationOfBenefit.enterer",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "event": {
+      "path": "ExplanationOfBenefit.event",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "ExplanationOfBenefit.event.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ExplanationOfBenefit.event.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ExplanationOfBenefit.event.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "ExplanationOfBenefit.event.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/datestype"
+          }
+        },
+        "when": {
+          "path": "ExplanationOfBenefit.event.when[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "dateTime",
+            "Period"
+          ],
+          "choices": [
+            "whenDateTime",
+            "whenPeriod"
+          ]
+        }
+      }
+    },
+    "extension": {
+      "path": "ExplanationOfBenefit.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "facility": {
+      "path": "ExplanationOfBenefit.facility",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "form": {
+      "path": "ExplanationOfBenefit.form",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Attachment"
+      ]
+    },
+    "formCode": {
+      "path": "ExplanationOfBenefit.formCode",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/forms"
+      }
+    },
+    "fundsReserve": {
+      "path": "ExplanationOfBenefit.fundsReserve",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/fundsreserve"
+      }
+    },
+    "fundsReserveRequested": {
+      "path": "ExplanationOfBenefit.fundsReserveRequested",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/fundsreserve"
+      }
+    },
+    "id": {
+      "path": "ExplanationOfBenefit.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "ExplanationOfBenefit.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "ExplanationOfBenefit.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "insurance": {
+      "path": "ExplanationOfBenefit.insurance",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "coverage": {
+          "path": "ExplanationOfBenefit.insurance.coverage",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "extension": {
+          "path": "ExplanationOfBenefit.insurance.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "focal": {
+          "path": "ExplanationOfBenefit.insurance.focal",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "id": {
+          "path": "ExplanationOfBenefit.insurance.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ExplanationOfBenefit.insurance.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "preAuthRef": {
+          "path": "ExplanationOfBenefit.insurance.preAuthRef",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "string"
+          ]
+        }
+      }
+    },
+    "insurer": {
+      "path": "ExplanationOfBenefit.insurer",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "item": {
+      "path": "ExplanationOfBenefit.item",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "adjudication": {
+          "path": "ExplanationOfBenefit.item.adjudication",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "amount": {
+              "path": "ExplanationOfBenefit.item.adjudication.amount",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Money"
+              ]
+            },
+            "category": {
+              "path": "ExplanationOfBenefit.item.adjudication.category",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/adjudication"
+              }
+            },
+            "extension": {
+              "path": "ExplanationOfBenefit.item.adjudication.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ExplanationOfBenefit.item.adjudication.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ExplanationOfBenefit.item.adjudication.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "quantity": {
+              "path": "ExplanationOfBenefit.item.adjudication.quantity",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Quantity"
+              ]
+            },
+            "reason": {
+              "path": "ExplanationOfBenefit.item.adjudication.reason",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/adjudication-reason"
+              }
+            }
+          }
+        },
+        "bodySite": {
+          "path": "ExplanationOfBenefit.item.bodySite",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "ExplanationOfBenefit.item.bodySite.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ExplanationOfBenefit.item.bodySite.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ExplanationOfBenefit.item.bodySite.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "site": {
+              "path": "ExplanationOfBenefit.item.bodySite.site",
+              "min": 1,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableReference"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/tooth"
+              }
+            },
+            "subSite": {
+              "path": "ExplanationOfBenefit.item.bodySite.subSite",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/surface"
+              }
+            }
+          }
+        },
+        "careTeamSequence": {
+          "path": "ExplanationOfBenefit.item.careTeamSequence",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "category": {
+          "path": "ExplanationOfBenefit.item.category",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/ex-benefitcategory"
+          }
+        },
+        "detail": {
+          "path": "ExplanationOfBenefit.item.detail",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "adjudication": {
+              "path": "ExplanationOfBenefit.item.detail.adjudication",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [],
+              "contentReference": "#ExplanationOfBenefit.item.adjudication"
+            },
+            "category": {
+              "path": "ExplanationOfBenefit.item.detail.category",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/ex-benefitcategory"
+              }
+            },
+            "extension": {
+              "path": "ExplanationOfBenefit.item.detail.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "factor": {
+              "path": "ExplanationOfBenefit.item.detail.factor",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "decimal"
+              ]
+            },
+            "id": {
+              "path": "ExplanationOfBenefit.item.detail.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifier": {
+              "path": "ExplanationOfBenefit.item.detail.modifier",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/claim-modifiers"
+              }
+            },
+            "modifierExtension": {
+              "path": "ExplanationOfBenefit.item.detail.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "net": {
+              "path": "ExplanationOfBenefit.item.detail.net",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Money"
+              ]
+            },
+            "noteNumber": {
+              "path": "ExplanationOfBenefit.item.detail.noteNumber",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "positiveInt"
+              ]
+            },
+            "patientPaid": {
+              "path": "ExplanationOfBenefit.item.detail.patientPaid",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Money"
+              ]
+            },
+            "productOrService": {
+              "path": "ExplanationOfBenefit.item.detail.productOrService",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
+              }
+            },
+            "productOrServiceEnd": {
+              "path": "ExplanationOfBenefit.item.detail.productOrServiceEnd",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
+              }
+            },
+            "programCode": {
+              "path": "ExplanationOfBenefit.item.detail.programCode",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/ex-program-code"
+              }
+            },
+            "quantity": {
+              "path": "ExplanationOfBenefit.item.detail.quantity",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Quantity"
+              ]
+            },
+            "revenue": {
+              "path": "ExplanationOfBenefit.item.detail.revenue",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/ex-revenue-center"
+              }
+            },
+            "reviewOutcome": {
+              "path": "ExplanationOfBenefit.item.detail.reviewOutcome",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [],
+              "contentReference": "#ExplanationOfBenefit.item.reviewOutcome"
+            },
+            "sequence": {
+              "path": "ExplanationOfBenefit.item.detail.sequence",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "positiveInt"
+              ]
+            },
+            "subDetail": {
+              "path": "ExplanationOfBenefit.item.detail.subDetail",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "adjudication": {
+                  "path": "ExplanationOfBenefit.item.detail.subDetail.adjudication",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [],
+                  "contentReference": "#ExplanationOfBenefit.item.adjudication"
+                },
+                "category": {
+                  "path": "ExplanationOfBenefit.item.detail.subDetail.category",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/ex-benefitcategory"
+                  }
+                },
+                "extension": {
+                  "path": "ExplanationOfBenefit.item.detail.subDetail.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "factor": {
+                  "path": "ExplanationOfBenefit.item.detail.subDetail.factor",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "decimal"
+                  ]
+                },
+                "id": {
+                  "path": "ExplanationOfBenefit.item.detail.subDetail.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifier": {
+                  "path": "ExplanationOfBenefit.item.detail.subDetail.modifier",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/claim-modifiers"
+                  }
+                },
+                "modifierExtension": {
+                  "path": "ExplanationOfBenefit.item.detail.subDetail.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "net": {
+                  "path": "ExplanationOfBenefit.item.detail.subDetail.net",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Money"
+                  ]
+                },
+                "noteNumber": {
+                  "path": "ExplanationOfBenefit.item.detail.subDetail.noteNumber",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "positiveInt"
+                  ]
+                },
+                "patientPaid": {
+                  "path": "ExplanationOfBenefit.item.detail.subDetail.patientPaid",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Money"
+                  ]
+                },
+                "productOrService": {
+                  "path": "ExplanationOfBenefit.item.detail.subDetail.productOrService",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
+                  }
+                },
+                "productOrServiceEnd": {
+                  "path": "ExplanationOfBenefit.item.detail.subDetail.productOrServiceEnd",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
+                  }
+                },
+                "programCode": {
+                  "path": "ExplanationOfBenefit.item.detail.subDetail.programCode",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/ex-program-code"
+                  }
+                },
+                "quantity": {
+                  "path": "ExplanationOfBenefit.item.detail.subDetail.quantity",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Quantity"
+                  ]
+                },
+                "revenue": {
+                  "path": "ExplanationOfBenefit.item.detail.subDetail.revenue",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/ex-revenue-center"
+                  }
+                },
+                "reviewOutcome": {
+                  "path": "ExplanationOfBenefit.item.detail.subDetail.reviewOutcome",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [],
+                  "contentReference": "#ExplanationOfBenefit.item.reviewOutcome"
+                },
+                "sequence": {
+                  "path": "ExplanationOfBenefit.item.detail.subDetail.sequence",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "positiveInt"
+                  ]
+                },
+                "tax": {
+                  "path": "ExplanationOfBenefit.item.detail.subDetail.tax",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Money"
+                  ]
+                },
+                "traceNumber": {
+                  "path": "ExplanationOfBenefit.item.detail.subDetail.traceNumber",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Identifier"
+                  ]
+                },
+                "udi": {
+                  "path": "ExplanationOfBenefit.item.detail.subDetail.udi",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Reference"
+                  ]
+                },
+                "unitPrice": {
+                  "path": "ExplanationOfBenefit.item.detail.subDetail.unitPrice",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Money"
+                  ]
+                }
+              }
+            },
+            "tax": {
+              "path": "ExplanationOfBenefit.item.detail.tax",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Money"
+              ]
+            },
+            "traceNumber": {
+              "path": "ExplanationOfBenefit.item.detail.traceNumber",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Identifier"
+              ]
+            },
+            "udi": {
+              "path": "ExplanationOfBenefit.item.detail.udi",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Reference"
+              ]
+            },
+            "unitPrice": {
+              "path": "ExplanationOfBenefit.item.detail.unitPrice",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Money"
+              ]
+            }
+          }
+        },
+        "diagnosisSequence": {
+          "path": "ExplanationOfBenefit.item.diagnosisSequence",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "encounter": {
+          "path": "ExplanationOfBenefit.item.encounter",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "extension": {
+          "path": "ExplanationOfBenefit.item.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "factor": {
+          "path": "ExplanationOfBenefit.item.factor",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "decimal"
+          ]
+        },
+        "id": {
+          "path": "ExplanationOfBenefit.item.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "informationSequence": {
+          "path": "ExplanationOfBenefit.item.informationSequence",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "location": {
+          "path": "ExplanationOfBenefit.item.location[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept",
+            "Address",
+            "Reference"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/service-place"
+          },
+          "choices": [
+            "locationCodeableConcept",
+            "locationAddress",
+            "locationReference"
+          ]
+        },
+        "modifier": {
+          "path": "ExplanationOfBenefit.item.modifier",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/claim-modifiers"
+          }
+        },
+        "modifierExtension": {
+          "path": "ExplanationOfBenefit.item.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "net": {
+          "path": "ExplanationOfBenefit.item.net",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Money"
+          ]
+        },
+        "noteNumber": {
+          "path": "ExplanationOfBenefit.item.noteNumber",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "patientPaid": {
+          "path": "ExplanationOfBenefit.item.patientPaid",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Money"
+          ]
+        },
+        "procedureSequence": {
+          "path": "ExplanationOfBenefit.item.procedureSequence",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "productOrService": {
+          "path": "ExplanationOfBenefit.item.productOrService",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
+          }
+        },
+        "productOrServiceEnd": {
+          "path": "ExplanationOfBenefit.item.productOrServiceEnd",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
+          }
+        },
+        "programCode": {
+          "path": "ExplanationOfBenefit.item.programCode",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/ex-program-code"
+          }
+        },
+        "quantity": {
+          "path": "ExplanationOfBenefit.item.quantity",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity"
+          ]
+        },
+        "request": {
+          "path": "ExplanationOfBenefit.item.request",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "revenue": {
+          "path": "ExplanationOfBenefit.item.revenue",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/ex-revenue-center"
+          }
+        },
+        "reviewOutcome": {
+          "path": "ExplanationOfBenefit.item.reviewOutcome",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "decision": {
+              "path": "ExplanationOfBenefit.item.reviewOutcome.decision",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/claim-decision"
+              }
+            },
+            "extension": {
+              "path": "ExplanationOfBenefit.item.reviewOutcome.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ExplanationOfBenefit.item.reviewOutcome.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ExplanationOfBenefit.item.reviewOutcome.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "preAuthPeriod": {
+              "path": "ExplanationOfBenefit.item.reviewOutcome.preAuthPeriod",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Period"
+              ]
+            },
+            "preAuthRef": {
+              "path": "ExplanationOfBenefit.item.reviewOutcome.preAuthRef",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "reason": {
+              "path": "ExplanationOfBenefit.item.reviewOutcome.reason",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/claim-decision-reason"
+              }
+            }
+          }
+        },
+        "sequence": {
+          "path": "ExplanationOfBenefit.item.sequence",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "serviced": {
+          "path": "ExplanationOfBenefit.item.serviced[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "date",
+            "Period"
+          ],
+          "choices": [
+            "servicedDate",
+            "servicedPeriod"
+          ]
+        },
+        "tax": {
+          "path": "ExplanationOfBenefit.item.tax",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Money"
+          ]
+        },
+        "traceNumber": {
+          "path": "ExplanationOfBenefit.item.traceNumber",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "udi": {
+          "path": "ExplanationOfBenefit.item.udi",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "unitPrice": {
+          "path": "ExplanationOfBenefit.item.unitPrice",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Money"
+          ]
+        }
+      }
+    },
+    "language": {
+      "path": "ExplanationOfBenefit.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "ExplanationOfBenefit.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "ExplanationOfBenefit.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "originalPrescription": {
+      "path": "ExplanationOfBenefit.originalPrescription",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "outcome": {
+      "path": "ExplanationOfBenefit.outcome",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/claim-outcome|5.0.0"
+      }
+    },
+    "patient": {
+      "path": "ExplanationOfBenefit.patient",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "patientPaid": {
+      "path": "ExplanationOfBenefit.patientPaid",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Money"
+      ]
+    },
+    "payee": {
+      "path": "ExplanationOfBenefit.payee",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "ExplanationOfBenefit.payee.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ExplanationOfBenefit.payee.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ExplanationOfBenefit.payee.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "party": {
+          "path": "ExplanationOfBenefit.payee.party",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "type": {
+          "path": "ExplanationOfBenefit.payee.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/payeetype"
+          }
+        }
+      }
+    },
+    "payment": {
+      "path": "ExplanationOfBenefit.payment",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "adjustment": {
+          "path": "ExplanationOfBenefit.payment.adjustment",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Money"
+          ]
+        },
+        "adjustmentReason": {
+          "path": "ExplanationOfBenefit.payment.adjustmentReason",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/payment-adjustment-reason"
+          }
+        },
+        "amount": {
+          "path": "ExplanationOfBenefit.payment.amount",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Money"
+          ]
+        },
+        "date": {
+          "path": "ExplanationOfBenefit.payment.date",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "date"
+          ]
+        },
+        "extension": {
+          "path": "ExplanationOfBenefit.payment.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ExplanationOfBenefit.payment.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "identifier": {
+          "path": "ExplanationOfBenefit.payment.identifier",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ExplanationOfBenefit.payment.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "ExplanationOfBenefit.payment.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/ex-paymenttype"
+          }
+        }
+      }
+    },
+    "preAuthRef": {
+      "path": "ExplanationOfBenefit.preAuthRef",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "string"
+      ]
+    },
+    "preAuthRefPeriod": {
+      "path": "ExplanationOfBenefit.preAuthRefPeriod",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Period"
+      ]
+    },
+    "precedence": {
+      "path": "ExplanationOfBenefit.precedence",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "positiveInt"
+      ]
+    },
+    "prescription": {
+      "path": "ExplanationOfBenefit.prescription",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "priority": {
+      "path": "ExplanationOfBenefit.priority",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/process-priority"
+      }
+    },
+    "procedure": {
+      "path": "ExplanationOfBenefit.procedure",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "date": {
+          "path": "ExplanationOfBenefit.procedure.date",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "dateTime"
+          ]
+        },
+        "extension": {
+          "path": "ExplanationOfBenefit.procedure.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ExplanationOfBenefit.procedure.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ExplanationOfBenefit.procedure.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "procedure": {
+          "path": "ExplanationOfBenefit.procedure.procedure[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept",
+            "Reference"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/icd-10-procedures"
+          },
+          "choices": [
+            "procedureCodeableConcept",
+            "procedureReference"
+          ]
+        },
+        "sequence": {
+          "path": "ExplanationOfBenefit.procedure.sequence",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "type": {
+          "path": "ExplanationOfBenefit.procedure.type",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/ex-procedure-type"
+          }
+        },
+        "udi": {
+          "path": "ExplanationOfBenefit.procedure.udi",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    },
+    "processNote": {
+      "path": "ExplanationOfBenefit.processNote",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "ExplanationOfBenefit.processNote.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ExplanationOfBenefit.processNote.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "language": {
+          "path": "ExplanationOfBenefit.processNote.language",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+          }
+        },
+        "modifierExtension": {
+          "path": "ExplanationOfBenefit.processNote.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "number": {
+          "path": "ExplanationOfBenefit.processNote.number",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "text": {
+          "path": "ExplanationOfBenefit.processNote.text",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "type": {
+          "path": "ExplanationOfBenefit.processNote.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/note-type"
+          }
+        }
+      }
+    },
+    "provider": {
+      "path": "ExplanationOfBenefit.provider",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "referral": {
+      "path": "ExplanationOfBenefit.referral",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "related": {
+      "path": "ExplanationOfBenefit.related",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "claim": {
+          "path": "ExplanationOfBenefit.related.claim",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "extension": {
+          "path": "ExplanationOfBenefit.related.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ExplanationOfBenefit.related.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ExplanationOfBenefit.related.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "reference": {
+          "path": "ExplanationOfBenefit.related.reference",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "relationship": {
+          "path": "ExplanationOfBenefit.related.relationship",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/related-claim-relationship"
+          }
+        }
+      }
+    },
+    "status": {
+      "path": "ExplanationOfBenefit.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/explanationofbenefit-status|5.0.0"
+      }
+    },
+    "subType": {
+      "path": "ExplanationOfBenefit.subType",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/claim-subtype"
+      }
+    },
+    "supportingInfo": {
+      "path": "ExplanationOfBenefit.supportingInfo",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "category": {
+          "path": "ExplanationOfBenefit.supportingInfo.category",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/claim-informationcategory"
+          }
+        },
+        "code": {
+          "path": "ExplanationOfBenefit.supportingInfo.code",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/claim-exception"
+          }
+        },
+        "extension": {
+          "path": "ExplanationOfBenefit.supportingInfo.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ExplanationOfBenefit.supportingInfo.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ExplanationOfBenefit.supportingInfo.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "reason": {
+          "path": "ExplanationOfBenefit.supportingInfo.reason",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Coding"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/missing-tooth-reason"
+          }
+        },
+        "sequence": {
+          "path": "ExplanationOfBenefit.supportingInfo.sequence",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "timing": {
+          "path": "ExplanationOfBenefit.supportingInfo.timing[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "date",
+            "Period"
+          ],
+          "choices": [
+            "timingDate",
+            "timingPeriod"
+          ]
+        },
+        "value": {
+          "path": "ExplanationOfBenefit.supportingInfo.value[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean",
+            "string",
+            "Quantity",
+            "Attachment",
+            "Reference",
+            "Identifier"
+          ],
+          "choices": [
+            "valueBoolean",
+            "valueString",
+            "valueQuantity",
+            "valueAttachment",
+            "valueReference",
+            "valueIdentifier"
+          ]
+        }
+      }
+    },
+    "text": {
+      "path": "ExplanationOfBenefit.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "total": {
+      "path": "ExplanationOfBenefit.total",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "amount": {
+          "path": "ExplanationOfBenefit.total.amount",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Money"
+          ]
+        },
+        "category": {
+          "path": "ExplanationOfBenefit.total.category",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/adjudication"
+          }
+        },
+        "extension": {
+          "path": "ExplanationOfBenefit.total.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ExplanationOfBenefit.total.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ExplanationOfBenefit.total.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "traceNumber": {
+      "path": "ExplanationOfBenefit.traceNumber",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "type": {
+      "path": "ExplanationOfBenefit.type",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/claim-type"
+      }
+    },
+    "use": {
+      "path": "ExplanationOfBenefit.use",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/claim-use|5.0.0"
+      }
+    }
+  }
+}

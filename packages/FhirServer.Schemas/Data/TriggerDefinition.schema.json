@@ -1,0 +1,107 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/TriggerDefinition",
+  "type": "TriggerDefinition",
+  "name": "TriggerDefinition",
+  "kind": "complex-type",
+  "derivation": "specialization",
+  "required": [
+    "type"
+  ],
+  "elements": {
+    "code": {
+      "path": "TriggerDefinition.code",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "condition": {
+      "path": "TriggerDefinition.condition",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Expression"
+      ]
+    },
+    "data": {
+      "path": "TriggerDefinition.data",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "DataRequirement"
+      ]
+    },
+    "extension": {
+      "path": "TriggerDefinition.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "TriggerDefinition.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "name": {
+      "path": "TriggerDefinition.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "subscriptionTopic": {
+      "path": "TriggerDefinition.subscriptionTopic",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "canonical"
+      ]
+    },
+    "timing": {
+      "path": "TriggerDefinition.timing[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Timing",
+        "Reference",
+        "date",
+        "dateTime"
+      ],
+      "choices": [
+        "timingTiming",
+        "timingReference",
+        "timingDate",
+        "timingDateTime"
+      ]
+    },
+    "type": {
+      "path": "TriggerDefinition.type",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/trigger-type|5.0.0"
+      }
+    }
+  }
+}

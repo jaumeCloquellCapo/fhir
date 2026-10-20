@@ -1,0 +1,233 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Parameters",
+  "type": "Parameters",
+  "name": "Parameters",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "id": {
+      "path": "Parameters.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "implicitRules": {
+      "path": "Parameters.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "Parameters.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "Parameters.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "parameter": {
+      "path": "Parameters.parameter",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Parameters.parameter.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Parameters.parameter.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Parameters.parameter.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "name": {
+          "path": "Parameters.parameter.name",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "part": {
+          "path": "Parameters.parameter.part",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#Parameters.parameter"
+        },
+        "resource": {
+          "path": "Parameters.parameter.resource",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Resource"
+          ]
+        },
+        "value": {
+          "path": "Parameters.parameter.value[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "base64Binary",
+            "boolean",
+            "canonical",
+            "code",
+            "date",
+            "dateTime",
+            "decimal",
+            "id",
+            "instant",
+            "integer",
+            "integer64",
+            "markdown",
+            "oid",
+            "positiveInt",
+            "string",
+            "time",
+            "unsignedInt",
+            "uri",
+            "url",
+            "uuid",
+            "Address",
+            "Age",
+            "Annotation",
+            "Attachment",
+            "CodeableConcept",
+            "CodeableReference",
+            "Coding",
+            "ContactPoint",
+            "Count",
+            "Distance",
+            "Duration",
+            "HumanName",
+            "Identifier",
+            "Money",
+            "Period",
+            "Quantity",
+            "Range",
+            "Ratio",
+            "RatioRange",
+            "Reference",
+            "SampledData",
+            "Signature",
+            "Timing",
+            "ContactDetail",
+            "DataRequirement",
+            "Expression",
+            "ParameterDefinition",
+            "RelatedArtifact",
+            "TriggerDefinition",
+            "UsageContext",
+            "Availability",
+            "ExtendedContactDetail",
+            "Dosage",
+            "Meta"
+          ],
+          "choices": [
+            "valueBase64Binary",
+            "valueBoolean",
+            "valueCanonical",
+            "valueCode",
+            "valueDate",
+            "valueDateTime",
+            "valueDecimal",
+            "valueId",
+            "valueInstant",
+            "valueInteger",
+            "valueInteger64",
+            "valueMarkdown",
+            "valueOid",
+            "valuePositiveInt",
+            "valueString",
+            "valueTime",
+            "valueUnsignedInt",
+            "valueUri",
+            "valueUrl",
+            "valueUuid",
+            "valueAddress",
+            "valueAge",
+            "valueAnnotation",
+            "valueAttachment",
+            "valueCodeableConcept",
+            "valueCodeableReference",
+            "valueCoding",
+            "valueContactPoint",
+            "valueCount",
+            "valueDistance",
+            "valueDuration",
+            "valueHumanName",
+            "valueIdentifier",
+            "valueMoney",
+            "valuePeriod",
+            "valueQuantity",
+            "valueRange",
+            "valueRatio",
+            "valueRatioRange",
+            "valueReference",
+            "valueSampledData",
+            "valueSignature",
+            "valueTiming",
+            "valueContactDetail",
+            "valueDataRequirement",
+            "valueExpression",
+            "valueParameterDefinition",
+            "valueRelatedArtifact",
+            "valueTriggerDefinition",
+            "valueUsageContext",
+            "valueAvailability",
+            "valueExtendedContactDetail",
+            "valueDosage",
+            "valueMeta"
+          ]
+        }
+      }
+    }
+  }
+}

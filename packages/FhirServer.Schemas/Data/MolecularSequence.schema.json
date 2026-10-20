@@ -1,0 +1,439 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/MolecularSequence",
+  "type": "MolecularSequence",
+  "name": "MolecularSequence",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "contained": {
+      "path": "MolecularSequence.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "device": {
+      "path": "MolecularSequence.device",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "extension": {
+      "path": "MolecularSequence.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "focus": {
+      "path": "MolecularSequence.focus",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "formatted": {
+      "path": "MolecularSequence.formatted",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Attachment"
+      ]
+    },
+    "id": {
+      "path": "MolecularSequence.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "MolecularSequence.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "MolecularSequence.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "MolecularSequence.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "literal": {
+      "path": "MolecularSequence.literal",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "meta": {
+      "path": "MolecularSequence.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "MolecularSequence.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "performer": {
+      "path": "MolecularSequence.performer",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "relative": {
+      "path": "MolecularSequence.relative",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "coordinateSystem": {
+          "path": "MolecularSequence.relative.coordinateSystem",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://loinc.org/LL5323-2/"
+          }
+        },
+        "edit": {
+          "path": "MolecularSequence.relative.edit",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "end": {
+              "path": "MolecularSequence.relative.edit.end",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "integer"
+              ]
+            },
+            "extension": {
+              "path": "MolecularSequence.relative.edit.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "MolecularSequence.relative.edit.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "MolecularSequence.relative.edit.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "replacedSequence": {
+              "path": "MolecularSequence.relative.edit.replacedSequence",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "replacementSequence": {
+              "path": "MolecularSequence.relative.edit.replacementSequence",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "start": {
+              "path": "MolecularSequence.relative.edit.start",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "extension": {
+          "path": "MolecularSequence.relative.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MolecularSequence.relative.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "MolecularSequence.relative.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "ordinalPosition": {
+          "path": "MolecularSequence.relative.ordinalPosition",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "integer"
+          ]
+        },
+        "sequenceRange": {
+          "path": "MolecularSequence.relative.sequenceRange",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Range"
+          ]
+        },
+        "startingSequence": {
+          "path": "MolecularSequence.relative.startingSequence",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "chromosome": {
+              "path": "MolecularSequence.relative.startingSequence.chromosome",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://loinc.org/LL2938-0/|5.0.0"
+              }
+            },
+            "extension": {
+              "path": "MolecularSequence.relative.startingSequence.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "genomeAssembly": {
+              "path": "MolecularSequence.relative.startingSequence.genomeAssembly",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://loinc.org/LL1040-6/"
+              }
+            },
+            "id": {
+              "path": "MolecularSequence.relative.startingSequence.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "MolecularSequence.relative.startingSequence.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "orientation": {
+              "path": "MolecularSequence.relative.startingSequence.orientation",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/orientation-type|5.0.0"
+              }
+            },
+            "sequence": {
+              "path": "MolecularSequence.relative.startingSequence.sequence[x]",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept",
+                "string",
+                "Reference"
+              ],
+              "choices": [
+                "sequenceCodeableConcept",
+                "sequenceString",
+                "sequenceReference"
+              ]
+            },
+            "strand": {
+              "path": "MolecularSequence.relative.startingSequence.strand",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/strand-type|5.0.0"
+              }
+            },
+            "windowEnd": {
+              "path": "MolecularSequence.relative.startingSequence.windowEnd",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "integer"
+              ]
+            },
+            "windowStart": {
+              "path": "MolecularSequence.relative.startingSequence.windowStart",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "integer"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "specimen": {
+      "path": "MolecularSequence.specimen",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "subject": {
+      "path": "MolecularSequence.subject",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "text": {
+      "path": "MolecularSequence.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "type": {
+      "path": "MolecularSequence.type",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/sequence-type|5.0.0"
+      }
+    }
+  }
+}

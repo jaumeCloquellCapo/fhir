@@ -1,0 +1,226 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/ImmunizationEvaluation",
+  "type": "ImmunizationEvaluation",
+  "name": "ImmunizationEvaluation",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "doseStatus",
+    "immunizationEvent",
+    "patient",
+    "status",
+    "targetDisease"
+  ],
+  "elements": {
+    "authority": {
+      "path": "ImmunizationEvaluation.authority",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "contained": {
+      "path": "ImmunizationEvaluation.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "date": {
+      "path": "ImmunizationEvaluation.date",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "description": {
+      "path": "ImmunizationEvaluation.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "doseNumber": {
+      "path": "ImmunizationEvaluation.doseNumber",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "doseStatus": {
+      "path": "ImmunizationEvaluation.doseStatus",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/immunization-evaluation-dose-status"
+      }
+    },
+    "doseStatusReason": {
+      "path": "ImmunizationEvaluation.doseStatusReason",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/immunization-evaluation-dose-status-reason"
+      }
+    },
+    "extension": {
+      "path": "ImmunizationEvaluation.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "ImmunizationEvaluation.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "ImmunizationEvaluation.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "immunizationEvent": {
+      "path": "ImmunizationEvaluation.immunizationEvent",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "implicitRules": {
+      "path": "ImmunizationEvaluation.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "ImmunizationEvaluation.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "ImmunizationEvaluation.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "ImmunizationEvaluation.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "patient": {
+      "path": "ImmunizationEvaluation.patient",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "series": {
+      "path": "ImmunizationEvaluation.series",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "seriesDoses": {
+      "path": "ImmunizationEvaluation.seriesDoses",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "status": {
+      "path": "ImmunizationEvaluation.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/immunization-evaluation-status|5.0.0"
+      }
+    },
+    "targetDisease": {
+      "path": "ImmunizationEvaluation.targetDisease",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/immunization-target-disease"
+      }
+    },
+    "text": {
+      "path": "ImmunizationEvaluation.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

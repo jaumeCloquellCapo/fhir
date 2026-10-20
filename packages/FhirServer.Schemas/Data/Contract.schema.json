@@ -1,0 +1,1862 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Contract",
+  "type": "Contract",
+  "name": "Contract",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "alias": {
+      "path": "Contract.alias",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "string"
+      ]
+    },
+    "applies": {
+      "path": "Contract.applies",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ]
+    },
+    "author": {
+      "path": "Contract.author",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "authority": {
+      "path": "Contract.authority",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "contained": {
+      "path": "Contract.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "contentDefinition": {
+      "path": "Contract.contentDefinition",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "copyright": {
+          "path": "Contract.contentDefinition.copyright",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "extension": {
+          "path": "Contract.contentDefinition.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Contract.contentDefinition.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Contract.contentDefinition.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "publicationDate": {
+          "path": "Contract.contentDefinition.publicationDate",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "dateTime"
+          ]
+        },
+        "publicationStatus": {
+          "path": "Contract.contentDefinition.publicationStatus",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/contract-publicationstatus|5.0.0"
+          }
+        },
+        "publisher": {
+          "path": "Contract.contentDefinition.publisher",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "subType": {
+          "path": "Contract.contentDefinition.subType",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/contract-definition-subtype"
+          }
+        },
+        "type": {
+          "path": "Contract.contentDefinition.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/contract-definition-type"
+          }
+        }
+      }
+    },
+    "contentDerivative": {
+      "path": "Contract.contentDerivative",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/contract-content-derivative"
+      }
+    },
+    "domain": {
+      "path": "Contract.domain",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "expirationType": {
+      "path": "Contract.expirationType",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/contract-expiration-type"
+      }
+    },
+    "extension": {
+      "path": "Contract.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "friendly": {
+      "path": "Contract.friendly",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "content": {
+          "path": "Contract.friendly.content[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Attachment",
+            "Reference"
+          ],
+          "choices": [
+            "contentAttachment",
+            "contentReference"
+          ]
+        },
+        "extension": {
+          "path": "Contract.friendly.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Contract.friendly.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Contract.friendly.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "id": {
+      "path": "Contract.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Contract.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "Contract.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "instantiatesCanonical": {
+      "path": "Contract.instantiatesCanonical",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "instantiatesUri": {
+      "path": "Contract.instantiatesUri",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "issued": {
+      "path": "Contract.issued",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "language": {
+      "path": "Contract.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "legal": {
+      "path": "Contract.legal",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "content": {
+          "path": "Contract.legal.content[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Attachment",
+            "Reference"
+          ],
+          "choices": [
+            "contentAttachment",
+            "contentReference"
+          ]
+        },
+        "extension": {
+          "path": "Contract.legal.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Contract.legal.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Contract.legal.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "legalState": {
+      "path": "Contract.legalState",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/contract-legalstate"
+      }
+    },
+    "legallyBinding": {
+      "path": "Contract.legallyBinding[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Attachment",
+        "Reference"
+      ],
+      "choices": [
+        "legallyBindingAttachment",
+        "legallyBindingReference"
+      ]
+    },
+    "meta": {
+      "path": "Contract.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "Contract.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "Contract.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "relevantHistory": {
+      "path": "Contract.relevantHistory",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "rule": {
+      "path": "Contract.rule",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "content": {
+          "path": "Contract.rule.content[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Attachment",
+            "Reference"
+          ],
+          "choices": [
+            "contentAttachment",
+            "contentReference"
+          ]
+        },
+        "extension": {
+          "path": "Contract.rule.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Contract.rule.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Contract.rule.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "scope": {
+      "path": "Contract.scope",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/contract-scope"
+      }
+    },
+    "signer": {
+      "path": "Contract.signer",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Contract.signer.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Contract.signer.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Contract.signer.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "party": {
+          "path": "Contract.signer.party",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "signature": {
+          "path": "Contract.signer.signature",
+          "min": 1,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Signature"
+          ]
+        },
+        "type": {
+          "path": "Contract.signer.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Coding"
+          ],
+          "binding": {
+            "strength": "preferred",
+            "valueSet": "http://hl7.org/fhir/ValueSet/contract-signer-type"
+          }
+        }
+      }
+    },
+    "site": {
+      "path": "Contract.site",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "status": {
+      "path": "Contract.status",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/contract-status|5.0.0"
+      }
+    },
+    "subType": {
+      "path": "Contract.subType",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/contract-subtype"
+      }
+    },
+    "subject": {
+      "path": "Contract.subject",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "subtitle": {
+      "path": "Contract.subtitle",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "supportingInfo": {
+      "path": "Contract.supportingInfo",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "term": {
+      "path": "Contract.term",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "action": {
+          "path": "Contract.term.action",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "context": {
+              "path": "Contract.term.action.context",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            },
+            "contextLinkId": {
+              "path": "Contract.term.action.contextLinkId",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "string"
+              ]
+            },
+            "doNotPerform": {
+              "path": "Contract.term.action.doNotPerform",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "extension": {
+              "path": "Contract.term.action.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Contract.term.action.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "intent": {
+              "path": "Contract.term.action.intent",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://terminology.hl7.org/ValueSet/v3-PurposeOfUse"
+              }
+            },
+            "linkId": {
+              "path": "Contract.term.action.linkId",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "string"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Contract.term.action.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "note": {
+              "path": "Contract.term.action.note",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Annotation"
+              ]
+            },
+            "occurrence": {
+              "path": "Contract.term.action.occurrence[x]",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "dateTime",
+                "Period",
+                "Timing"
+              ],
+              "choices": [
+                "occurrenceDateTime",
+                "occurrencePeriod",
+                "occurrenceTiming"
+              ]
+            },
+            "performer": {
+              "path": "Contract.term.action.performer",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            },
+            "performerLinkId": {
+              "path": "Contract.term.action.performerLinkId",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "string"
+              ]
+            },
+            "performerRole": {
+              "path": "Contract.term.action.performerRole",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/security-role-type"
+              }
+            },
+            "performerType": {
+              "path": "Contract.term.action.performerType",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/participation-role-type"
+              }
+            },
+            "reason": {
+              "path": "Contract.term.action.reason",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableReference"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://terminology.hl7.org/ValueSet/v3-PurposeOfUse"
+              }
+            },
+            "reasonLinkId": {
+              "path": "Contract.term.action.reasonLinkId",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "string"
+              ]
+            },
+            "requester": {
+              "path": "Contract.term.action.requester",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Reference"
+              ]
+            },
+            "requesterLinkId": {
+              "path": "Contract.term.action.requesterLinkId",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "string"
+              ]
+            },
+            "securityLabelNumber": {
+              "path": "Contract.term.action.securityLabelNumber",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "unsignedInt"
+              ]
+            },
+            "status": {
+              "path": "Contract.term.action.status",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/contract-actionstatus"
+              }
+            },
+            "subject": {
+              "path": "Contract.term.action.subject",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "extension": {
+                  "path": "Contract.term.action.subject.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "Contract.term.action.subject.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "Contract.term.action.subject.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "reference": {
+                  "path": "Contract.term.action.subject.reference",
+                  "min": 1,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Reference"
+                  ]
+                },
+                "role": {
+                  "path": "Contract.term.action.subject.role",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/contract-actorrole"
+                  }
+                }
+              }
+            },
+            "type": {
+              "path": "Contract.term.action.type",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/contract-action"
+              }
+            }
+          }
+        },
+        "applies": {
+          "path": "Contract.term.applies",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Period"
+          ]
+        },
+        "asset": {
+          "path": "Contract.term.asset",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "answer": {
+              "path": "Contract.term.asset.answer",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [],
+              "contentReference": "#Contract.term.offer.answer"
+            },
+            "condition": {
+              "path": "Contract.term.asset.condition",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "context": {
+              "path": "Contract.term.asset.context",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "code": {
+                  "path": "Contract.term.asset.context.code",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/contract-assetcontext"
+                  }
+                },
+                "extension": {
+                  "path": "Contract.term.asset.context.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "Contract.term.asset.context.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "Contract.term.asset.context.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "reference": {
+                  "path": "Contract.term.asset.context.reference",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Reference"
+                  ]
+                },
+                "text": {
+                  "path": "Contract.term.asset.context.text",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                }
+              }
+            },
+            "extension": {
+              "path": "Contract.term.asset.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Contract.term.asset.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "linkId": {
+              "path": "Contract.term.asset.linkId",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "string"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Contract.term.asset.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "period": {
+              "path": "Contract.term.asset.period",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Period"
+              ]
+            },
+            "periodType": {
+              "path": "Contract.term.asset.periodType",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/asset-availability"
+              }
+            },
+            "relationship": {
+              "path": "Contract.term.asset.relationship",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Coding"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/consent-content-class"
+              }
+            },
+            "scope": {
+              "path": "Contract.term.asset.scope",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/contract-assetscope"
+              }
+            },
+            "securityLabelNumber": {
+              "path": "Contract.term.asset.securityLabelNumber",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "unsignedInt"
+              ]
+            },
+            "subtype": {
+              "path": "Contract.term.asset.subtype",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/contract-assetsubtype"
+              }
+            },
+            "text": {
+              "path": "Contract.term.asset.text",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "type": {
+              "path": "Contract.term.asset.type",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/contract-assettype"
+              }
+            },
+            "typeReference": {
+              "path": "Contract.term.asset.typeReference",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Reference"
+              ]
+            },
+            "usePeriod": {
+              "path": "Contract.term.asset.usePeriod",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Period"
+              ]
+            },
+            "valuedItem": {
+              "path": "Contract.term.asset.valuedItem",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "effectiveTime": {
+                  "path": "Contract.term.asset.valuedItem.effectiveTime",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "dateTime"
+                  ]
+                },
+                "entity": {
+                  "path": "Contract.term.asset.valuedItem.entity[x]",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept",
+                    "Reference"
+                  ],
+                  "choices": [
+                    "entityCodeableConcept",
+                    "entityReference"
+                  ]
+                },
+                "extension": {
+                  "path": "Contract.term.asset.valuedItem.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "factor": {
+                  "path": "Contract.term.asset.valuedItem.factor",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "decimal"
+                  ]
+                },
+                "id": {
+                  "path": "Contract.term.asset.valuedItem.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "identifier": {
+                  "path": "Contract.term.asset.valuedItem.identifier",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Identifier"
+                  ]
+                },
+                "linkId": {
+                  "path": "Contract.term.asset.valuedItem.linkId",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "Contract.term.asset.valuedItem.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "net": {
+                  "path": "Contract.term.asset.valuedItem.net",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Money"
+                  ]
+                },
+                "payment": {
+                  "path": "Contract.term.asset.valuedItem.payment",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "paymentDate": {
+                  "path": "Contract.term.asset.valuedItem.paymentDate",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "dateTime"
+                  ]
+                },
+                "points": {
+                  "path": "Contract.term.asset.valuedItem.points",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "decimal"
+                  ]
+                },
+                "quantity": {
+                  "path": "Contract.term.asset.valuedItem.quantity",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Quantity"
+                  ]
+                },
+                "recipient": {
+                  "path": "Contract.term.asset.valuedItem.recipient",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Reference"
+                  ]
+                },
+                "responsible": {
+                  "path": "Contract.term.asset.valuedItem.responsible",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Reference"
+                  ]
+                },
+                "securityLabelNumber": {
+                  "path": "Contract.term.asset.valuedItem.securityLabelNumber",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "unsignedInt"
+                  ]
+                },
+                "unitPrice": {
+                  "path": "Contract.term.asset.valuedItem.unitPrice",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Money"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "extension": {
+          "path": "Contract.term.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "group": {
+          "path": "Contract.term.group",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#Contract.term"
+        },
+        "id": {
+          "path": "Contract.term.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "identifier": {
+          "path": "Contract.term.identifier",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "issued": {
+          "path": "Contract.term.issued",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "dateTime"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Contract.term.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "offer": {
+          "path": "Contract.term.offer",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "answer": {
+              "path": "Contract.term.offer.answer",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "extension": {
+                  "path": "Contract.term.offer.answer.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "Contract.term.offer.answer.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "Contract.term.offer.answer.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "value": {
+                  "path": "Contract.term.offer.answer.value[x]",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "boolean",
+                    "decimal",
+                    "integer",
+                    "date",
+                    "dateTime",
+                    "time",
+                    "string",
+                    "uri",
+                    "Attachment",
+                    "Coding",
+                    "Quantity",
+                    "Reference"
+                  ],
+                  "choices": [
+                    "valueBoolean",
+                    "valueDecimal",
+                    "valueInteger",
+                    "valueDate",
+                    "valueDateTime",
+                    "valueTime",
+                    "valueString",
+                    "valueUri",
+                    "valueAttachment",
+                    "valueCoding",
+                    "valueQuantity",
+                    "valueReference"
+                  ]
+                }
+              }
+            },
+            "decision": {
+              "path": "Contract.term.offer.decision",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://terminology.hl7.org/ValueSet/v3-ActConsentDirective"
+              }
+            },
+            "decisionMode": {
+              "path": "Contract.term.offer.decisionMode",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/contract-decision-mode"
+              }
+            },
+            "extension": {
+              "path": "Contract.term.offer.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Contract.term.offer.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "identifier": {
+              "path": "Contract.term.offer.identifier",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Identifier"
+              ]
+            },
+            "linkId": {
+              "path": "Contract.term.offer.linkId",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "string"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Contract.term.offer.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "party": {
+              "path": "Contract.term.offer.party",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "extension": {
+                  "path": "Contract.term.offer.party.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "Contract.term.offer.party.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "Contract.term.offer.party.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "reference": {
+                  "path": "Contract.term.offer.party.reference",
+                  "min": 1,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Reference"
+                  ]
+                },
+                "role": {
+                  "path": "Contract.term.offer.party.role",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/contract-party-role"
+                  }
+                }
+              }
+            },
+            "securityLabelNumber": {
+              "path": "Contract.term.offer.securityLabelNumber",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "unsignedInt"
+              ]
+            },
+            "text": {
+              "path": "Contract.term.offer.text",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "topic": {
+              "path": "Contract.term.offer.topic",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            },
+            "type": {
+              "path": "Contract.term.offer.type",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/contract-term-type"
+              }
+            }
+          }
+        },
+        "securityLabel": {
+          "path": "Contract.term.securityLabel",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "category": {
+              "path": "Contract.term.securityLabel.category",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Coding"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/contract-security-category"
+              }
+            },
+            "classification": {
+              "path": "Contract.term.securityLabel.classification",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Coding"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/contract-security-classification"
+              }
+            },
+            "control": {
+              "path": "Contract.term.securityLabel.control",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Coding"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/contract-security-control"
+              }
+            },
+            "extension": {
+              "path": "Contract.term.securityLabel.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Contract.term.securityLabel.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Contract.term.securityLabel.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "number": {
+              "path": "Contract.term.securityLabel.number",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "unsignedInt"
+              ]
+            }
+          }
+        },
+        "subType": {
+          "path": "Contract.term.subType",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/contract-term-subtype"
+          }
+        },
+        "text": {
+          "path": "Contract.term.text",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "topic": {
+          "path": "Contract.term.topic[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept",
+            "Reference"
+          ],
+          "choices": [
+            "topicCodeableConcept",
+            "topicReference"
+          ]
+        },
+        "type": {
+          "path": "Contract.term.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/contract-term-type"
+          }
+        }
+      }
+    },
+    "text": {
+      "path": "Contract.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "title": {
+      "path": "Contract.title",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "topic": {
+      "path": "Contract.topic[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept",
+        "Reference"
+      ],
+      "choices": [
+        "topicCodeableConcept",
+        "topicReference"
+      ]
+    },
+    "type": {
+      "path": "Contract.type",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/contract-type"
+      }
+    },
+    "url": {
+      "path": "Contract.url",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "version": {
+      "path": "Contract.version",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    }
+  }
+}

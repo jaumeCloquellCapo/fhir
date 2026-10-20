@@ -1,0 +1,127 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/SampledData",
+  "type": "SampledData",
+  "name": "SampledData",
+  "kind": "complex-type",
+  "derivation": "specialization",
+  "required": [
+    "dimensions",
+    "intervalUnit",
+    "origin"
+  ],
+  "elements": {
+    "codeMap": {
+      "path": "SampledData.codeMap",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "canonical"
+      ]
+    },
+    "data": {
+      "path": "SampledData.data",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "dimensions": {
+      "path": "SampledData.dimensions",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "positiveInt"
+      ]
+    },
+    "extension": {
+      "path": "SampledData.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "factor": {
+      "path": "SampledData.factor",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "decimal"
+      ]
+    },
+    "id": {
+      "path": "SampledData.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "interval": {
+      "path": "SampledData.interval",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "decimal"
+      ]
+    },
+    "intervalUnit": {
+      "path": "SampledData.intervalUnit",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/ucum-units|5.0.0"
+      }
+    },
+    "lowerLimit": {
+      "path": "SampledData.lowerLimit",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "decimal"
+      ]
+    },
+    "offsets": {
+      "path": "SampledData.offsets",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "origin": {
+      "path": "SampledData.origin",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Quantity"
+      ]
+    },
+    "upperLimit": {
+      "path": "SampledData.upperLimit",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "decimal"
+      ]
+    }
+  }
+}

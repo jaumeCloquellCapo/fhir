@@ -1,0 +1,47 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/CodeableReference",
+  "type": "CodeableReference",
+  "name": "CodeableReference",
+  "kind": "complex-type",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "concept": {
+      "path": "CodeableReference.concept",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "extension": {
+      "path": "CodeableReference.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "CodeableReference.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "reference": {
+      "path": "CodeableReference.reference",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    }
+  }
+}

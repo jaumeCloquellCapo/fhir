@@ -1,0 +1,766 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/MeasureReport",
+  "type": "MeasureReport",
+  "name": "MeasureReport",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "period",
+    "status",
+    "type"
+  ],
+  "elements": {
+    "contained": {
+      "path": "MeasureReport.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "dataUpdateType": {
+      "path": "MeasureReport.dataUpdateType",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/submit-data-update-type|5.0.0"
+      }
+    },
+    "date": {
+      "path": "MeasureReport.date",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "evaluatedResource": {
+      "path": "MeasureReport.evaluatedResource",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "extension": {
+      "path": "MeasureReport.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "group": {
+      "path": "MeasureReport.group",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "code": {
+          "path": "MeasureReport.group.code",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/measure-group-example"
+          }
+        },
+        "extension": {
+          "path": "MeasureReport.group.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MeasureReport.group.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "linkId": {
+          "path": "MeasureReport.group.linkId",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "measureScore": {
+          "path": "MeasureReport.group.measureScore[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity",
+            "dateTime",
+            "CodeableConcept",
+            "Period",
+            "Range",
+            "Duration"
+          ],
+          "choices": [
+            "measureScoreQuantity",
+            "measureScoreDateTime",
+            "measureScoreCodeableConcept",
+            "measureScorePeriod",
+            "measureScoreRange",
+            "measureScoreDuration"
+          ]
+        },
+        "modifierExtension": {
+          "path": "MeasureReport.group.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "population": {
+          "path": "MeasureReport.group.population",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "code": {
+              "path": "MeasureReport.group.population.code",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/measure-population"
+              }
+            },
+            "count": {
+              "path": "MeasureReport.group.population.count",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "integer"
+              ]
+            },
+            "extension": {
+              "path": "MeasureReport.group.population.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "MeasureReport.group.population.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "linkId": {
+              "path": "MeasureReport.group.population.linkId",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "modifierExtension": {
+              "path": "MeasureReport.group.population.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "subjectReport": {
+              "path": "MeasureReport.group.population.subjectReport",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Reference"
+              ]
+            },
+            "subjectResults": {
+              "path": "MeasureReport.group.population.subjectResults",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            },
+            "subjects": {
+              "path": "MeasureReport.group.population.subjects",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            }
+          }
+        },
+        "stratifier": {
+          "path": "MeasureReport.group.stratifier",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "code": {
+              "path": "MeasureReport.group.stratifier.code",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/measure-stratifier-example"
+              }
+            },
+            "extension": {
+              "path": "MeasureReport.group.stratifier.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "MeasureReport.group.stratifier.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "linkId": {
+              "path": "MeasureReport.group.stratifier.linkId",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "modifierExtension": {
+              "path": "MeasureReport.group.stratifier.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "stratum": {
+              "path": "MeasureReport.group.stratifier.stratum",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "component": {
+                  "path": "MeasureReport.group.stratifier.stratum.component",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "BackboneElement"
+                  ],
+                  "elements": {
+                    "code": {
+                      "path": "MeasureReport.group.stratifier.stratum.component.code",
+                      "min": 1,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "CodeableConcept"
+                      ],
+                      "binding": {
+                        "strength": "example",
+                        "valueSet": "http://hl7.org/fhir/ValueSet/measure-stratifier-example"
+                      }
+                    },
+                    "extension": {
+                      "path": "MeasureReport.group.stratifier.stratum.component.extension",
+                      "min": 0,
+                      "max": "*",
+                      "array": true,
+                      "type": [
+                        "Extension"
+                      ]
+                    },
+                    "id": {
+                      "path": "MeasureReport.group.stratifier.stratum.component.id",
+                      "min": 0,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "http://hl7.org/fhirpath/System.String"
+                      ]
+                    },
+                    "linkId": {
+                      "path": "MeasureReport.group.stratifier.stratum.component.linkId",
+                      "min": 0,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "modifierExtension": {
+                      "path": "MeasureReport.group.stratifier.stratum.component.modifierExtension",
+                      "min": 0,
+                      "max": "*",
+                      "array": true,
+                      "type": [
+                        "Extension"
+                      ]
+                    },
+                    "value": {
+                      "path": "MeasureReport.group.stratifier.stratum.component.value[x]",
+                      "min": 1,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "CodeableConcept",
+                        "boolean",
+                        "Quantity",
+                        "Range",
+                        "Reference"
+                      ],
+                      "binding": {
+                        "strength": "example",
+                        "valueSet": "http://hl7.org/fhir/ValueSet/measurereport-stratifier-value-example"
+                      },
+                      "choices": [
+                        "valueCodeableConcept",
+                        "valueBoolean",
+                        "valueQuantity",
+                        "valueRange",
+                        "valueReference"
+                      ]
+                    }
+                  }
+                },
+                "extension": {
+                  "path": "MeasureReport.group.stratifier.stratum.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "MeasureReport.group.stratifier.stratum.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "measureScore": {
+                  "path": "MeasureReport.group.stratifier.stratum.measureScore[x]",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Quantity",
+                    "dateTime",
+                    "CodeableConcept",
+                    "Period",
+                    "Range",
+                    "Duration"
+                  ],
+                  "choices": [
+                    "measureScoreQuantity",
+                    "measureScoreDateTime",
+                    "measureScoreCodeableConcept",
+                    "measureScorePeriod",
+                    "measureScoreRange",
+                    "measureScoreDuration"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "MeasureReport.group.stratifier.stratum.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "population": {
+                  "path": "MeasureReport.group.stratifier.stratum.population",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "BackboneElement"
+                  ],
+                  "elements": {
+                    "code": {
+                      "path": "MeasureReport.group.stratifier.stratum.population.code",
+                      "min": 0,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "CodeableConcept"
+                      ],
+                      "binding": {
+                        "strength": "extensible",
+                        "valueSet": "http://hl7.org/fhir/ValueSet/measure-population"
+                      }
+                    },
+                    "count": {
+                      "path": "MeasureReport.group.stratifier.stratum.population.count",
+                      "min": 0,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "integer"
+                      ]
+                    },
+                    "extension": {
+                      "path": "MeasureReport.group.stratifier.stratum.population.extension",
+                      "min": 0,
+                      "max": "*",
+                      "array": true,
+                      "type": [
+                        "Extension"
+                      ]
+                    },
+                    "id": {
+                      "path": "MeasureReport.group.stratifier.stratum.population.id",
+                      "min": 0,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "http://hl7.org/fhirpath/System.String"
+                      ]
+                    },
+                    "linkId": {
+                      "path": "MeasureReport.group.stratifier.stratum.population.linkId",
+                      "min": 0,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "modifierExtension": {
+                      "path": "MeasureReport.group.stratifier.stratum.population.modifierExtension",
+                      "min": 0,
+                      "max": "*",
+                      "array": true,
+                      "type": [
+                        "Extension"
+                      ]
+                    },
+                    "subjectReport": {
+                      "path": "MeasureReport.group.stratifier.stratum.population.subjectReport",
+                      "min": 0,
+                      "max": "*",
+                      "array": true,
+                      "type": [
+                        "Reference"
+                      ]
+                    },
+                    "subjectResults": {
+                      "path": "MeasureReport.group.stratifier.stratum.population.subjectResults",
+                      "min": 0,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "Reference"
+                      ]
+                    },
+                    "subjects": {
+                      "path": "MeasureReport.group.stratifier.stratum.population.subjects",
+                      "min": 0,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "Reference"
+                      ]
+                    }
+                  }
+                },
+                "value": {
+                  "path": "MeasureReport.group.stratifier.stratum.value[x]",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept",
+                    "boolean",
+                    "Quantity",
+                    "Range",
+                    "Reference"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/measurereport-stratifier-value-example"
+                  },
+                  "choices": [
+                    "valueCodeableConcept",
+                    "valueBoolean",
+                    "valueQuantity",
+                    "valueRange",
+                    "valueReference"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "subject": {
+          "path": "MeasureReport.group.subject",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    },
+    "id": {
+      "path": "MeasureReport.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "MeasureReport.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "MeasureReport.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "improvementNotation": {
+      "path": "MeasureReport.improvementNotation",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/measure-improvement-notation|5.0.0"
+      }
+    },
+    "inputParameters": {
+      "path": "MeasureReport.inputParameters",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "language": {
+      "path": "MeasureReport.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "location": {
+      "path": "MeasureReport.location",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "measure": {
+      "path": "MeasureReport.measure",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "canonical"
+      ]
+    },
+    "meta": {
+      "path": "MeasureReport.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "MeasureReport.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "period": {
+      "path": "MeasureReport.period",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ]
+    },
+    "reporter": {
+      "path": "MeasureReport.reporter",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "reportingVendor": {
+      "path": "MeasureReport.reportingVendor",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "scoring": {
+      "path": "MeasureReport.scoring",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://terminology.hl7.org/ValueSet/measure-scoring"
+      }
+    },
+    "status": {
+      "path": "MeasureReport.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/measure-report-status|5.0.0"
+      }
+    },
+    "subject": {
+      "path": "MeasureReport.subject",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "supplementalData": {
+      "path": "MeasureReport.supplementalData",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "text": {
+      "path": "MeasureReport.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "type": {
+      "path": "MeasureReport.type",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/measure-report-type|5.0.0"
+      }
+    }
+  }
+}

@@ -1,0 +1,462 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/MedicationAdministration",
+  "type": "MedicationAdministration",
+  "name": "MedicationAdministration",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "medication",
+    "status",
+    "subject"
+  ],
+  "elements": {
+    "basedOn": {
+      "path": "MedicationAdministration.basedOn",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "category": {
+      "path": "MedicationAdministration.category",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medication-admin-location"
+      }
+    },
+    "contained": {
+      "path": "MedicationAdministration.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "device": {
+      "path": "MedicationAdministration.device",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ]
+    },
+    "dosage": {
+      "path": "MedicationAdministration.dosage",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "dose": {
+          "path": "MedicationAdministration.dosage.dose",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity"
+          ]
+        },
+        "extension": {
+          "path": "MedicationAdministration.dosage.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MedicationAdministration.dosage.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "method": {
+          "path": "MedicationAdministration.dosage.method",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/administration-method-codes"
+          }
+        },
+        "modifierExtension": {
+          "path": "MedicationAdministration.dosage.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "rate": {
+          "path": "MedicationAdministration.dosage.rate[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Ratio",
+            "Quantity"
+          ],
+          "choices": [
+            "rateRatio",
+            "rateQuantity"
+          ]
+        },
+        "route": {
+          "path": "MedicationAdministration.dosage.route",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/route-codes"
+          }
+        },
+        "site": {
+          "path": "MedicationAdministration.dosage.site",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/approach-site-codes"
+          }
+        },
+        "text": {
+          "path": "MedicationAdministration.dosage.text",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        }
+      }
+    },
+    "encounter": {
+      "path": "MedicationAdministration.encounter",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "eventHistory": {
+      "path": "MedicationAdministration.eventHistory",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "extension": {
+      "path": "MedicationAdministration.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "MedicationAdministration.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "MedicationAdministration.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "MedicationAdministration.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "isSubPotent": {
+      "path": "MedicationAdministration.isSubPotent",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "language": {
+      "path": "MedicationAdministration.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "medication": {
+      "path": "MedicationAdministration.medication",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableReference"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medication-codes"
+      }
+    },
+    "meta": {
+      "path": "MedicationAdministration.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "MedicationAdministration.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "note": {
+      "path": "MedicationAdministration.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "occurence": {
+      "path": "MedicationAdministration.occurence[x]",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime",
+        "Period",
+        "Timing"
+      ],
+      "choices": [
+        "occurenceDateTime",
+        "occurencePeriod",
+        "occurenceTiming"
+      ]
+    },
+    "partOf": {
+      "path": "MedicationAdministration.partOf",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "performer": {
+      "path": "MedicationAdministration.performer",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "actor": {
+          "path": "MedicationAdministration.performer.actor",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableReference"
+          ]
+        },
+        "extension": {
+          "path": "MedicationAdministration.performer.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "function": {
+          "path": "MedicationAdministration.performer.function",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/med-admin-perform-function"
+          }
+        },
+        "id": {
+          "path": "MedicationAdministration.performer.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "MedicationAdministration.performer.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "reason": {
+      "path": "MedicationAdministration.reason",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/reason-medication-given-codes"
+      }
+    },
+    "recorded": {
+      "path": "MedicationAdministration.recorded",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "request": {
+      "path": "MedicationAdministration.request",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "status": {
+      "path": "MedicationAdministration.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medication-admin-status|5.0.0"
+      }
+    },
+    "statusReason": {
+      "path": "MedicationAdministration.statusReason",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/reason-medication-not-given-codes"
+      }
+    },
+    "subPotentReason": {
+      "path": "MedicationAdministration.subPotentReason",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/administration-subpotent-reason"
+      }
+    },
+    "subject": {
+      "path": "MedicationAdministration.subject",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "supportingInformation": {
+      "path": "MedicationAdministration.supportingInformation",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "text": {
+      "path": "MedicationAdministration.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

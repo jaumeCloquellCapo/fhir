@@ -1,0 +1,341 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse",
+  "type": "QuestionnaireResponse",
+  "name": "QuestionnaireResponse",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "questionnaire",
+    "status"
+  ],
+  "elements": {
+    "author": {
+      "path": "QuestionnaireResponse.author",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "authored": {
+      "path": "QuestionnaireResponse.authored",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "basedOn": {
+      "path": "QuestionnaireResponse.basedOn",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "contained": {
+      "path": "QuestionnaireResponse.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "encounter": {
+      "path": "QuestionnaireResponse.encounter",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "extension": {
+      "path": "QuestionnaireResponse.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "QuestionnaireResponse.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "QuestionnaireResponse.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "QuestionnaireResponse.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "item": {
+      "path": "QuestionnaireResponse.item",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "answer": {
+          "path": "QuestionnaireResponse.item.answer",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "QuestionnaireResponse.item.answer.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "QuestionnaireResponse.item.answer.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "item": {
+              "path": "QuestionnaireResponse.item.answer.item",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [],
+              "contentReference": "#QuestionnaireResponse.item"
+            },
+            "modifierExtension": {
+              "path": "QuestionnaireResponse.item.answer.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "value": {
+              "path": "QuestionnaireResponse.item.answer.value[x]",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean",
+                "decimal",
+                "integer",
+                "date",
+                "dateTime",
+                "time",
+                "string",
+                "uri",
+                "Attachment",
+                "Coding",
+                "Quantity",
+                "Reference"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choices": [
+                "valueBoolean",
+                "valueDecimal",
+                "valueInteger",
+                "valueDate",
+                "valueDateTime",
+                "valueTime",
+                "valueString",
+                "valueUri",
+                "valueAttachment",
+                "valueCoding",
+                "valueQuantity",
+                "valueReference"
+              ]
+            }
+          }
+        },
+        "definition": {
+          "path": "QuestionnaireResponse.item.definition",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "uri"
+          ]
+        },
+        "extension": {
+          "path": "QuestionnaireResponse.item.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "QuestionnaireResponse.item.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "item": {
+          "path": "QuestionnaireResponse.item.item",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#QuestionnaireResponse.item"
+        },
+        "linkId": {
+          "path": "QuestionnaireResponse.item.linkId",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "modifierExtension": {
+          "path": "QuestionnaireResponse.item.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "text": {
+          "path": "QuestionnaireResponse.item.text",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        }
+      }
+    },
+    "language": {
+      "path": "QuestionnaireResponse.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "QuestionnaireResponse.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "QuestionnaireResponse.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "partOf": {
+      "path": "QuestionnaireResponse.partOf",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "questionnaire": {
+      "path": "QuestionnaireResponse.questionnaire",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "canonical"
+      ]
+    },
+    "source": {
+      "path": "QuestionnaireResponse.source",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "status": {
+      "path": "QuestionnaireResponse.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers-status|5.0.0"
+      }
+    },
+    "subject": {
+      "path": "QuestionnaireResponse.subject",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "text": {
+      "path": "QuestionnaireResponse.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

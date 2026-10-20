@@ -1,0 +1,646 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/GenomicStudy",
+  "type": "GenomicStudy",
+  "name": "GenomicStudy",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "status",
+    "subject"
+  ],
+  "elements": {
+    "analysis": {
+      "path": "GenomicStudy.analysis",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "changeType": {
+          "path": "GenomicStudy.analysis.changeType",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/genomicstudy-changetype"
+          }
+        },
+        "date": {
+          "path": "GenomicStudy.analysis.date",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "dateTime"
+          ]
+        },
+        "device": {
+          "path": "GenomicStudy.analysis.device",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "device": {
+              "path": "GenomicStudy.analysis.device.device",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            },
+            "extension": {
+              "path": "GenomicStudy.analysis.device.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "function": {
+              "path": "GenomicStudy.analysis.device.function",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ]
+            },
+            "id": {
+              "path": "GenomicStudy.analysis.device.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "GenomicStudy.analysis.device.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            }
+          }
+        },
+        "extension": {
+          "path": "GenomicStudy.analysis.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "focus": {
+          "path": "GenomicStudy.analysis.focus",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "genomeBuild": {
+          "path": "GenomicStudy.analysis.genomeBuild",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://loinc.org/vs/LL1040-6"
+          }
+        },
+        "id": {
+          "path": "GenomicStudy.analysis.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "identifier": {
+          "path": "GenomicStudy.analysis.identifier",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "input": {
+          "path": "GenomicStudy.analysis.input",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "GenomicStudy.analysis.input.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "file": {
+              "path": "GenomicStudy.analysis.input.file",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            },
+            "generatedBy": {
+              "path": "GenomicStudy.analysis.input.generatedBy[x]",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Identifier",
+                "Reference"
+              ],
+              "choices": [
+                "generatedByIdentifier",
+                "generatedByReference"
+              ]
+            },
+            "id": {
+              "path": "GenomicStudy.analysis.input.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "GenomicStudy.analysis.input.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "type": {
+              "path": "GenomicStudy.analysis.input.type",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/genomicstudy-dataformat"
+              }
+            }
+          }
+        },
+        "instantiatesCanonical": {
+          "path": "GenomicStudy.analysis.instantiatesCanonical",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "canonical"
+          ]
+        },
+        "instantiatesUri": {
+          "path": "GenomicStudy.analysis.instantiatesUri",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "uri"
+          ]
+        },
+        "methodType": {
+          "path": "GenomicStudy.analysis.methodType",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/genomicstudy-methodtype"
+          }
+        },
+        "modifierExtension": {
+          "path": "GenomicStudy.analysis.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "note": {
+          "path": "GenomicStudy.analysis.note",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Annotation"
+          ]
+        },
+        "output": {
+          "path": "GenomicStudy.analysis.output",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "GenomicStudy.analysis.output.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "file": {
+              "path": "GenomicStudy.analysis.output.file",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            },
+            "id": {
+              "path": "GenomicStudy.analysis.output.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "GenomicStudy.analysis.output.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "type": {
+              "path": "GenomicStudy.analysis.output.type",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/genomicstudy-dataformat"
+              }
+            }
+          }
+        },
+        "performer": {
+          "path": "GenomicStudy.analysis.performer",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "actor": {
+              "path": "GenomicStudy.analysis.performer.actor",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            },
+            "extension": {
+              "path": "GenomicStudy.analysis.performer.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "GenomicStudy.analysis.performer.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "GenomicStudy.analysis.performer.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "role": {
+              "path": "GenomicStudy.analysis.performer.role",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ]
+            }
+          }
+        },
+        "protocolPerformed": {
+          "path": "GenomicStudy.analysis.protocolPerformed",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "regionsCalled": {
+          "path": "GenomicStudy.analysis.regionsCalled",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "regionsStudied": {
+          "path": "GenomicStudy.analysis.regionsStudied",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "specimen": {
+          "path": "GenomicStudy.analysis.specimen",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "title": {
+          "path": "GenomicStudy.analysis.title",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        }
+      }
+    },
+    "basedOn": {
+      "path": "GenomicStudy.basedOn",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "contained": {
+      "path": "GenomicStudy.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "description": {
+      "path": "GenomicStudy.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "encounter": {
+      "path": "GenomicStudy.encounter",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "extension": {
+      "path": "GenomicStudy.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "GenomicStudy.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "GenomicStudy.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "GenomicStudy.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "instantiatesCanonical": {
+      "path": "GenomicStudy.instantiatesCanonical",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "canonical"
+      ]
+    },
+    "instantiatesUri": {
+      "path": "GenomicStudy.instantiatesUri",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "interpreter": {
+      "path": "GenomicStudy.interpreter",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "language": {
+      "path": "GenomicStudy.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "GenomicStudy.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "GenomicStudy.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "note": {
+      "path": "GenomicStudy.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "reason": {
+      "path": "GenomicStudy.reason",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ]
+    },
+    "referrer": {
+      "path": "GenomicStudy.referrer",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "startDate": {
+      "path": "GenomicStudy.startDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "status": {
+      "path": "GenomicStudy.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/genomicstudy-status|5.0.0"
+      }
+    },
+    "subject": {
+      "path": "GenomicStudy.subject",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "text": {
+      "path": "GenomicStudy.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "type": {
+      "path": "GenomicStudy.type",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/genomicstudy-type"
+      }
+    }
+  }
+}

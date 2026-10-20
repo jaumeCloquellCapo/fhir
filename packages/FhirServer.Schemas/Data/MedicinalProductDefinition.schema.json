@@ -1,0 +1,831 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/MedicinalProductDefinition",
+  "type": "MedicinalProductDefinition",
+  "name": "MedicinalProductDefinition",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "name"
+  ],
+  "elements": {
+    "additionalMonitoringIndicator": {
+      "path": "MedicinalProductDefinition.additionalMonitoringIndicator",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medicinal-product-additional-monitoring"
+      }
+    },
+    "attachedDocument": {
+      "path": "MedicinalProductDefinition.attachedDocument",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "characteristic": {
+      "path": "MedicinalProductDefinition.characteristic",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "MedicinalProductDefinition.characteristic.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MedicinalProductDefinition.characteristic.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "MedicinalProductDefinition.characteristic.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "MedicinalProductDefinition.characteristic.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/product-characteristic-codes"
+          }
+        },
+        "value": {
+          "path": "MedicinalProductDefinition.characteristic.value[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept",
+            "markdown",
+            "Quantity",
+            "integer",
+            "date",
+            "boolean",
+            "Attachment"
+          ],
+          "choices": [
+            "valueCodeableConcept",
+            "valueMarkdown",
+            "valueQuantity",
+            "valueInteger",
+            "valueDate",
+            "valueBoolean",
+            "valueAttachment"
+          ]
+        }
+      }
+    },
+    "classification": {
+      "path": "MedicinalProductDefinition.classification",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medicinal-product-classification"
+      }
+    },
+    "clinicalTrial": {
+      "path": "MedicinalProductDefinition.clinicalTrial",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "code": {
+      "path": "MedicinalProductDefinition.code",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Coding"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medication-codes"
+      }
+    },
+    "combinedPharmaceuticalDoseForm": {
+      "path": "MedicinalProductDefinition.combinedPharmaceuticalDoseForm",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/combined-dose-form"
+      }
+    },
+    "comprisedOf": {
+      "path": "MedicinalProductDefinition.comprisedOf",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "contact": {
+      "path": "MedicinalProductDefinition.contact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "contact": {
+          "path": "MedicinalProductDefinition.contact.contact",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "extension": {
+          "path": "MedicinalProductDefinition.contact.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MedicinalProductDefinition.contact.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "MedicinalProductDefinition.contact.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "MedicinalProductDefinition.contact.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/medicinal-product-contact-type"
+          }
+        }
+      }
+    },
+    "contained": {
+      "path": "MedicinalProductDefinition.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "crossReference": {
+      "path": "MedicinalProductDefinition.crossReference",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "MedicinalProductDefinition.crossReference.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MedicinalProductDefinition.crossReference.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "MedicinalProductDefinition.crossReference.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "product": {
+          "path": "MedicinalProductDefinition.crossReference.product",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableReference"
+          ]
+        },
+        "type": {
+          "path": "MedicinalProductDefinition.crossReference.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/medicinal-product-cross-reference-type"
+          }
+        }
+      }
+    },
+    "description": {
+      "path": "MedicinalProductDefinition.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "domain": {
+      "path": "MedicinalProductDefinition.domain",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medicinal-product-domain"
+      }
+    },
+    "extension": {
+      "path": "MedicinalProductDefinition.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "MedicinalProductDefinition.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "MedicinalProductDefinition.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "MedicinalProductDefinition.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "impurity": {
+      "path": "MedicinalProductDefinition.impurity",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/substance-codes"
+      }
+    },
+    "indication": {
+      "path": "MedicinalProductDefinition.indication",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "ingredient": {
+      "path": "MedicinalProductDefinition.ingredient",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/substance-codes"
+      }
+    },
+    "language": {
+      "path": "MedicinalProductDefinition.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "legalStatusOfSupply": {
+      "path": "MedicinalProductDefinition.legalStatusOfSupply",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/legal-status-of-supply"
+      }
+    },
+    "marketingStatus": {
+      "path": "MedicinalProductDefinition.marketingStatus",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "MarketingStatus"
+      ]
+    },
+    "masterFile": {
+      "path": "MedicinalProductDefinition.masterFile",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "meta": {
+      "path": "MedicinalProductDefinition.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "MedicinalProductDefinition.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "MedicinalProductDefinition.name",
+      "min": 1,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "MedicinalProductDefinition.name.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MedicinalProductDefinition.name.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "MedicinalProductDefinition.name.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "part": {
+          "path": "MedicinalProductDefinition.name.part",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "MedicinalProductDefinition.name.part.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "MedicinalProductDefinition.name.part.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "MedicinalProductDefinition.name.part.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "part": {
+              "path": "MedicinalProductDefinition.name.part.part",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "type": {
+              "path": "MedicinalProductDefinition.name.part.type",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/medicinal-product-name-part-type"
+              }
+            }
+          }
+        },
+        "productName": {
+          "path": "MedicinalProductDefinition.name.productName",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "type": {
+          "path": "MedicinalProductDefinition.name.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/medicinal-product-name-type"
+          }
+        },
+        "usage": {
+          "path": "MedicinalProductDefinition.name.usage",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "country": {
+              "path": "MedicinalProductDefinition.name.usage.country",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/country"
+              }
+            },
+            "extension": {
+              "path": "MedicinalProductDefinition.name.usage.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "MedicinalProductDefinition.name.usage.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "jurisdiction": {
+              "path": "MedicinalProductDefinition.name.usage.jurisdiction",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
+              }
+            },
+            "language": {
+              "path": "MedicinalProductDefinition.name.usage.language",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+              }
+            },
+            "modifierExtension": {
+              "path": "MedicinalProductDefinition.name.usage.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "operation": {
+      "path": "MedicinalProductDefinition.operation",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "confidentialityIndicator": {
+          "path": "MedicinalProductDefinition.operation.confidentialityIndicator",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/medicinal-product-confidentiality"
+          }
+        },
+        "effectiveDate": {
+          "path": "MedicinalProductDefinition.operation.effectiveDate",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Period"
+          ]
+        },
+        "extension": {
+          "path": "MedicinalProductDefinition.operation.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MedicinalProductDefinition.operation.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "MedicinalProductDefinition.operation.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "organization": {
+          "path": "MedicinalProductDefinition.operation.organization",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "type": {
+          "path": "MedicinalProductDefinition.operation.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableReference"
+          ]
+        }
+      }
+    },
+    "packagedMedicinalProduct": {
+      "path": "MedicinalProductDefinition.packagedMedicinalProduct",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medicinal-product-package-type"
+      }
+    },
+    "pediatricUseIndicator": {
+      "path": "MedicinalProductDefinition.pediatricUseIndicator",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medicinal-product-pediatric-use"
+      }
+    },
+    "route": {
+      "path": "MedicinalProductDefinition.route",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/route-codes"
+      }
+    },
+    "specialMeasures": {
+      "path": "MedicinalProductDefinition.specialMeasures",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medicinal-product-special-measures"
+      }
+    },
+    "status": {
+      "path": "MedicinalProductDefinition.status",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status"
+      }
+    },
+    "statusDate": {
+      "path": "MedicinalProductDefinition.statusDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "text": {
+      "path": "MedicinalProductDefinition.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "type": {
+      "path": "MedicinalProductDefinition.type",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medicinal-product-type"
+      }
+    },
+    "version": {
+      "path": "MedicinalProductDefinition.version",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    }
+  }
+}

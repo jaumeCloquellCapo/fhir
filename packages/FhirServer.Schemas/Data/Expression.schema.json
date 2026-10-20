@@ -1,0 +1,78 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Expression",
+  "type": "Expression",
+  "name": "Expression",
+  "kind": "complex-type",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "description": {
+      "path": "Expression.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "expression": {
+      "path": "Expression.expression",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "extension": {
+      "path": "Expression.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "Expression.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "language": {
+      "path": "Expression.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/expression-language"
+      }
+    },
+    "name": {
+      "path": "Expression.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ]
+    },
+    "reference": {
+      "path": "Expression.reference",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    }
+  }
+}

@@ -1,0 +1,398 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/DiagnosticReport",
+  "type": "DiagnosticReport",
+  "name": "DiagnosticReport",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "code",
+    "status"
+  ],
+  "elements": {
+    "basedOn": {
+      "path": "DiagnosticReport.basedOn",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "category": {
+      "path": "DiagnosticReport.category",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/diagnostic-service-sections"
+      }
+    },
+    "code": {
+      "path": "DiagnosticReport.code",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/report-codes"
+      }
+    },
+    "composition": {
+      "path": "DiagnosticReport.composition",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "conclusion": {
+      "path": "DiagnosticReport.conclusion",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "conclusionCode": {
+      "path": "DiagnosticReport.conclusionCode",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/clinical-findings"
+      }
+    },
+    "contained": {
+      "path": "DiagnosticReport.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "effective": {
+      "path": "DiagnosticReport.effective[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime",
+        "Period"
+      ],
+      "choices": [
+        "effectiveDateTime",
+        "effectivePeriod"
+      ]
+    },
+    "encounter": {
+      "path": "DiagnosticReport.encounter",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "extension": {
+      "path": "DiagnosticReport.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "DiagnosticReport.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "DiagnosticReport.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "DiagnosticReport.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "issued": {
+      "path": "DiagnosticReport.issued",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "instant"
+      ]
+    },
+    "language": {
+      "path": "DiagnosticReport.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "media": {
+      "path": "DiagnosticReport.media",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "comment": {
+          "path": "DiagnosticReport.media.comment",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "extension": {
+          "path": "DiagnosticReport.media.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "DiagnosticReport.media.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "link": {
+          "path": "DiagnosticReport.media.link",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "modifierExtension": {
+          "path": "DiagnosticReport.media.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "meta": {
+      "path": "DiagnosticReport.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "DiagnosticReport.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "note": {
+      "path": "DiagnosticReport.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "performer": {
+      "path": "DiagnosticReport.performer",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "presentedForm": {
+      "path": "DiagnosticReport.presentedForm",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Attachment"
+      ]
+    },
+    "result": {
+      "path": "DiagnosticReport.result",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "resultsInterpreter": {
+      "path": "DiagnosticReport.resultsInterpreter",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "specimen": {
+      "path": "DiagnosticReport.specimen",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "status": {
+      "path": "DiagnosticReport.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/diagnostic-report-status|5.0.0"
+      }
+    },
+    "study": {
+      "path": "DiagnosticReport.study",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "subject": {
+      "path": "DiagnosticReport.subject",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "supportingInfo": {
+      "path": "DiagnosticReport.supportingInfo",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "DiagnosticReport.supportingInfo.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "DiagnosticReport.supportingInfo.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "DiagnosticReport.supportingInfo.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "reference": {
+          "path": "DiagnosticReport.supportingInfo.reference",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "type": {
+          "path": "DiagnosticReport.supportingInfo.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://terminology.hl7.org/ValueSet/v2-0936"
+          }
+        }
+      }
+    },
+    "text": {
+      "path": "DiagnosticReport.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

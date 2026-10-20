@@ -1,0 +1,352 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Provenance",
+  "type": "Provenance",
+  "name": "Provenance",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "agent",
+    "target"
+  ],
+  "elements": {
+    "activity": {
+      "path": "Provenance.activity",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/provenance-activity-type"
+      }
+    },
+    "agent": {
+      "path": "Provenance.agent",
+      "min": 1,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Provenance.agent.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Provenance.agent.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Provenance.agent.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "onBehalfOf": {
+          "path": "Provenance.agent.onBehalfOf",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "role": {
+          "path": "Provenance.agent.role",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/security-role-type"
+          }
+        },
+        "type": {
+          "path": "Provenance.agent.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/participation-role-type"
+          }
+        },
+        "who": {
+          "path": "Provenance.agent.who",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    },
+    "authorization": {
+      "path": "Provenance.authorization",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://terminology.hl7.org/ValueSet/v3-PurposeOfUse"
+      }
+    },
+    "basedOn": {
+      "path": "Provenance.basedOn",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "contained": {
+      "path": "Provenance.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "encounter": {
+      "path": "Provenance.encounter",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "entity": {
+      "path": "Provenance.entity",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "agent": {
+          "path": "Provenance.entity.agent",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#Provenance.agent"
+        },
+        "extension": {
+          "path": "Provenance.entity.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Provenance.entity.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Provenance.entity.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "role": {
+          "path": "Provenance.entity.role",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/provenance-entity-role|5.0.0"
+          }
+        },
+        "what": {
+          "path": "Provenance.entity.what",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    },
+    "extension": {
+      "path": "Provenance.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "Provenance.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "implicitRules": {
+      "path": "Provenance.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "Provenance.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "location": {
+      "path": "Provenance.location",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "meta": {
+      "path": "Provenance.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "Provenance.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "occurred": {
+      "path": "Provenance.occurred[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period",
+        "dateTime"
+      ],
+      "choices": [
+        "occurredPeriod",
+        "occurredDateTime"
+      ]
+    },
+    "patient": {
+      "path": "Provenance.patient",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "policy": {
+      "path": "Provenance.policy",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "uri"
+      ]
+    },
+    "recorded": {
+      "path": "Provenance.recorded",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "instant"
+      ]
+    },
+    "signature": {
+      "path": "Provenance.signature",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Signature"
+      ]
+    },
+    "target": {
+      "path": "Provenance.target",
+      "min": 1,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "text": {
+      "path": "Provenance.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

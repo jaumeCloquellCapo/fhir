@@ -1,0 +1,104 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Signature",
+  "type": "Signature",
+  "name": "Signature",
+  "kind": "complex-type",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "data": {
+      "path": "Signature.data",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "base64Binary"
+      ]
+    },
+    "extension": {
+      "path": "Signature.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "Signature.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "onBehalfOf": {
+      "path": "Signature.onBehalfOf",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "sigFormat": {
+      "path": "Signature.sigFormat",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/mimetypes|5.0.0"
+      }
+    },
+    "targetFormat": {
+      "path": "Signature.targetFormat",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/mimetypes|5.0.0"
+      }
+    },
+    "type": {
+      "path": "Signature.type",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Coding"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/signature-type"
+      }
+    },
+    "when": {
+      "path": "Signature.when",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "instant"
+      ]
+    },
+    "who": {
+      "path": "Signature.who",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    }
+  }
+}

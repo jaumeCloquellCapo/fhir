@@ -7,6 +7,7 @@ open FhirServer.Domain.Types
 open FhirServer.Domain.Ports
 open FhirServer.Domain
 open FhirServer.Domain.Services
+open FhirServer.Application.Subscriptions
 
 module ResourceHandlers =
 
@@ -222,7 +223,9 @@ module ResourceHandlers =
             | None ->
                 body["resourceType"] <- resourceType
                 FhirJson.setId body id |> ignore
-                Ok(store.Upsert body))
+                let created = store.Upsert body
+                SubscriptionNotifier.notifyChange store "create" created
+                Ok created)
 
     let update
         (store: IResourceStore)
@@ -240,7 +243,9 @@ module ResourceHandlers =
             |> Result.bind (fun () ->
                 body["resourceType"] <- resourceType
                 FhirJson.setId body id |> ignore
-                Ok(store.Upsert body)))
+                let updated = store.Upsert body
+                SubscriptionNotifier.notifyChange store "update" updated
+                Ok updated))
 
     let validateRaw (resourceType: string option) (body: string) : FhirResult<FhirResource> =
         match resourceType with
@@ -264,7 +269,9 @@ module ResourceHandlers =
             checkIfMatch existing ifMatch
             |> Result.bind (fun () ->
                 match store.Delete(resourceType, id) with
-                | Some deleted -> Ok deleted
+                | Some deleted ->
+                    SubscriptionNotifier.notifyChange store "delete" deleted
+                    Ok deleted
                 | None when store.WasDeleted(resourceType, id) -> Error(Gone(resourceType, id, None))
                 | None -> Error(NotFound(resourceType, id))))
 
@@ -286,41 +293,27 @@ module ResourceHandlers =
             let includeTokens = query |> Map.tryFind "_include" |> Option.defaultValue []
             let revIncludeTokens = query |> Map.tryFind "_revinclude" |> Option.defaultValue []
 
+            let searchList (rt: string, q: Map<string, string list>) =
+                if ResourceCatalog.isSupported rt then
+                    store.Search(rt, q) |> fst
+                else
+                    []
+
             let filterQuery =
                 query
                 |> Map.remove "_include"
                 |> Map.remove "_revinclude"
-                |> SearchEngine.expandChainedQuery (fun (rt, q) ->
-                    if ResourceCatalog.isSupported rt then
-                        store.Search(rt, q)
-                    else
-                        [])
+                |> SearchEngine.expandChainedQuery searchList
 
-            let unpaged =
-                filterQuery
-                |> Map.remove "_count"
-                |> Map.remove "_offset"
-                |> Map.remove "_getpagesoffset"
-                |> Map.add "_count" [ "10000" ]
-
-            let allMatches = store.Search(resourceType, unpaged)
-            let page = store.Search(resourceType, filterQuery)
+            let page, total = store.Search(resourceType, filterQuery)
 
             let includes =
                 SearchEngine.resolveIncludes (fun (rt, id) -> store.Get(rt, id)) resourceType includeTokens page
 
             let revincludes =
-                SearchEngine.resolveRevincludes
-                    (fun (rt, q) ->
-                        if ResourceCatalog.isSupported rt then
-                            store.Search(rt, q)
-                        else
-                            [])
-                    resourceType
-                    revIncludeTokens
-                    page
+                SearchEngine.resolveRevincludes searchList resourceType revIncludeTokens page
 
-            Ok(toSearchBundle resourceType page (includes @ revincludes) allMatches.Length))
+            Ok(toSearchBundle resourceType page (includes @ revincludes) total))
 
     let patientEverything (store: IResourceStore) (id: string) : FhirResult<FhirResource> =
         ensureKnownResourceType "Patient"
@@ -348,7 +341,7 @@ module ResourceHandlers =
                     relatedTypes
                     |> List.collect (fun rt ->
                         if ResourceCatalog.isSupported rt then
-                            store.Search(rt, query)
+                            store.Search(rt, query |> Map.add "_count" [ "10000" ]) |> fst
                         else
                             [])
 
@@ -499,11 +492,11 @@ module ResourceHandlers =
         match ifNoneExist with
         | None -> create store resourceType body
         | Some criteria ->
-            let query = parseCriteriaQuery criteria
+            let query = parseCriteriaQuery criteria |> Map.add "_count" [ "1" ]
 
             match store.Search(resourceType, query) with
-            | existing :: _ -> Ok existing
-            | [] -> create store resourceType body
+            | existing :: _, _ -> Ok existing
+            | [], _ -> create store resourceType body
 
     /// Conditional update: exactly one match → update; zero → create; multiple → conflict.
     let conditionalUpdate
@@ -513,11 +506,11 @@ module ResourceHandlers =
         (body: FhirResource)
         (ifMatch: string option)
         =
-        let query = parseCriteriaQuery criteria
+        let query = parseCriteriaQuery criteria |> Map.add "_count" [ "2" ]
 
         match store.Search(resourceType, query) with
-        | [ existing ] -> update store resourceType (FhirJson.id existing) body ifMatch
-        | [] -> create store resourceType body
+        | [ existing ], 1 -> update store resourceType (FhirJson.id existing) body ifMatch
+        | [], 0 -> create store resourceType body
         | _ -> Error(Conflict $"Conditional update matched multiple {resourceType} resources.")
 
     let observationLastN (store: IResourceStore) (query: Map<string, string list>) : FhirResult<FhirResource> =
@@ -538,12 +531,13 @@ module ResourceHandlers =
                 |> Map.remove "_offset"
                 |> SearchEngine.expandChainedQuery (fun (rt, q) ->
                     if ResourceCatalog.isSupported rt then
-                        store.Search(rt, q)
+                        store.Search(rt, q) |> fst
                     else
                         [])
 
             let all =
                 store.Search("Observation", filterQuery |> Map.add "_count" [ "10000" ])
+                |> fst
                 |> List.sortByDescending (fun r ->
                     FhirJson.lastUpdated r |> Option.defaultValue DateTimeOffset.MinValue)
 
@@ -593,7 +587,9 @@ module ResourceHandlers =
 
                     FhirJson.setId node id |> ignore
                     node["resourceType"] <- resourceType
-                    Ok(store.Upsert node)
+                    let patched = store.Upsert node
+                    SubscriptionNotifier.notifyChange store "patch" patched
+                    Ok patched
             with ex ->
                 Error(BadRequest $"JSON Patch failed: {ex.Message}"))
 
@@ -675,7 +671,9 @@ module ResourceHandlers =
                             let existingBefore =
                                 match ifNoneExist with
                                 | Some criteria ->
-                                    store.Search(resourceType, parseCriteriaQuery criteria) |> List.tryHead
+                                    store.Search(resourceType, parseCriteriaQuery criteria |> Map.add "_count" [ "1" ])
+                                    |> fst
+                                    |> List.tryHead
                                 | None -> None
 
                             match conditionalCreate store resourceType resource ifNoneExist with

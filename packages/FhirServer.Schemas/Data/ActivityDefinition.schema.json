@@ -1,0 +1,742 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/ActivityDefinition",
+  "type": "ActivityDefinition",
+  "name": "ActivityDefinition",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "status"
+  ],
+  "elements": {
+    "approvalDate": {
+      "path": "ActivityDefinition.approvalDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "asNeeded": {
+      "path": "ActivityDefinition.asNeeded[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean",
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medication-as-needed-reason"
+      },
+      "choices": [
+        "asNeededBoolean",
+        "asNeededCodeableConcept"
+      ]
+    },
+    "author": {
+      "path": "ActivityDefinition.author",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "bodySite": {
+      "path": "ActivityDefinition.bodySite",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/body-site"
+      }
+    },
+    "code": {
+      "path": "ActivityDefinition.code",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/procedure-code"
+      }
+    },
+    "contact": {
+      "path": "ActivityDefinition.contact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "contained": {
+      "path": "ActivityDefinition.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "copyright": {
+      "path": "ActivityDefinition.copyright",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "copyrightLabel": {
+      "path": "ActivityDefinition.copyrightLabel",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "date": {
+      "path": "ActivityDefinition.date",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "description": {
+      "path": "ActivityDefinition.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "doNotPerform": {
+      "path": "ActivityDefinition.doNotPerform",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "dosage": {
+      "path": "ActivityDefinition.dosage",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Dosage"
+      ]
+    },
+    "dynamicValue": {
+      "path": "ActivityDefinition.dynamicValue",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "expression": {
+          "path": "ActivityDefinition.dynamicValue.expression",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Expression"
+          ]
+        },
+        "extension": {
+          "path": "ActivityDefinition.dynamicValue.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ActivityDefinition.dynamicValue.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ActivityDefinition.dynamicValue.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "path": {
+          "path": "ActivityDefinition.dynamicValue.path",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        }
+      }
+    },
+    "editor": {
+      "path": "ActivityDefinition.editor",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "effectivePeriod": {
+      "path": "ActivityDefinition.effectivePeriod",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ]
+    },
+    "endorser": {
+      "path": "ActivityDefinition.endorser",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "experimental": {
+      "path": "ActivityDefinition.experimental",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "extension": {
+      "path": "ActivityDefinition.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "ActivityDefinition.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "ActivityDefinition.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "ActivityDefinition.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "intent": {
+      "path": "ActivityDefinition.intent",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/request-intent|5.0.0"
+      }
+    },
+    "jurisdiction": {
+      "path": "ActivityDefinition.jurisdiction",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
+      }
+    },
+    "kind": {
+      "path": "ActivityDefinition.kind",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/request-resource-types|5.0.0"
+      }
+    },
+    "language": {
+      "path": "ActivityDefinition.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "lastReviewDate": {
+      "path": "ActivityDefinition.lastReviewDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "library": {
+      "path": "ActivityDefinition.library",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "canonical"
+      ]
+    },
+    "location": {
+      "path": "ActivityDefinition.location",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableReference"
+      ]
+    },
+    "meta": {
+      "path": "ActivityDefinition.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "ActivityDefinition.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "ActivityDefinition.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "observationRequirement": {
+      "path": "ActivityDefinition.observationRequirement",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "canonical"
+      ]
+    },
+    "observationResultRequirement": {
+      "path": "ActivityDefinition.observationResultRequirement",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "canonical"
+      ]
+    },
+    "participant": {
+      "path": "ActivityDefinition.participant",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "ActivityDefinition.participant.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "function": {
+          "path": "ActivityDefinition.participant.function",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/action-participant-function"
+          }
+        },
+        "id": {
+          "path": "ActivityDefinition.participant.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ActivityDefinition.participant.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "role": {
+          "path": "ActivityDefinition.participant.role",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://terminology.hl7.org/ValueSet/action-participant-role"
+          }
+        },
+        "type": {
+          "path": "ActivityDefinition.participant.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/action-participant-type|5.0.0"
+          }
+        },
+        "typeCanonical": {
+          "path": "ActivityDefinition.participant.typeCanonical",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "canonical"
+          ]
+        },
+        "typeReference": {
+          "path": "ActivityDefinition.participant.typeReference",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    },
+    "priority": {
+      "path": "ActivityDefinition.priority",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/request-priority|5.0.0"
+      }
+    },
+    "product": {
+      "path": "ActivityDefinition.product[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference",
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medication-codes"
+      },
+      "choices": [
+        "productReference",
+        "productCodeableConcept"
+      ]
+    },
+    "profile": {
+      "path": "ActivityDefinition.profile",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "canonical"
+      ]
+    },
+    "publisher": {
+      "path": "ActivityDefinition.publisher",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "purpose": {
+      "path": "ActivityDefinition.purpose",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "quantity": {
+      "path": "ActivityDefinition.quantity",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Quantity"
+      ]
+    },
+    "relatedArtifact": {
+      "path": "ActivityDefinition.relatedArtifact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "RelatedArtifact"
+      ]
+    },
+    "reviewer": {
+      "path": "ActivityDefinition.reviewer",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "specimenRequirement": {
+      "path": "ActivityDefinition.specimenRequirement",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "canonical"
+      ]
+    },
+    "status": {
+      "path": "ActivityDefinition.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+      }
+    },
+    "subject": {
+      "path": "ActivityDefinition.subject[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept",
+        "Reference",
+        "canonical"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/participant-resource-types"
+      },
+      "choices": [
+        "subjectCodeableConcept",
+        "subjectReference",
+        "subjectCanonical"
+      ]
+    },
+    "subtitle": {
+      "path": "ActivityDefinition.subtitle",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "text": {
+      "path": "ActivityDefinition.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "timing": {
+      "path": "ActivityDefinition.timing[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Timing",
+        "Age",
+        "Range",
+        "Duration"
+      ],
+      "choices": [
+        "timingTiming",
+        "timingAge",
+        "timingRange",
+        "timingDuration"
+      ]
+    },
+    "title": {
+      "path": "ActivityDefinition.title",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "topic": {
+      "path": "ActivityDefinition.topic",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/definition-topic"
+      }
+    },
+    "transform": {
+      "path": "ActivityDefinition.transform",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "canonical"
+      ]
+    },
+    "url": {
+      "path": "ActivityDefinition.url",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "usage": {
+      "path": "ActivityDefinition.usage",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "useContext": {
+      "path": "ActivityDefinition.useContext",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "UsageContext"
+      ]
+    },
+    "version": {
+      "path": "ActivityDefinition.version",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "versionAlgorithm": {
+      "path": "ActivityDefinition.versionAlgorithm[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string",
+        "Coding"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/version-algorithm"
+      },
+      "choices": [
+        "versionAlgorithmString",
+        "versionAlgorithmCoding"
+      ]
+    }
+  }
+}

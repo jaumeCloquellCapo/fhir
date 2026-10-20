@@ -1,0 +1,366 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/CommunicationRequest",
+  "type": "CommunicationRequest",
+  "name": "CommunicationRequest",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "intent",
+    "status"
+  ],
+  "elements": {
+    "about": {
+      "path": "CommunicationRequest.about",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "authoredOn": {
+      "path": "CommunicationRequest.authoredOn",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "basedOn": {
+      "path": "CommunicationRequest.basedOn",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "category": {
+      "path": "CommunicationRequest.category",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/communication-category"
+      }
+    },
+    "contained": {
+      "path": "CommunicationRequest.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "doNotPerform": {
+      "path": "CommunicationRequest.doNotPerform",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "encounter": {
+      "path": "CommunicationRequest.encounter",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "extension": {
+      "path": "CommunicationRequest.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "groupIdentifier": {
+      "path": "CommunicationRequest.groupIdentifier",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "id": {
+      "path": "CommunicationRequest.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "CommunicationRequest.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "CommunicationRequest.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "informationProvider": {
+      "path": "CommunicationRequest.informationProvider",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "intent": {
+      "path": "CommunicationRequest.intent",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/request-intent|5.0.0"
+      }
+    },
+    "language": {
+      "path": "CommunicationRequest.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "medium": {
+      "path": "CommunicationRequest.medium",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://terminology.hl7.org/ValueSet/v3-ParticipationMode"
+      }
+    },
+    "meta": {
+      "path": "CommunicationRequest.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "CommunicationRequest.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "note": {
+      "path": "CommunicationRequest.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "occurrence": {
+      "path": "CommunicationRequest.occurrence[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime",
+        "Period"
+      ],
+      "choices": [
+        "occurrenceDateTime",
+        "occurrencePeriod"
+      ]
+    },
+    "payload": {
+      "path": "CommunicationRequest.payload",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "content": {
+          "path": "CommunicationRequest.payload.content[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Attachment",
+            "Reference",
+            "CodeableConcept"
+          ],
+          "choices": [
+            "contentAttachment",
+            "contentReference",
+            "contentCodeableConcept"
+          ]
+        },
+        "extension": {
+          "path": "CommunicationRequest.payload.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "CommunicationRequest.payload.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "CommunicationRequest.payload.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "priority": {
+      "path": "CommunicationRequest.priority",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/request-priority|5.0.0"
+      }
+    },
+    "reason": {
+      "path": "CommunicationRequest.reason",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://terminology.hl7.org/ValueSet/v3-ActReason"
+      }
+    },
+    "recipient": {
+      "path": "CommunicationRequest.recipient",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "replaces": {
+      "path": "CommunicationRequest.replaces",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "requester": {
+      "path": "CommunicationRequest.requester",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "status": {
+      "path": "CommunicationRequest.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/request-status|5.0.0"
+      }
+    },
+    "statusReason": {
+      "path": "CommunicationRequest.statusReason",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/communication-request-status-reason"
+      }
+    },
+    "subject": {
+      "path": "CommunicationRequest.subject",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "text": {
+      "path": "CommunicationRequest.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

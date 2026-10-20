@@ -1,0 +1,1227 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/ValueSet",
+  "type": "ValueSet",
+  "name": "ValueSet",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "status"
+  ],
+  "elements": {
+    "approvalDate": {
+      "path": "ValueSet.approvalDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "author": {
+      "path": "ValueSet.author",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "compose": {
+      "path": "ValueSet.compose",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "exclude": {
+          "path": "ValueSet.compose.exclude",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#ValueSet.compose.include"
+        },
+        "extension": {
+          "path": "ValueSet.compose.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ValueSet.compose.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "inactive": {
+          "path": "ValueSet.compose.inactive",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "include": {
+          "path": "ValueSet.compose.include",
+          "min": 1,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "concept": {
+              "path": "ValueSet.compose.include.concept",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "code": {
+                  "path": "ValueSet.compose.include.concept.code",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "code"
+                  ]
+                },
+                "designation": {
+                  "path": "ValueSet.compose.include.concept.designation",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "BackboneElement"
+                  ],
+                  "elements": {
+                    "additionalUse": {
+                      "path": "ValueSet.compose.include.concept.designation.additionalUse",
+                      "min": 0,
+                      "max": "*",
+                      "array": true,
+                      "type": [
+                        "Coding"
+                      ],
+                      "binding": {
+                        "strength": "extensible",
+                        "valueSet": "http://hl7.org/fhir/ValueSet/designation-use"
+                      }
+                    },
+                    "extension": {
+                      "path": "ValueSet.compose.include.concept.designation.extension",
+                      "min": 0,
+                      "max": "*",
+                      "array": true,
+                      "type": [
+                        "Extension"
+                      ]
+                    },
+                    "id": {
+                      "path": "ValueSet.compose.include.concept.designation.id",
+                      "min": 0,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "http://hl7.org/fhirpath/System.String"
+                      ]
+                    },
+                    "language": {
+                      "path": "ValueSet.compose.include.concept.designation.language",
+                      "min": 0,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "code"
+                      ],
+                      "binding": {
+                        "strength": "required",
+                        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+                      }
+                    },
+                    "modifierExtension": {
+                      "path": "ValueSet.compose.include.concept.designation.modifierExtension",
+                      "min": 0,
+                      "max": "*",
+                      "array": true,
+                      "type": [
+                        "Extension"
+                      ]
+                    },
+                    "use": {
+                      "path": "ValueSet.compose.include.concept.designation.use",
+                      "min": 0,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "Coding"
+                      ],
+                      "binding": {
+                        "strength": "extensible",
+                        "valueSet": "http://hl7.org/fhir/ValueSet/designation-use"
+                      }
+                    },
+                    "value": {
+                      "path": "ValueSet.compose.include.concept.designation.value",
+                      "min": 1,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "string"
+                      ]
+                    }
+                  }
+                },
+                "display": {
+                  "path": "ValueSet.compose.include.concept.display",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "extension": {
+                  "path": "ValueSet.compose.include.concept.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "ValueSet.compose.include.concept.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "ValueSet.compose.include.concept.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                }
+              }
+            },
+            "copyright": {
+              "path": "ValueSet.compose.include.copyright",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "extension": {
+              "path": "ValueSet.compose.include.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "filter": {
+              "path": "ValueSet.compose.include.filter",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "extension": {
+                  "path": "ValueSet.compose.include.filter.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "ValueSet.compose.include.filter.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "ValueSet.compose.include.filter.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "op": {
+                  "path": "ValueSet.compose.include.filter.op",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "code"
+                  ],
+                  "binding": {
+                    "strength": "required",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/filter-operator|5.0.0"
+                  }
+                },
+                "property": {
+                  "path": "ValueSet.compose.include.filter.property",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "code"
+                  ]
+                },
+                "value": {
+                  "path": "ValueSet.compose.include.filter.value",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                }
+              }
+            },
+            "id": {
+              "path": "ValueSet.compose.include.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ValueSet.compose.include.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "system": {
+              "path": "ValueSet.compose.include.system",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "uri"
+              ]
+            },
+            "valueSet": {
+              "path": "ValueSet.compose.include.valueSet",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "canonical"
+              ]
+            },
+            "version": {
+              "path": "ValueSet.compose.include.version",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "lockedDate": {
+          "path": "ValueSet.compose.lockedDate",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "date"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ValueSet.compose.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "property": {
+          "path": "ValueSet.compose.property",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "string"
+          ]
+        }
+      }
+    },
+    "contact": {
+      "path": "ValueSet.contact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "contained": {
+      "path": "ValueSet.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "copyright": {
+      "path": "ValueSet.copyright",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "copyrightLabel": {
+      "path": "ValueSet.copyrightLabel",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "date": {
+      "path": "ValueSet.date",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "description": {
+      "path": "ValueSet.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "editor": {
+      "path": "ValueSet.editor",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "effectivePeriod": {
+      "path": "ValueSet.effectivePeriod",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ]
+    },
+    "endorser": {
+      "path": "ValueSet.endorser",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "expansion": {
+      "path": "ValueSet.expansion",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "contains": {
+          "path": "ValueSet.expansion.contains",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "abstract": {
+              "path": "ValueSet.expansion.contains.abstract",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "code": {
+              "path": "ValueSet.expansion.contains.code",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ]
+            },
+            "contains": {
+              "path": "ValueSet.expansion.contains.contains",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [],
+              "contentReference": "#ValueSet.expansion.contains"
+            },
+            "designation": {
+              "path": "ValueSet.expansion.contains.designation",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [],
+              "contentReference": "#ValueSet.compose.include.concept.designation"
+            },
+            "display": {
+              "path": "ValueSet.expansion.contains.display",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "extension": {
+              "path": "ValueSet.expansion.contains.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ValueSet.expansion.contains.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "inactive": {
+              "path": "ValueSet.expansion.contains.inactive",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ValueSet.expansion.contains.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "property": {
+              "path": "ValueSet.expansion.contains.property",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "code": {
+                  "path": "ValueSet.expansion.contains.property.code",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "code"
+                  ]
+                },
+                "extension": {
+                  "path": "ValueSet.expansion.contains.property.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "ValueSet.expansion.contains.property.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "ValueSet.expansion.contains.property.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "subProperty": {
+                  "path": "ValueSet.expansion.contains.property.subProperty",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "BackboneElement"
+                  ],
+                  "elements": {
+                    "code": {
+                      "path": "ValueSet.expansion.contains.property.subProperty.code",
+                      "min": 1,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "code"
+                      ]
+                    },
+                    "extension": {
+                      "path": "ValueSet.expansion.contains.property.subProperty.extension",
+                      "min": 0,
+                      "max": "*",
+                      "array": true,
+                      "type": [
+                        "Extension"
+                      ]
+                    },
+                    "id": {
+                      "path": "ValueSet.expansion.contains.property.subProperty.id",
+                      "min": 0,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "http://hl7.org/fhirpath/System.String"
+                      ]
+                    },
+                    "modifierExtension": {
+                      "path": "ValueSet.expansion.contains.property.subProperty.modifierExtension",
+                      "min": 0,
+                      "max": "*",
+                      "array": true,
+                      "type": [
+                        "Extension"
+                      ]
+                    },
+                    "value": {
+                      "path": "ValueSet.expansion.contains.property.subProperty.value[x]",
+                      "min": 1,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "code",
+                        "Coding",
+                        "string",
+                        "integer",
+                        "boolean",
+                        "dateTime",
+                        "decimal"
+                      ],
+                      "choices": [
+                        "valueCode",
+                        "valueCoding",
+                        "valueString",
+                        "valueInteger",
+                        "valueBoolean",
+                        "valueDateTime",
+                        "valueDecimal"
+                      ]
+                    }
+                  }
+                },
+                "value": {
+                  "path": "ValueSet.expansion.contains.property.value[x]",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "code",
+                    "Coding",
+                    "string",
+                    "integer",
+                    "boolean",
+                    "dateTime",
+                    "decimal"
+                  ],
+                  "choices": [
+                    "valueCode",
+                    "valueCoding",
+                    "valueString",
+                    "valueInteger",
+                    "valueBoolean",
+                    "valueDateTime",
+                    "valueDecimal"
+                  ]
+                }
+              }
+            },
+            "system": {
+              "path": "ValueSet.expansion.contains.system",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "uri"
+              ]
+            },
+            "version": {
+              "path": "ValueSet.expansion.contains.version",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "extension": {
+          "path": "ValueSet.expansion.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ValueSet.expansion.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "identifier": {
+          "path": "ValueSet.expansion.identifier",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "uri"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ValueSet.expansion.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "next": {
+          "path": "ValueSet.expansion.next",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "uri"
+          ]
+        },
+        "offset": {
+          "path": "ValueSet.expansion.offset",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "integer"
+          ]
+        },
+        "parameter": {
+          "path": "ValueSet.expansion.parameter",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "ValueSet.expansion.parameter.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ValueSet.expansion.parameter.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ValueSet.expansion.parameter.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "name": {
+              "path": "ValueSet.expansion.parameter.name",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "value": {
+              "path": "ValueSet.expansion.parameter.value[x]",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string",
+                "boolean",
+                "integer",
+                "decimal",
+                "uri",
+                "code",
+                "dateTime"
+              ],
+              "choices": [
+                "valueString",
+                "valueBoolean",
+                "valueInteger",
+                "valueDecimal",
+                "valueUri",
+                "valueCode",
+                "valueDateTime"
+              ]
+            }
+          }
+        },
+        "property": {
+          "path": "ValueSet.expansion.property",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "code": {
+              "path": "ValueSet.expansion.property.code",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ]
+            },
+            "extension": {
+              "path": "ValueSet.expansion.property.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ValueSet.expansion.property.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ValueSet.expansion.property.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "uri": {
+              "path": "ValueSet.expansion.property.uri",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "uri"
+              ]
+            }
+          }
+        },
+        "timestamp": {
+          "path": "ValueSet.expansion.timestamp",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "dateTime"
+          ]
+        },
+        "total": {
+          "path": "ValueSet.expansion.total",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "integer"
+          ]
+        }
+      }
+    },
+    "experimental": {
+      "path": "ValueSet.experimental",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "extension": {
+      "path": "ValueSet.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "ValueSet.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "ValueSet.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "immutable": {
+      "path": "ValueSet.immutable",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "implicitRules": {
+      "path": "ValueSet.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "jurisdiction": {
+      "path": "ValueSet.jurisdiction",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
+      }
+    },
+    "language": {
+      "path": "ValueSet.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "lastReviewDate": {
+      "path": "ValueSet.lastReviewDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "meta": {
+      "path": "ValueSet.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "ValueSet.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "ValueSet.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "publisher": {
+      "path": "ValueSet.publisher",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "purpose": {
+      "path": "ValueSet.purpose",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "relatedArtifact": {
+      "path": "ValueSet.relatedArtifact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "RelatedArtifact"
+      ]
+    },
+    "reviewer": {
+      "path": "ValueSet.reviewer",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "scope": {
+      "path": "ValueSet.scope",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "exclusionCriteria": {
+          "path": "ValueSet.scope.exclusionCriteria",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "extension": {
+          "path": "ValueSet.scope.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ValueSet.scope.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "inclusionCriteria": {
+          "path": "ValueSet.scope.inclusionCriteria",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ValueSet.scope.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "status": {
+      "path": "ValueSet.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+      }
+    },
+    "text": {
+      "path": "ValueSet.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "title": {
+      "path": "ValueSet.title",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "topic": {
+      "path": "ValueSet.topic",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/definition-topic"
+      }
+    },
+    "url": {
+      "path": "ValueSet.url",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "useContext": {
+      "path": "ValueSet.useContext",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "UsageContext"
+      ]
+    },
+    "version": {
+      "path": "ValueSet.version",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "versionAlgorithm": {
+      "path": "ValueSet.versionAlgorithm[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string",
+        "Coding"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/version-algorithm"
+      },
+      "choices": [
+        "versionAlgorithmString",
+        "versionAlgorithmCoding"
+      ]
+    }
+  }
+}

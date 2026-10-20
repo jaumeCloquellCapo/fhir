@@ -1,0 +1,206 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/AppointmentResponse",
+  "type": "AppointmentResponse",
+  "name": "AppointmentResponse",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "appointment",
+    "participantStatus"
+  ],
+  "elements": {
+    "actor": {
+      "path": "AppointmentResponse.actor",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "appointment": {
+      "path": "AppointmentResponse.appointment",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "comment": {
+      "path": "AppointmentResponse.comment",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "contained": {
+      "path": "AppointmentResponse.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "end": {
+      "path": "AppointmentResponse.end",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "instant"
+      ]
+    },
+    "extension": {
+      "path": "AppointmentResponse.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "AppointmentResponse.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "AppointmentResponse.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "AppointmentResponse.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "AppointmentResponse.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "AppointmentResponse.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "AppointmentResponse.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "occurrenceDate": {
+      "path": "AppointmentResponse.occurrenceDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "participantStatus": {
+      "path": "AppointmentResponse.participantStatus",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/appointmentresponse-status|5.0.0"
+      }
+    },
+    "participantType": {
+      "path": "AppointmentResponse.participantType",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/encounter-participant-type"
+      }
+    },
+    "proposedNewTime": {
+      "path": "AppointmentResponse.proposedNewTime",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "recurrenceId": {
+      "path": "AppointmentResponse.recurrenceId",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "positiveInt"
+      ]
+    },
+    "recurring": {
+      "path": "AppointmentResponse.recurring",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "start": {
+      "path": "AppointmentResponse.start",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "instant"
+      ]
+    },
+    "text": {
+      "path": "AppointmentResponse.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

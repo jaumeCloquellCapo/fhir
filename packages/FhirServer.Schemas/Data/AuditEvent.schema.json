@@ -1,0 +1,642 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/AuditEvent",
+  "type": "AuditEvent",
+  "name": "AuditEvent",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "agent",
+    "code",
+    "recorded",
+    "source"
+  ],
+  "elements": {
+    "action": {
+      "path": "AuditEvent.action",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/audit-event-action|5.0.0"
+      }
+    },
+    "agent": {
+      "path": "AuditEvent.agent",
+      "min": 1,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "authorization": {
+          "path": "AuditEvent.agent.authorization",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://terminology.hl7.org/ValueSet/v3-PurposeOfUse"
+          }
+        },
+        "extension": {
+          "path": "AuditEvent.agent.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "AuditEvent.agent.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "location": {
+          "path": "AuditEvent.agent.location",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "modifierExtension": {
+          "path": "AuditEvent.agent.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "network": {
+          "path": "AuditEvent.agent.network[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference",
+            "uri",
+            "string"
+          ],
+          "choices": [
+            "networkReference",
+            "networkUri",
+            "networkString"
+          ]
+        },
+        "policy": {
+          "path": "AuditEvent.agent.policy",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "uri"
+          ]
+        },
+        "requestor": {
+          "path": "AuditEvent.agent.requestor",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "role": {
+          "path": "AuditEvent.agent.role",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/security-role-type"
+          }
+        },
+        "type": {
+          "path": "AuditEvent.agent.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "preferred",
+            "valueSet": "http://hl7.org/fhir/ValueSet/participation-role-type"
+          }
+        },
+        "who": {
+          "path": "AuditEvent.agent.who",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    },
+    "authorization": {
+      "path": "AuditEvent.authorization",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://terminology.hl7.org/ValueSet/v3-PurposeOfUse"
+      }
+    },
+    "basedOn": {
+      "path": "AuditEvent.basedOn",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "category": {
+      "path": "AuditEvent.category",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/audit-event-type"
+      }
+    },
+    "code": {
+      "path": "AuditEvent.code",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/audit-event-sub-type"
+      }
+    },
+    "contained": {
+      "path": "AuditEvent.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "encounter": {
+      "path": "AuditEvent.encounter",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "entity": {
+      "path": "AuditEvent.entity",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "agent": {
+          "path": "AuditEvent.entity.agent",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#AuditEvent.agent"
+        },
+        "detail": {
+          "path": "AuditEvent.entity.detail",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "AuditEvent.entity.detail.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "AuditEvent.entity.detail.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "AuditEvent.entity.detail.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "type": {
+              "path": "AuditEvent.entity.detail.type",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/audit-event-type"
+              }
+            },
+            "value": {
+              "path": "AuditEvent.entity.detail.value[x]",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Quantity",
+                "CodeableConcept",
+                "string",
+                "boolean",
+                "integer",
+                "Range",
+                "Ratio",
+                "time",
+                "dateTime",
+                "Period",
+                "base64Binary"
+              ],
+              "choices": [
+                "valueQuantity",
+                "valueCodeableConcept",
+                "valueString",
+                "valueBoolean",
+                "valueInteger",
+                "valueRange",
+                "valueRatio",
+                "valueTime",
+                "valueDateTime",
+                "valuePeriod",
+                "valueBase64Binary"
+              ]
+            }
+          }
+        },
+        "extension": {
+          "path": "AuditEvent.entity.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "AuditEvent.entity.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "AuditEvent.entity.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "query": {
+          "path": "AuditEvent.entity.query",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "base64Binary"
+          ]
+        },
+        "role": {
+          "path": "AuditEvent.entity.role",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/object-role"
+          }
+        },
+        "securityLabel": {
+          "path": "AuditEvent.entity.securityLabel",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/security-label-examples"
+          }
+        },
+        "what": {
+          "path": "AuditEvent.entity.what",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    },
+    "extension": {
+      "path": "AuditEvent.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "AuditEvent.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "implicitRules": {
+      "path": "AuditEvent.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "AuditEvent.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "AuditEvent.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "AuditEvent.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "occurred": {
+      "path": "AuditEvent.occurred[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period",
+        "dateTime"
+      ],
+      "choices": [
+        "occurredPeriod",
+        "occurredDateTime"
+      ]
+    },
+    "outcome": {
+      "path": "AuditEvent.outcome",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "code": {
+          "path": "AuditEvent.outcome.code",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Coding"
+          ],
+          "binding": {
+            "strength": "preferred",
+            "valueSet": "http://hl7.org/fhir/ValueSet/audit-event-outcome"
+          }
+        },
+        "detail": {
+          "path": "AuditEvent.outcome.detail",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/audit-event-outcome-detail"
+          }
+        },
+        "extension": {
+          "path": "AuditEvent.outcome.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "AuditEvent.outcome.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "AuditEvent.outcome.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "patient": {
+      "path": "AuditEvent.patient",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "recorded": {
+      "path": "AuditEvent.recorded",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "instant"
+      ]
+    },
+    "severity": {
+      "path": "AuditEvent.severity",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/audit-event-severity|5.0.0"
+      }
+    },
+    "source": {
+      "path": "AuditEvent.source",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "AuditEvent.source.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "AuditEvent.source.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "AuditEvent.source.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "observer": {
+          "path": "AuditEvent.source.observer",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "site": {
+          "path": "AuditEvent.source.site",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "type": {
+          "path": "AuditEvent.source.type",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "preferred",
+            "valueSet": "http://hl7.org/fhir/ValueSet/security-source-type"
+          }
+        }
+      }
+    },
+    "text": {
+      "path": "AuditEvent.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

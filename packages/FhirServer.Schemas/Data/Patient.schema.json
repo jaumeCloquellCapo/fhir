@@ -1,0 +1,451 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "type": "Patient",
+  "name": "Patient",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "active": {
+      "path": "Patient.active",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "address": {
+      "path": "Patient.address",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Address"
+      ]
+    },
+    "birthDate": {
+      "path": "Patient.birthDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "communication": {
+      "path": "Patient.communication",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Patient.communication.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Patient.communication.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "language": {
+          "path": "Patient.communication.language",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+          }
+        },
+        "modifierExtension": {
+          "path": "Patient.communication.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "preferred": {
+          "path": "Patient.communication.preferred",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        }
+      }
+    },
+    "contact": {
+      "path": "Patient.contact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "address": {
+          "path": "Patient.contact.address",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Address"
+          ]
+        },
+        "extension": {
+          "path": "Patient.contact.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "gender": {
+          "path": "Patient.contact.gender",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/administrative-gender|5.0.0"
+          }
+        },
+        "id": {
+          "path": "Patient.contact.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Patient.contact.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "name": {
+          "path": "Patient.contact.name",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "HumanName"
+          ]
+        },
+        "organization": {
+          "path": "Patient.contact.organization",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "period": {
+          "path": "Patient.contact.period",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Period"
+          ]
+        },
+        "relationship": {
+          "path": "Patient.contact.relationship",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/patient-contactrelationship"
+          }
+        },
+        "telecom": {
+          "path": "Patient.contact.telecom",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "ContactPoint"
+          ]
+        }
+      }
+    },
+    "contained": {
+      "path": "Patient.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "deceased": {
+      "path": "Patient.deceased[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean",
+        "dateTime"
+      ],
+      "choices": [
+        "deceasedBoolean",
+        "deceasedDateTime"
+      ]
+    },
+    "extension": {
+      "path": "Patient.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "gender": {
+      "path": "Patient.gender",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/administrative-gender|5.0.0"
+      }
+    },
+    "generalPractitioner": {
+      "path": "Patient.generalPractitioner",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "id": {
+      "path": "Patient.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Patient.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "Patient.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "Patient.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "link": {
+      "path": "Patient.link",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Patient.link.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Patient.link.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Patient.link.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "other": {
+          "path": "Patient.link.other",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "type": {
+          "path": "Patient.link.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/link-type|5.0.0"
+          }
+        }
+      }
+    },
+    "managingOrganization": {
+      "path": "Patient.managingOrganization",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "maritalStatus": {
+      "path": "Patient.maritalStatus",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/marital-status"
+      }
+    },
+    "meta": {
+      "path": "Patient.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "Patient.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "multipleBirth": {
+      "path": "Patient.multipleBirth[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean",
+        "integer"
+      ],
+      "choices": [
+        "multipleBirthBoolean",
+        "multipleBirthInteger"
+      ]
+    },
+    "name": {
+      "path": "Patient.name",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "HumanName"
+      ]
+    },
+    "photo": {
+      "path": "Patient.photo",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Attachment"
+      ]
+    },
+    "telecom": {
+      "path": "Patient.telecom",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactPoint"
+      ]
+    },
+    "text": {
+      "path": "Patient.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

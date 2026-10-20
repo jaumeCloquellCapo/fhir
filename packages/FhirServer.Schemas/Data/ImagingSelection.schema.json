@@ -1,0 +1,499 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/ImagingSelection",
+  "type": "ImagingSelection",
+  "name": "ImagingSelection",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "code",
+    "status"
+  ],
+  "elements": {
+    "basedOn": {
+      "path": "ImagingSelection.basedOn",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "bodySite": {
+      "path": "ImagingSelection.bodySite",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableReference"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/body-site"
+      }
+    },
+    "category": {
+      "path": "ImagingSelection.category",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_7010.html"
+      }
+    },
+    "code": {
+      "path": "ImagingSelection.code",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_7010.html"
+      }
+    },
+    "contained": {
+      "path": "ImagingSelection.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "derivedFrom": {
+      "path": "ImagingSelection.derivedFrom",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "endpoint": {
+      "path": "ImagingSelection.endpoint",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "extension": {
+      "path": "ImagingSelection.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "focus": {
+      "path": "ImagingSelection.focus",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "frameOfReferenceUid": {
+      "path": "ImagingSelection.frameOfReferenceUid",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "id"
+      ]
+    },
+    "id": {
+      "path": "ImagingSelection.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "ImagingSelection.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "ImagingSelection.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "instance": {
+      "path": "ImagingSelection.instance",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "ImagingSelection.instance.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ImagingSelection.instance.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "imageRegion2D": {
+          "path": "ImagingSelection.instance.imageRegion2D",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "coordinate": {
+              "path": "ImagingSelection.instance.imageRegion2D.coordinate",
+              "min": 1,
+              "max": "*",
+              "array": true,
+              "type": [
+                "decimal"
+              ]
+            },
+            "extension": {
+              "path": "ImagingSelection.instance.imageRegion2D.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ImagingSelection.instance.imageRegion2D.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ImagingSelection.instance.imageRegion2D.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "regionType": {
+              "path": "ImagingSelection.instance.imageRegion2D.regionType",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/imagingselection-2dgraphictype|5.0.0"
+              }
+            }
+          }
+        },
+        "imageRegion3D": {
+          "path": "ImagingSelection.instance.imageRegion3D",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "coordinate": {
+              "path": "ImagingSelection.instance.imageRegion3D.coordinate",
+              "min": 1,
+              "max": "*",
+              "array": true,
+              "type": [
+                "decimal"
+              ]
+            },
+            "extension": {
+              "path": "ImagingSelection.instance.imageRegion3D.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ImagingSelection.instance.imageRegion3D.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ImagingSelection.instance.imageRegion3D.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "regionType": {
+              "path": "ImagingSelection.instance.imageRegion3D.regionType",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/imagingselection-3dgraphictype|5.0.0"
+              }
+            }
+          }
+        },
+        "modifierExtension": {
+          "path": "ImagingSelection.instance.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "number": {
+          "path": "ImagingSelection.instance.number",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "unsignedInt"
+          ]
+        },
+        "sopClass": {
+          "path": "ImagingSelection.instance.sopClass",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Coding"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://dicom.nema.org/medical/dicom/current/output/chtml/part04/sect_B.5.html#table_B.5-1"
+          }
+        },
+        "subset": {
+          "path": "ImagingSelection.instance.subset",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "string"
+          ]
+        },
+        "uid": {
+          "path": "ImagingSelection.instance.uid",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "id"
+          ]
+        }
+      }
+    },
+    "issued": {
+      "path": "ImagingSelection.issued",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "instant"
+      ]
+    },
+    "language": {
+      "path": "ImagingSelection.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "ImagingSelection.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "ImagingSelection.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "performer": {
+      "path": "ImagingSelection.performer",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "actor": {
+          "path": "ImagingSelection.performer.actor",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "extension": {
+          "path": "ImagingSelection.performer.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "function": {
+          "path": "ImagingSelection.performer.function",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/series-performer-function"
+          }
+        },
+        "id": {
+          "path": "ImagingSelection.performer.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ImagingSelection.performer.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "seriesNumber": {
+      "path": "ImagingSelection.seriesNumber",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "unsignedInt"
+      ]
+    },
+    "seriesUid": {
+      "path": "ImagingSelection.seriesUid",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "id"
+      ]
+    },
+    "status": {
+      "path": "ImagingSelection.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/imagingselection-status|5.0.0"
+      }
+    },
+    "studyUid": {
+      "path": "ImagingSelection.studyUid",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "id"
+      ]
+    },
+    "subject": {
+      "path": "ImagingSelection.subject",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "text": {
+      "path": "ImagingSelection.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

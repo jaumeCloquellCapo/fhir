@@ -1,0 +1,336 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/ArtifactAssessment",
+  "type": "ArtifactAssessment",
+  "name": "ArtifactAssessment",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "approvalDate": {
+      "path": "ArtifactAssessment.approvalDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "artifact": {
+      "path": "ArtifactAssessment.artifact[x]",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference",
+        "canonical",
+        "uri"
+      ],
+      "choices": [
+        "artifactReference",
+        "artifactCanonical",
+        "artifactUri"
+      ]
+    },
+    "citeAs": {
+      "path": "ArtifactAssessment.citeAs[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference",
+        "markdown"
+      ],
+      "choices": [
+        "citeAsReference",
+        "citeAsMarkdown"
+      ]
+    },
+    "contained": {
+      "path": "ArtifactAssessment.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "content": {
+      "path": "ArtifactAssessment.content",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "author": {
+          "path": "ArtifactAssessment.content.author",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "classifier": {
+          "path": "ArtifactAssessment.content.classifier",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/certainty-rating"
+          }
+        },
+        "component": {
+          "path": "ArtifactAssessment.content.component",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#ArtifactAssessment.content"
+        },
+        "extension": {
+          "path": "ArtifactAssessment.content.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "freeToShare": {
+          "path": "ArtifactAssessment.content.freeToShare",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "id": {
+          "path": "ArtifactAssessment.content.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "informationType": {
+          "path": "ArtifactAssessment.content.informationType",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/artifactassessment-information-type|5.0.0"
+          }
+        },
+        "modifierExtension": {
+          "path": "ArtifactAssessment.content.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "path": {
+          "path": "ArtifactAssessment.content.path",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "uri"
+          ]
+        },
+        "quantity": {
+          "path": "ArtifactAssessment.content.quantity",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity"
+          ]
+        },
+        "relatedArtifact": {
+          "path": "ArtifactAssessment.content.relatedArtifact",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "RelatedArtifact"
+          ]
+        },
+        "summary": {
+          "path": "ArtifactAssessment.content.summary",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "type": {
+          "path": "ArtifactAssessment.content.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/certainty-type"
+          }
+        }
+      }
+    },
+    "copyright": {
+      "path": "ArtifactAssessment.copyright",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "date": {
+      "path": "ArtifactAssessment.date",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "disposition": {
+      "path": "ArtifactAssessment.disposition",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/artifactassessment-disposition|5.0.0"
+      }
+    },
+    "extension": {
+      "path": "ArtifactAssessment.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "ArtifactAssessment.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "ArtifactAssessment.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "ArtifactAssessment.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "ArtifactAssessment.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "lastReviewDate": {
+      "path": "ArtifactAssessment.lastReviewDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "meta": {
+      "path": "ArtifactAssessment.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "ArtifactAssessment.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "text": {
+      "path": "ArtifactAssessment.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "title": {
+      "path": "ArtifactAssessment.title",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "workflowStatus": {
+      "path": "ArtifactAssessment.workflowStatus",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status|5.0.0"
+      }
+    }
+  }
+}

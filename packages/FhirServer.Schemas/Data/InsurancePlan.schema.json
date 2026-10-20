@@ -1,0 +1,691 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/InsurancePlan",
+  "type": "InsurancePlan",
+  "name": "InsurancePlan",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "administeredBy": {
+      "path": "InsurancePlan.administeredBy",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "alias": {
+      "path": "InsurancePlan.alias",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "string"
+      ]
+    },
+    "contact": {
+      "path": "InsurancePlan.contact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ExtendedContactDetail"
+      ]
+    },
+    "contained": {
+      "path": "InsurancePlan.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "coverage": {
+      "path": "InsurancePlan.coverage",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "benefit": {
+          "path": "InsurancePlan.coverage.benefit",
+          "min": 1,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "InsurancePlan.coverage.benefit.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "InsurancePlan.coverage.benefit.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "limit": {
+              "path": "InsurancePlan.coverage.benefit.limit",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "code": {
+                  "path": "InsurancePlan.coverage.benefit.limit.code",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ]
+                },
+                "extension": {
+                  "path": "InsurancePlan.coverage.benefit.limit.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "InsurancePlan.coverage.benefit.limit.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "InsurancePlan.coverage.benefit.limit.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "value": {
+                  "path": "InsurancePlan.coverage.benefit.limit.value",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Quantity"
+                  ]
+                }
+              }
+            },
+            "modifierExtension": {
+              "path": "InsurancePlan.coverage.benefit.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "requirement": {
+              "path": "InsurancePlan.coverage.benefit.requirement",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "type": {
+              "path": "InsurancePlan.coverage.benefit.type",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ]
+            }
+          }
+        },
+        "extension": {
+          "path": "InsurancePlan.coverage.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "InsurancePlan.coverage.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "InsurancePlan.coverage.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "network": {
+          "path": "InsurancePlan.coverage.network",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "type": {
+          "path": "InsurancePlan.coverage.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        }
+      }
+    },
+    "coverageArea": {
+      "path": "InsurancePlan.coverageArea",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "endpoint": {
+      "path": "InsurancePlan.endpoint",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "extension": {
+      "path": "InsurancePlan.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "InsurancePlan.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "InsurancePlan.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "InsurancePlan.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "InsurancePlan.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "InsurancePlan.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "InsurancePlan.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "InsurancePlan.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "network": {
+      "path": "InsurancePlan.network",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "ownedBy": {
+      "path": "InsurancePlan.ownedBy",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "period": {
+      "path": "InsurancePlan.period",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ]
+    },
+    "plan": {
+      "path": "InsurancePlan.plan",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "coverageArea": {
+          "path": "InsurancePlan.plan.coverageArea",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "extension": {
+          "path": "InsurancePlan.plan.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "generalCost": {
+          "path": "InsurancePlan.plan.generalCost",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "comment": {
+              "path": "InsurancePlan.plan.generalCost.comment",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "cost": {
+              "path": "InsurancePlan.plan.generalCost.cost",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Money"
+              ]
+            },
+            "extension": {
+              "path": "InsurancePlan.plan.generalCost.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "groupSize": {
+              "path": "InsurancePlan.plan.generalCost.groupSize",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "positiveInt"
+              ]
+            },
+            "id": {
+              "path": "InsurancePlan.plan.generalCost.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "InsurancePlan.plan.generalCost.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "type": {
+              "path": "InsurancePlan.plan.generalCost.type",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ]
+            }
+          }
+        },
+        "id": {
+          "path": "InsurancePlan.plan.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "identifier": {
+          "path": "InsurancePlan.plan.identifier",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "modifierExtension": {
+          "path": "InsurancePlan.plan.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "network": {
+          "path": "InsurancePlan.plan.network",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "specificCost": {
+          "path": "InsurancePlan.plan.specificCost",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "benefit": {
+              "path": "InsurancePlan.plan.specificCost.benefit",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "cost": {
+                  "path": "InsurancePlan.plan.specificCost.benefit.cost",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "BackboneElement"
+                  ],
+                  "elements": {
+                    "applicability": {
+                      "path": "InsurancePlan.plan.specificCost.benefit.cost.applicability",
+                      "min": 0,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "CodeableConcept"
+                      ],
+                      "binding": {
+                        "strength": "required",
+                        "valueSet": "http://hl7.org/fhir/ValueSet/insuranceplan-applicability|5.0.0"
+                      }
+                    },
+                    "extension": {
+                      "path": "InsurancePlan.plan.specificCost.benefit.cost.extension",
+                      "min": 0,
+                      "max": "*",
+                      "array": true,
+                      "type": [
+                        "Extension"
+                      ]
+                    },
+                    "id": {
+                      "path": "InsurancePlan.plan.specificCost.benefit.cost.id",
+                      "min": 0,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "http://hl7.org/fhirpath/System.String"
+                      ]
+                    },
+                    "modifierExtension": {
+                      "path": "InsurancePlan.plan.specificCost.benefit.cost.modifierExtension",
+                      "min": 0,
+                      "max": "*",
+                      "array": true,
+                      "type": [
+                        "Extension"
+                      ]
+                    },
+                    "qualifiers": {
+                      "path": "InsurancePlan.plan.specificCost.benefit.cost.qualifiers",
+                      "min": 0,
+                      "max": "*",
+                      "array": true,
+                      "type": [
+                        "CodeableConcept"
+                      ]
+                    },
+                    "type": {
+                      "path": "InsurancePlan.plan.specificCost.benefit.cost.type",
+                      "min": 1,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "CodeableConcept"
+                      ]
+                    },
+                    "value": {
+                      "path": "InsurancePlan.plan.specificCost.benefit.cost.value",
+                      "min": 0,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "Quantity"
+                      ]
+                    }
+                  }
+                },
+                "extension": {
+                  "path": "InsurancePlan.plan.specificCost.benefit.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "InsurancePlan.plan.specificCost.benefit.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "InsurancePlan.plan.specificCost.benefit.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "type": {
+                  "path": "InsurancePlan.plan.specificCost.benefit.type",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ]
+                }
+              }
+            },
+            "category": {
+              "path": "InsurancePlan.plan.specificCost.category",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ]
+            },
+            "extension": {
+              "path": "InsurancePlan.plan.specificCost.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "InsurancePlan.plan.specificCost.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "InsurancePlan.plan.specificCost.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            }
+          }
+        },
+        "type": {
+          "path": "InsurancePlan.plan.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        }
+      }
+    },
+    "status": {
+      "path": "InsurancePlan.status",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+      }
+    },
+    "text": {
+      "path": "InsurancePlan.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "type": {
+      "path": "InsurancePlan.type",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/insuranceplan-type"
+      }
+    }
+  }
+}

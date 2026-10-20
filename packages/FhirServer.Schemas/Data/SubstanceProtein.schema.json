@@ -1,0 +1,224 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/SubstanceProtein",
+  "type": "SubstanceProtein",
+  "name": "SubstanceProtein",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "contained": {
+      "path": "SubstanceProtein.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "disulfideLinkage": {
+      "path": "SubstanceProtein.disulfideLinkage",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "string"
+      ]
+    },
+    "extension": {
+      "path": "SubstanceProtein.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "SubstanceProtein.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "implicitRules": {
+      "path": "SubstanceProtein.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "SubstanceProtein.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "SubstanceProtein.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "SubstanceProtein.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "numberOfSubunits": {
+      "path": "SubstanceProtein.numberOfSubunits",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "integer"
+      ]
+    },
+    "sequenceType": {
+      "path": "SubstanceProtein.sequenceType",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "subunit": {
+      "path": "SubstanceProtein.subunit",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "cTerminalModification": {
+          "path": "SubstanceProtein.subunit.cTerminalModification",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "cTerminalModificationId": {
+          "path": "SubstanceProtein.subunit.cTerminalModificationId",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "extension": {
+          "path": "SubstanceProtein.subunit.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "SubstanceProtein.subunit.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "length": {
+          "path": "SubstanceProtein.subunit.length",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "integer"
+          ]
+        },
+        "modifierExtension": {
+          "path": "SubstanceProtein.subunit.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "nTerminalModification": {
+          "path": "SubstanceProtein.subunit.nTerminalModification",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "nTerminalModificationId": {
+          "path": "SubstanceProtein.subunit.nTerminalModificationId",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "sequence": {
+          "path": "SubstanceProtein.subunit.sequence",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "sequenceAttachment": {
+          "path": "SubstanceProtein.subunit.sequenceAttachment",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Attachment"
+          ]
+        },
+        "subunit": {
+          "path": "SubstanceProtein.subunit.subunit",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "integer"
+          ]
+        }
+      }
+    },
+    "text": {
+      "path": "SubstanceProtein.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

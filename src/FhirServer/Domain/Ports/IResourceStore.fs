@@ -12,6 +12,7 @@ type IResourceStore =
     /// Soft-delete via history; returns the deleted version resource (DELETE 200 body).
     abstract member Delete: resourceType: string * id: string -> FhirResource option
     abstract member ListByType: resourceType: string -> FhirResource list
-    abstract member Search: resourceType: string * query: Map<string, string list> -> FhirResource list
+    /// Returns (page, total matching count).
+    abstract member Search: resourceType: string * query: Map<string, string list> -> FhirResource list * int
     abstract member ListHistory: filter: HistoryFilter -> HistoryEntry list * int
     abstract member RunInTransaction: action: (unit -> 'T) -> 'T

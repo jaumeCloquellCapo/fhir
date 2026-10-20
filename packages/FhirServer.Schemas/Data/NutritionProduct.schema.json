@@ -1,0 +1,449 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/NutritionProduct",
+  "type": "NutritionProduct",
+  "name": "NutritionProduct",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "status"
+  ],
+  "elements": {
+    "category": {
+      "path": "NutritionProduct.category",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/nutrition-product-category"
+      }
+    },
+    "characteristic": {
+      "path": "NutritionProduct.characteristic",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "NutritionProduct.characteristic.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "NutritionProduct.characteristic.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "NutritionProduct.characteristic.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "NutritionProduct.characteristic.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/measurement-property"
+          }
+        },
+        "value": {
+          "path": "NutritionProduct.characteristic.value[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept",
+            "string",
+            "Quantity",
+            "base64Binary",
+            "Attachment",
+            "boolean"
+          ],
+          "choices": [
+            "valueCodeableConcept",
+            "valueString",
+            "valueQuantity",
+            "valueBase64Binary",
+            "valueAttachment",
+            "valueBoolean"
+          ]
+        }
+      }
+    },
+    "code": {
+      "path": "NutritionProduct.code",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/edible-substance-type"
+      }
+    },
+    "contained": {
+      "path": "NutritionProduct.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "extension": {
+      "path": "NutritionProduct.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "NutritionProduct.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "implicitRules": {
+      "path": "NutritionProduct.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "ingredient": {
+      "path": "NutritionProduct.ingredient",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "amount": {
+          "path": "NutritionProduct.ingredient.amount",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Ratio"
+          ]
+        },
+        "extension": {
+          "path": "NutritionProduct.ingredient.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "NutritionProduct.ingredient.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "item": {
+          "path": "NutritionProduct.ingredient.item",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableReference"
+          ]
+        },
+        "modifierExtension": {
+          "path": "NutritionProduct.ingredient.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "instance": {
+      "path": "NutritionProduct.instance",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "biologicalSourceEvent": {
+          "path": "NutritionProduct.instance.biologicalSourceEvent",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "expiry": {
+          "path": "NutritionProduct.instance.expiry",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "dateTime"
+          ]
+        },
+        "extension": {
+          "path": "NutritionProduct.instance.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "NutritionProduct.instance.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "identifier": {
+          "path": "NutritionProduct.instance.identifier",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "lotNumber": {
+          "path": "NutritionProduct.instance.lotNumber",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "modifierExtension": {
+          "path": "NutritionProduct.instance.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "name": {
+          "path": "NutritionProduct.instance.name",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "quantity": {
+          "path": "NutritionProduct.instance.quantity",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity"
+          ]
+        },
+        "useBy": {
+          "path": "NutritionProduct.instance.useBy",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "dateTime"
+          ]
+        }
+      }
+    },
+    "knownAllergen": {
+      "path": "NutritionProduct.knownAllergen",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/allergen-class"
+      }
+    },
+    "language": {
+      "path": "NutritionProduct.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "manufacturer": {
+      "path": "NutritionProduct.manufacturer",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "meta": {
+      "path": "NutritionProduct.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "NutritionProduct.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "note": {
+      "path": "NutritionProduct.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "nutrient": {
+      "path": "NutritionProduct.nutrient",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "amount": {
+          "path": "NutritionProduct.nutrient.amount",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Ratio"
+          ]
+        },
+        "extension": {
+          "path": "NutritionProduct.nutrient.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "NutritionProduct.nutrient.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "item": {
+          "path": "NutritionProduct.nutrient.item",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableReference"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/nutrition-product-nutrient"
+          }
+        },
+        "modifierExtension": {
+          "path": "NutritionProduct.nutrient.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "status": {
+      "path": "NutritionProduct.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/nutritionproduct-status|5.0.0"
+      }
+    },
+    "text": {
+      "path": "NutritionProduct.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

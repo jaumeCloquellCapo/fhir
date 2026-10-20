@@ -175,9 +175,34 @@ module Metadata =
             ]
         )
 
+        let securityServices = JsonArray()
+
+        securityServices.Add(
+            FhirJson.mkObject [
+                "coding",
+                JsonArray(
+                    FhirJson.mkObject [
+                        "system", FhirJson.jStr "http://hl7.org/fhir/restful-security-service"
+                        "code", FhirJson.jStr "SMART-on-FHIR"
+                        "display", FhirJson.jStr "SMART-on-FHIR"
+                    ]
+                )
+            ]
+        )
+
+        let security =
+            FhirJson.mkObject [
+                "cors", FhirJson.jBool true
+                "service", securityServices
+                "description",
+                FhirJson.jStr
+                    "SMART App Launch MVP: /.well-known/smart-configuration and /auth/token (client_credentials). Optional HTTP Basic when Auth:Enabled=true."
+            ]
+
         let rest =
             FhirJson.mkObject [
                 "mode", FhirJson.jStr "server"
+                "security", security
                 "interaction", systemInteractions
                 "resource", resources
                 "operation", operations

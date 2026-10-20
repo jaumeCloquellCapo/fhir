@@ -1,0 +1,133 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/RelatedArtifact",
+  "type": "RelatedArtifact",
+  "name": "RelatedArtifact",
+  "kind": "complex-type",
+  "derivation": "specialization",
+  "required": [
+    "type"
+  ],
+  "elements": {
+    "citation": {
+      "path": "RelatedArtifact.citation",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "classifier": {
+      "path": "RelatedArtifact.classifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/citation-artifact-classifier"
+      }
+    },
+    "display": {
+      "path": "RelatedArtifact.display",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "document": {
+      "path": "RelatedArtifact.document",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Attachment"
+      ]
+    },
+    "extension": {
+      "path": "RelatedArtifact.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "RelatedArtifact.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "label": {
+      "path": "RelatedArtifact.label",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "publicationDate": {
+      "path": "RelatedArtifact.publicationDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "publicationStatus": {
+      "path": "RelatedArtifact.publicationStatus",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+      }
+    },
+    "resource": {
+      "path": "RelatedArtifact.resource",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "canonical"
+      ]
+    },
+    "resourceReference": {
+      "path": "RelatedArtifact.resourceReference",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "type": {
+      "path": "RelatedArtifact.type",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/related-artifact-type|5.0.0"
+      }
+    }
+  }
+}

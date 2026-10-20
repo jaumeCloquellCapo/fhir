@@ -13,12 +13,15 @@ make run              # or: make watch
 
 ## Tests
 
-In-process E2E tests live under `tests/FhirServer.E2E/` (one file per endpoint area).
+In-process E2E tests live under `tests/FhirServer.E2E/` (one file per endpoint area). Each factory creates and drops an isolated Postgres database. Start Postgres first:
 
 ```bash
+make db-up
 make test
 # or: dotnet test tests/FhirServer.E2E
 ```
+
+Optional override: `FHIR_E2E_ADMIN_CONNECTION` (defaults to local Compose credentials).
 
 ## CI (GitHub Actions)
 
@@ -56,7 +59,7 @@ Commit regenerated `packages/` artifacts when the generator or package version c
 ## Project layout tips
 
 - Prefer changes in **Domain** / **Application** before touching HTTP adapters
-- New SQL behavior: implement once in `EnvelopeResourceStore` or the dialect interface—avoid duplicating store logic
+- New persistence behavior: implement once in `EnvelopeResourceStore` or the Postgres dialect—avoid duplicating store logic
 - New FHIR interactions: add a handler, route in `AppHost`, and an E2E test under `Endpoints/`
 
 ## Pull requests

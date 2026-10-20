@@ -1,0 +1,736 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/ClinicalUseDefinition",
+  "type": "ClinicalUseDefinition",
+  "name": "ClinicalUseDefinition",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "type"
+  ],
+  "elements": {
+    "category": {
+      "path": "ClinicalUseDefinition.category",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/clinical-use-definition-category"
+      }
+    },
+    "contained": {
+      "path": "ClinicalUseDefinition.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "contraindication": {
+      "path": "ClinicalUseDefinition.contraindication",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "applicability": {
+          "path": "ClinicalUseDefinition.contraindication.applicability",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Expression"
+          ]
+        },
+        "comorbidity": {
+          "path": "ClinicalUseDefinition.contraindication.comorbidity",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableReference"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/disease-symptom-procedure"
+          }
+        },
+        "diseaseStatus": {
+          "path": "ClinicalUseDefinition.contraindication.diseaseStatus",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableReference"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/disease-status"
+          }
+        },
+        "diseaseSymptomProcedure": {
+          "path": "ClinicalUseDefinition.contraindication.diseaseSymptomProcedure",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableReference"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/disease-symptom-procedure"
+          }
+        },
+        "extension": {
+          "path": "ClinicalUseDefinition.contraindication.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ClinicalUseDefinition.contraindication.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "indication": {
+          "path": "ClinicalUseDefinition.contraindication.indication",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ClinicalUseDefinition.contraindication.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "otherTherapy": {
+          "path": "ClinicalUseDefinition.contraindication.otherTherapy",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "ClinicalUseDefinition.contraindication.otherTherapy.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ClinicalUseDefinition.contraindication.otherTherapy.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ClinicalUseDefinition.contraindication.otherTherapy.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "relationshipType": {
+              "path": "ClinicalUseDefinition.contraindication.otherTherapy.relationshipType",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "preferred",
+                "valueSet": "http://hl7.org/fhir/ValueSet/therapy-relationship-type"
+              }
+            },
+            "treatment": {
+              "path": "ClinicalUseDefinition.contraindication.otherTherapy.treatment",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableReference"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/therapy"
+              }
+            }
+          }
+        }
+      }
+    },
+    "extension": {
+      "path": "ClinicalUseDefinition.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "ClinicalUseDefinition.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "ClinicalUseDefinition.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "ClinicalUseDefinition.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "indication": {
+      "path": "ClinicalUseDefinition.indication",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "applicability": {
+          "path": "ClinicalUseDefinition.indication.applicability",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Expression"
+          ]
+        },
+        "comorbidity": {
+          "path": "ClinicalUseDefinition.indication.comorbidity",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableReference"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/disease-symptom-procedure"
+          }
+        },
+        "diseaseStatus": {
+          "path": "ClinicalUseDefinition.indication.diseaseStatus",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableReference"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/disease-status"
+          }
+        },
+        "diseaseSymptomProcedure": {
+          "path": "ClinicalUseDefinition.indication.diseaseSymptomProcedure",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableReference"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/disease-symptom-procedure"
+          }
+        },
+        "duration": {
+          "path": "ClinicalUseDefinition.indication.duration[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Range",
+            "string"
+          ],
+          "choices": [
+            "durationRange",
+            "durationString"
+          ]
+        },
+        "extension": {
+          "path": "ClinicalUseDefinition.indication.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ClinicalUseDefinition.indication.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "intendedEffect": {
+          "path": "ClinicalUseDefinition.indication.intendedEffect",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableReference"
+          ],
+          "binding": {
+            "strength": "preferred",
+            "valueSet": "http://hl7.org/fhir/ValueSet/product-intended-use"
+          }
+        },
+        "modifierExtension": {
+          "path": "ClinicalUseDefinition.indication.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "otherTherapy": {
+          "path": "ClinicalUseDefinition.indication.otherTherapy",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#ClinicalUseDefinition.contraindication.otherTherapy"
+        },
+        "undesirableEffect": {
+          "path": "ClinicalUseDefinition.indication.undesirableEffect",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    },
+    "interaction": {
+      "path": "ClinicalUseDefinition.interaction",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "effect": {
+          "path": "ClinicalUseDefinition.interaction.effect",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableReference"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/interaction-effect"
+          }
+        },
+        "extension": {
+          "path": "ClinicalUseDefinition.interaction.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ClinicalUseDefinition.interaction.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "incidence": {
+          "path": "ClinicalUseDefinition.interaction.incidence",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/interaction-incidence"
+          }
+        },
+        "interactant": {
+          "path": "ClinicalUseDefinition.interaction.interactant",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "ClinicalUseDefinition.interaction.interactant.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "ClinicalUseDefinition.interaction.interactant.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "item": {
+              "path": "ClinicalUseDefinition.interaction.interactant.item[x]",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference",
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/interactant"
+              },
+              "choices": [
+                "itemReference",
+                "itemCodeableConcept"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ClinicalUseDefinition.interaction.interactant.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            }
+          }
+        },
+        "management": {
+          "path": "ClinicalUseDefinition.interaction.management",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/interaction-management"
+          }
+        },
+        "modifierExtension": {
+          "path": "ClinicalUseDefinition.interaction.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "ClinicalUseDefinition.interaction.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/interaction-type"
+          }
+        }
+      }
+    },
+    "language": {
+      "path": "ClinicalUseDefinition.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "library": {
+      "path": "ClinicalUseDefinition.library",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "canonical"
+      ]
+    },
+    "meta": {
+      "path": "ClinicalUseDefinition.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "ClinicalUseDefinition.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "population": {
+      "path": "ClinicalUseDefinition.population",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "status": {
+      "path": "ClinicalUseDefinition.status",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status"
+      }
+    },
+    "subject": {
+      "path": "ClinicalUseDefinition.subject",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "text": {
+      "path": "ClinicalUseDefinition.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "type": {
+      "path": "ClinicalUseDefinition.type",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/clinical-use-definition-type|5.0.0"
+      }
+    },
+    "undesirableEffect": {
+      "path": "ClinicalUseDefinition.undesirableEffect",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "classification": {
+          "path": "ClinicalUseDefinition.undesirableEffect.classification",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/undesirable-effect-classification"
+          }
+        },
+        "extension": {
+          "path": "ClinicalUseDefinition.undesirableEffect.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "frequencyOfOccurrence": {
+          "path": "ClinicalUseDefinition.undesirableEffect.frequencyOfOccurrence",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/undesirable-effect-frequency"
+          }
+        },
+        "id": {
+          "path": "ClinicalUseDefinition.undesirableEffect.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ClinicalUseDefinition.undesirableEffect.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "symptomConditionEffect": {
+          "path": "ClinicalUseDefinition.undesirableEffect.symptomConditionEffect",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableReference"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/undesirable-effect-symptom"
+          }
+        }
+      }
+    },
+    "warning": {
+      "path": "ClinicalUseDefinition.warning",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "code": {
+          "path": "ClinicalUseDefinition.warning.code",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/warning-type"
+          }
+        },
+        "description": {
+          "path": "ClinicalUseDefinition.warning.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "extension": {
+          "path": "ClinicalUseDefinition.warning.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ClinicalUseDefinition.warning.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ClinicalUseDefinition.warning.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    }
+  }
+}

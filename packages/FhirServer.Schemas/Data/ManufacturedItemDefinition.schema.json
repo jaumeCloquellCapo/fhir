@@ -1,0 +1,408 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/ManufacturedItemDefinition",
+  "type": "ManufacturedItemDefinition",
+  "name": "ManufacturedItemDefinition",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "manufacturedDoseForm",
+    "status"
+  ],
+  "elements": {
+    "component": {
+      "path": "ManufacturedItemDefinition.component",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "amount": {
+          "path": "ManufacturedItemDefinition.component.amount",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Quantity"
+          ]
+        },
+        "component": {
+          "path": "ManufacturedItemDefinition.component.component",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#ManufacturedItemDefinition.component"
+        },
+        "constituent": {
+          "path": "ManufacturedItemDefinition.component.constituent",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "amount": {
+              "path": "ManufacturedItemDefinition.component.constituent.amount",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Quantity"
+              ]
+            },
+            "extension": {
+              "path": "ManufacturedItemDefinition.component.constituent.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "function": {
+              "path": "ManufacturedItemDefinition.component.constituent.function",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ]
+            },
+            "hasIngredient": {
+              "path": "ManufacturedItemDefinition.component.constituent.hasIngredient",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableReference"
+              ]
+            },
+            "id": {
+              "path": "ManufacturedItemDefinition.component.constituent.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "location": {
+              "path": "ManufacturedItemDefinition.component.constituent.location",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ]
+            },
+            "modifierExtension": {
+              "path": "ManufacturedItemDefinition.component.constituent.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            }
+          }
+        },
+        "extension": {
+          "path": "ManufacturedItemDefinition.component.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "function": {
+          "path": "ManufacturedItemDefinition.component.function",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "id": {
+          "path": "ManufacturedItemDefinition.component.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ManufacturedItemDefinition.component.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "property": {
+          "path": "ManufacturedItemDefinition.component.property",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#ManufacturedItemDefinition.property"
+        },
+        "type": {
+          "path": "ManufacturedItemDefinition.component.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        }
+      }
+    },
+    "contained": {
+      "path": "ManufacturedItemDefinition.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "extension": {
+      "path": "ManufacturedItemDefinition.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "ManufacturedItemDefinition.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "ManufacturedItemDefinition.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "ManufacturedItemDefinition.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "ingredient": {
+      "path": "ManufacturedItemDefinition.ingredient",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/substance-codes"
+      }
+    },
+    "language": {
+      "path": "ManufacturedItemDefinition.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "manufacturedDoseForm": {
+      "path": "ManufacturedItemDefinition.manufacturedDoseForm",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/manufactured-dose-form"
+      }
+    },
+    "manufacturer": {
+      "path": "ManufacturedItemDefinition.manufacturer",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "marketingStatus": {
+      "path": "ManufacturedItemDefinition.marketingStatus",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "MarketingStatus"
+      ]
+    },
+    "meta": {
+      "path": "ManufacturedItemDefinition.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "ManufacturedItemDefinition.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "ManufacturedItemDefinition.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "property": {
+      "path": "ManufacturedItemDefinition.property",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "ManufacturedItemDefinition.property.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "ManufacturedItemDefinition.property.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "ManufacturedItemDefinition.property.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "ManufacturedItemDefinition.property.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/product-characteristic-codes"
+          }
+        },
+        "value": {
+          "path": "ManufacturedItemDefinition.property.value[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept",
+            "Quantity",
+            "date",
+            "boolean",
+            "markdown",
+            "Attachment",
+            "Reference"
+          ],
+          "choices": [
+            "valueCodeableConcept",
+            "valueQuantity",
+            "valueDate",
+            "valueBoolean",
+            "valueMarkdown",
+            "valueAttachment",
+            "valueReference"
+          ]
+        }
+      }
+    },
+    "status": {
+      "path": "ManufacturedItemDefinition.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+      }
+    },
+    "text": {
+      "path": "ManufacturedItemDefinition.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "unitOfPresentation": {
+      "path": "ManufacturedItemDefinition.unitOfPresentation",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/unit-of-presentation"
+      }
+    }
+  }
+}

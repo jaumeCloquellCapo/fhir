@@ -1,0 +1,247 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Timing",
+  "type": "Timing",
+  "name": "Timing",
+  "kind": "complex-type",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "code": {
+      "path": "Timing.code",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/timing-abbreviation"
+      }
+    },
+    "event": {
+      "path": "Timing.event",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "extension": {
+      "path": "Timing.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "Timing.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "modifierExtension": {
+      "path": "Timing.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "repeat": {
+      "path": "Timing.repeat",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Element"
+      ],
+      "elements": {
+        "bounds": {
+          "path": "Timing.repeat.bounds[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Duration",
+            "Range",
+            "Period"
+          ],
+          "choices": [
+            "boundsDuration",
+            "boundsRange",
+            "boundsPeriod"
+          ]
+        },
+        "count": {
+          "path": "Timing.repeat.count",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "countMax": {
+          "path": "Timing.repeat.countMax",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "dayOfWeek": {
+          "path": "Timing.repeat.dayOfWeek",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/days-of-week|5.0.0"
+          }
+        },
+        "duration": {
+          "path": "Timing.repeat.duration",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "decimal"
+          ]
+        },
+        "durationMax": {
+          "path": "Timing.repeat.durationMax",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "decimal"
+          ]
+        },
+        "durationUnit": {
+          "path": "Timing.repeat.durationUnit",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/units-of-time|5.0.0"
+          }
+        },
+        "extension": {
+          "path": "Timing.repeat.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "frequency": {
+          "path": "Timing.repeat.frequency",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "frequencyMax": {
+          "path": "Timing.repeat.frequencyMax",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "id": {
+          "path": "Timing.repeat.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "offset": {
+          "path": "Timing.repeat.offset",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "unsignedInt"
+          ]
+        },
+        "period": {
+          "path": "Timing.repeat.period",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "decimal"
+          ]
+        },
+        "periodMax": {
+          "path": "Timing.repeat.periodMax",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "decimal"
+          ]
+        },
+        "periodUnit": {
+          "path": "Timing.repeat.periodUnit",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/units-of-time|5.0.0"
+          }
+        },
+        "timeOfDay": {
+          "path": "Timing.repeat.timeOfDay",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "time"
+          ]
+        },
+        "when": {
+          "path": "Timing.repeat.when",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/event-timing|5.0.0"
+          }
+        }
+      }
+    }
+  }
+}

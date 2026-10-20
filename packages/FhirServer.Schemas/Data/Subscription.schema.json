@@ -1,0 +1,393 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Subscription",
+  "type": "Subscription",
+  "name": "Subscription",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "channelType",
+    "status",
+    "topic"
+  ],
+  "elements": {
+    "channelType": {
+      "path": "Subscription.channelType",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Coding"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/subscription-channel-type"
+      }
+    },
+    "contact": {
+      "path": "Subscription.contact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactPoint"
+      ]
+    },
+    "contained": {
+      "path": "Subscription.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "content": {
+      "path": "Subscription.content",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/subscription-payload-content|5.0.0"
+      }
+    },
+    "contentType": {
+      "path": "Subscription.contentType",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/mimetypes|5.0.0"
+      }
+    },
+    "end": {
+      "path": "Subscription.end",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "instant"
+      ]
+    },
+    "endpoint": {
+      "path": "Subscription.endpoint",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "url"
+      ]
+    },
+    "extension": {
+      "path": "Subscription.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "filterBy": {
+      "path": "Subscription.filterBy",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "comparator": {
+          "path": "Subscription.filterBy.comparator",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/search-comparator|5.0.0"
+          }
+        },
+        "extension": {
+          "path": "Subscription.filterBy.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "filterParameter": {
+          "path": "Subscription.filterBy.filterParameter",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "id": {
+          "path": "Subscription.filterBy.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifier": {
+          "path": "Subscription.filterBy.modifier",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/search-modifier-code|5.0.0"
+          }
+        },
+        "modifierExtension": {
+          "path": "Subscription.filterBy.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "resourceType": {
+          "path": "Subscription.filterBy.resourceType",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "uri"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/subscription-types"
+          }
+        },
+        "value": {
+          "path": "Subscription.filterBy.value",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        }
+      }
+    },
+    "heartbeatPeriod": {
+      "path": "Subscription.heartbeatPeriod",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "unsignedInt"
+      ]
+    },
+    "id": {
+      "path": "Subscription.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Subscription.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "Subscription.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "Subscription.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "managingEntity": {
+      "path": "Subscription.managingEntity",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "maxCount": {
+      "path": "Subscription.maxCount",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "positiveInt"
+      ]
+    },
+    "meta": {
+      "path": "Subscription.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "Subscription.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "Subscription.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "parameter": {
+      "path": "Subscription.parameter",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Subscription.parameter.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Subscription.parameter.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Subscription.parameter.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "name": {
+          "path": "Subscription.parameter.name",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "value": {
+          "path": "Subscription.parameter.value",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        }
+      }
+    },
+    "reason": {
+      "path": "Subscription.reason",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "status": {
+      "path": "Subscription.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/subscription-status|5.0.0"
+      }
+    },
+    "text": {
+      "path": "Subscription.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "timeout": {
+      "path": "Subscription.timeout",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "unsignedInt"
+      ]
+    },
+    "topic": {
+      "path": "Subscription.topic",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "canonical"
+      ]
+    }
+  }
+}

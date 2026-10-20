@@ -1,6 +1,7 @@
 namespace FhirServer.Infrastructure.Persistence
 
 open System
+open FhirServer.Domain.Services
 open FhirServer.Domain.Types
 
 /// One envelope row (current or history).
@@ -12,7 +13,7 @@ type EnvelopeRow = {
     BodyJson: string
 }
 
-/// Dialect-specific SQL session (SQLite vs Postgres). Owned by caller; dispose closes connection.
+/// Postgres envelope session. Owned by caller; dispose closes connection.
 type IEnvelopeSession =
     inherit IDisposable
     abstract member BeginTransaction: unit -> unit
@@ -37,7 +38,18 @@ type IEnvelopeSession =
     abstract member QueryHistory:
         filter: HistoryFilter -> (string * string * int64 * DateTimeOffset * string * string) list
 
-/// Outbound adapter factory for a concrete database.
+    abstract member ReplaceSearchIndex:
+        resourceType: string * id: string * rows: SearchIndexer.IndexRows -> unit
+
+    abstract member ClearSearchIndex: resourceType: string * id: string -> unit
+
+    abstract member SearchCurrent:
+        resourceType: string * plan: SearchEngine.SearchPlan -> (string * int64 * DateTimeOffset * string) list * int
+
+    abstract member IsSearchIndexBackfilled: unit -> bool
+    abstract member MarkSearchIndexBackfilled: unit -> unit
+
+/// Outbound adapter factory for Postgres.
 type IEnvelopeDialect =
     abstract member Migrate: unit -> unit
     abstract member OpenSession: unit -> IEnvelopeSession

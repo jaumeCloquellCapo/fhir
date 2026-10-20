@@ -1,0 +1,1498 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/PlanDefinition",
+  "type": "PlanDefinition",
+  "name": "PlanDefinition",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "status"
+  ],
+  "elements": {
+    "action": {
+      "path": "PlanDefinition.action",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "action": {
+          "path": "PlanDefinition.action.action",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#PlanDefinition.action"
+        },
+        "cardinalityBehavior": {
+          "path": "PlanDefinition.action.cardinalityBehavior",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/action-cardinality-behavior|5.0.0"
+          }
+        },
+        "code": {
+          "path": "PlanDefinition.action.code",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/action-code"
+          }
+        },
+        "condition": {
+          "path": "PlanDefinition.action.condition",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "expression": {
+              "path": "PlanDefinition.action.condition.expression",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Expression"
+              ]
+            },
+            "extension": {
+              "path": "PlanDefinition.action.condition.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "PlanDefinition.action.condition.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "kind": {
+              "path": "PlanDefinition.action.condition.kind",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/action-condition-kind|5.0.0"
+              }
+            },
+            "modifierExtension": {
+              "path": "PlanDefinition.action.condition.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            }
+          }
+        },
+        "definition": {
+          "path": "PlanDefinition.action.definition[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "canonical",
+            "uri"
+          ],
+          "choices": [
+            "definitionCanonical",
+            "definitionUri"
+          ]
+        },
+        "description": {
+          "path": "PlanDefinition.action.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "documentation": {
+          "path": "PlanDefinition.action.documentation",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "RelatedArtifact"
+          ]
+        },
+        "dynamicValue": {
+          "path": "PlanDefinition.action.dynamicValue",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "expression": {
+              "path": "PlanDefinition.action.dynamicValue.expression",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Expression"
+              ]
+            },
+            "extension": {
+              "path": "PlanDefinition.action.dynamicValue.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "PlanDefinition.action.dynamicValue.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "PlanDefinition.action.dynamicValue.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "path": {
+              "path": "PlanDefinition.action.dynamicValue.path",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "extension": {
+          "path": "PlanDefinition.action.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "goalId": {
+          "path": "PlanDefinition.action.goalId",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "id"
+          ]
+        },
+        "groupingBehavior": {
+          "path": "PlanDefinition.action.groupingBehavior",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/action-grouping-behavior|5.0.0"
+          }
+        },
+        "id": {
+          "path": "PlanDefinition.action.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "input": {
+          "path": "PlanDefinition.action.input",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "PlanDefinition.action.input.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "PlanDefinition.action.input.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "PlanDefinition.action.input.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "relatedData": {
+              "path": "PlanDefinition.action.input.relatedData",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "id"
+              ]
+            },
+            "requirement": {
+              "path": "PlanDefinition.action.input.requirement",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "DataRequirement"
+              ]
+            },
+            "title": {
+              "path": "PlanDefinition.action.input.title",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "linkId": {
+          "path": "PlanDefinition.action.linkId",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "location": {
+          "path": "PlanDefinition.action.location",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableReference"
+          ]
+        },
+        "modifierExtension": {
+          "path": "PlanDefinition.action.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "output": {
+          "path": "PlanDefinition.action.output",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "PlanDefinition.action.output.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "PlanDefinition.action.output.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "PlanDefinition.action.output.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "relatedData": {
+              "path": "PlanDefinition.action.output.relatedData",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "requirement": {
+              "path": "PlanDefinition.action.output.requirement",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "DataRequirement"
+              ]
+            },
+            "title": {
+              "path": "PlanDefinition.action.output.title",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "participant": {
+          "path": "PlanDefinition.action.participant",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "actorId": {
+              "path": "PlanDefinition.action.participant.actorId",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "extension": {
+              "path": "PlanDefinition.action.participant.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "function": {
+              "path": "PlanDefinition.action.participant.function",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/action-participant-function"
+              }
+            },
+            "id": {
+              "path": "PlanDefinition.action.participant.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "PlanDefinition.action.participant.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "role": {
+              "path": "PlanDefinition.action.participant.role",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://terminology.hl7.org/ValueSet/action-participant-role"
+              }
+            },
+            "type": {
+              "path": "PlanDefinition.action.participant.type",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/action-participant-type|5.0.0"
+              }
+            },
+            "typeCanonical": {
+              "path": "PlanDefinition.action.participant.typeCanonical",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "canonical"
+              ]
+            },
+            "typeReference": {
+              "path": "PlanDefinition.action.participant.typeReference",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            }
+          }
+        },
+        "precheckBehavior": {
+          "path": "PlanDefinition.action.precheckBehavior",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/action-precheck-behavior|5.0.0"
+          }
+        },
+        "prefix": {
+          "path": "PlanDefinition.action.prefix",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "priority": {
+          "path": "PlanDefinition.action.priority",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/request-priority|5.0.0"
+          }
+        },
+        "reason": {
+          "path": "PlanDefinition.action.reason",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/action-reason-code"
+          }
+        },
+        "relatedAction": {
+          "path": "PlanDefinition.action.relatedAction",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "endRelationship": {
+              "path": "PlanDefinition.action.relatedAction.endRelationship",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/action-relationship-type|5.0.0"
+              }
+            },
+            "extension": {
+              "path": "PlanDefinition.action.relatedAction.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "PlanDefinition.action.relatedAction.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "PlanDefinition.action.relatedAction.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "offset": {
+              "path": "PlanDefinition.action.relatedAction.offset[x]",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Duration",
+                "Range"
+              ],
+              "choices": [
+                "offsetDuration",
+                "offsetRange"
+              ]
+            },
+            "relationship": {
+              "path": "PlanDefinition.action.relatedAction.relationship",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/action-relationship-type|5.0.0"
+              }
+            },
+            "targetId": {
+              "path": "PlanDefinition.action.relatedAction.targetId",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "id"
+              ]
+            }
+          }
+        },
+        "requiredBehavior": {
+          "path": "PlanDefinition.action.requiredBehavior",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/action-required-behavior|5.0.0"
+          }
+        },
+        "selectionBehavior": {
+          "path": "PlanDefinition.action.selectionBehavior",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/action-selection-behavior|5.0.0"
+          }
+        },
+        "subject": {
+          "path": "PlanDefinition.action.subject[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept",
+            "Reference",
+            "canonical"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/participant-resource-types"
+          },
+          "choices": [
+            "subjectCodeableConcept",
+            "subjectReference",
+            "subjectCanonical"
+          ]
+        },
+        "textEquivalent": {
+          "path": "PlanDefinition.action.textEquivalent",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "timing": {
+          "path": "PlanDefinition.action.timing[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Age",
+            "Duration",
+            "Range",
+            "Timing"
+          ],
+          "choices": [
+            "timingAge",
+            "timingDuration",
+            "timingRange",
+            "timingTiming"
+          ]
+        },
+        "title": {
+          "path": "PlanDefinition.action.title",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "transform": {
+          "path": "PlanDefinition.action.transform",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "canonical"
+          ]
+        },
+        "trigger": {
+          "path": "PlanDefinition.action.trigger",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "TriggerDefinition"
+          ]
+        },
+        "type": {
+          "path": "PlanDefinition.action.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/action-type"
+          }
+        }
+      }
+    },
+    "actor": {
+      "path": "PlanDefinition.actor",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "description": {
+          "path": "PlanDefinition.actor.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "extension": {
+          "path": "PlanDefinition.actor.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "PlanDefinition.actor.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "PlanDefinition.actor.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "option": {
+          "path": "PlanDefinition.actor.option",
+          "min": 1,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "PlanDefinition.actor.option.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "PlanDefinition.actor.option.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "PlanDefinition.actor.option.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "role": {
+              "path": "PlanDefinition.actor.option.role",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://terminology.hl7.org/ValueSet/action-participant-role"
+              }
+            },
+            "type": {
+              "path": "PlanDefinition.actor.option.type",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/action-participant-type|5.0.0"
+              }
+            },
+            "typeCanonical": {
+              "path": "PlanDefinition.actor.option.typeCanonical",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "canonical"
+              ]
+            },
+            "typeReference": {
+              "path": "PlanDefinition.actor.option.typeReference",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            }
+          }
+        },
+        "title": {
+          "path": "PlanDefinition.actor.title",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        }
+      }
+    },
+    "approvalDate": {
+      "path": "PlanDefinition.approvalDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "asNeeded": {
+      "path": "PlanDefinition.asNeeded[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean",
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medication-as-needed-reason"
+      },
+      "choices": [
+        "asNeededBoolean",
+        "asNeededCodeableConcept"
+      ]
+    },
+    "author": {
+      "path": "PlanDefinition.author",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "contact": {
+      "path": "PlanDefinition.contact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "contained": {
+      "path": "PlanDefinition.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "copyright": {
+      "path": "PlanDefinition.copyright",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "copyrightLabel": {
+      "path": "PlanDefinition.copyrightLabel",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "date": {
+      "path": "PlanDefinition.date",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "description": {
+      "path": "PlanDefinition.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "editor": {
+      "path": "PlanDefinition.editor",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "effectivePeriod": {
+      "path": "PlanDefinition.effectivePeriod",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ]
+    },
+    "endorser": {
+      "path": "PlanDefinition.endorser",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "experimental": {
+      "path": "PlanDefinition.experimental",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "extension": {
+      "path": "PlanDefinition.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "goal": {
+      "path": "PlanDefinition.goal",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "addresses": {
+          "path": "PlanDefinition.goal.addresses",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/condition-code"
+          }
+        },
+        "category": {
+          "path": "PlanDefinition.goal.category",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/goal-category"
+          }
+        },
+        "description": {
+          "path": "PlanDefinition.goal.description",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/clinical-findings"
+          }
+        },
+        "documentation": {
+          "path": "PlanDefinition.goal.documentation",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "RelatedArtifact"
+          ]
+        },
+        "extension": {
+          "path": "PlanDefinition.goal.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "PlanDefinition.goal.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "PlanDefinition.goal.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "priority": {
+          "path": "PlanDefinition.goal.priority",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "preferred",
+            "valueSet": "http://hl7.org/fhir/ValueSet/goal-priority"
+          }
+        },
+        "start": {
+          "path": "PlanDefinition.goal.start",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/goal-start-event"
+          }
+        },
+        "target": {
+          "path": "PlanDefinition.goal.target",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "detail": {
+              "path": "PlanDefinition.goal.target.detail[x]",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Quantity",
+                "Range",
+                "CodeableConcept",
+                "string",
+                "boolean",
+                "integer",
+                "Ratio"
+              ],
+              "choices": [
+                "detailQuantity",
+                "detailRange",
+                "detailCodeableConcept",
+                "detailString",
+                "detailBoolean",
+                "detailInteger",
+                "detailRatio"
+              ]
+            },
+            "due": {
+              "path": "PlanDefinition.goal.target.due",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Duration"
+              ]
+            },
+            "extension": {
+              "path": "PlanDefinition.goal.target.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "PlanDefinition.goal.target.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "measure": {
+              "path": "PlanDefinition.goal.target.measure",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/observation-codes"
+              }
+            },
+            "modifierExtension": {
+              "path": "PlanDefinition.goal.target.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "id": {
+      "path": "PlanDefinition.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "PlanDefinition.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "PlanDefinition.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "jurisdiction": {
+      "path": "PlanDefinition.jurisdiction",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
+      }
+    },
+    "language": {
+      "path": "PlanDefinition.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "lastReviewDate": {
+      "path": "PlanDefinition.lastReviewDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "library": {
+      "path": "PlanDefinition.library",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "canonical"
+      ]
+    },
+    "meta": {
+      "path": "PlanDefinition.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "PlanDefinition.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "PlanDefinition.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "publisher": {
+      "path": "PlanDefinition.publisher",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "purpose": {
+      "path": "PlanDefinition.purpose",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "relatedArtifact": {
+      "path": "PlanDefinition.relatedArtifact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "RelatedArtifact"
+      ]
+    },
+    "reviewer": {
+      "path": "PlanDefinition.reviewer",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "status": {
+      "path": "PlanDefinition.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+      }
+    },
+    "subject": {
+      "path": "PlanDefinition.subject[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept",
+        "Reference",
+        "canonical"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/participant-resource-types"
+      },
+      "choices": [
+        "subjectCodeableConcept",
+        "subjectReference",
+        "subjectCanonical"
+      ]
+    },
+    "subtitle": {
+      "path": "PlanDefinition.subtitle",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "text": {
+      "path": "PlanDefinition.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "title": {
+      "path": "PlanDefinition.title",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "topic": {
+      "path": "PlanDefinition.topic",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/definition-topic"
+      }
+    },
+    "type": {
+      "path": "PlanDefinition.type",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/plan-definition-type"
+      }
+    },
+    "url": {
+      "path": "PlanDefinition.url",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "usage": {
+      "path": "PlanDefinition.usage",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "useContext": {
+      "path": "PlanDefinition.useContext",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "UsageContext"
+      ]
+    },
+    "version": {
+      "path": "PlanDefinition.version",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "versionAlgorithm": {
+      "path": "PlanDefinition.versionAlgorithm[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string",
+        "Coding"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/version-algorithm"
+      },
+      "choices": [
+        "versionAlgorithmString",
+        "versionAlgorithmCoding"
+      ]
+    }
+  }
+}

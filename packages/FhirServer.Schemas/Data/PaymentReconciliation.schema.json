@@ -1,0 +1,590 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/PaymentReconciliation",
+  "type": "PaymentReconciliation",
+  "name": "PaymentReconciliation",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "amount",
+    "created",
+    "date",
+    "status",
+    "type"
+  ],
+  "elements": {
+    "accountNumber": {
+      "path": "PaymentReconciliation.accountNumber",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "allocation": {
+      "path": "PaymentReconciliation.allocation",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "account": {
+          "path": "PaymentReconciliation.allocation.account",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "amount": {
+          "path": "PaymentReconciliation.allocation.amount",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Money"
+          ]
+        },
+        "date": {
+          "path": "PaymentReconciliation.allocation.date",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "date"
+          ]
+        },
+        "encounter": {
+          "path": "PaymentReconciliation.allocation.encounter",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "extension": {
+          "path": "PaymentReconciliation.allocation.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "PaymentReconciliation.allocation.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "identifier": {
+          "path": "PaymentReconciliation.allocation.identifier",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "modifierExtension": {
+          "path": "PaymentReconciliation.allocation.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "payee": {
+          "path": "PaymentReconciliation.allocation.payee",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "predecessor": {
+          "path": "PaymentReconciliation.allocation.predecessor",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "response": {
+          "path": "PaymentReconciliation.allocation.response",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "responsible": {
+          "path": "PaymentReconciliation.allocation.responsible",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "submitter": {
+          "path": "PaymentReconciliation.allocation.submitter",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "target": {
+          "path": "PaymentReconciliation.allocation.target",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "targetItem": {
+          "path": "PaymentReconciliation.allocation.targetItem[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string",
+            "Identifier",
+            "positiveInt"
+          ],
+          "choices": [
+            "targetItemString",
+            "targetItemIdentifier",
+            "targetItemPositiveInt"
+          ]
+        },
+        "type": {
+          "path": "PaymentReconciliation.allocation.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/payment-type"
+          }
+        }
+      }
+    },
+    "amount": {
+      "path": "PaymentReconciliation.amount",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Money"
+      ]
+    },
+    "authorization": {
+      "path": "PaymentReconciliation.authorization",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "cardBrand": {
+      "path": "PaymentReconciliation.cardBrand",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "contained": {
+      "path": "PaymentReconciliation.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "created": {
+      "path": "PaymentReconciliation.created",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "date": {
+      "path": "PaymentReconciliation.date",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "disposition": {
+      "path": "PaymentReconciliation.disposition",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "enterer": {
+      "path": "PaymentReconciliation.enterer",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "expirationDate": {
+      "path": "PaymentReconciliation.expirationDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "extension": {
+      "path": "PaymentReconciliation.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "formCode": {
+      "path": "PaymentReconciliation.formCode",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/forms"
+      }
+    },
+    "id": {
+      "path": "PaymentReconciliation.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "PaymentReconciliation.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "PaymentReconciliation.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "issuerType": {
+      "path": "PaymentReconciliation.issuerType",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/payment-issuertype"
+      }
+    },
+    "kind": {
+      "path": "PaymentReconciliation.kind",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/payment-kind"
+      }
+    },
+    "language": {
+      "path": "PaymentReconciliation.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "location": {
+      "path": "PaymentReconciliation.location",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "meta": {
+      "path": "PaymentReconciliation.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "method": {
+      "path": "PaymentReconciliation.method",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://terminology.hl7.org/ValueSet/v2-0570"
+      }
+    },
+    "modifierExtension": {
+      "path": "PaymentReconciliation.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "outcome": {
+      "path": "PaymentReconciliation.outcome",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/payment-outcome|5.0.0"
+      }
+    },
+    "paymentIdentifier": {
+      "path": "PaymentReconciliation.paymentIdentifier",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "paymentIssuer": {
+      "path": "PaymentReconciliation.paymentIssuer",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "period": {
+      "path": "PaymentReconciliation.period",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ]
+    },
+    "processNote": {
+      "path": "PaymentReconciliation.processNote",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "PaymentReconciliation.processNote.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "PaymentReconciliation.processNote.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "PaymentReconciliation.processNote.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "text": {
+          "path": "PaymentReconciliation.processNote.text",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "type": {
+          "path": "PaymentReconciliation.processNote.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/note-type|5.0.0"
+          }
+        }
+      }
+    },
+    "processor": {
+      "path": "PaymentReconciliation.processor",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "referenceNumber": {
+      "path": "PaymentReconciliation.referenceNumber",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "request": {
+      "path": "PaymentReconciliation.request",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "requestor": {
+      "path": "PaymentReconciliation.requestor",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "returnedAmount": {
+      "path": "PaymentReconciliation.returnedAmount",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Money"
+      ]
+    },
+    "status": {
+      "path": "PaymentReconciliation.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/fm-status|5.0.0"
+      }
+    },
+    "tenderedAmount": {
+      "path": "PaymentReconciliation.tenderedAmount",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Money"
+      ]
+    },
+    "text": {
+      "path": "PaymentReconciliation.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "type": {
+      "path": "PaymentReconciliation.type",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/payment-type"
+      }
+    }
+  }
+}

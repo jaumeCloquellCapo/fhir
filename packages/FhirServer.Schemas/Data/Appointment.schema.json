@@ -1,0 +1,835 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Appointment",
+  "type": "Appointment",
+  "name": "Appointment",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "participant",
+    "status"
+  ],
+  "elements": {
+    "account": {
+      "path": "Appointment.account",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "appointmentType": {
+      "path": "Appointment.appointmentType",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://terminology.hl7.org/ValueSet/v2-0276"
+      }
+    },
+    "basedOn": {
+      "path": "Appointment.basedOn",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "cancellationDate": {
+      "path": "Appointment.cancellationDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "cancellationReason": {
+      "path": "Appointment.cancellationReason",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/appointment-cancellation-reason"
+      }
+    },
+    "class": {
+      "path": "Appointment.class",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://terminology.hl7.org/ValueSet/EncounterClass"
+      }
+    },
+    "contained": {
+      "path": "Appointment.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "created": {
+      "path": "Appointment.created",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "description": {
+      "path": "Appointment.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "end": {
+      "path": "Appointment.end",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "instant"
+      ]
+    },
+    "extension": {
+      "path": "Appointment.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "Appointment.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Appointment.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "Appointment.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "Appointment.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "Appointment.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "minutesDuration": {
+      "path": "Appointment.minutesDuration",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "positiveInt"
+      ]
+    },
+    "modifierExtension": {
+      "path": "Appointment.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "note": {
+      "path": "Appointment.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "occurrenceChanged": {
+      "path": "Appointment.occurrenceChanged",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "originatingAppointment": {
+      "path": "Appointment.originatingAppointment",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "participant": {
+      "path": "Appointment.participant",
+      "min": 1,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "actor": {
+          "path": "Appointment.participant.actor",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "extension": {
+          "path": "Appointment.participant.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Appointment.participant.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Appointment.participant.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "period": {
+          "path": "Appointment.participant.period",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Period"
+          ]
+        },
+        "required": {
+          "path": "Appointment.participant.required",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "status": {
+          "path": "Appointment.participant.status",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/participationstatus|5.0.0"
+          }
+        },
+        "type": {
+          "path": "Appointment.participant.type",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/encounter-participant-type"
+          }
+        }
+      }
+    },
+    "patientInstruction": {
+      "path": "Appointment.patientInstruction",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ]
+    },
+    "previousAppointment": {
+      "path": "Appointment.previousAppointment",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "priority": {
+      "path": "Appointment.priority",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://terminology.hl7.org/ValueSet/v3-ActPriority"
+      }
+    },
+    "reason": {
+      "path": "Appointment.reason",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/encounter-reason"
+      }
+    },
+    "recurrenceId": {
+      "path": "Appointment.recurrenceId",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "positiveInt"
+      ]
+    },
+    "recurrenceTemplate": {
+      "path": "Appointment.recurrenceTemplate",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "excludingDate": {
+          "path": "Appointment.recurrenceTemplate.excludingDate",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "date"
+          ]
+        },
+        "excludingRecurrenceId": {
+          "path": "Appointment.recurrenceTemplate.excludingRecurrenceId",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "extension": {
+          "path": "Appointment.recurrenceTemplate.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Appointment.recurrenceTemplate.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "lastOccurrenceDate": {
+          "path": "Appointment.recurrenceTemplate.lastOccurrenceDate",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "date"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Appointment.recurrenceTemplate.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "monthlyTemplate": {
+          "path": "Appointment.recurrenceTemplate.monthlyTemplate",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "dayOfMonth": {
+              "path": "Appointment.recurrenceTemplate.monthlyTemplate.dayOfMonth",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "positiveInt"
+              ]
+            },
+            "dayOfWeek": {
+              "path": "Appointment.recurrenceTemplate.monthlyTemplate.dayOfWeek",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Coding"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/days-of-week|5.0.0"
+              }
+            },
+            "extension": {
+              "path": "Appointment.recurrenceTemplate.monthlyTemplate.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Appointment.recurrenceTemplate.monthlyTemplate.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Appointment.recurrenceTemplate.monthlyTemplate.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "monthInterval": {
+              "path": "Appointment.recurrenceTemplate.monthlyTemplate.monthInterval",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "positiveInt"
+              ]
+            },
+            "nthWeekOfMonth": {
+              "path": "Appointment.recurrenceTemplate.monthlyTemplate.nthWeekOfMonth",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Coding"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/week-of-month|5.0.0"
+              }
+            }
+          }
+        },
+        "occurrenceCount": {
+          "path": "Appointment.recurrenceTemplate.occurrenceCount",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "occurrenceDate": {
+          "path": "Appointment.recurrenceTemplate.occurrenceDate",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "date"
+          ]
+        },
+        "recurrenceType": {
+          "path": "Appointment.recurrenceTemplate.recurrenceType",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "preferred",
+            "valueSet": "http://hl7.org/fhir/ValueSet/appointment-recurrrence-type"
+          }
+        },
+        "timezone": {
+          "path": "Appointment.recurrenceTemplate.timezone",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/timezones|5.0.0"
+          }
+        },
+        "weeklyTemplate": {
+          "path": "Appointment.recurrenceTemplate.weeklyTemplate",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "Appointment.recurrenceTemplate.weeklyTemplate.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "friday": {
+              "path": "Appointment.recurrenceTemplate.weeklyTemplate.friday",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "id": {
+              "path": "Appointment.recurrenceTemplate.weeklyTemplate.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Appointment.recurrenceTemplate.weeklyTemplate.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "monday": {
+              "path": "Appointment.recurrenceTemplate.weeklyTemplate.monday",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "saturday": {
+              "path": "Appointment.recurrenceTemplate.weeklyTemplate.saturday",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "sunday": {
+              "path": "Appointment.recurrenceTemplate.weeklyTemplate.sunday",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "thursday": {
+              "path": "Appointment.recurrenceTemplate.weeklyTemplate.thursday",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "tuesday": {
+              "path": "Appointment.recurrenceTemplate.weeklyTemplate.tuesday",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "wednesday": {
+              "path": "Appointment.recurrenceTemplate.weeklyTemplate.wednesday",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "weekInterval": {
+              "path": "Appointment.recurrenceTemplate.weeklyTemplate.weekInterval",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "positiveInt"
+              ]
+            }
+          }
+        },
+        "yearlyTemplate": {
+          "path": "Appointment.recurrenceTemplate.yearlyTemplate",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "Appointment.recurrenceTemplate.yearlyTemplate.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Appointment.recurrenceTemplate.yearlyTemplate.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Appointment.recurrenceTemplate.yearlyTemplate.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "yearInterval": {
+              "path": "Appointment.recurrenceTemplate.yearlyTemplate.yearInterval",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "positiveInt"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "replaces": {
+      "path": "Appointment.replaces",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "requestedPeriod": {
+      "path": "Appointment.requestedPeriod",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Period"
+      ]
+    },
+    "serviceCategory": {
+      "path": "Appointment.serviceCategory",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/service-category"
+      }
+    },
+    "serviceType": {
+      "path": "Appointment.serviceType",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/service-type"
+      }
+    },
+    "slot": {
+      "path": "Appointment.slot",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "specialty": {
+      "path": "Appointment.specialty",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/c80-practice-codes"
+      }
+    },
+    "start": {
+      "path": "Appointment.start",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "instant"
+      ]
+    },
+    "status": {
+      "path": "Appointment.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/appointmentstatus|5.0.0"
+      }
+    },
+    "subject": {
+      "path": "Appointment.subject",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "supportingInformation": {
+      "path": "Appointment.supportingInformation",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "text": {
+      "path": "Appointment.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "virtualService": {
+      "path": "Appointment.virtualService",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "VirtualServiceDetail"
+      ]
+    }
+  }
+}

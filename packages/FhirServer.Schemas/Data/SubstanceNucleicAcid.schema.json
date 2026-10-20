@@ -1,0 +1,354 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/SubstanceNucleicAcid",
+  "type": "SubstanceNucleicAcid",
+  "name": "SubstanceNucleicAcid",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "areaOfHybridisation": {
+      "path": "SubstanceNucleicAcid.areaOfHybridisation",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "contained": {
+      "path": "SubstanceNucleicAcid.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "extension": {
+      "path": "SubstanceNucleicAcid.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "SubstanceNucleicAcid.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "implicitRules": {
+      "path": "SubstanceNucleicAcid.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "SubstanceNucleicAcid.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "SubstanceNucleicAcid.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "SubstanceNucleicAcid.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "numberOfSubunits": {
+      "path": "SubstanceNucleicAcid.numberOfSubunits",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "integer"
+      ]
+    },
+    "oligoNucleotideType": {
+      "path": "SubstanceNucleicAcid.oligoNucleotideType",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "sequenceType": {
+      "path": "SubstanceNucleicAcid.sequenceType",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "subunit": {
+      "path": "SubstanceNucleicAcid.subunit",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "SubstanceNucleicAcid.subunit.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "fivePrime": {
+          "path": "SubstanceNucleicAcid.subunit.fivePrime",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "id": {
+          "path": "SubstanceNucleicAcid.subunit.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "length": {
+          "path": "SubstanceNucleicAcid.subunit.length",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "integer"
+          ]
+        },
+        "linkage": {
+          "path": "SubstanceNucleicAcid.subunit.linkage",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "connectivity": {
+              "path": "SubstanceNucleicAcid.subunit.linkage.connectivity",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "extension": {
+              "path": "SubstanceNucleicAcid.subunit.linkage.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "SubstanceNucleicAcid.subunit.linkage.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "identifier": {
+              "path": "SubstanceNucleicAcid.subunit.linkage.identifier",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Identifier"
+              ]
+            },
+            "modifierExtension": {
+              "path": "SubstanceNucleicAcid.subunit.linkage.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "name": {
+              "path": "SubstanceNucleicAcid.subunit.linkage.name",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "residueSite": {
+              "path": "SubstanceNucleicAcid.subunit.linkage.residueSite",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "modifierExtension": {
+          "path": "SubstanceNucleicAcid.subunit.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "sequence": {
+          "path": "SubstanceNucleicAcid.subunit.sequence",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "sequenceAttachment": {
+          "path": "SubstanceNucleicAcid.subunit.sequenceAttachment",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Attachment"
+          ]
+        },
+        "subunit": {
+          "path": "SubstanceNucleicAcid.subunit.subunit",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "integer"
+          ]
+        },
+        "sugar": {
+          "path": "SubstanceNucleicAcid.subunit.sugar",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "SubstanceNucleicAcid.subunit.sugar.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "SubstanceNucleicAcid.subunit.sugar.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "identifier": {
+              "path": "SubstanceNucleicAcid.subunit.sugar.identifier",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Identifier"
+              ]
+            },
+            "modifierExtension": {
+              "path": "SubstanceNucleicAcid.subunit.sugar.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "name": {
+              "path": "SubstanceNucleicAcid.subunit.sugar.name",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "residueSite": {
+              "path": "SubstanceNucleicAcid.subunit.sugar.residueSite",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "threePrime": {
+          "path": "SubstanceNucleicAcid.subunit.threePrime",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        }
+      }
+    },
+    "text": {
+      "path": "SubstanceNucleicAcid.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

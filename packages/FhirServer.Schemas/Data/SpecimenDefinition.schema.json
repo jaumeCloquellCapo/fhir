@@ -1,0 +1,744 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/SpecimenDefinition",
+  "type": "SpecimenDefinition",
+  "name": "SpecimenDefinition",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "status"
+  ],
+  "elements": {
+    "approvalDate": {
+      "path": "SpecimenDefinition.approvalDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "collection": {
+      "path": "SpecimenDefinition.collection",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/specimen-collection"
+      }
+    },
+    "contact": {
+      "path": "SpecimenDefinition.contact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "contained": {
+      "path": "SpecimenDefinition.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "copyright": {
+      "path": "SpecimenDefinition.copyright",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "copyrightLabel": {
+      "path": "SpecimenDefinition.copyrightLabel",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "date": {
+      "path": "SpecimenDefinition.date",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "derivedFromCanonical": {
+      "path": "SpecimenDefinition.derivedFromCanonical",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "canonical"
+      ]
+    },
+    "derivedFromUri": {
+      "path": "SpecimenDefinition.derivedFromUri",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "uri"
+      ]
+    },
+    "description": {
+      "path": "SpecimenDefinition.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "effectivePeriod": {
+      "path": "SpecimenDefinition.effectivePeriod",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ]
+    },
+    "experimental": {
+      "path": "SpecimenDefinition.experimental",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "extension": {
+      "path": "SpecimenDefinition.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "SpecimenDefinition.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "SpecimenDefinition.identifier",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "SpecimenDefinition.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "jurisdiction": {
+      "path": "SpecimenDefinition.jurisdiction",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
+      }
+    },
+    "language": {
+      "path": "SpecimenDefinition.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "lastReviewDate": {
+      "path": "SpecimenDefinition.lastReviewDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "meta": {
+      "path": "SpecimenDefinition.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "SpecimenDefinition.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "SpecimenDefinition.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "patientPreparation": {
+      "path": "SpecimenDefinition.patientPreparation",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/prepare-patient-prior-specimen-collection"
+      }
+    },
+    "publisher": {
+      "path": "SpecimenDefinition.publisher",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "purpose": {
+      "path": "SpecimenDefinition.purpose",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "status": {
+      "path": "SpecimenDefinition.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+      }
+    },
+    "subject": {
+      "path": "SpecimenDefinition.subject[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept",
+        "Reference"
+      ],
+      "choices": [
+        "subjectCodeableConcept",
+        "subjectReference"
+      ]
+    },
+    "text": {
+      "path": "SpecimenDefinition.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "timeAspect": {
+      "path": "SpecimenDefinition.timeAspect",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "title": {
+      "path": "SpecimenDefinition.title",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "typeCollected": {
+      "path": "SpecimenDefinition.typeCollected",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://terminology.hl7.org/ValueSet/v2-0487"
+      }
+    },
+    "typeTested": {
+      "path": "SpecimenDefinition.typeTested",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "container": {
+          "path": "SpecimenDefinition.typeTested.container",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "additive": {
+              "path": "SpecimenDefinition.typeTested.container.additive",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "additive": {
+                  "path": "SpecimenDefinition.typeTested.container.additive.additive[x]",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept",
+                    "Reference"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://terminology.hl7.org/ValueSet/v2-0371"
+                  },
+                  "choices": [
+                    "additiveCodeableConcept",
+                    "additiveReference"
+                  ]
+                },
+                "extension": {
+                  "path": "SpecimenDefinition.typeTested.container.additive.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "SpecimenDefinition.typeTested.container.additive.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "SpecimenDefinition.typeTested.container.additive.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                }
+              }
+            },
+            "cap": {
+              "path": "SpecimenDefinition.typeTested.container.cap",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/container-cap"
+              }
+            },
+            "capacity": {
+              "path": "SpecimenDefinition.typeTested.container.capacity",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Quantity"
+              ]
+            },
+            "description": {
+              "path": "SpecimenDefinition.typeTested.container.description",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "markdown"
+              ]
+            },
+            "extension": {
+              "path": "SpecimenDefinition.typeTested.container.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "SpecimenDefinition.typeTested.container.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "material": {
+              "path": "SpecimenDefinition.typeTested.container.material",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/container-material"
+              }
+            },
+            "minimumVolume": {
+              "path": "SpecimenDefinition.typeTested.container.minimumVolume[x]",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Quantity",
+                "string"
+              ],
+              "choices": [
+                "minimumVolumeQuantity",
+                "minimumVolumeString"
+              ]
+            },
+            "modifierExtension": {
+              "path": "SpecimenDefinition.typeTested.container.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "preparation": {
+              "path": "SpecimenDefinition.typeTested.container.preparation",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "markdown"
+              ]
+            },
+            "type": {
+              "path": "SpecimenDefinition.typeTested.container.type",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/specimen-container-type"
+              }
+            }
+          }
+        },
+        "extension": {
+          "path": "SpecimenDefinition.typeTested.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "handling": {
+          "path": "SpecimenDefinition.typeTested.handling",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "SpecimenDefinition.typeTested.handling.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "SpecimenDefinition.typeTested.handling.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "instruction": {
+              "path": "SpecimenDefinition.typeTested.handling.instruction",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "markdown"
+              ]
+            },
+            "maxDuration": {
+              "path": "SpecimenDefinition.typeTested.handling.maxDuration",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Duration"
+              ]
+            },
+            "modifierExtension": {
+              "path": "SpecimenDefinition.typeTested.handling.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "temperatureQualifier": {
+              "path": "SpecimenDefinition.typeTested.handling.temperatureQualifier",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/handling-condition"
+              }
+            },
+            "temperatureRange": {
+              "path": "SpecimenDefinition.typeTested.handling.temperatureRange",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Range"
+              ]
+            }
+          }
+        },
+        "id": {
+          "path": "SpecimenDefinition.typeTested.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "isDerived": {
+          "path": "SpecimenDefinition.typeTested.isDerived",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "modifierExtension": {
+          "path": "SpecimenDefinition.typeTested.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "preference": {
+          "path": "SpecimenDefinition.typeTested.preference",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/specimen-contained-preference|5.0.0"
+          }
+        },
+        "rejectionCriterion": {
+          "path": "SpecimenDefinition.typeTested.rejectionCriterion",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/rejection-criteria"
+          }
+        },
+        "requirement": {
+          "path": "SpecimenDefinition.typeTested.requirement",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "retentionTime": {
+          "path": "SpecimenDefinition.typeTested.retentionTime",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Duration"
+          ]
+        },
+        "singleUse": {
+          "path": "SpecimenDefinition.typeTested.singleUse",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "testingDestination": {
+          "path": "SpecimenDefinition.typeTested.testingDestination",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/diagnostic-service-sections"
+          }
+        },
+        "type": {
+          "path": "SpecimenDefinition.typeTested.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://terminology.hl7.org/ValueSet/v2-0487"
+          }
+        }
+      }
+    },
+    "url": {
+      "path": "SpecimenDefinition.url",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "useContext": {
+      "path": "SpecimenDefinition.useContext",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "UsageContext"
+      ]
+    },
+    "version": {
+      "path": "SpecimenDefinition.version",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "versionAlgorithm": {
+      "path": "SpecimenDefinition.versionAlgorithm[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string",
+        "Coding"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/version-algorithm"
+      },
+      "choices": [
+        "versionAlgorithmString",
+        "versionAlgorithmCoding"
+      ]
+    }
+  }
+}

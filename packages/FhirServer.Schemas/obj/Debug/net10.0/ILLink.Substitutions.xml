@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<linker>
+  <assembly fullname="FhirServer.Schemas">
+    <resource name="FSharpSignatureData.FhirServer.Schemas" action="remove"></resource>
+    <resource name="FSharpSignatureCompressedData.FhirServer.Schemas" action="remove"></resource>
+    <resource name="FSharpSignatureDataB.FhirServer.Schemas" action="remove"></resource>
+    <resource name="FSharpSignatureCompressedDataB.FhirServer.Schemas" action="remove"></resource>
+    <resource name="FSharpOptimizationData.FhirServer.Schemas" action="remove"></resource>
+    <resource name="FSharpOptimizationCompressedData.FhirServer.Schemas" action="remove"></resource>
+    <resource name="FSharpOptimizationDataB.FhirServer.Schemas" action="remove"></resource>
+    <resource name="FSharpOptimizationCompressedDataB.FhirServer.Schemas" action="remove"></resource>
+    <resource name="FSharpOptimizationInfo.FhirServer.Schemas" action="remove"></resource>
+    <resource name="FSharpSignatureInfo.FhirServer.Schemas" action="remove"></resource>
+  </assembly>
+</linker>

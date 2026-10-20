@@ -1,0 +1,310 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/InventoryReport",
+  "type": "InventoryReport",
+  "name": "InventoryReport",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "countType",
+    "reportedDateTime",
+    "status"
+  ],
+  "elements": {
+    "contained": {
+      "path": "InventoryReport.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "countType": {
+      "path": "InventoryReport.countType",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/inventoryreport-counttype|5.0.0"
+      }
+    },
+    "extension": {
+      "path": "InventoryReport.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "InventoryReport.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "InventoryReport.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "InventoryReport.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "inventoryListing": {
+      "path": "InventoryReport.inventoryListing",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "countingDateTime": {
+          "path": "InventoryReport.inventoryListing.countingDateTime",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "dateTime"
+          ]
+        },
+        "extension": {
+          "path": "InventoryReport.inventoryListing.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "InventoryReport.inventoryListing.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "item": {
+          "path": "InventoryReport.inventoryListing.item",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "category": {
+              "path": "InventoryReport.inventoryListing.item.category",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ]
+            },
+            "extension": {
+              "path": "InventoryReport.inventoryListing.item.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "InventoryReport.inventoryListing.item.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "item": {
+              "path": "InventoryReport.inventoryListing.item.item",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableReference"
+              ]
+            },
+            "modifierExtension": {
+              "path": "InventoryReport.inventoryListing.item.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "quantity": {
+              "path": "InventoryReport.inventoryListing.item.quantity",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Quantity"
+              ]
+            }
+          }
+        },
+        "itemStatus": {
+          "path": "InventoryReport.inventoryListing.itemStatus",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "location": {
+          "path": "InventoryReport.inventoryListing.location",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "modifierExtension": {
+          "path": "InventoryReport.inventoryListing.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "language": {
+      "path": "InventoryReport.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "InventoryReport.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "InventoryReport.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "note": {
+      "path": "InventoryReport.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "operationType": {
+      "path": "InventoryReport.operationType",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "operationTypeReason": {
+      "path": "InventoryReport.operationTypeReason",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "reportedDateTime": {
+      "path": "InventoryReport.reportedDateTime",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "reporter": {
+      "path": "InventoryReport.reporter",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "reportingPeriod": {
+      "path": "InventoryReport.reportingPeriod",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ]
+    },
+    "status": {
+      "path": "InventoryReport.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/inventoryreport-status|5.0.0"
+      }
+    },
+    "text": {
+      "path": "InventoryReport.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

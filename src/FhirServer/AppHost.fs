@@ -2,6 +2,7 @@ namespace FhirServer
 
 open System
 open System.IO
+open System.Text.Json.Nodes
 open System.Threading.Tasks
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Http
@@ -13,8 +14,9 @@ open FhirServer.Domain.Types
 open FhirServer.Infrastructure.Http
 open FhirServer.Domain.Ports
 open FhirServer.Application
+open FhirServer.Application.Smart
+open FhirServer.Application.Subscriptions
 open FhirServer.Infrastructure.Persistence
-open FhirServer.Infrastructure.Persistence.Sqlite
 open FhirServer.Infrastructure.Persistence.Postgres
 
 /// Composition root helpers (also used by E2E WebApplicationFactory).
@@ -52,29 +54,13 @@ module AppHost =
         Codec.negotiateFormat None contentType
 
     let createStore (config: IConfiguration) : IResourceStore =
-        let provider =
-            match config.["Store:Provider"] with
+        let cs =
+            match config.["ConnectionStrings:Fhir"] with
             | null
-            | "" -> "sqlite"
-            | value -> value.ToLowerInvariant()
+            | "" -> "Host=localhost;Port=5432;Database=fhir;Username=fhir;Password=fhir"
+            | value -> value
 
-        match provider with
-        | "postgres" ->
-            let cs =
-                match config.["ConnectionStrings:Fhir"] with
-                | null
-                | "" -> "Host=localhost;Port=5432;Database=fhir;Username=fhir;Password=fhir"
-                | value -> value
-
-            EnvelopeResourceStore(PostgresEnvelopeDialect(cs)) :> IResourceStore
-        | _ ->
-            let cs =
-                match config.["ConnectionStrings:Fhir"] with
-                | null
-                | "" -> "Data Source=data/fhir.db"
-                | value -> value
-
-            EnvelopeResourceStore(SqliteEnvelopeDialect(cs)) :> IResourceStore
+        EnvelopeResourceStore(PostgresEnvelopeDialect(cs)) :> IResourceStore
 
     let mapRoutes (app: WebApplication) =
         app.MapGet(
@@ -111,6 +97,123 @@ module AppHost =
                 })
         )
         |> OpenApiDocs.documentJson [| OpenApiDocs.TagSystem |] "Version" "Build/product version JSON."
+        |> ignore
+
+        app.MapGet(
+            "/.well-known/smart-configuration",
+            Func<HttpContext, Task<unit>>(fun ctx ->
+                task {
+                    let config = ctx.RequestServices.GetRequiredService<IConfiguration>()
+                    let doc = SmartAuth.wellKnown (baseUrl ctx) config
+                    ctx.Response.ContentType <- "application/json"
+                    do! ctx.Response.WriteAsync(FhirJson.toJson doc)
+                })
+        )
+        |> OpenApiDocs.documentJson
+            [| OpenApiDocs.TagSystem |]
+            "SMART configuration"
+            "SMART App Launch discovery document."
+        |> ignore
+
+        app.MapGet(
+            "/auth/authorize",
+            Func<HttpContext, Task<unit>>(fun ctx ->
+                task {
+                    // MVP: authorization_code UX is out of scope; advertise endpoint for discovery.
+                    ctx.Response.StatusCode <- StatusCodes.Status501NotImplemented
+                    ctx.Response.ContentType <- "application/json"
+
+                    do!
+                        ctx.Response.WriteAsync(
+                            """{"error":"unsupported_response_type","error_description":"Use grant_type=client_credentials against /auth/token"}"""
+                        )
+                })
+        )
+        |> ignore
+
+        app.MapPost(
+            "/auth/token",
+            Func<HttpContext, Task<unit>>(fun ctx ->
+                task {
+                    let config = ctx.RequestServices.GetRequiredService<IConfiguration>()
+                    let! body = readBody ctx
+
+                    let form =
+                        body.Split('&', StringSplitOptions.RemoveEmptyEntries)
+                        |> Array.choose (fun part ->
+                            match part.Split('=', 2) with
+                            | [| k; v |] -> Some(Uri.UnescapeDataString(k), Uri.UnescapeDataString(v))
+                            | _ -> None)
+                        |> Map.ofArray
+
+                    let authHeader =
+                        let h = ctx.Request.Headers.Authorization.ToString()
+                        if String.IsNullOrWhiteSpace h then None else Some h
+
+                    match SmartAuth.parseClientCredentials authHeader form with
+                    | None ->
+                        ctx.Response.StatusCode <- StatusCodes.Status401Unauthorized
+                        do! ctx.Response.WriteAsync("""{"error":"invalid_client"}""")
+                    | Some(id, secret) when not (SmartAuth.validateClient config id secret) ->
+                        ctx.Response.StatusCode <- StatusCodes.Status401Unauthorized
+                        do! ctx.Response.WriteAsync("""{"error":"invalid_client"}""")
+                    | Some _ ->
+                        let grant =
+                            form |> Map.tryFind "grant_type" |> Option.defaultValue "client_credentials"
+
+                        if grant <> "client_credentials" then
+                            ctx.Response.StatusCode <- StatusCodes.Status400BadRequest
+                            do! ctx.Response.WriteAsync("""{"error":"unsupported_grant_type"}""")
+                        else
+                            let tokenDoc = SmartAuth.issueToken config (Map.tryFind "scope" form)
+
+                            ctx.Response.ContentType <- "application/json"
+                            do! ctx.Response.WriteAsync(FhirJson.toJson tokenDoc)
+                })
+        )
+        |> OpenApiDocs.documentJson
+            [| OpenApiDocs.TagSystem |]
+            "OAuth token"
+            "SMART token endpoint (client_credentials)."
+        |> ignore
+
+        app.MapPost(
+            "/_hooks/{sinkId}",
+            Func<HttpContext, string, Task<unit>>(fun ctx sinkId ->
+                task {
+                    let! body = readBody ctx
+                    SubscriptionNotifier.captureHook sinkId body
+                    ctx.Response.StatusCode <- StatusCodes.Status202Accepted
+                })
+        )
+        |> ignore
+
+        app.MapGet(
+            "/_hooks/{sinkId}",
+            Func<HttpContext, string, Task<unit>>(fun ctx sinkId ->
+                task {
+                    let payloads = SubscriptionNotifier.listCaptured sinkId
+                    let arr = JsonArray()
+
+                    for p in payloads do
+                        match JsonNode.Parse(p) with
+                        | null -> arr.Add(FhirJson.jStr p)
+                        | node -> arr.Add(node)
+
+                    ctx.Response.ContentType <- "application/json"
+                    do! ctx.Response.WriteAsync(arr.ToJsonString())
+                })
+        )
+        |> ignore
+
+        app.MapDelete(
+            "/_hooks/{sinkId}",
+            Func<HttpContext, string, Task<unit>>(fun ctx sinkId ->
+                task {
+                    SubscriptionNotifier.clearCaptured sinkId
+                    ctx.Response.StatusCode <- StatusCodes.Status204NoContent
+                })
+        )
         |> ignore
 
         app.MapGet(
@@ -517,7 +620,7 @@ module AppHost =
             options.RoutePrefix <- "swagger")
         |> ignore
 
-        Auth.useBasicAuth app |> ignore
+        Auth.useAuth app |> ignore
         AuditMiddleware.useAudit app |> ignore
         mapRoutes app
 

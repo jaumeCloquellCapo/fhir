@@ -1,0 +1,318 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/DeviceUsage",
+  "type": "DeviceUsage",
+  "name": "DeviceUsage",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "device",
+    "patient",
+    "status"
+  ],
+  "elements": {
+    "adherence": {
+      "path": "DeviceUsage.adherence",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "code": {
+          "path": "DeviceUsage.adherence.code",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/deviceusage-adherence-code"
+          }
+        },
+        "extension": {
+          "path": "DeviceUsage.adherence.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "DeviceUsage.adherence.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "DeviceUsage.adherence.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "reason": {
+          "path": "DeviceUsage.adherence.reason",
+          "min": 1,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/deviceusage-adherence-reason"
+          }
+        }
+      }
+    },
+    "basedOn": {
+      "path": "DeviceUsage.basedOn",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "bodySite": {
+      "path": "DeviceUsage.bodySite",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableReference"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/body-site"
+      }
+    },
+    "category": {
+      "path": "DeviceUsage.category",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "contained": {
+      "path": "DeviceUsage.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "context": {
+      "path": "DeviceUsage.context",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "dateAsserted": {
+      "path": "DeviceUsage.dateAsserted",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "derivedFrom": {
+      "path": "DeviceUsage.derivedFrom",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "device": {
+      "path": "DeviceUsage.device",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableReference"
+      ]
+    },
+    "extension": {
+      "path": "DeviceUsage.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "DeviceUsage.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "DeviceUsage.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "DeviceUsage.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "informationSource": {
+      "path": "DeviceUsage.informationSource",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "language": {
+      "path": "DeviceUsage.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "DeviceUsage.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "DeviceUsage.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "note": {
+      "path": "DeviceUsage.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "patient": {
+      "path": "DeviceUsage.patient",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "reason": {
+      "path": "DeviceUsage.reason",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ]
+    },
+    "status": {
+      "path": "DeviceUsage.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/deviceusage-status|5.0.0"
+      }
+    },
+    "text": {
+      "path": "DeviceUsage.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "timing": {
+      "path": "DeviceUsage.timing[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Timing",
+        "Period",
+        "dateTime"
+      ],
+      "choices": [
+        "timingTiming",
+        "timingPeriod",
+        "timingDateTime"
+      ]
+    },
+    "usageReason": {
+      "path": "DeviceUsage.usageReason",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "usageStatus": {
+      "path": "DeviceUsage.usageStatus",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/deviceusage-status|5.0.0"
+      }
+    }
+  }
+}

@@ -1,0 +1,397 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/MessageHeader",
+  "type": "MessageHeader",
+  "name": "MessageHeader",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "source"
+  ],
+  "elements": {
+    "author": {
+      "path": "MessageHeader.author",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "contained": {
+      "path": "MessageHeader.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "definition": {
+      "path": "MessageHeader.definition",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "canonical"
+      ]
+    },
+    "destination": {
+      "path": "MessageHeader.destination",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "endpoint": {
+          "path": "MessageHeader.destination.endpoint[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "url",
+            "Reference"
+          ],
+          "choices": [
+            "endpointUrl",
+            "endpointReference"
+          ]
+        },
+        "extension": {
+          "path": "MessageHeader.destination.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MessageHeader.destination.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "MessageHeader.destination.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "name": {
+          "path": "MessageHeader.destination.name",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "receiver": {
+          "path": "MessageHeader.destination.receiver",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "target": {
+          "path": "MessageHeader.destination.target",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    },
+    "event": {
+      "path": "MessageHeader.event[x]",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Coding",
+        "canonical"
+      ],
+      "choices": [
+        "eventCoding",
+        "eventCanonical"
+      ]
+    },
+    "extension": {
+      "path": "MessageHeader.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "focus": {
+      "path": "MessageHeader.focus",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "id": {
+      "path": "MessageHeader.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "implicitRules": {
+      "path": "MessageHeader.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "MessageHeader.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "MessageHeader.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "MessageHeader.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "reason": {
+      "path": "MessageHeader.reason",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/message-reason-encounter"
+      }
+    },
+    "response": {
+      "path": "MessageHeader.response",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "code": {
+          "path": "MessageHeader.response.code",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/response-code|5.0.0"
+          }
+        },
+        "details": {
+          "path": "MessageHeader.response.details",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "extension": {
+          "path": "MessageHeader.response.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MessageHeader.response.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "identifier": {
+          "path": "MessageHeader.response.identifier",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "modifierExtension": {
+          "path": "MessageHeader.response.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "responsible": {
+      "path": "MessageHeader.responsible",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "sender": {
+      "path": "MessageHeader.sender",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "source": {
+      "path": "MessageHeader.source",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "contact": {
+          "path": "MessageHeader.source.contact",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "ContactPoint"
+          ]
+        },
+        "endpoint": {
+          "path": "MessageHeader.source.endpoint[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "url",
+            "Reference"
+          ],
+          "choices": [
+            "endpointUrl",
+            "endpointReference"
+          ]
+        },
+        "extension": {
+          "path": "MessageHeader.source.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MessageHeader.source.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "MessageHeader.source.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "name": {
+          "path": "MessageHeader.source.name",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "software": {
+          "path": "MessageHeader.source.software",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "version": {
+          "path": "MessageHeader.source.version",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        }
+      }
+    },
+    "text": {
+      "path": "MessageHeader.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

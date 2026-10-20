@@ -1,0 +1,230 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/SubscriptionStatus",
+  "type": "SubscriptionStatus",
+  "name": "SubscriptionStatus",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "subscription",
+    "type"
+  ],
+  "elements": {
+    "contained": {
+      "path": "SubscriptionStatus.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "error": {
+      "path": "SubscriptionStatus.error",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/subscription-error"
+      }
+    },
+    "eventsSinceSubscriptionStart": {
+      "path": "SubscriptionStatus.eventsSinceSubscriptionStart",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "integer64"
+      ]
+    },
+    "extension": {
+      "path": "SubscriptionStatus.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "SubscriptionStatus.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "implicitRules": {
+      "path": "SubscriptionStatus.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "SubscriptionStatus.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "SubscriptionStatus.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "SubscriptionStatus.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "notificationEvent": {
+      "path": "SubscriptionStatus.notificationEvent",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "additionalContext": {
+          "path": "SubscriptionStatus.notificationEvent.additionalContext",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "eventNumber": {
+          "path": "SubscriptionStatus.notificationEvent.eventNumber",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "integer64"
+          ]
+        },
+        "extension": {
+          "path": "SubscriptionStatus.notificationEvent.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "focus": {
+          "path": "SubscriptionStatus.notificationEvent.focus",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "id": {
+          "path": "SubscriptionStatus.notificationEvent.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "SubscriptionStatus.notificationEvent.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "timestamp": {
+          "path": "SubscriptionStatus.notificationEvent.timestamp",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "instant"
+          ]
+        }
+      }
+    },
+    "status": {
+      "path": "SubscriptionStatus.status",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/subscription-status|5.0.0"
+      }
+    },
+    "subscription": {
+      "path": "SubscriptionStatus.subscription",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "text": {
+      "path": "SubscriptionStatus.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "topic": {
+      "path": "SubscriptionStatus.topic",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "canonical"
+      ]
+    },
+    "type": {
+      "path": "SubscriptionStatus.type",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/subscription-notification-type|5.0.0"
+      }
+    }
+  }
+}

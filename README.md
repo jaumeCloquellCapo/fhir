@@ -8,7 +8,7 @@ An open-source [HL7 FHIR](https://hl7.org/fhir/) server written in [F#](https://
 | Generator | [![Generator](https://github.com/jaumeCloquellCapo/fhir/actions/workflows/generator.yml/badge.svg)](https://github.com/jaumeCloquellCapo/fhir/actions/workflows/generator.yml) |
 | Local | `make build` · `make test` |
 
-FhirServer helps you stand up a standards-oriented FHIR API quickly: create, read, update, search, history, validate, and related operations—backed by an envelope store (PostgreSQL or SQLite) and schema validation generated from official HL7 packages (no Firely / `Hl7.Fhir.*` runtime dependency).
+FhirServer helps you stand up a standards-oriented FHIR API quickly: create, read, update, search, history, validate, and related operations—backed by a PostgreSQL envelope store and schema validation generated from official HL7 packages (no Firely / `Hl7.Fhir.*` runtime dependency).
 
 The goal is a small, readable codebase that developers can run locally, extend, and contribute to—similar in spirit to other open FHIR implementations, but focused on F#, hexagonal architecture, and generated FHIR Schema validation.
 
@@ -16,7 +16,9 @@ The goal is a small, readable codebase that developers can run locally, extend, 
 
 - **FHIR R5** resources and `CapabilityStatement` from a generated catalog
 - **REST API** for CRUD, search (`_include` / `_revinclude` / chaining), history, `$validate`, `$everything`, `$document`, `$lastn`, `$dump`, `$export` / `$import`, and Bundle transaction/batch
-- **Envelope persistence** — one current + history table per resource type; pluggable SQL dialects
+- **SMART App Launch MVP** — `/.well-known/smart-configuration` + `/auth/token` (`client_credentials`)
+- **Subscriptions MVP** — rest-hook notifications + local `/_hooks/{id}` capture sink
+- **Envelope persistence** — one current + history table per resource type on PostgreSQL
 - **Schema validation** — cardinality, choice types, bindings, and primitives via `FhirServer.Validation` + embedded schemas
 - **Optional BALP audit** — persist `AuditEvent` for REST operations when enabled
 - **Swagger UI** — interactive OpenAPI docs at `/swagger` for every endpoint
@@ -29,11 +31,11 @@ Hosting / composition   AppHost.fs, Program.fs
 HTTP adapters           CapabilityStatement, Codec, Auth, Audit middleware
 Application             ResourceHandlers (use cases)
 Domain                  types, SearchEngine, ResourceValidator, IResourceStore
-Persistence             EnvelopeResourceStore + Postgres / SQLite dialects
+Persistence             EnvelopeResourceStore + Postgres dialect
 Schemas & validation    packages/FhirServer.Schemas · FhirServer.Validation
 ```
 
-Persistence is a port (`IResourceStore`) with a shared envelope implementation; dialects only supply SQL. Schema JSON and the validator are produced by [`generator/`](generator/README.md) from `hl7.fhir.r5.core` and synced into `packages/`.
+Persistence is a port (`IResourceStore`) with a shared envelope implementation backed by PostgreSQL. Schema JSON and the validator are produced by [`generator/`](generator/README.md) from `hl7.fhir.r5.core` and synced into `packages/`.
 
 See [docs/Architecture.md](docs/Architecture.md) for details.
 
@@ -52,20 +54,16 @@ See [docs/Architecture.md](docs/Architecture.md) for details.
 
 ## Quick start
 
-**Requirements:** [.NET 10 SDK](https://dotnet.microsoft.com/download), Docker (optional, for Postgres).
+**Requirements:** [.NET 10 SDK](https://dotnet.microsoft.com/download), Docker (for Postgres).
 
 ```bash
-# Postgres (recommended)
 make db-up
-# appsettings: Store:Provider=postgres
 # ConnectionStrings:Fhir=Host=localhost;Port=5432;Database=fhir;Username=fhir;Password=fhir
 
 dotnet run --project src/FhirServer
 # → http://localhost:5050
 # → Swagger UI: http://localhost:5050/swagger
 ```
-
-SQLite works out of the box for local experiments (`Store:Provider=sqlite`, default `data/fhir.db`).
 
 ```bash
 curl -s http://localhost:5050/metadata | jq .software
@@ -92,7 +90,7 @@ compose.yaml             Postgres for local development
 
 This project is an **MVP**. It is useful for learning, demos, and as a foundation for a custom FHIR service. It is **not** a certified, production-hardened clinical platform out of the box.
 
-**Not yet in scope:** full IG/profile StructureDefinition conformance, SMART on FHIR, Subscriptions.
+**Not yet in scope:** full IG/profile StructureDefinition conformance; full SMART authorize/PKCE/EHR launch; subscription webhook retries/signing.
 
 Contributions that move those areas forward are welcome—see [CONTRIBUTING.md](CONTRIBUTING.md).
 

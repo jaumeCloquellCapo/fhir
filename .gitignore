@@ -19,8 +19,11 @@ artifacts/
 TestResults/
 *.nupkg
 *.snupkg
+# NuGet packages.config restore folder — keep first-party packages/ tracked
 **/[Pp]ackages/*
 !**/[Pp]ackages/build/
+!/packages/
+!/packages/**
 *.DotSettings.user
 .nuget/
 
@@ -33,17 +36,6 @@ app.publish/
 # ASP.NET
 wwwroot/lib/
 **/appsettings.*.local.json
-
-# SQLite / local data
-data/
-**/data/
-*.db
-*.db-*
-*.sqlite
-*.sqlite3
-*.sqlite-journal
-*.sqlite-wal
-*.sqlite-shm
 
 # Docker / compose volumes
 pgdata/

@@ -1,0 +1,154 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Attachment",
+  "type": "Attachment",
+  "name": "Attachment",
+  "kind": "complex-type",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "contentType": {
+      "path": "Attachment.contentType",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/mimetypes|5.0.0"
+      }
+    },
+    "creation": {
+      "path": "Attachment.creation",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "data": {
+      "path": "Attachment.data",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "base64Binary"
+      ]
+    },
+    "duration": {
+      "path": "Attachment.duration",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "decimal"
+      ]
+    },
+    "extension": {
+      "path": "Attachment.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "frames": {
+      "path": "Attachment.frames",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "positiveInt"
+      ]
+    },
+    "hash": {
+      "path": "Attachment.hash",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "base64Binary"
+      ]
+    },
+    "height": {
+      "path": "Attachment.height",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "positiveInt"
+      ]
+    },
+    "id": {
+      "path": "Attachment.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "language": {
+      "path": "Attachment.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "pages": {
+      "path": "Attachment.pages",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "positiveInt"
+      ]
+    },
+    "size": {
+      "path": "Attachment.size",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "integer64"
+      ]
+    },
+    "title": {
+      "path": "Attachment.title",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "url": {
+      "path": "Attachment.url",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "url"
+      ]
+    },
+    "width": {
+      "path": "Attachment.width",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "positiveInt"
+      ]
+    }
+  }
+}

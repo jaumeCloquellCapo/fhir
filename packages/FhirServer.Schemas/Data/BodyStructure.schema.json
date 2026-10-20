@@ -1,0 +1,379 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/BodyStructure",
+  "type": "BodyStructure",
+  "name": "BodyStructure",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "includedStructure",
+    "patient"
+  ],
+  "elements": {
+    "active": {
+      "path": "BodyStructure.active",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "contained": {
+      "path": "BodyStructure.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "description": {
+      "path": "BodyStructure.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "excludedStructure": {
+      "path": "BodyStructure.excludedStructure",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [],
+      "contentReference": "#BodyStructure.includedStructure"
+    },
+    "extension": {
+      "path": "BodyStructure.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "BodyStructure.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "BodyStructure.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "image": {
+      "path": "BodyStructure.image",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Attachment"
+      ]
+    },
+    "implicitRules": {
+      "path": "BodyStructure.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "includedStructure": {
+      "path": "BodyStructure.includedStructure",
+      "min": 1,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "bodyLandmarkOrientation": {
+          "path": "BodyStructure.includedStructure.bodyLandmarkOrientation",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "clockFacePosition": {
+              "path": "BodyStructure.includedStructure.bodyLandmarkOrientation.clockFacePosition",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/bodystructure-bodylandmarkorientation-clockface-position"
+              }
+            },
+            "distanceFromLandmark": {
+              "path": "BodyStructure.includedStructure.bodyLandmarkOrientation.distanceFromLandmark",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "device": {
+                  "path": "BodyStructure.includedStructure.bodyLandmarkOrientation.distanceFromLandmark.device",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "CodeableReference"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/device-type"
+                  }
+                },
+                "extension": {
+                  "path": "BodyStructure.includedStructure.bodyLandmarkOrientation.distanceFromLandmark.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "BodyStructure.includedStructure.bodyLandmarkOrientation.distanceFromLandmark.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "BodyStructure.includedStructure.bodyLandmarkOrientation.distanceFromLandmark.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "value": {
+                  "path": "BodyStructure.includedStructure.bodyLandmarkOrientation.distanceFromLandmark.value",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Quantity"
+                  ]
+                }
+              }
+            },
+            "extension": {
+              "path": "BodyStructure.includedStructure.bodyLandmarkOrientation.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "BodyStructure.includedStructure.bodyLandmarkOrientation.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "landmarkDescription": {
+              "path": "BodyStructure.includedStructure.bodyLandmarkOrientation.landmarkDescription",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/body-site"
+              }
+            },
+            "modifierExtension": {
+              "path": "BodyStructure.includedStructure.bodyLandmarkOrientation.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "surfaceOrientation": {
+              "path": "BodyStructure.includedStructure.bodyLandmarkOrientation.surfaceOrientation",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "preferred",
+                "valueSet": "http://hl7.org/fhir/ValueSet/bodystructure-relative-location"
+              }
+            }
+          }
+        },
+        "extension": {
+          "path": "BodyStructure.includedStructure.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "BodyStructure.includedStructure.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "laterality": {
+          "path": "BodyStructure.includedStructure.laterality",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/bodystructure-relative-location"
+          }
+        },
+        "modifierExtension": {
+          "path": "BodyStructure.includedStructure.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "qualifier": {
+          "path": "BodyStructure.includedStructure.qualifier",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/bodystructure-relative-location"
+          }
+        },
+        "spatialReference": {
+          "path": "BodyStructure.includedStructure.spatialReference",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "structure": {
+          "path": "BodyStructure.includedStructure.structure",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/body-site"
+          }
+        }
+      }
+    },
+    "language": {
+      "path": "BodyStructure.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "BodyStructure.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "BodyStructure.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "morphology": {
+      "path": "BodyStructure.morphology",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/bodystructure-code"
+      }
+    },
+    "patient": {
+      "path": "BodyStructure.patient",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "text": {
+      "path": "BodyStructure.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

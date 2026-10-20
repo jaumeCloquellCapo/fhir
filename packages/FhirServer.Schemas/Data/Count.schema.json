@@ -1,0 +1,78 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Count",
+  "type": "Count",
+  "name": "Count",
+  "kind": "complex-type",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "code": {
+      "path": "Count.code",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ]
+    },
+    "comparator": {
+      "path": "Count.comparator",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/quantity-comparator|5.0.0"
+      }
+    },
+    "extension": {
+      "path": "Count.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "Count.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "system": {
+      "path": "Count.system",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "unit": {
+      "path": "Count.unit",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "value": {
+      "path": "Count.value",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "decimal"
+      ]
+    }
+  }
+}

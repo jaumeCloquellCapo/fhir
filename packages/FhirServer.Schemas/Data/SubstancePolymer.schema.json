@@ -1,0 +1,522 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/SubstancePolymer",
+  "type": "SubstancePolymer",
+  "name": "SubstancePolymer",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "class": {
+      "path": "SubstancePolymer.class",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "contained": {
+      "path": "SubstancePolymer.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "copolymerConnectivity": {
+      "path": "SubstancePolymer.copolymerConnectivity",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "extension": {
+      "path": "SubstancePolymer.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "geometry": {
+      "path": "SubstancePolymer.geometry",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "id": {
+      "path": "SubstancePolymer.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "SubstancePolymer.identifier",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "SubstancePolymer.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "SubstancePolymer.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "SubstancePolymer.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modification": {
+      "path": "SubstancePolymer.modification",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "modifierExtension": {
+      "path": "SubstancePolymer.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "monomerSet": {
+      "path": "SubstancePolymer.monomerSet",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "SubstancePolymer.monomerSet.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "SubstancePolymer.monomerSet.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "SubstancePolymer.monomerSet.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "ratioType": {
+          "path": "SubstancePolymer.monomerSet.ratioType",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "startingMaterial": {
+          "path": "SubstancePolymer.monomerSet.startingMaterial",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "amount": {
+              "path": "SubstancePolymer.monomerSet.startingMaterial.amount",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Quantity"
+              ]
+            },
+            "category": {
+              "path": "SubstancePolymer.monomerSet.startingMaterial.category",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ]
+            },
+            "code": {
+              "path": "SubstancePolymer.monomerSet.startingMaterial.code",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ]
+            },
+            "extension": {
+              "path": "SubstancePolymer.monomerSet.startingMaterial.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "SubstancePolymer.monomerSet.startingMaterial.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "isDefining": {
+              "path": "SubstancePolymer.monomerSet.startingMaterial.isDefining",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "modifierExtension": {
+              "path": "SubstancePolymer.monomerSet.startingMaterial.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "repeat": {
+      "path": "SubstancePolymer.repeat",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "averageMolecularFormula": {
+          "path": "SubstancePolymer.repeat.averageMolecularFormula",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "extension": {
+          "path": "SubstancePolymer.repeat.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "SubstancePolymer.repeat.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "SubstancePolymer.repeat.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "repeatUnit": {
+          "path": "SubstancePolymer.repeat.repeatUnit",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "amount": {
+              "path": "SubstancePolymer.repeat.repeatUnit.amount",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "integer"
+              ]
+            },
+            "degreeOfPolymerisation": {
+              "path": "SubstancePolymer.repeat.repeatUnit.degreeOfPolymerisation",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "average": {
+                  "path": "SubstancePolymer.repeat.repeatUnit.degreeOfPolymerisation.average",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "integer"
+                  ]
+                },
+                "extension": {
+                  "path": "SubstancePolymer.repeat.repeatUnit.degreeOfPolymerisation.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "high": {
+                  "path": "SubstancePolymer.repeat.repeatUnit.degreeOfPolymerisation.high",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "integer"
+                  ]
+                },
+                "id": {
+                  "path": "SubstancePolymer.repeat.repeatUnit.degreeOfPolymerisation.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "low": {
+                  "path": "SubstancePolymer.repeat.repeatUnit.degreeOfPolymerisation.low",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "integer"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "SubstancePolymer.repeat.repeatUnit.degreeOfPolymerisation.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "type": {
+                  "path": "SubstancePolymer.repeat.repeatUnit.degreeOfPolymerisation.type",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ]
+                }
+              }
+            },
+            "extension": {
+              "path": "SubstancePolymer.repeat.repeatUnit.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "SubstancePolymer.repeat.repeatUnit.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "SubstancePolymer.repeat.repeatUnit.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "orientation": {
+              "path": "SubstancePolymer.repeat.repeatUnit.orientation",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ]
+            },
+            "structuralRepresentation": {
+              "path": "SubstancePolymer.repeat.repeatUnit.structuralRepresentation",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "attachment": {
+                  "path": "SubstancePolymer.repeat.repeatUnit.structuralRepresentation.attachment",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Attachment"
+                  ]
+                },
+                "extension": {
+                  "path": "SubstancePolymer.repeat.repeatUnit.structuralRepresentation.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "format": {
+                  "path": "SubstancePolymer.repeat.repeatUnit.structuralRepresentation.format",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ]
+                },
+                "id": {
+                  "path": "SubstancePolymer.repeat.repeatUnit.structuralRepresentation.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "SubstancePolymer.repeat.repeatUnit.structuralRepresentation.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "representation": {
+                  "path": "SubstancePolymer.repeat.repeatUnit.structuralRepresentation.representation",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "type": {
+                  "path": "SubstancePolymer.repeat.repeatUnit.structuralRepresentation.type",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ]
+                }
+              }
+            },
+            "unit": {
+              "path": "SubstancePolymer.repeat.repeatUnit.unit",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "repeatUnitAmountType": {
+          "path": "SubstancePolymer.repeat.repeatUnitAmountType",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        }
+      }
+    },
+    "text": {
+      "path": "SubstancePolymer.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

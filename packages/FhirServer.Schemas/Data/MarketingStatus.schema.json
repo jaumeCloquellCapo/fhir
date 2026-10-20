@@ -1,0 +1,85 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/MarketingStatus",
+  "type": "MarketingStatus",
+  "name": "MarketingStatus",
+  "kind": "complex-type",
+  "derivation": "specialization",
+  "required": [
+    "status"
+  ],
+  "elements": {
+    "country": {
+      "path": "MarketingStatus.country",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "dateRange": {
+      "path": "MarketingStatus.dateRange",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ]
+    },
+    "extension": {
+      "path": "MarketingStatus.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "MarketingStatus.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "jurisdiction": {
+      "path": "MarketingStatus.jurisdiction",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "modifierExtension": {
+      "path": "MarketingStatus.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "restoreDate": {
+      "path": "MarketingStatus.restoreDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "status": {
+      "path": "MarketingStatus.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ]
+    }
+  }
+}

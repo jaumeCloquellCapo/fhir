@@ -1,0 +1,1303 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/MedicationKnowledge",
+  "type": "MedicationKnowledge",
+  "name": "MedicationKnowledge",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "associatedMedication": {
+      "path": "MedicationKnowledge.associatedMedication",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "author": {
+      "path": "MedicationKnowledge.author",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "clinicalUseIssue": {
+      "path": "MedicationKnowledge.clinicalUseIssue",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "code": {
+      "path": "MedicationKnowledge.code",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medication-codes"
+      }
+    },
+    "contained": {
+      "path": "MedicationKnowledge.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "cost": {
+      "path": "MedicationKnowledge.cost",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "cost": {
+          "path": "MedicationKnowledge.cost.cost[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Money",
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/medication-cost-category"
+          },
+          "choices": [
+            "costMoney",
+            "costCodeableConcept"
+          ]
+        },
+        "effectiveDate": {
+          "path": "MedicationKnowledge.cost.effectiveDate",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Period"
+          ]
+        },
+        "extension": {
+          "path": "MedicationKnowledge.cost.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MedicationKnowledge.cost.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "MedicationKnowledge.cost.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "source": {
+          "path": "MedicationKnowledge.cost.source",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "type": {
+          "path": "MedicationKnowledge.cost.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        }
+      }
+    },
+    "definitional": {
+      "path": "MedicationKnowledge.definitional",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "definition": {
+          "path": "MedicationKnowledge.definitional.definition",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "doseForm": {
+          "path": "MedicationKnowledge.definitional.doseForm",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/medication-form-codes"
+          }
+        },
+        "drugCharacteristic": {
+          "path": "MedicationKnowledge.definitional.drugCharacteristic",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "MedicationKnowledge.definitional.drugCharacteristic.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "MedicationKnowledge.definitional.drugCharacteristic.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "MedicationKnowledge.definitional.drugCharacteristic.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "type": {
+              "path": "MedicationKnowledge.definitional.drugCharacteristic.type",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/medicationknowledge-characteristic"
+              }
+            },
+            "value": {
+              "path": "MedicationKnowledge.definitional.drugCharacteristic.value[x]",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept",
+                "string",
+                "Quantity",
+                "base64Binary",
+                "Attachment"
+              ],
+              "choices": [
+                "valueCodeableConcept",
+                "valueString",
+                "valueQuantity",
+                "valueBase64Binary",
+                "valueAttachment"
+              ]
+            }
+          }
+        },
+        "extension": {
+          "path": "MedicationKnowledge.definitional.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MedicationKnowledge.definitional.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "ingredient": {
+          "path": "MedicationKnowledge.definitional.ingredient",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "MedicationKnowledge.definitional.ingredient.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "MedicationKnowledge.definitional.ingredient.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "item": {
+              "path": "MedicationKnowledge.definitional.ingredient.item",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableReference"
+              ]
+            },
+            "modifierExtension": {
+              "path": "MedicationKnowledge.definitional.ingredient.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "strength": {
+              "path": "MedicationKnowledge.definitional.ingredient.strength[x]",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Ratio",
+                "CodeableConcept",
+                "Quantity"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/medication-ingredientstrength"
+              },
+              "choices": [
+                "strengthRatio",
+                "strengthCodeableConcept",
+                "strengthQuantity"
+              ]
+            },
+            "type": {
+              "path": "MedicationKnowledge.definitional.ingredient.type",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://terminology.hl7.org/ValueSet/v3-RoleClassIngredientEntity"
+              }
+            }
+          }
+        },
+        "intendedRoute": {
+          "path": "MedicationKnowledge.definitional.intendedRoute",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/route-codes"
+          }
+        },
+        "modifierExtension": {
+          "path": "MedicationKnowledge.definitional.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "extension": {
+      "path": "MedicationKnowledge.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "MedicationKnowledge.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "MedicationKnowledge.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "MedicationKnowledge.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "indicationGuideline": {
+      "path": "MedicationKnowledge.indicationGuideline",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "dosingGuideline": {
+          "path": "MedicationKnowledge.indicationGuideline.dosingGuideline",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "administrationTreatment": {
+              "path": "MedicationKnowledge.indicationGuideline.dosingGuideline.administrationTreatment",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ]
+            },
+            "dosage": {
+              "path": "MedicationKnowledge.indicationGuideline.dosingGuideline.dosage",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "dosage": {
+                  "path": "MedicationKnowledge.indicationGuideline.dosingGuideline.dosage.dosage",
+                  "min": 1,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Dosage"
+                  ]
+                },
+                "extension": {
+                  "path": "MedicationKnowledge.indicationGuideline.dosingGuideline.dosage.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "MedicationKnowledge.indicationGuideline.dosingGuideline.dosage.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "MedicationKnowledge.indicationGuideline.dosingGuideline.dosage.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "type": {
+                  "path": "MedicationKnowledge.indicationGuideline.dosingGuideline.dosage.type",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ]
+                }
+              }
+            },
+            "extension": {
+              "path": "MedicationKnowledge.indicationGuideline.dosingGuideline.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "MedicationKnowledge.indicationGuideline.dosingGuideline.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "MedicationKnowledge.indicationGuideline.dosingGuideline.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "patientCharacteristic": {
+              "path": "MedicationKnowledge.indicationGuideline.dosingGuideline.patientCharacteristic",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "extension": {
+                  "path": "MedicationKnowledge.indicationGuideline.dosingGuideline.patientCharacteristic.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "MedicationKnowledge.indicationGuideline.dosingGuideline.patientCharacteristic.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "MedicationKnowledge.indicationGuideline.dosingGuideline.patientCharacteristic.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "type": {
+                  "path": "MedicationKnowledge.indicationGuideline.dosingGuideline.patientCharacteristic.type",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ]
+                },
+                "value": {
+                  "path": "MedicationKnowledge.indicationGuideline.dosingGuideline.patientCharacteristic.value[x]",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept",
+                    "Quantity",
+                    "Range"
+                  ],
+                  "choices": [
+                    "valueCodeableConcept",
+                    "valueQuantity",
+                    "valueRange"
+                  ]
+                }
+              }
+            },
+            "treatmentIntent": {
+              "path": "MedicationKnowledge.indicationGuideline.dosingGuideline.treatmentIntent",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ]
+            }
+          }
+        },
+        "extension": {
+          "path": "MedicationKnowledge.indicationGuideline.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MedicationKnowledge.indicationGuideline.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "indication": {
+          "path": "MedicationKnowledge.indicationGuideline.indication",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableReference"
+          ]
+        },
+        "modifierExtension": {
+          "path": "MedicationKnowledge.indicationGuideline.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "intendedJurisdiction": {
+      "path": "MedicationKnowledge.intendedJurisdiction",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "language": {
+      "path": "MedicationKnowledge.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "medicineClassification": {
+      "path": "MedicationKnowledge.medicineClassification",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "classification": {
+          "path": "MedicationKnowledge.medicineClassification.classification",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "extension": {
+          "path": "MedicationKnowledge.medicineClassification.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MedicationKnowledge.medicineClassification.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "MedicationKnowledge.medicineClassification.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "source": {
+          "path": "MedicationKnowledge.medicineClassification.source[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string",
+            "uri"
+          ],
+          "choices": [
+            "sourceString",
+            "sourceUri"
+          ]
+        },
+        "type": {
+          "path": "MedicationKnowledge.medicineClassification.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        }
+      }
+    },
+    "meta": {
+      "path": "MedicationKnowledge.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "MedicationKnowledge.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "monitoringProgram": {
+      "path": "MedicationKnowledge.monitoringProgram",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "MedicationKnowledge.monitoringProgram.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MedicationKnowledge.monitoringProgram.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "MedicationKnowledge.monitoringProgram.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "name": {
+          "path": "MedicationKnowledge.monitoringProgram.name",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "type": {
+          "path": "MedicationKnowledge.monitoringProgram.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        }
+      }
+    },
+    "monograph": {
+      "path": "MedicationKnowledge.monograph",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "MedicationKnowledge.monograph.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MedicationKnowledge.monograph.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "MedicationKnowledge.monograph.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "source": {
+          "path": "MedicationKnowledge.monograph.source",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "type": {
+          "path": "MedicationKnowledge.monograph.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        }
+      }
+    },
+    "name": {
+      "path": "MedicationKnowledge.name",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "string"
+      ]
+    },
+    "packaging": {
+      "path": "MedicationKnowledge.packaging",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "cost": {
+          "path": "MedicationKnowledge.packaging.cost",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#MedicationKnowledge.cost"
+        },
+        "extension": {
+          "path": "MedicationKnowledge.packaging.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MedicationKnowledge.packaging.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "MedicationKnowledge.packaging.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "packagedProduct": {
+          "path": "MedicationKnowledge.packaging.packagedProduct",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    },
+    "preparationInstruction": {
+      "path": "MedicationKnowledge.preparationInstruction",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "productType": {
+      "path": "MedicationKnowledge.productType",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "regulatory": {
+      "path": "MedicationKnowledge.regulatory",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "MedicationKnowledge.regulatory.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MedicationKnowledge.regulatory.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "maxDispense": {
+          "path": "MedicationKnowledge.regulatory.maxDispense",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "MedicationKnowledge.regulatory.maxDispense.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "MedicationKnowledge.regulatory.maxDispense.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "MedicationKnowledge.regulatory.maxDispense.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "period": {
+              "path": "MedicationKnowledge.regulatory.maxDispense.period",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Duration"
+              ]
+            },
+            "quantity": {
+              "path": "MedicationKnowledge.regulatory.maxDispense.quantity",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Quantity"
+              ]
+            }
+          }
+        },
+        "modifierExtension": {
+          "path": "MedicationKnowledge.regulatory.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "regulatoryAuthority": {
+          "path": "MedicationKnowledge.regulatory.regulatoryAuthority",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "schedule": {
+          "path": "MedicationKnowledge.regulatory.schedule",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "substitution": {
+          "path": "MedicationKnowledge.regulatory.substitution",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "allowed": {
+              "path": "MedicationKnowledge.regulatory.substitution.allowed",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "extension": {
+              "path": "MedicationKnowledge.regulatory.substitution.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "MedicationKnowledge.regulatory.substitution.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "MedicationKnowledge.regulatory.substitution.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "type": {
+              "path": "MedicationKnowledge.regulatory.substitution.type",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "relatedMedicationKnowledge": {
+      "path": "MedicationKnowledge.relatedMedicationKnowledge",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "MedicationKnowledge.relatedMedicationKnowledge.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MedicationKnowledge.relatedMedicationKnowledge.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "MedicationKnowledge.relatedMedicationKnowledge.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "reference": {
+          "path": "MedicationKnowledge.relatedMedicationKnowledge.reference",
+          "min": 1,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "type": {
+          "path": "MedicationKnowledge.relatedMedicationKnowledge.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        }
+      }
+    },
+    "status": {
+      "path": "MedicationKnowledge.status",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medicationknowledge-status|5.0.0"
+      }
+    },
+    "storageGuideline": {
+      "path": "MedicationKnowledge.storageGuideline",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "environmentalSetting": {
+          "path": "MedicationKnowledge.storageGuideline.environmentalSetting",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "MedicationKnowledge.storageGuideline.environmentalSetting.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "MedicationKnowledge.storageGuideline.environmentalSetting.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "MedicationKnowledge.storageGuideline.environmentalSetting.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "type": {
+              "path": "MedicationKnowledge.storageGuideline.environmentalSetting.type",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ]
+            },
+            "value": {
+              "path": "MedicationKnowledge.storageGuideline.environmentalSetting.value[x]",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Quantity",
+                "Range",
+                "CodeableConcept"
+              ],
+              "choices": [
+                "valueQuantity",
+                "valueRange",
+                "valueCodeableConcept"
+              ]
+            }
+          }
+        },
+        "extension": {
+          "path": "MedicationKnowledge.storageGuideline.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "MedicationKnowledge.storageGuideline.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "MedicationKnowledge.storageGuideline.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "note": {
+          "path": "MedicationKnowledge.storageGuideline.note",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Annotation"
+          ]
+        },
+        "reference": {
+          "path": "MedicationKnowledge.storageGuideline.reference",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "uri"
+          ]
+        },
+        "stabilityDuration": {
+          "path": "MedicationKnowledge.storageGuideline.stabilityDuration",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Duration"
+          ]
+        }
+      }
+    },
+    "text": {
+      "path": "MedicationKnowledge.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

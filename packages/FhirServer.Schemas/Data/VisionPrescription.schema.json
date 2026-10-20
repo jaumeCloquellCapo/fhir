@@ -1,0 +1,384 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/VisionPrescription",
+  "type": "VisionPrescription",
+  "name": "VisionPrescription",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "created",
+    "dateWritten",
+    "lensSpecification",
+    "patient",
+    "prescriber",
+    "status"
+  ],
+  "elements": {
+    "contained": {
+      "path": "VisionPrescription.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "created": {
+      "path": "VisionPrescription.created",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "dateWritten": {
+      "path": "VisionPrescription.dateWritten",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "encounter": {
+      "path": "VisionPrescription.encounter",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "extension": {
+      "path": "VisionPrescription.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "VisionPrescription.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "VisionPrescription.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "VisionPrescription.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "VisionPrescription.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "lensSpecification": {
+      "path": "VisionPrescription.lensSpecification",
+      "min": 1,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "add": {
+          "path": "VisionPrescription.lensSpecification.add",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "decimal"
+          ]
+        },
+        "axis": {
+          "path": "VisionPrescription.lensSpecification.axis",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "integer"
+          ]
+        },
+        "backCurve": {
+          "path": "VisionPrescription.lensSpecification.backCurve",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "decimal"
+          ]
+        },
+        "brand": {
+          "path": "VisionPrescription.lensSpecification.brand",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "color": {
+          "path": "VisionPrescription.lensSpecification.color",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "cylinder": {
+          "path": "VisionPrescription.lensSpecification.cylinder",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "decimal"
+          ]
+        },
+        "diameter": {
+          "path": "VisionPrescription.lensSpecification.diameter",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "decimal"
+          ]
+        },
+        "duration": {
+          "path": "VisionPrescription.lensSpecification.duration",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity"
+          ]
+        },
+        "extension": {
+          "path": "VisionPrescription.lensSpecification.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "eye": {
+          "path": "VisionPrescription.lensSpecification.eye",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/vision-eye-codes|5.0.0"
+          }
+        },
+        "id": {
+          "path": "VisionPrescription.lensSpecification.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "VisionPrescription.lensSpecification.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "note": {
+          "path": "VisionPrescription.lensSpecification.note",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Annotation"
+          ]
+        },
+        "power": {
+          "path": "VisionPrescription.lensSpecification.power",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "decimal"
+          ]
+        },
+        "prism": {
+          "path": "VisionPrescription.lensSpecification.prism",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "amount": {
+              "path": "VisionPrescription.lensSpecification.prism.amount",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "decimal"
+              ]
+            },
+            "base": {
+              "path": "VisionPrescription.lensSpecification.prism.base",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/vision-base-codes|5.0.0"
+              }
+            },
+            "extension": {
+              "path": "VisionPrescription.lensSpecification.prism.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "VisionPrescription.lensSpecification.prism.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "VisionPrescription.lensSpecification.prism.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            }
+          }
+        },
+        "product": {
+          "path": "VisionPrescription.lensSpecification.product",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/vision-product"
+          }
+        },
+        "sphere": {
+          "path": "VisionPrescription.lensSpecification.sphere",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "decimal"
+          ]
+        }
+      }
+    },
+    "meta": {
+      "path": "VisionPrescription.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "VisionPrescription.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "patient": {
+      "path": "VisionPrescription.patient",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "prescriber": {
+      "path": "VisionPrescription.prescriber",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "status": {
+      "path": "VisionPrescription.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/fm-status|5.0.0"
+      }
+    },
+    "text": {
+      "path": "VisionPrescription.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

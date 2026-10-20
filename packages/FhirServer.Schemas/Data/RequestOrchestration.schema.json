@@ -1,0 +1,981 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/RequestOrchestration",
+  "type": "RequestOrchestration",
+  "name": "RequestOrchestration",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "intent",
+    "status"
+  ],
+  "elements": {
+    "action": {
+      "path": "RequestOrchestration.action",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "action": {
+          "path": "RequestOrchestration.action.action",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#RequestOrchestration.action"
+        },
+        "cardinalityBehavior": {
+          "path": "RequestOrchestration.action.cardinalityBehavior",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/action-cardinality-behavior|5.0.0"
+          }
+        },
+        "code": {
+          "path": "RequestOrchestration.action.code",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/action-code"
+          }
+        },
+        "condition": {
+          "path": "RequestOrchestration.action.condition",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "expression": {
+              "path": "RequestOrchestration.action.condition.expression",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Expression"
+              ]
+            },
+            "extension": {
+              "path": "RequestOrchestration.action.condition.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "RequestOrchestration.action.condition.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "kind": {
+              "path": "RequestOrchestration.action.condition.kind",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/action-condition-kind|5.0.0"
+              }
+            },
+            "modifierExtension": {
+              "path": "RequestOrchestration.action.condition.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            }
+          }
+        },
+        "definition": {
+          "path": "RequestOrchestration.action.definition[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "canonical",
+            "uri"
+          ],
+          "choices": [
+            "definitionCanonical",
+            "definitionUri"
+          ]
+        },
+        "description": {
+          "path": "RequestOrchestration.action.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "documentation": {
+          "path": "RequestOrchestration.action.documentation",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "RelatedArtifact"
+          ]
+        },
+        "dynamicValue": {
+          "path": "RequestOrchestration.action.dynamicValue",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "expression": {
+              "path": "RequestOrchestration.action.dynamicValue.expression",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Expression"
+              ]
+            },
+            "extension": {
+              "path": "RequestOrchestration.action.dynamicValue.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "RequestOrchestration.action.dynamicValue.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "RequestOrchestration.action.dynamicValue.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "path": {
+              "path": "RequestOrchestration.action.dynamicValue.path",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "extension": {
+          "path": "RequestOrchestration.action.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "goal": {
+          "path": "RequestOrchestration.action.goal",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "groupingBehavior": {
+          "path": "RequestOrchestration.action.groupingBehavior",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/action-grouping-behavior|5.0.0"
+          }
+        },
+        "id": {
+          "path": "RequestOrchestration.action.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "input": {
+          "path": "RequestOrchestration.action.input",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "RequestOrchestration.action.input.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "RequestOrchestration.action.input.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "RequestOrchestration.action.input.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "relatedData": {
+              "path": "RequestOrchestration.action.input.relatedData",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "id"
+              ]
+            },
+            "requirement": {
+              "path": "RequestOrchestration.action.input.requirement",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "DataRequirement"
+              ]
+            },
+            "title": {
+              "path": "RequestOrchestration.action.input.title",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "linkId": {
+          "path": "RequestOrchestration.action.linkId",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "location": {
+          "path": "RequestOrchestration.action.location",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableReference"
+          ]
+        },
+        "modifierExtension": {
+          "path": "RequestOrchestration.action.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "output": {
+          "path": "RequestOrchestration.action.output",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "RequestOrchestration.action.output.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "RequestOrchestration.action.output.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "RequestOrchestration.action.output.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "relatedData": {
+              "path": "RequestOrchestration.action.output.relatedData",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "requirement": {
+              "path": "RequestOrchestration.action.output.requirement",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "DataRequirement"
+              ]
+            },
+            "title": {
+              "path": "RequestOrchestration.action.output.title",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "participant": {
+          "path": "RequestOrchestration.action.participant",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "actor": {
+              "path": "RequestOrchestration.action.participant.actor[x]",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "canonical",
+                "Reference"
+              ],
+              "choices": [
+                "actorCanonical",
+                "actorReference"
+              ]
+            },
+            "extension": {
+              "path": "RequestOrchestration.action.participant.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "function": {
+              "path": "RequestOrchestration.action.participant.function",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/action-participant-function"
+              }
+            },
+            "id": {
+              "path": "RequestOrchestration.action.participant.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "RequestOrchestration.action.participant.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "role": {
+              "path": "RequestOrchestration.action.participant.role",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://terminology.hl7.org/ValueSet/action-participant-role"
+              }
+            },
+            "type": {
+              "path": "RequestOrchestration.action.participant.type",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/action-participant-type|5.0.0"
+              }
+            },
+            "typeCanonical": {
+              "path": "RequestOrchestration.action.participant.typeCanonical",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "canonical"
+              ]
+            },
+            "typeReference": {
+              "path": "RequestOrchestration.action.participant.typeReference",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            }
+          }
+        },
+        "precheckBehavior": {
+          "path": "RequestOrchestration.action.precheckBehavior",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/action-precheck-behavior|5.0.0"
+          }
+        },
+        "prefix": {
+          "path": "RequestOrchestration.action.prefix",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "priority": {
+          "path": "RequestOrchestration.action.priority",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/request-priority|5.0.0"
+          }
+        },
+        "relatedAction": {
+          "path": "RequestOrchestration.action.relatedAction",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "endRelationship": {
+              "path": "RequestOrchestration.action.relatedAction.endRelationship",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/action-relationship-type|5.0.0"
+              }
+            },
+            "extension": {
+              "path": "RequestOrchestration.action.relatedAction.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "RequestOrchestration.action.relatedAction.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "RequestOrchestration.action.relatedAction.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "offset": {
+              "path": "RequestOrchestration.action.relatedAction.offset[x]",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Duration",
+                "Range"
+              ],
+              "choices": [
+                "offsetDuration",
+                "offsetRange"
+              ]
+            },
+            "relationship": {
+              "path": "RequestOrchestration.action.relatedAction.relationship",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/action-relationship-type|5.0.0"
+              }
+            },
+            "targetId": {
+              "path": "RequestOrchestration.action.relatedAction.targetId",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "id"
+              ]
+            }
+          }
+        },
+        "requiredBehavior": {
+          "path": "RequestOrchestration.action.requiredBehavior",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/action-required-behavior|5.0.0"
+          }
+        },
+        "resource": {
+          "path": "RequestOrchestration.action.resource",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "selectionBehavior": {
+          "path": "RequestOrchestration.action.selectionBehavior",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/action-selection-behavior|5.0.0"
+          }
+        },
+        "textEquivalent": {
+          "path": "RequestOrchestration.action.textEquivalent",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "timing": {
+          "path": "RequestOrchestration.action.timing[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "dateTime",
+            "Age",
+            "Period",
+            "Duration",
+            "Range",
+            "Timing"
+          ],
+          "choices": [
+            "timingDateTime",
+            "timingAge",
+            "timingPeriod",
+            "timingDuration",
+            "timingRange",
+            "timingTiming"
+          ]
+        },
+        "title": {
+          "path": "RequestOrchestration.action.title",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "transform": {
+          "path": "RequestOrchestration.action.transform",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "canonical"
+          ]
+        },
+        "type": {
+          "path": "RequestOrchestration.action.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/action-type"
+          }
+        }
+      }
+    },
+    "author": {
+      "path": "RequestOrchestration.author",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "authoredOn": {
+      "path": "RequestOrchestration.authoredOn",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "basedOn": {
+      "path": "RequestOrchestration.basedOn",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "code": {
+      "path": "RequestOrchestration.code",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/action-code"
+      }
+    },
+    "contained": {
+      "path": "RequestOrchestration.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "encounter": {
+      "path": "RequestOrchestration.encounter",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "extension": {
+      "path": "RequestOrchestration.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "goal": {
+      "path": "RequestOrchestration.goal",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "groupIdentifier": {
+      "path": "RequestOrchestration.groupIdentifier",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "id": {
+      "path": "RequestOrchestration.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "RequestOrchestration.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "RequestOrchestration.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "instantiatesCanonical": {
+      "path": "RequestOrchestration.instantiatesCanonical",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "canonical"
+      ]
+    },
+    "instantiatesUri": {
+      "path": "RequestOrchestration.instantiatesUri",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "uri"
+      ]
+    },
+    "intent": {
+      "path": "RequestOrchestration.intent",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/request-intent|5.0.0"
+      }
+    },
+    "language": {
+      "path": "RequestOrchestration.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "RequestOrchestration.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "RequestOrchestration.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "note": {
+      "path": "RequestOrchestration.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "priority": {
+      "path": "RequestOrchestration.priority",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/request-priority|5.0.0"
+      }
+    },
+    "reason": {
+      "path": "RequestOrchestration.reason",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/action-reason-code"
+      }
+    },
+    "replaces": {
+      "path": "RequestOrchestration.replaces",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "status": {
+      "path": "RequestOrchestration.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/request-status|5.0.0"
+      }
+    },
+    "subject": {
+      "path": "RequestOrchestration.subject",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "text": {
+      "path": "RequestOrchestration.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

@@ -1,0 +1,1311 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/SubstanceDefinition",
+  "type": "SubstanceDefinition",
+  "name": "SubstanceDefinition",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "characterization": {
+      "path": "SubstanceDefinition.characterization",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "description": {
+          "path": "SubstanceDefinition.characterization.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "extension": {
+          "path": "SubstanceDefinition.characterization.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "file": {
+          "path": "SubstanceDefinition.characterization.file",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Attachment"
+          ]
+        },
+        "form": {
+          "path": "SubstanceDefinition.characterization.form",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/substance-form"
+          }
+        },
+        "id": {
+          "path": "SubstanceDefinition.characterization.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "SubstanceDefinition.characterization.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "technique": {
+          "path": "SubstanceDefinition.characterization.technique",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/substance-structure-technique"
+          }
+        }
+      }
+    },
+    "classification": {
+      "path": "SubstanceDefinition.classification",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "code": {
+      "path": "SubstanceDefinition.code",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "code": {
+          "path": "SubstanceDefinition.code.code",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "extension": {
+          "path": "SubstanceDefinition.code.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "SubstanceDefinition.code.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "SubstanceDefinition.code.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "note": {
+          "path": "SubstanceDefinition.code.note",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Annotation"
+          ]
+        },
+        "source": {
+          "path": "SubstanceDefinition.code.source",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "status": {
+          "path": "SubstanceDefinition.code.status",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "preferred",
+            "valueSet": "http://hl7.org/fhir/ValueSet/publication-status"
+          }
+        },
+        "statusDate": {
+          "path": "SubstanceDefinition.code.statusDate",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "dateTime"
+          ]
+        }
+      }
+    },
+    "contained": {
+      "path": "SubstanceDefinition.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "description": {
+      "path": "SubstanceDefinition.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "domain": {
+      "path": "SubstanceDefinition.domain",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medicinal-product-domain"
+      }
+    },
+    "extension": {
+      "path": "SubstanceDefinition.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "grade": {
+      "path": "SubstanceDefinition.grade",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/substance-grade"
+      }
+    },
+    "id": {
+      "path": "SubstanceDefinition.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "SubstanceDefinition.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "SubstanceDefinition.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "informationSource": {
+      "path": "SubstanceDefinition.informationSource",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "language": {
+      "path": "SubstanceDefinition.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "manufacturer": {
+      "path": "SubstanceDefinition.manufacturer",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "meta": {
+      "path": "SubstanceDefinition.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "SubstanceDefinition.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "moiety": {
+      "path": "SubstanceDefinition.moiety",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "amount": {
+          "path": "SubstanceDefinition.moiety.amount[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity",
+            "string"
+          ],
+          "choices": [
+            "amountQuantity",
+            "amountString"
+          ]
+        },
+        "extension": {
+          "path": "SubstanceDefinition.moiety.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "SubstanceDefinition.moiety.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "identifier": {
+          "path": "SubstanceDefinition.moiety.identifier",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "measurementType": {
+          "path": "SubstanceDefinition.moiety.measurementType",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/substance-amount-type"
+          }
+        },
+        "modifierExtension": {
+          "path": "SubstanceDefinition.moiety.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "molecularFormula": {
+          "path": "SubstanceDefinition.moiety.molecularFormula",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "name": {
+          "path": "SubstanceDefinition.moiety.name",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "opticalActivity": {
+          "path": "SubstanceDefinition.moiety.opticalActivity",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/substance-optical-activity"
+          }
+        },
+        "role": {
+          "path": "SubstanceDefinition.moiety.role",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "stereochemistry": {
+          "path": "SubstanceDefinition.moiety.stereochemistry",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/substance-stereochemistry"
+          }
+        }
+      }
+    },
+    "molecularWeight": {
+      "path": "SubstanceDefinition.molecularWeight",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "amount": {
+          "path": "SubstanceDefinition.molecularWeight.amount",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity"
+          ]
+        },
+        "extension": {
+          "path": "SubstanceDefinition.molecularWeight.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "SubstanceDefinition.molecularWeight.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "method": {
+          "path": "SubstanceDefinition.molecularWeight.method",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/substance-weight-method"
+          }
+        },
+        "modifierExtension": {
+          "path": "SubstanceDefinition.molecularWeight.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "SubstanceDefinition.molecularWeight.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/substance-weight-type"
+          }
+        }
+      }
+    },
+    "name": {
+      "path": "SubstanceDefinition.name",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "domain": {
+          "path": "SubstanceDefinition.name.domain",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/substance-name-domain"
+          }
+        },
+        "extension": {
+          "path": "SubstanceDefinition.name.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "SubstanceDefinition.name.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "jurisdiction": {
+          "path": "SubstanceDefinition.name.jurisdiction",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
+          }
+        },
+        "language": {
+          "path": "SubstanceDefinition.name.language",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+          }
+        },
+        "modifierExtension": {
+          "path": "SubstanceDefinition.name.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "name": {
+          "path": "SubstanceDefinition.name.name",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "official": {
+          "path": "SubstanceDefinition.name.official",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "authority": {
+              "path": "SubstanceDefinition.name.official.authority",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "preferred",
+                "valueSet": "http://hl7.org/fhir/ValueSet/substance-name-authority"
+              }
+            },
+            "date": {
+              "path": "SubstanceDefinition.name.official.date",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "dateTime"
+              ]
+            },
+            "extension": {
+              "path": "SubstanceDefinition.name.official.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "SubstanceDefinition.name.official.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "SubstanceDefinition.name.official.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "status": {
+              "path": "SubstanceDefinition.name.official.status",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "preferred",
+                "valueSet": "http://hl7.org/fhir/ValueSet/publication-status"
+              }
+            }
+          }
+        },
+        "preferred": {
+          "path": "SubstanceDefinition.name.preferred",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "source": {
+          "path": "SubstanceDefinition.name.source",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "status": {
+          "path": "SubstanceDefinition.name.status",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "preferred",
+            "valueSet": "http://hl7.org/fhir/ValueSet/publication-status"
+          }
+        },
+        "synonym": {
+          "path": "SubstanceDefinition.name.synonym",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#SubstanceDefinition.name"
+        },
+        "translation": {
+          "path": "SubstanceDefinition.name.translation",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#SubstanceDefinition.name"
+        },
+        "type": {
+          "path": "SubstanceDefinition.name.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/substance-name-type"
+          }
+        }
+      }
+    },
+    "note": {
+      "path": "SubstanceDefinition.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "nucleicAcid": {
+      "path": "SubstanceDefinition.nucleicAcid",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "polymer": {
+      "path": "SubstanceDefinition.polymer",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "property": {
+      "path": "SubstanceDefinition.property",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "SubstanceDefinition.property.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "SubstanceDefinition.property.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "SubstanceDefinition.property.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "SubstanceDefinition.property.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/product-characteristic-codes"
+          }
+        },
+        "value": {
+          "path": "SubstanceDefinition.property.value[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept",
+            "Quantity",
+            "date",
+            "boolean",
+            "Attachment"
+          ],
+          "choices": [
+            "valueCodeableConcept",
+            "valueQuantity",
+            "valueDate",
+            "valueBoolean",
+            "valueAttachment"
+          ]
+        }
+      }
+    },
+    "protein": {
+      "path": "SubstanceDefinition.protein",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "referenceInformation": {
+      "path": "SubstanceDefinition.referenceInformation",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "relationship": {
+      "path": "SubstanceDefinition.relationship",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "amount": {
+          "path": "SubstanceDefinition.relationship.amount[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity",
+            "Ratio",
+            "string"
+          ],
+          "choices": [
+            "amountQuantity",
+            "amountRatio",
+            "amountString"
+          ]
+        },
+        "comparator": {
+          "path": "SubstanceDefinition.relationship.comparator",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/substance-amount-type"
+          }
+        },
+        "extension": {
+          "path": "SubstanceDefinition.relationship.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "SubstanceDefinition.relationship.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "isDefining": {
+          "path": "SubstanceDefinition.relationship.isDefining",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "modifierExtension": {
+          "path": "SubstanceDefinition.relationship.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "ratioHighLimitAmount": {
+          "path": "SubstanceDefinition.relationship.ratioHighLimitAmount",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Ratio"
+          ]
+        },
+        "source": {
+          "path": "SubstanceDefinition.relationship.source",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "substanceDefinition": {
+          "path": "SubstanceDefinition.relationship.substanceDefinition[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference",
+            "CodeableConcept"
+          ],
+          "choices": [
+            "substanceDefinitionReference",
+            "substanceDefinitionCodeableConcept"
+          ]
+        },
+        "type": {
+          "path": "SubstanceDefinition.relationship.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/substance-relationship-type"
+          }
+        }
+      }
+    },
+    "sourceMaterial": {
+      "path": "SubstanceDefinition.sourceMaterial",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "countryOfOrigin": {
+          "path": "SubstanceDefinition.sourceMaterial.countryOfOrigin",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/country|5.0.0"
+          }
+        },
+        "extension": {
+          "path": "SubstanceDefinition.sourceMaterial.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "genus": {
+          "path": "SubstanceDefinition.sourceMaterial.genus",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/substance-source-material-genus"
+          }
+        },
+        "id": {
+          "path": "SubstanceDefinition.sourceMaterial.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "SubstanceDefinition.sourceMaterial.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "part": {
+          "path": "SubstanceDefinition.sourceMaterial.part",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/substance-source-material-part"
+          }
+        },
+        "species": {
+          "path": "SubstanceDefinition.sourceMaterial.species",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/substance-source-material-species"
+          }
+        },
+        "type": {
+          "path": "SubstanceDefinition.sourceMaterial.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/substance-source-material-type"
+          }
+        }
+      }
+    },
+    "status": {
+      "path": "SubstanceDefinition.status",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status"
+      }
+    },
+    "structure": {
+      "path": "SubstanceDefinition.structure",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "SubstanceDefinition.structure.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "SubstanceDefinition.structure.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "SubstanceDefinition.structure.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "molecularFormula": {
+          "path": "SubstanceDefinition.structure.molecularFormula",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "molecularFormulaByMoiety": {
+          "path": "SubstanceDefinition.structure.molecularFormulaByMoiety",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "molecularWeight": {
+          "path": "SubstanceDefinition.structure.molecularWeight",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [],
+          "contentReference": "#SubstanceDefinition.molecularWeight"
+        },
+        "opticalActivity": {
+          "path": "SubstanceDefinition.structure.opticalActivity",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/substance-optical-activity"
+          }
+        },
+        "representation": {
+          "path": "SubstanceDefinition.structure.representation",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "document": {
+              "path": "SubstanceDefinition.structure.representation.document",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            },
+            "extension": {
+              "path": "SubstanceDefinition.structure.representation.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "format": {
+              "path": "SubstanceDefinition.structure.representation.format",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/substance-representation-format"
+              }
+            },
+            "id": {
+              "path": "SubstanceDefinition.structure.representation.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "SubstanceDefinition.structure.representation.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "representation": {
+              "path": "SubstanceDefinition.structure.representation.representation",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "type": {
+              "path": "SubstanceDefinition.structure.representation.type",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/substance-representation-type"
+              }
+            }
+          }
+        },
+        "sourceDocument": {
+          "path": "SubstanceDefinition.structure.sourceDocument",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "stereochemistry": {
+          "path": "SubstanceDefinition.structure.stereochemistry",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/substance-stereochemistry"
+          }
+        },
+        "technique": {
+          "path": "SubstanceDefinition.structure.technique",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/substance-structure-technique"
+          }
+        }
+      }
+    },
+    "supplier": {
+      "path": "SubstanceDefinition.supplier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "text": {
+      "path": "SubstanceDefinition.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "version": {
+      "path": "SubstanceDefinition.version",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    }
+  }
+}

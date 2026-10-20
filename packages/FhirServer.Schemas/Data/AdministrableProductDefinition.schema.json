@@ -1,0 +1,491 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/AdministrableProductDefinition",
+  "type": "AdministrableProductDefinition",
+  "name": "AdministrableProductDefinition",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "routeOfAdministration",
+    "status"
+  ],
+  "elements": {
+    "administrableDoseForm": {
+      "path": "AdministrableProductDefinition.administrableDoseForm",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/administrable-dose-form"
+      }
+    },
+    "contained": {
+      "path": "AdministrableProductDefinition.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "description": {
+      "path": "AdministrableProductDefinition.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "device": {
+      "path": "AdministrableProductDefinition.device",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "extension": {
+      "path": "AdministrableProductDefinition.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "formOf": {
+      "path": "AdministrableProductDefinition.formOf",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "id": {
+      "path": "AdministrableProductDefinition.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "AdministrableProductDefinition.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "AdministrableProductDefinition.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "ingredient": {
+      "path": "AdministrableProductDefinition.ingredient",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/substance-codes"
+      }
+    },
+    "language": {
+      "path": "AdministrableProductDefinition.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "AdministrableProductDefinition.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "AdministrableProductDefinition.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "producedFrom": {
+      "path": "AdministrableProductDefinition.producedFrom",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "property": {
+      "path": "AdministrableProductDefinition.property",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "AdministrableProductDefinition.property.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "AdministrableProductDefinition.property.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "AdministrableProductDefinition.property.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "status": {
+          "path": "AdministrableProductDefinition.property.status",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+          }
+        },
+        "type": {
+          "path": "AdministrableProductDefinition.property.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/product-characteristic-codes"
+          }
+        },
+        "value": {
+          "path": "AdministrableProductDefinition.property.value[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept",
+            "Quantity",
+            "date",
+            "boolean",
+            "markdown",
+            "Attachment",
+            "Reference"
+          ],
+          "choices": [
+            "valueCodeableConcept",
+            "valueQuantity",
+            "valueDate",
+            "valueBoolean",
+            "valueMarkdown",
+            "valueAttachment",
+            "valueReference"
+          ]
+        }
+      }
+    },
+    "routeOfAdministration": {
+      "path": "AdministrableProductDefinition.routeOfAdministration",
+      "min": 1,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "code": {
+          "path": "AdministrableProductDefinition.routeOfAdministration.code",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/route-codes"
+          }
+        },
+        "extension": {
+          "path": "AdministrableProductDefinition.routeOfAdministration.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "firstDose": {
+          "path": "AdministrableProductDefinition.routeOfAdministration.firstDose",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity"
+          ]
+        },
+        "id": {
+          "path": "AdministrableProductDefinition.routeOfAdministration.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "maxDosePerDay": {
+          "path": "AdministrableProductDefinition.routeOfAdministration.maxDosePerDay",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity"
+          ]
+        },
+        "maxDosePerTreatmentPeriod": {
+          "path": "AdministrableProductDefinition.routeOfAdministration.maxDosePerTreatmentPeriod",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Ratio"
+          ]
+        },
+        "maxSingleDose": {
+          "path": "AdministrableProductDefinition.routeOfAdministration.maxSingleDose",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity"
+          ]
+        },
+        "maxTreatmentPeriod": {
+          "path": "AdministrableProductDefinition.routeOfAdministration.maxTreatmentPeriod",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Duration"
+          ]
+        },
+        "modifierExtension": {
+          "path": "AdministrableProductDefinition.routeOfAdministration.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "targetSpecies": {
+          "path": "AdministrableProductDefinition.routeOfAdministration.targetSpecies",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "code": {
+              "path": "AdministrableProductDefinition.routeOfAdministration.targetSpecies.code",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/target-species"
+              }
+            },
+            "extension": {
+              "path": "AdministrableProductDefinition.routeOfAdministration.targetSpecies.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "AdministrableProductDefinition.routeOfAdministration.targetSpecies.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "AdministrableProductDefinition.routeOfAdministration.targetSpecies.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "withdrawalPeriod": {
+              "path": "AdministrableProductDefinition.routeOfAdministration.targetSpecies.withdrawalPeriod",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "extension": {
+                  "path": "AdministrableProductDefinition.routeOfAdministration.targetSpecies.withdrawalPeriod.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "AdministrableProductDefinition.routeOfAdministration.targetSpecies.withdrawalPeriod.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "AdministrableProductDefinition.routeOfAdministration.targetSpecies.withdrawalPeriod.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "supportingInformation": {
+                  "path": "AdministrableProductDefinition.routeOfAdministration.targetSpecies.withdrawalPeriod.supportingInformation",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "tissue": {
+                  "path": "AdministrableProductDefinition.routeOfAdministration.targetSpecies.withdrawalPeriod.tissue",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/animal-tissue-type"
+                  }
+                },
+                "value": {
+                  "path": "AdministrableProductDefinition.routeOfAdministration.targetSpecies.withdrawalPeriod.value",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Quantity"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "status": {
+      "path": "AdministrableProductDefinition.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+      }
+    },
+    "text": {
+      "path": "AdministrableProductDefinition.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "unitOfPresentation": {
+      "path": "AdministrableProductDefinition.unitOfPresentation",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/unit-of-presentation"
+      }
+    }
+  }
+}

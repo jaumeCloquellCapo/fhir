@@ -34,7 +34,7 @@ tools: ## Restore local .NET tools (Fantomas, FSharpLint)
 build: restore ## Build the API
 	dotnet build $(PROJECT) --no-restore
 
-test test-e2e: ## Run E2E tests (tests/FhirServer.E2E)
+test test-e2e: ## Run E2E tests (requires make db-up)
 	dotnet test $(E2E) --verbosity minimal
 
 format: tools ## Format F# sources with Fantomas

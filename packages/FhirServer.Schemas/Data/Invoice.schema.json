@@ -1,0 +1,382 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Invoice",
+  "type": "Invoice",
+  "name": "Invoice",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "status"
+  ],
+  "elements": {
+    "account": {
+      "path": "Invoice.account",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "cancelledReason": {
+      "path": "Invoice.cancelledReason",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "contained": {
+      "path": "Invoice.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "creation": {
+      "path": "Invoice.creation",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "date": {
+      "path": "Invoice.date",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "extension": {
+      "path": "Invoice.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "Invoice.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Invoice.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "Invoice.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "issuer": {
+      "path": "Invoice.issuer",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "language": {
+      "path": "Invoice.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "lineItem": {
+      "path": "Invoice.lineItem",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "chargeItem": {
+          "path": "Invoice.lineItem.chargeItem[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference",
+            "CodeableConcept"
+          ],
+          "choices": [
+            "chargeItemReference",
+            "chargeItemCodeableConcept"
+          ]
+        },
+        "extension": {
+          "path": "Invoice.lineItem.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Invoice.lineItem.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Invoice.lineItem.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "priceComponent": {
+          "path": "Invoice.lineItem.priceComponent",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "MonetaryComponent"
+          ]
+        },
+        "sequence": {
+          "path": "Invoice.lineItem.sequence",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "serviced": {
+          "path": "Invoice.lineItem.serviced[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "date",
+            "Period"
+          ],
+          "choices": [
+            "servicedDate",
+            "servicedPeriod"
+          ]
+        }
+      }
+    },
+    "meta": {
+      "path": "Invoice.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "Invoice.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "note": {
+      "path": "Invoice.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "participant": {
+      "path": "Invoice.participant",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "actor": {
+          "path": "Invoice.participant.actor",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "extension": {
+          "path": "Invoice.participant.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Invoice.participant.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Invoice.participant.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "role": {
+          "path": "Invoice.participant.role",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        }
+      }
+    },
+    "paymentTerms": {
+      "path": "Invoice.paymentTerms",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "period": {
+      "path": "Invoice.period[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date",
+        "Period"
+      ],
+      "choices": [
+        "periodDate",
+        "periodPeriod"
+      ]
+    },
+    "recipient": {
+      "path": "Invoice.recipient",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "status": {
+      "path": "Invoice.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/invoice-status|5.0.0"
+      }
+    },
+    "subject": {
+      "path": "Invoice.subject",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "text": {
+      "path": "Invoice.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "totalGross": {
+      "path": "Invoice.totalGross",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Money"
+      ]
+    },
+    "totalNet": {
+      "path": "Invoice.totalNet",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Money"
+      ]
+    },
+    "totalPriceComponent": {
+      "path": "Invoice.totalPriceComponent",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "MonetaryComponent"
+      ]
+    },
+    "type": {
+      "path": "Invoice.type",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ]
+    }
+  }
+}

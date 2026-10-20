@@ -1,0 +1,498 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Ingredient",
+  "type": "Ingredient",
+  "name": "Ingredient",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "role",
+    "status",
+    "substance"
+  ],
+  "elements": {
+    "allergenicIndicator": {
+      "path": "Ingredient.allergenicIndicator",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "comment": {
+      "path": "Ingredient.comment",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "contained": {
+      "path": "Ingredient.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "extension": {
+      "path": "Ingredient.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "for": {
+      "path": "Ingredient.for",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "function": {
+      "path": "Ingredient.function",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/ingredient-function"
+      }
+    },
+    "group": {
+      "path": "Ingredient.group",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ]
+    },
+    "id": {
+      "path": "Ingredient.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Ingredient.identifier",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "Ingredient.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "Ingredient.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "manufacturer": {
+      "path": "Ingredient.manufacturer",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Ingredient.manufacturer.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Ingredient.manufacturer.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "manufacturer": {
+          "path": "Ingredient.manufacturer.manufacturer",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Ingredient.manufacturer.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "role": {
+          "path": "Ingredient.manufacturer.role",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/ingredient-manufacturer-role|5.0.0"
+          }
+        }
+      }
+    },
+    "meta": {
+      "path": "Ingredient.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "Ingredient.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "role": {
+      "path": "Ingredient.role",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/ingredient-role"
+      }
+    },
+    "status": {
+      "path": "Ingredient.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+      }
+    },
+    "substance": {
+      "path": "Ingredient.substance",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "code": {
+          "path": "Ingredient.substance.code",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableReference"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/substance-codes"
+          }
+        },
+        "extension": {
+          "path": "Ingredient.substance.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Ingredient.substance.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Ingredient.substance.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "strength": {
+          "path": "Ingredient.substance.strength",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "basis": {
+              "path": "Ingredient.substance.strength.basis",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ]
+            },
+            "concentration": {
+              "path": "Ingredient.substance.strength.concentration[x]",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Ratio",
+                "RatioRange",
+                "CodeableConcept",
+                "Quantity"
+              ],
+              "choices": [
+                "concentrationRatio",
+                "concentrationRatioRange",
+                "concentrationCodeableConcept",
+                "concentrationQuantity"
+              ]
+            },
+            "country": {
+              "path": "Ingredient.substance.strength.country",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/country"
+              }
+            },
+            "extension": {
+              "path": "Ingredient.substance.strength.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Ingredient.substance.strength.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "measurementPoint": {
+              "path": "Ingredient.substance.strength.measurementPoint",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Ingredient.substance.strength.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "presentation": {
+              "path": "Ingredient.substance.strength.presentation[x]",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Ratio",
+                "RatioRange",
+                "CodeableConcept",
+                "Quantity"
+              ],
+              "choices": [
+                "presentationRatio",
+                "presentationRatioRange",
+                "presentationCodeableConcept",
+                "presentationQuantity"
+              ]
+            },
+            "referenceStrength": {
+              "path": "Ingredient.substance.strength.referenceStrength",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "country": {
+                  "path": "Ingredient.substance.strength.referenceStrength.country",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/country"
+                  }
+                },
+                "extension": {
+                  "path": "Ingredient.substance.strength.referenceStrength.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "Ingredient.substance.strength.referenceStrength.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "measurementPoint": {
+                  "path": "Ingredient.substance.strength.referenceStrength.measurementPoint",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "Ingredient.substance.strength.referenceStrength.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "strength": {
+                  "path": "Ingredient.substance.strength.referenceStrength.strength[x]",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Ratio",
+                    "RatioRange",
+                    "Quantity"
+                  ],
+                  "choices": [
+                    "strengthRatio",
+                    "strengthRatioRange",
+                    "strengthQuantity"
+                  ]
+                },
+                "substance": {
+                  "path": "Ingredient.substance.strength.referenceStrength.substance",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableReference"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/substance-codes"
+                  }
+                }
+              }
+            },
+            "textConcentration": {
+              "path": "Ingredient.substance.strength.textConcentration",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "textPresentation": {
+              "path": "Ingredient.substance.strength.textPresentation",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "text": {
+      "path": "Ingredient.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

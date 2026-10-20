@@ -1,0 +1,771 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Transport",
+  "type": "Transport",
+  "name": "Transport",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "currentLocation",
+    "intent",
+    "requestedLocation"
+  ],
+  "elements": {
+    "authoredOn": {
+      "path": "Transport.authoredOn",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "basedOn": {
+      "path": "Transport.basedOn",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "code": {
+      "path": "Transport.code",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/transport-code"
+      }
+    },
+    "completionTime": {
+      "path": "Transport.completionTime",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "contained": {
+      "path": "Transport.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "currentLocation": {
+      "path": "Transport.currentLocation",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "description": {
+      "path": "Transport.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "encounter": {
+      "path": "Transport.encounter",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "extension": {
+      "path": "Transport.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "focus": {
+      "path": "Transport.focus",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "for": {
+      "path": "Transport.for",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "groupIdentifier": {
+      "path": "Transport.groupIdentifier",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "history": {
+      "path": "Transport.history",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "id": {
+      "path": "Transport.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Transport.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "Transport.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "input": {
+      "path": "Transport.input",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Transport.input.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Transport.input.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Transport.input.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "Transport.input.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "value": {
+          "path": "Transport.input.value[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "base64Binary",
+            "boolean",
+            "canonical",
+            "code",
+            "date",
+            "dateTime",
+            "decimal",
+            "id",
+            "instant",
+            "integer",
+            "integer64",
+            "markdown",
+            "oid",
+            "positiveInt",
+            "string",
+            "time",
+            "unsignedInt",
+            "uri",
+            "url",
+            "uuid",
+            "Address",
+            "Age",
+            "Annotation",
+            "Attachment",
+            "CodeableConcept",
+            "CodeableReference",
+            "Coding",
+            "ContactPoint",
+            "Count",
+            "Distance",
+            "Duration",
+            "HumanName",
+            "Identifier",
+            "Money",
+            "Period",
+            "Quantity",
+            "Range",
+            "Ratio",
+            "RatioRange",
+            "Reference",
+            "SampledData",
+            "Signature",
+            "Timing",
+            "ContactDetail",
+            "DataRequirement",
+            "Expression",
+            "ParameterDefinition",
+            "RelatedArtifact",
+            "TriggerDefinition",
+            "UsageContext",
+            "Availability",
+            "ExtendedContactDetail",
+            "Dosage",
+            "Meta"
+          ],
+          "choices": [
+            "valueBase64Binary",
+            "valueBoolean",
+            "valueCanonical",
+            "valueCode",
+            "valueDate",
+            "valueDateTime",
+            "valueDecimal",
+            "valueId",
+            "valueInstant",
+            "valueInteger",
+            "valueInteger64",
+            "valueMarkdown",
+            "valueOid",
+            "valuePositiveInt",
+            "valueString",
+            "valueTime",
+            "valueUnsignedInt",
+            "valueUri",
+            "valueUrl",
+            "valueUuid",
+            "valueAddress",
+            "valueAge",
+            "valueAnnotation",
+            "valueAttachment",
+            "valueCodeableConcept",
+            "valueCodeableReference",
+            "valueCoding",
+            "valueContactPoint",
+            "valueCount",
+            "valueDistance",
+            "valueDuration",
+            "valueHumanName",
+            "valueIdentifier",
+            "valueMoney",
+            "valuePeriod",
+            "valueQuantity",
+            "valueRange",
+            "valueRatio",
+            "valueRatioRange",
+            "valueReference",
+            "valueSampledData",
+            "valueSignature",
+            "valueTiming",
+            "valueContactDetail",
+            "valueDataRequirement",
+            "valueExpression",
+            "valueParameterDefinition",
+            "valueRelatedArtifact",
+            "valueTriggerDefinition",
+            "valueUsageContext",
+            "valueAvailability",
+            "valueExtendedContactDetail",
+            "valueDosage",
+            "valueMeta"
+          ]
+        }
+      }
+    },
+    "instantiatesCanonical": {
+      "path": "Transport.instantiatesCanonical",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "canonical"
+      ]
+    },
+    "instantiatesUri": {
+      "path": "Transport.instantiatesUri",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "insurance": {
+      "path": "Transport.insurance",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "intent": {
+      "path": "Transport.intent",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/transport-intent|5.0.0"
+      }
+    },
+    "language": {
+      "path": "Transport.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "lastModified": {
+      "path": "Transport.lastModified",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "location": {
+      "path": "Transport.location",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "meta": {
+      "path": "Transport.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "Transport.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "note": {
+      "path": "Transport.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "output": {
+      "path": "Transport.output",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Transport.output.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Transport.output.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Transport.output.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "Transport.output.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "value": {
+          "path": "Transport.output.value[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "base64Binary",
+            "boolean",
+            "canonical",
+            "code",
+            "date",
+            "dateTime",
+            "decimal",
+            "id",
+            "instant",
+            "integer",
+            "integer64",
+            "markdown",
+            "oid",
+            "positiveInt",
+            "string",
+            "time",
+            "unsignedInt",
+            "uri",
+            "url",
+            "uuid",
+            "Address",
+            "Age",
+            "Annotation",
+            "Attachment",
+            "CodeableConcept",
+            "CodeableReference",
+            "Coding",
+            "ContactPoint",
+            "Count",
+            "Distance",
+            "Duration",
+            "HumanName",
+            "Identifier",
+            "Money",
+            "Period",
+            "Quantity",
+            "Range",
+            "Ratio",
+            "RatioRange",
+            "Reference",
+            "SampledData",
+            "Signature",
+            "Timing",
+            "ContactDetail",
+            "DataRequirement",
+            "Expression",
+            "ParameterDefinition",
+            "RelatedArtifact",
+            "TriggerDefinition",
+            "UsageContext",
+            "Availability",
+            "ExtendedContactDetail",
+            "Dosage",
+            "Meta"
+          ],
+          "choices": [
+            "valueBase64Binary",
+            "valueBoolean",
+            "valueCanonical",
+            "valueCode",
+            "valueDate",
+            "valueDateTime",
+            "valueDecimal",
+            "valueId",
+            "valueInstant",
+            "valueInteger",
+            "valueInteger64",
+            "valueMarkdown",
+            "valueOid",
+            "valuePositiveInt",
+            "valueString",
+            "valueTime",
+            "valueUnsignedInt",
+            "valueUri",
+            "valueUrl",
+            "valueUuid",
+            "valueAddress",
+            "valueAge",
+            "valueAnnotation",
+            "valueAttachment",
+            "valueCodeableConcept",
+            "valueCodeableReference",
+            "valueCoding",
+            "valueContactPoint",
+            "valueCount",
+            "valueDistance",
+            "valueDuration",
+            "valueHumanName",
+            "valueIdentifier",
+            "valueMoney",
+            "valuePeriod",
+            "valueQuantity",
+            "valueRange",
+            "valueRatio",
+            "valueRatioRange",
+            "valueReference",
+            "valueSampledData",
+            "valueSignature",
+            "valueTiming",
+            "valueContactDetail",
+            "valueDataRequirement",
+            "valueExpression",
+            "valueParameterDefinition",
+            "valueRelatedArtifact",
+            "valueTriggerDefinition",
+            "valueUsageContext",
+            "valueAvailability",
+            "valueExtendedContactDetail",
+            "valueDosage",
+            "valueMeta"
+          ]
+        }
+      }
+    },
+    "owner": {
+      "path": "Transport.owner",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "partOf": {
+      "path": "Transport.partOf",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "performerType": {
+      "path": "Transport.performerType",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/performer-role"
+      }
+    },
+    "priority": {
+      "path": "Transport.priority",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/request-priority|5.0.0"
+      }
+    },
+    "reason": {
+      "path": "Transport.reason",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableReference"
+      ]
+    },
+    "relevantHistory": {
+      "path": "Transport.relevantHistory",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "requestedLocation": {
+      "path": "Transport.requestedLocation",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "requester": {
+      "path": "Transport.requester",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "restriction": {
+      "path": "Transport.restriction",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Transport.restriction.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Transport.restriction.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Transport.restriction.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "period": {
+          "path": "Transport.restriction.period",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Period"
+          ]
+        },
+        "recipient": {
+          "path": "Transport.restriction.recipient",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "repetitions": {
+          "path": "Transport.restriction.repetitions",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "positiveInt"
+          ]
+        }
+      }
+    },
+    "status": {
+      "path": "Transport.status",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/transport-status|5.0.0"
+      }
+    },
+    "statusReason": {
+      "path": "Transport.statusReason",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/transport-status-reason"
+      }
+    },
+    "text": {
+      "path": "Transport.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

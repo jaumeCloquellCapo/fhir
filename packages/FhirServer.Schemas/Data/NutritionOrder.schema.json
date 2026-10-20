@@ -1,0 +1,1013 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/NutritionOrder",
+  "type": "NutritionOrder",
+  "name": "NutritionOrder",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "dateTime",
+    "intent",
+    "status",
+    "subject"
+  ],
+  "elements": {
+    "allergyIntolerance": {
+      "path": "NutritionOrder.allergyIntolerance",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "basedOn": {
+      "path": "NutritionOrder.basedOn",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "contained": {
+      "path": "NutritionOrder.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "dateTime": {
+      "path": "NutritionOrder.dateTime",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "encounter": {
+      "path": "NutritionOrder.encounter",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "enteralFormula": {
+      "path": "NutritionOrder.enteralFormula",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "additive": {
+          "path": "NutritionOrder.enteralFormula.additive",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "NutritionOrder.enteralFormula.additive.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "NutritionOrder.enteralFormula.additive.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "NutritionOrder.enteralFormula.additive.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "productName": {
+              "path": "NutritionOrder.enteralFormula.additive.productName",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "quantity": {
+              "path": "NutritionOrder.enteralFormula.additive.quantity",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Quantity"
+              ]
+            },
+            "type": {
+              "path": "NutritionOrder.enteralFormula.additive.type",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableReference"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/entformula-additive"
+              }
+            }
+          }
+        },
+        "administration": {
+          "path": "NutritionOrder.enteralFormula.administration",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "NutritionOrder.enteralFormula.administration.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "NutritionOrder.enteralFormula.administration.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "NutritionOrder.enteralFormula.administration.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "quantity": {
+              "path": "NutritionOrder.enteralFormula.administration.quantity",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Quantity"
+              ]
+            },
+            "rate": {
+              "path": "NutritionOrder.enteralFormula.administration.rate[x]",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Quantity",
+                "Ratio"
+              ],
+              "choices": [
+                "rateQuantity",
+                "rateRatio"
+              ]
+            },
+            "schedule": {
+              "path": "NutritionOrder.enteralFormula.administration.schedule",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "asNeeded": {
+                  "path": "NutritionOrder.enteralFormula.administration.schedule.asNeeded",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "boolean"
+                  ]
+                },
+                "asNeededFor": {
+                  "path": "NutritionOrder.enteralFormula.administration.schedule.asNeededFor",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/medication-as-needed-reason"
+                  }
+                },
+                "extension": {
+                  "path": "NutritionOrder.enteralFormula.administration.schedule.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "NutritionOrder.enteralFormula.administration.schedule.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "NutritionOrder.enteralFormula.administration.schedule.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "timing": {
+                  "path": "NutritionOrder.enteralFormula.administration.schedule.timing",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Timing"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "administrationInstruction": {
+          "path": "NutritionOrder.enteralFormula.administrationInstruction",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "baseFormulaProductName": {
+          "path": "NutritionOrder.enteralFormula.baseFormulaProductName",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "baseFormulaType": {
+          "path": "NutritionOrder.enteralFormula.baseFormulaType",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableReference"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/entformula-type"
+          }
+        },
+        "caloricDensity": {
+          "path": "NutritionOrder.enteralFormula.caloricDensity",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity"
+          ]
+        },
+        "deliveryDevice": {
+          "path": "NutritionOrder.enteralFormula.deliveryDevice",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableReference"
+          ]
+        },
+        "extension": {
+          "path": "NutritionOrder.enteralFormula.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "NutritionOrder.enteralFormula.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "maxVolumeToDeliver": {
+          "path": "NutritionOrder.enteralFormula.maxVolumeToDeliver",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity"
+          ]
+        },
+        "modifierExtension": {
+          "path": "NutritionOrder.enteralFormula.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "routeOfAdministration": {
+          "path": "NutritionOrder.enteralFormula.routeOfAdministration",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/enteral-route"
+          }
+        }
+      }
+    },
+    "excludeFoodModifier": {
+      "path": "NutritionOrder.excludeFoodModifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/food-type"
+      }
+    },
+    "extension": {
+      "path": "NutritionOrder.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "foodPreferenceModifier": {
+      "path": "NutritionOrder.foodPreferenceModifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/encounter-diet"
+      }
+    },
+    "groupIdentifier": {
+      "path": "NutritionOrder.groupIdentifier",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "id": {
+      "path": "NutritionOrder.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "NutritionOrder.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "NutritionOrder.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "instantiates": {
+      "path": "NutritionOrder.instantiates",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "uri"
+      ]
+    },
+    "instantiatesCanonical": {
+      "path": "NutritionOrder.instantiatesCanonical",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "canonical"
+      ]
+    },
+    "instantiatesUri": {
+      "path": "NutritionOrder.instantiatesUri",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "uri"
+      ]
+    },
+    "intent": {
+      "path": "NutritionOrder.intent",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/request-intent|5.0.0"
+      }
+    },
+    "language": {
+      "path": "NutritionOrder.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "NutritionOrder.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "NutritionOrder.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "note": {
+      "path": "NutritionOrder.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "oralDiet": {
+      "path": "NutritionOrder.oralDiet",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "NutritionOrder.oralDiet.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "fluidConsistencyType": {
+          "path": "NutritionOrder.oralDiet.fluidConsistencyType",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/consistency-type"
+          }
+        },
+        "id": {
+          "path": "NutritionOrder.oralDiet.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "instruction": {
+          "path": "NutritionOrder.oralDiet.instruction",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "modifierExtension": {
+          "path": "NutritionOrder.oralDiet.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "nutrient": {
+          "path": "NutritionOrder.oralDiet.nutrient",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "amount": {
+              "path": "NutritionOrder.oralDiet.nutrient.amount",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Quantity"
+              ]
+            },
+            "extension": {
+              "path": "NutritionOrder.oralDiet.nutrient.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "NutritionOrder.oralDiet.nutrient.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifier": {
+              "path": "NutritionOrder.oralDiet.nutrient.modifier",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/nutrient-code"
+              }
+            },
+            "modifierExtension": {
+              "path": "NutritionOrder.oralDiet.nutrient.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            }
+          }
+        },
+        "schedule": {
+          "path": "NutritionOrder.oralDiet.schedule",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "asNeeded": {
+              "path": "NutritionOrder.oralDiet.schedule.asNeeded",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "asNeededFor": {
+              "path": "NutritionOrder.oralDiet.schedule.asNeededFor",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/medication-as-needed-reason"
+              }
+            },
+            "extension": {
+              "path": "NutritionOrder.oralDiet.schedule.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "NutritionOrder.oralDiet.schedule.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "NutritionOrder.oralDiet.schedule.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "timing": {
+              "path": "NutritionOrder.oralDiet.schedule.timing",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Timing"
+              ]
+            }
+          }
+        },
+        "texture": {
+          "path": "NutritionOrder.oralDiet.texture",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "NutritionOrder.oralDiet.texture.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "foodType": {
+              "path": "NutritionOrder.oralDiet.texture.foodType",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/modified-foodtype"
+              }
+            },
+            "id": {
+              "path": "NutritionOrder.oralDiet.texture.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifier": {
+              "path": "NutritionOrder.oralDiet.texture.modifier",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/texture-code"
+              }
+            },
+            "modifierExtension": {
+              "path": "NutritionOrder.oralDiet.texture.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            }
+          }
+        },
+        "type": {
+          "path": "NutritionOrder.oralDiet.type",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/diet-type"
+          }
+        }
+      }
+    },
+    "orderer": {
+      "path": "NutritionOrder.orderer",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "outsideFoodAllowed": {
+      "path": "NutritionOrder.outsideFoodAllowed",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "performer": {
+      "path": "NutritionOrder.performer",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ]
+    },
+    "priority": {
+      "path": "NutritionOrder.priority",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/request-priority|5.0.0"
+      }
+    },
+    "status": {
+      "path": "NutritionOrder.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/request-status|5.0.0"
+      }
+    },
+    "subject": {
+      "path": "NutritionOrder.subject",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "supplement": {
+      "path": "NutritionOrder.supplement",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "NutritionOrder.supplement.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "NutritionOrder.supplement.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "instruction": {
+          "path": "NutritionOrder.supplement.instruction",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "modifierExtension": {
+          "path": "NutritionOrder.supplement.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "productName": {
+          "path": "NutritionOrder.supplement.productName",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "quantity": {
+          "path": "NutritionOrder.supplement.quantity",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity"
+          ]
+        },
+        "schedule": {
+          "path": "NutritionOrder.supplement.schedule",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "asNeeded": {
+              "path": "NutritionOrder.supplement.schedule.asNeeded",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "asNeededFor": {
+              "path": "NutritionOrder.supplement.schedule.asNeededFor",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/medication-as-needed-reason"
+              }
+            },
+            "extension": {
+              "path": "NutritionOrder.supplement.schedule.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "NutritionOrder.supplement.schedule.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "NutritionOrder.supplement.schedule.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "timing": {
+              "path": "NutritionOrder.supplement.schedule.timing",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Timing"
+              ]
+            }
+          }
+        },
+        "type": {
+          "path": "NutritionOrder.supplement.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableReference"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/supplement-type"
+          }
+        }
+      }
+    },
+    "supportingInformation": {
+      "path": "NutritionOrder.supportingInformation",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "text": {
+      "path": "NutritionOrder.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

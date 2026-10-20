@@ -1,0 +1,347 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/BiologicallyDerivedProduct",
+  "type": "BiologicallyDerivedProduct",
+  "name": "BiologicallyDerivedProduct",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [],
+  "elements": {
+    "biologicalSourceEvent": {
+      "path": "BiologicallyDerivedProduct.biologicalSourceEvent",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "collection": {
+      "path": "BiologicallyDerivedProduct.collection",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "collected": {
+          "path": "BiologicallyDerivedProduct.collection.collected[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "dateTime",
+            "Period"
+          ],
+          "choices": [
+            "collectedDateTime",
+            "collectedPeriod"
+          ]
+        },
+        "collector": {
+          "path": "BiologicallyDerivedProduct.collection.collector",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "extension": {
+          "path": "BiologicallyDerivedProduct.collection.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "BiologicallyDerivedProduct.collection.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "BiologicallyDerivedProduct.collection.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "source": {
+          "path": "BiologicallyDerivedProduct.collection.source",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    },
+    "contained": {
+      "path": "BiologicallyDerivedProduct.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "division": {
+      "path": "BiologicallyDerivedProduct.division",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "expirationDate": {
+      "path": "BiologicallyDerivedProduct.expirationDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "extension": {
+      "path": "BiologicallyDerivedProduct.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "BiologicallyDerivedProduct.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "BiologicallyDerivedProduct.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "BiologicallyDerivedProduct.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "BiologicallyDerivedProduct.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "BiologicallyDerivedProduct.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "BiologicallyDerivedProduct.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "parent": {
+      "path": "BiologicallyDerivedProduct.parent",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "processingFacility": {
+      "path": "BiologicallyDerivedProduct.processingFacility",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "productCategory": {
+      "path": "BiologicallyDerivedProduct.productCategory",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Coding"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/product-category"
+      }
+    },
+    "productCode": {
+      "path": "BiologicallyDerivedProduct.productCode",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/biologicallyderived-productcodes"
+      }
+    },
+    "productStatus": {
+      "path": "BiologicallyDerivedProduct.productStatus",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Coding"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/biologicallyderived-product-status"
+      }
+    },
+    "property": {
+      "path": "BiologicallyDerivedProduct.property",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "BiologicallyDerivedProduct.property.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "BiologicallyDerivedProduct.property.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "BiologicallyDerivedProduct.property.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "BiologicallyDerivedProduct.property.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/biologicallyderived-product-property-type-codes"
+          }
+        },
+        "value": {
+          "path": "BiologicallyDerivedProduct.property.value[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean",
+            "integer",
+            "CodeableConcept",
+            "Period",
+            "Quantity",
+            "Range",
+            "Ratio",
+            "string",
+            "Attachment"
+          ],
+          "choices": [
+            "valueBoolean",
+            "valueInteger",
+            "valueCodeableConcept",
+            "valuePeriod",
+            "valueQuantity",
+            "valueRange",
+            "valueRatio",
+            "valueString",
+            "valueAttachment"
+          ]
+        }
+      }
+    },
+    "request": {
+      "path": "BiologicallyDerivedProduct.request",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "storageTempRequirements": {
+      "path": "BiologicallyDerivedProduct.storageTempRequirements",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Range"
+      ]
+    },
+    "text": {
+      "path": "BiologicallyDerivedProduct.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

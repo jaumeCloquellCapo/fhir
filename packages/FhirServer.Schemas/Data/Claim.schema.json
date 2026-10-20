@@ -1,0 +1,1831 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Claim",
+  "type": "Claim",
+  "name": "Claim",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "created",
+    "patient",
+    "status",
+    "type",
+    "use"
+  ],
+  "elements": {
+    "accident": {
+      "path": "Claim.accident",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "date": {
+          "path": "Claim.accident.date",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "date"
+          ]
+        },
+        "extension": {
+          "path": "Claim.accident.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Claim.accident.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "location": {
+          "path": "Claim.accident.location[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Address",
+            "Reference"
+          ],
+          "choices": [
+            "locationAddress",
+            "locationReference"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Claim.accident.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "Claim.accident.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://terminology.hl7.org/ValueSet/v3-ActIncidentCode"
+          }
+        }
+      }
+    },
+    "billablePeriod": {
+      "path": "Claim.billablePeriod",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ]
+    },
+    "careTeam": {
+      "path": "Claim.careTeam",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Claim.careTeam.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Claim.careTeam.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Claim.careTeam.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "provider": {
+          "path": "Claim.careTeam.provider",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "responsible": {
+          "path": "Claim.careTeam.responsible",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "role": {
+          "path": "Claim.careTeam.role",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/claim-careteamrole"
+          }
+        },
+        "sequence": {
+          "path": "Claim.careTeam.sequence",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "specialty": {
+          "path": "Claim.careTeam.specialty",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/provider-qualification"
+          }
+        }
+      }
+    },
+    "contained": {
+      "path": "Claim.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "created": {
+      "path": "Claim.created",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "diagnosis": {
+      "path": "Claim.diagnosis",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "diagnosis": {
+          "path": "Claim.diagnosis.diagnosis[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept",
+            "Reference"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/icd-10"
+          },
+          "choices": [
+            "diagnosisCodeableConcept",
+            "diagnosisReference"
+          ]
+        },
+        "extension": {
+          "path": "Claim.diagnosis.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Claim.diagnosis.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Claim.diagnosis.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "onAdmission": {
+          "path": "Claim.diagnosis.onAdmission",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/ex-diagnosis-on-admission"
+          }
+        },
+        "sequence": {
+          "path": "Claim.diagnosis.sequence",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "type": {
+          "path": "Claim.diagnosis.type",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/ex-diagnosistype"
+          }
+        }
+      }
+    },
+    "diagnosisRelatedGroup": {
+      "path": "Claim.diagnosisRelatedGroup",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/ex-diagnosisrelatedgroup"
+      }
+    },
+    "encounter": {
+      "path": "Claim.encounter",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Reference"
+      ]
+    },
+    "enterer": {
+      "path": "Claim.enterer",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "event": {
+      "path": "Claim.event",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Claim.event.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Claim.event.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Claim.event.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "Claim.event.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/datestype"
+          }
+        },
+        "when": {
+          "path": "Claim.event.when[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "dateTime",
+            "Period"
+          ],
+          "choices": [
+            "whenDateTime",
+            "whenPeriod"
+          ]
+        }
+      }
+    },
+    "extension": {
+      "path": "Claim.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "facility": {
+      "path": "Claim.facility",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "fundsReserve": {
+      "path": "Claim.fundsReserve",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/fundsreserve"
+      }
+    },
+    "id": {
+      "path": "Claim.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Claim.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "Claim.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "insurance": {
+      "path": "Claim.insurance",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "businessArrangement": {
+          "path": "Claim.insurance.businessArrangement",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "claimResponse": {
+          "path": "Claim.insurance.claimResponse",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "coverage": {
+          "path": "Claim.insurance.coverage",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "extension": {
+          "path": "Claim.insurance.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "focal": {
+          "path": "Claim.insurance.focal",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "id": {
+          "path": "Claim.insurance.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "identifier": {
+          "path": "Claim.insurance.identifier",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Claim.insurance.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "preAuthRef": {
+          "path": "Claim.insurance.preAuthRef",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "string"
+          ]
+        },
+        "sequence": {
+          "path": "Claim.insurance.sequence",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "positiveInt"
+          ]
+        }
+      }
+    },
+    "insurer": {
+      "path": "Claim.insurer",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "item": {
+      "path": "Claim.item",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "bodySite": {
+          "path": "Claim.item.bodySite",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "Claim.item.bodySite.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Claim.item.bodySite.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Claim.item.bodySite.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "site": {
+              "path": "Claim.item.bodySite.site",
+              "min": 1,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableReference"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/tooth"
+              }
+            },
+            "subSite": {
+              "path": "Claim.item.bodySite.subSite",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/surface"
+              }
+            }
+          }
+        },
+        "careTeamSequence": {
+          "path": "Claim.item.careTeamSequence",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "category": {
+          "path": "Claim.item.category",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/ex-benefitcategory"
+          }
+        },
+        "detail": {
+          "path": "Claim.item.detail",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "category": {
+              "path": "Claim.item.detail.category",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/ex-benefitcategory"
+              }
+            },
+            "extension": {
+              "path": "Claim.item.detail.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "factor": {
+              "path": "Claim.item.detail.factor",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "decimal"
+              ]
+            },
+            "id": {
+              "path": "Claim.item.detail.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifier": {
+              "path": "Claim.item.detail.modifier",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/claim-modifiers"
+              }
+            },
+            "modifierExtension": {
+              "path": "Claim.item.detail.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "net": {
+              "path": "Claim.item.detail.net",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Money"
+              ]
+            },
+            "patientPaid": {
+              "path": "Claim.item.detail.patientPaid",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Money"
+              ]
+            },
+            "productOrService": {
+              "path": "Claim.item.detail.productOrService",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
+              }
+            },
+            "productOrServiceEnd": {
+              "path": "Claim.item.detail.productOrServiceEnd",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
+              }
+            },
+            "programCode": {
+              "path": "Claim.item.detail.programCode",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/ex-program-code"
+              }
+            },
+            "quantity": {
+              "path": "Claim.item.detail.quantity",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Quantity"
+              ]
+            },
+            "revenue": {
+              "path": "Claim.item.detail.revenue",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/ex-revenue-center"
+              }
+            },
+            "sequence": {
+              "path": "Claim.item.detail.sequence",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "positiveInt"
+              ]
+            },
+            "subDetail": {
+              "path": "Claim.item.detail.subDetail",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "category": {
+                  "path": "Claim.item.detail.subDetail.category",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/ex-benefitcategory"
+                  }
+                },
+                "extension": {
+                  "path": "Claim.item.detail.subDetail.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "factor": {
+                  "path": "Claim.item.detail.subDetail.factor",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "decimal"
+                  ]
+                },
+                "id": {
+                  "path": "Claim.item.detail.subDetail.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifier": {
+                  "path": "Claim.item.detail.subDetail.modifier",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/claim-modifiers"
+                  }
+                },
+                "modifierExtension": {
+                  "path": "Claim.item.detail.subDetail.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "net": {
+                  "path": "Claim.item.detail.subDetail.net",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Money"
+                  ]
+                },
+                "patientPaid": {
+                  "path": "Claim.item.detail.subDetail.patientPaid",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Money"
+                  ]
+                },
+                "productOrService": {
+                  "path": "Claim.item.detail.subDetail.productOrService",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
+                  }
+                },
+                "productOrServiceEnd": {
+                  "path": "Claim.item.detail.subDetail.productOrServiceEnd",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
+                  }
+                },
+                "programCode": {
+                  "path": "Claim.item.detail.subDetail.programCode",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/ex-program-code"
+                  }
+                },
+                "quantity": {
+                  "path": "Claim.item.detail.subDetail.quantity",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Quantity"
+                  ]
+                },
+                "revenue": {
+                  "path": "Claim.item.detail.subDetail.revenue",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "example",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/ex-revenue-center"
+                  }
+                },
+                "sequence": {
+                  "path": "Claim.item.detail.subDetail.sequence",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "positiveInt"
+                  ]
+                },
+                "tax": {
+                  "path": "Claim.item.detail.subDetail.tax",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Money"
+                  ]
+                },
+                "traceNumber": {
+                  "path": "Claim.item.detail.subDetail.traceNumber",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Identifier"
+                  ]
+                },
+                "udi": {
+                  "path": "Claim.item.detail.subDetail.udi",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Reference"
+                  ]
+                },
+                "unitPrice": {
+                  "path": "Claim.item.detail.subDetail.unitPrice",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Money"
+                  ]
+                }
+              }
+            },
+            "tax": {
+              "path": "Claim.item.detail.tax",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Money"
+              ]
+            },
+            "traceNumber": {
+              "path": "Claim.item.detail.traceNumber",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Identifier"
+              ]
+            },
+            "udi": {
+              "path": "Claim.item.detail.udi",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Reference"
+              ]
+            },
+            "unitPrice": {
+              "path": "Claim.item.detail.unitPrice",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Money"
+              ]
+            }
+          }
+        },
+        "diagnosisSequence": {
+          "path": "Claim.item.diagnosisSequence",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "encounter": {
+          "path": "Claim.item.encounter",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "extension": {
+          "path": "Claim.item.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "factor": {
+          "path": "Claim.item.factor",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "decimal"
+          ]
+        },
+        "id": {
+          "path": "Claim.item.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "informationSequence": {
+          "path": "Claim.item.informationSequence",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "location": {
+          "path": "Claim.item.location[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept",
+            "Address",
+            "Reference"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/service-place"
+          },
+          "choices": [
+            "locationCodeableConcept",
+            "locationAddress",
+            "locationReference"
+          ]
+        },
+        "modifier": {
+          "path": "Claim.item.modifier",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/claim-modifiers"
+          }
+        },
+        "modifierExtension": {
+          "path": "Claim.item.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "net": {
+          "path": "Claim.item.net",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Money"
+          ]
+        },
+        "patientPaid": {
+          "path": "Claim.item.patientPaid",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Money"
+          ]
+        },
+        "procedureSequence": {
+          "path": "Claim.item.procedureSequence",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "productOrService": {
+          "path": "Claim.item.productOrService",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
+          }
+        },
+        "productOrServiceEnd": {
+          "path": "Claim.item.productOrServiceEnd",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
+          }
+        },
+        "programCode": {
+          "path": "Claim.item.programCode",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/ex-program-code"
+          }
+        },
+        "quantity": {
+          "path": "Claim.item.quantity",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity"
+          ]
+        },
+        "request": {
+          "path": "Claim.item.request",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "revenue": {
+          "path": "Claim.item.revenue",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/ex-revenue-center"
+          }
+        },
+        "sequence": {
+          "path": "Claim.item.sequence",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "serviced": {
+          "path": "Claim.item.serviced[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "date",
+            "Period"
+          ],
+          "choices": [
+            "servicedDate",
+            "servicedPeriod"
+          ]
+        },
+        "tax": {
+          "path": "Claim.item.tax",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Money"
+          ]
+        },
+        "traceNumber": {
+          "path": "Claim.item.traceNumber",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "udi": {
+          "path": "Claim.item.udi",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "unitPrice": {
+          "path": "Claim.item.unitPrice",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Money"
+          ]
+        }
+      }
+    },
+    "language": {
+      "path": "Claim.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "Claim.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "Claim.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "originalPrescription": {
+      "path": "Claim.originalPrescription",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "patient": {
+      "path": "Claim.patient",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "patientPaid": {
+      "path": "Claim.patientPaid",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Money"
+      ]
+    },
+    "payee": {
+      "path": "Claim.payee",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Claim.payee.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Claim.payee.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Claim.payee.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "party": {
+          "path": "Claim.payee.party",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "type": {
+          "path": "Claim.payee.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/payeetype"
+          }
+        }
+      }
+    },
+    "prescription": {
+      "path": "Claim.prescription",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "priority": {
+      "path": "Claim.priority",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/process-priority"
+      }
+    },
+    "procedure": {
+      "path": "Claim.procedure",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "date": {
+          "path": "Claim.procedure.date",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "dateTime"
+          ]
+        },
+        "extension": {
+          "path": "Claim.procedure.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Claim.procedure.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Claim.procedure.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "procedure": {
+          "path": "Claim.procedure.procedure[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept",
+            "Reference"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/icd-10-procedures"
+          },
+          "choices": [
+            "procedureCodeableConcept",
+            "procedureReference"
+          ]
+        },
+        "sequence": {
+          "path": "Claim.procedure.sequence",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "type": {
+          "path": "Claim.procedure.type",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/ex-procedure-type"
+          }
+        },
+        "udi": {
+          "path": "Claim.procedure.udi",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    },
+    "provider": {
+      "path": "Claim.provider",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "referral": {
+      "path": "Claim.referral",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "related": {
+      "path": "Claim.related",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "claim": {
+          "path": "Claim.related.claim",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "extension": {
+          "path": "Claim.related.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Claim.related.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Claim.related.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "reference": {
+          "path": "Claim.related.reference",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "relationship": {
+          "path": "Claim.related.relationship",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/related-claim-relationship"
+          }
+        }
+      }
+    },
+    "status": {
+      "path": "Claim.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/fm-status|5.0.0"
+      }
+    },
+    "subType": {
+      "path": "Claim.subType",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/claim-subtype"
+      }
+    },
+    "supportingInfo": {
+      "path": "Claim.supportingInfo",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "category": {
+          "path": "Claim.supportingInfo.category",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/claim-informationcategory"
+          }
+        },
+        "code": {
+          "path": "Claim.supportingInfo.code",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/claim-exception"
+          }
+        },
+        "extension": {
+          "path": "Claim.supportingInfo.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Claim.supportingInfo.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Claim.supportingInfo.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "reason": {
+          "path": "Claim.supportingInfo.reason",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/missing-tooth-reason"
+          }
+        },
+        "sequence": {
+          "path": "Claim.supportingInfo.sequence",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "timing": {
+          "path": "Claim.supportingInfo.timing[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "date",
+            "Period"
+          ],
+          "choices": [
+            "timingDate",
+            "timingPeriod"
+          ]
+        },
+        "value": {
+          "path": "Claim.supportingInfo.value[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean",
+            "string",
+            "Quantity",
+            "Attachment",
+            "Reference",
+            "Identifier"
+          ],
+          "choices": [
+            "valueBoolean",
+            "valueString",
+            "valueQuantity",
+            "valueAttachment",
+            "valueReference",
+            "valueIdentifier"
+          ]
+        }
+      }
+    },
+    "text": {
+      "path": "Claim.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "total": {
+      "path": "Claim.total",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Money"
+      ]
+    },
+    "traceNumber": {
+      "path": "Claim.traceNumber",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "type": {
+      "path": "Claim.type",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/claim-type"
+      }
+    },
+    "use": {
+      "path": "Claim.use",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/claim-use|5.0.0"
+      }
+    }
+  }
+}

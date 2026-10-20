@@ -1,0 +1,1712 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/TestScript",
+  "type": "TestScript",
+  "name": "TestScript",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "name",
+    "status"
+  ],
+  "elements": {
+    "contact": {
+      "path": "TestScript.contact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "contained": {
+      "path": "TestScript.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "copyright": {
+      "path": "TestScript.copyright",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "copyrightLabel": {
+      "path": "TestScript.copyrightLabel",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "date": {
+      "path": "TestScript.date",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "description": {
+      "path": "TestScript.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "destination": {
+      "path": "TestScript.destination",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "TestScript.destination.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "TestScript.destination.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "index": {
+          "path": "TestScript.destination.index",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "integer"
+          ]
+        },
+        "modifierExtension": {
+          "path": "TestScript.destination.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "profile": {
+          "path": "TestScript.destination.profile",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Coding"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/testscript-profile-destination-types"
+          }
+        },
+        "url": {
+          "path": "TestScript.destination.url",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "url"
+          ]
+        }
+      }
+    },
+    "experimental": {
+      "path": "TestScript.experimental",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "extension": {
+      "path": "TestScript.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "fixture": {
+      "path": "TestScript.fixture",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "autocreate": {
+          "path": "TestScript.fixture.autocreate",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "autodelete": {
+          "path": "TestScript.fixture.autodelete",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "extension": {
+          "path": "TestScript.fixture.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "TestScript.fixture.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "TestScript.fixture.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "resource": {
+          "path": "TestScript.fixture.resource",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        }
+      }
+    },
+    "id": {
+      "path": "TestScript.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "TestScript.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "TestScript.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "jurisdiction": {
+      "path": "TestScript.jurisdiction",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
+      }
+    },
+    "language": {
+      "path": "TestScript.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "TestScript.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "metadata": {
+      "path": "TestScript.metadata",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "capability": {
+          "path": "TestScript.metadata.capability",
+          "min": 1,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "capabilities": {
+              "path": "TestScript.metadata.capability.capabilities",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "canonical"
+              ]
+            },
+            "description": {
+              "path": "TestScript.metadata.capability.description",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "destination": {
+              "path": "TestScript.metadata.capability.destination",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "integer"
+              ]
+            },
+            "extension": {
+              "path": "TestScript.metadata.capability.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "TestScript.metadata.capability.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "link": {
+              "path": "TestScript.metadata.capability.link",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "uri"
+              ]
+            },
+            "modifierExtension": {
+              "path": "TestScript.metadata.capability.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "origin": {
+              "path": "TestScript.metadata.capability.origin",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "integer"
+              ]
+            },
+            "required": {
+              "path": "TestScript.metadata.capability.required",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "validated": {
+              "path": "TestScript.metadata.capability.validated",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            }
+          }
+        },
+        "extension": {
+          "path": "TestScript.metadata.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "TestScript.metadata.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "link": {
+          "path": "TestScript.metadata.link",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "description": {
+              "path": "TestScript.metadata.link.description",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "extension": {
+              "path": "TestScript.metadata.link.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "TestScript.metadata.link.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "TestScript.metadata.link.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "url": {
+              "path": "TestScript.metadata.link.url",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "uri"
+              ]
+            }
+          }
+        },
+        "modifierExtension": {
+          "path": "TestScript.metadata.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "modifierExtension": {
+      "path": "TestScript.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "TestScript.name",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "origin": {
+      "path": "TestScript.origin",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "TestScript.origin.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "TestScript.origin.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "index": {
+          "path": "TestScript.origin.index",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "integer"
+          ]
+        },
+        "modifierExtension": {
+          "path": "TestScript.origin.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "profile": {
+          "path": "TestScript.origin.profile",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Coding"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/testscript-profile-origin-types"
+          }
+        },
+        "url": {
+          "path": "TestScript.origin.url",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "url"
+          ]
+        }
+      }
+    },
+    "profile": {
+      "path": "TestScript.profile",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "canonical"
+      ]
+    },
+    "publisher": {
+      "path": "TestScript.publisher",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "purpose": {
+      "path": "TestScript.purpose",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "scope": {
+      "path": "TestScript.scope",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "artifact": {
+          "path": "TestScript.scope.artifact",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "canonical"
+          ]
+        },
+        "conformance": {
+          "path": "TestScript.scope.conformance",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/testscript-scope-conformance-codes"
+          }
+        },
+        "extension": {
+          "path": "TestScript.scope.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "TestScript.scope.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "TestScript.scope.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "phase": {
+          "path": "TestScript.scope.phase",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/testscript-scope-phase-codes"
+          }
+        }
+      }
+    },
+    "setup": {
+      "path": "TestScript.setup",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "action": {
+          "path": "TestScript.setup.action",
+          "min": 1,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "assert": {
+              "path": "TestScript.setup.action.assert",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "compareToSourceExpression": {
+                  "path": "TestScript.setup.action.assert.compareToSourceExpression",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "compareToSourceId": {
+                  "path": "TestScript.setup.action.assert.compareToSourceId",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "compareToSourcePath": {
+                  "path": "TestScript.setup.action.assert.compareToSourcePath",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "contentType": {
+                  "path": "TestScript.setup.action.assert.contentType",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "code"
+                  ],
+                  "binding": {
+                    "strength": "required",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/mimetypes|5.0.0"
+                  }
+                },
+                "defaultManualCompletion": {
+                  "path": "TestScript.setup.action.assert.defaultManualCompletion",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "code"
+                  ],
+                  "binding": {
+                    "strength": "required",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/assert-manual-completion-codes|5.0.0"
+                  }
+                },
+                "description": {
+                  "path": "TestScript.setup.action.assert.description",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "direction": {
+                  "path": "TestScript.setup.action.assert.direction",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "code"
+                  ],
+                  "binding": {
+                    "strength": "required",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/assert-direction-codes|5.0.0"
+                  }
+                },
+                "expression": {
+                  "path": "TestScript.setup.action.assert.expression",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "extension": {
+                  "path": "TestScript.setup.action.assert.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "headerField": {
+                  "path": "TestScript.setup.action.assert.headerField",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "id": {
+                  "path": "TestScript.setup.action.assert.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "label": {
+                  "path": "TestScript.setup.action.assert.label",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "minimumId": {
+                  "path": "TestScript.setup.action.assert.minimumId",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "TestScript.setup.action.assert.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "navigationLinks": {
+                  "path": "TestScript.setup.action.assert.navigationLinks",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "boolean"
+                  ]
+                },
+                "operator": {
+                  "path": "TestScript.setup.action.assert.operator",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "code"
+                  ],
+                  "binding": {
+                    "strength": "required",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/assert-operator-codes|5.0.0"
+                  }
+                },
+                "path": {
+                  "path": "TestScript.setup.action.assert.path",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "requestMethod": {
+                  "path": "TestScript.setup.action.assert.requestMethod",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "code"
+                  ],
+                  "binding": {
+                    "strength": "required",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/http-operations|5.0.0"
+                  }
+                },
+                "requestURL": {
+                  "path": "TestScript.setup.action.assert.requestURL",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "requirement": {
+                  "path": "TestScript.setup.action.assert.requirement",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "BackboneElement"
+                  ],
+                  "elements": {
+                    "extension": {
+                      "path": "TestScript.setup.action.assert.requirement.extension",
+                      "min": 0,
+                      "max": "*",
+                      "array": true,
+                      "type": [
+                        "Extension"
+                      ]
+                    },
+                    "id": {
+                      "path": "TestScript.setup.action.assert.requirement.id",
+                      "min": 0,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "http://hl7.org/fhirpath/System.String"
+                      ]
+                    },
+                    "link": {
+                      "path": "TestScript.setup.action.assert.requirement.link[x]",
+                      "min": 0,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "uri",
+                        "canonical"
+                      ],
+                      "choices": [
+                        "linkUri",
+                        "linkCanonical"
+                      ]
+                    },
+                    "modifierExtension": {
+                      "path": "TestScript.setup.action.assert.requirement.modifierExtension",
+                      "min": 0,
+                      "max": "*",
+                      "array": true,
+                      "type": [
+                        "Extension"
+                      ]
+                    }
+                  }
+                },
+                "resource": {
+                  "path": "TestScript.setup.action.assert.resource",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "uri"
+                  ],
+                  "binding": {
+                    "strength": "extensible",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/concrete-fhir-types"
+                  }
+                },
+                "response": {
+                  "path": "TestScript.setup.action.assert.response",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "code"
+                  ],
+                  "binding": {
+                    "strength": "required",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/assert-response-code-types|5.0.0"
+                  }
+                },
+                "responseCode": {
+                  "path": "TestScript.setup.action.assert.responseCode",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "sourceId": {
+                  "path": "TestScript.setup.action.assert.sourceId",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "id"
+                  ]
+                },
+                "stopTestOnFail": {
+                  "path": "TestScript.setup.action.assert.stopTestOnFail",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "boolean"
+                  ]
+                },
+                "validateProfileId": {
+                  "path": "TestScript.setup.action.assert.validateProfileId",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "id"
+                  ]
+                },
+                "value": {
+                  "path": "TestScript.setup.action.assert.value",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "warningOnly": {
+                  "path": "TestScript.setup.action.assert.warningOnly",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "boolean"
+                  ]
+                }
+              }
+            },
+            "extension": {
+              "path": "TestScript.setup.action.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "TestScript.setup.action.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "TestScript.setup.action.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "operation": {
+              "path": "TestScript.setup.action.operation",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "accept": {
+                  "path": "TestScript.setup.action.operation.accept",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "code"
+                  ],
+                  "binding": {
+                    "strength": "required",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/mimetypes|5.0.0"
+                  }
+                },
+                "contentType": {
+                  "path": "TestScript.setup.action.operation.contentType",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "code"
+                  ],
+                  "binding": {
+                    "strength": "required",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/mimetypes|5.0.0"
+                  }
+                },
+                "description": {
+                  "path": "TestScript.setup.action.operation.description",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "destination": {
+                  "path": "TestScript.setup.action.operation.destination",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "integer"
+                  ]
+                },
+                "encodeRequestUrl": {
+                  "path": "TestScript.setup.action.operation.encodeRequestUrl",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "boolean"
+                  ]
+                },
+                "extension": {
+                  "path": "TestScript.setup.action.operation.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "TestScript.setup.action.operation.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "label": {
+                  "path": "TestScript.setup.action.operation.label",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "method": {
+                  "path": "TestScript.setup.action.operation.method",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "code"
+                  ],
+                  "binding": {
+                    "strength": "required",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/http-operations|5.0.0"
+                  }
+                },
+                "modifierExtension": {
+                  "path": "TestScript.setup.action.operation.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "origin": {
+                  "path": "TestScript.setup.action.operation.origin",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "integer"
+                  ]
+                },
+                "params": {
+                  "path": "TestScript.setup.action.operation.params",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "requestHeader": {
+                  "path": "TestScript.setup.action.operation.requestHeader",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "BackboneElement"
+                  ],
+                  "elements": {
+                    "extension": {
+                      "path": "TestScript.setup.action.operation.requestHeader.extension",
+                      "min": 0,
+                      "max": "*",
+                      "array": true,
+                      "type": [
+                        "Extension"
+                      ]
+                    },
+                    "field": {
+                      "path": "TestScript.setup.action.operation.requestHeader.field",
+                      "min": 1,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "id": {
+                      "path": "TestScript.setup.action.operation.requestHeader.id",
+                      "min": 0,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "http://hl7.org/fhirpath/System.String"
+                      ]
+                    },
+                    "modifierExtension": {
+                      "path": "TestScript.setup.action.operation.requestHeader.modifierExtension",
+                      "min": 0,
+                      "max": "*",
+                      "array": true,
+                      "type": [
+                        "Extension"
+                      ]
+                    },
+                    "value": {
+                      "path": "TestScript.setup.action.operation.requestHeader.value",
+                      "min": 1,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "string"
+                      ]
+                    }
+                  }
+                },
+                "requestId": {
+                  "path": "TestScript.setup.action.operation.requestId",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "id"
+                  ]
+                },
+                "resource": {
+                  "path": "TestScript.setup.action.operation.resource",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "uri"
+                  ],
+                  "binding": {
+                    "strength": "extensible",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/concrete-fhir-types"
+                  }
+                },
+                "responseId": {
+                  "path": "TestScript.setup.action.operation.responseId",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "id"
+                  ]
+                },
+                "sourceId": {
+                  "path": "TestScript.setup.action.operation.sourceId",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "id"
+                  ]
+                },
+                "targetId": {
+                  "path": "TestScript.setup.action.operation.targetId",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "id"
+                  ]
+                },
+                "type": {
+                  "path": "TestScript.setup.action.operation.type",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Coding"
+                  ],
+                  "binding": {
+                    "strength": "extensible",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/testscript-operation-codes"
+                  }
+                },
+                "url": {
+                  "path": "TestScript.setup.action.operation.url",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "extension": {
+          "path": "TestScript.setup.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "TestScript.setup.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "TestScript.setup.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "status": {
+      "path": "TestScript.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+      }
+    },
+    "teardown": {
+      "path": "TestScript.teardown",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "action": {
+          "path": "TestScript.teardown.action",
+          "min": 1,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "TestScript.teardown.action.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "TestScript.teardown.action.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "TestScript.teardown.action.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "operation": {
+              "path": "TestScript.teardown.action.operation",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [],
+              "contentReference": "#TestScript.setup.action.operation"
+            }
+          }
+        },
+        "extension": {
+          "path": "TestScript.teardown.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "TestScript.teardown.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "TestScript.teardown.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "test": {
+      "path": "TestScript.test",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "action": {
+          "path": "TestScript.test.action",
+          "min": 1,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "assert": {
+              "path": "TestScript.test.action.assert",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [],
+              "contentReference": "#TestScript.setup.action.assert"
+            },
+            "extension": {
+              "path": "TestScript.test.action.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "TestScript.test.action.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "TestScript.test.action.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "operation": {
+              "path": "TestScript.test.action.operation",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [],
+              "contentReference": "#TestScript.setup.action.operation"
+            }
+          }
+        },
+        "description": {
+          "path": "TestScript.test.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "extension": {
+          "path": "TestScript.test.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "TestScript.test.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "TestScript.test.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "name": {
+          "path": "TestScript.test.name",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        }
+      }
+    },
+    "text": {
+      "path": "TestScript.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "title": {
+      "path": "TestScript.title",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "url": {
+      "path": "TestScript.url",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "useContext": {
+      "path": "TestScript.useContext",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "UsageContext"
+      ]
+    },
+    "variable": {
+      "path": "TestScript.variable",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "defaultValue": {
+          "path": "TestScript.variable.defaultValue",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "description": {
+          "path": "TestScript.variable.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "expression": {
+          "path": "TestScript.variable.expression",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "extension": {
+          "path": "TestScript.variable.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "headerField": {
+          "path": "TestScript.variable.headerField",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "hint": {
+          "path": "TestScript.variable.hint",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "id": {
+          "path": "TestScript.variable.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "TestScript.variable.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "name": {
+          "path": "TestScript.variable.name",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "path": {
+          "path": "TestScript.variable.path",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "sourceId": {
+          "path": "TestScript.variable.sourceId",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "id"
+          ]
+        }
+      }
+    },
+    "version": {
+      "path": "TestScript.version",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "versionAlgorithm": {
+      "path": "TestScript.versionAlgorithm[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string",
+        "Coding"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/version-algorithm"
+      },
+      "choices": [
+        "versionAlgorithmString",
+        "versionAlgorithmCoding"
+      ]
+    }
+  }
+}

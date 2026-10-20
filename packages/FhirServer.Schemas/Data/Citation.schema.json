@@ -1,0 +1,1794 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Citation",
+  "type": "Citation",
+  "name": "Citation",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "status"
+  ],
+  "elements": {
+    "approvalDate": {
+      "path": "Citation.approvalDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "author": {
+      "path": "Citation.author",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "citedArtifact": {
+      "path": "Citation.citedArtifact",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "abstract": {
+          "path": "Citation.citedArtifact.abstract",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "copyright": {
+              "path": "Citation.citedArtifact.abstract.copyright",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "markdown"
+              ]
+            },
+            "extension": {
+              "path": "Citation.citedArtifact.abstract.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Citation.citedArtifact.abstract.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "language": {
+              "path": "Citation.citedArtifact.abstract.language",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "preferred",
+                "valueSet": "http://hl7.org/fhir/ValueSet/languages"
+              }
+            },
+            "modifierExtension": {
+              "path": "Citation.citedArtifact.abstract.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "text": {
+              "path": "Citation.citedArtifact.abstract.text",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "markdown"
+              ]
+            },
+            "type": {
+              "path": "Citation.citedArtifact.abstract.type",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/cited-artifact-abstract-type"
+              }
+            }
+          }
+        },
+        "classification": {
+          "path": "Citation.citedArtifact.classification",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "artifactAssessment": {
+              "path": "Citation.citedArtifact.classification.artifactAssessment",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Reference"
+              ]
+            },
+            "classifier": {
+              "path": "Citation.citedArtifact.classification.classifier",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/citation-artifact-classifier"
+              }
+            },
+            "extension": {
+              "path": "Citation.citedArtifact.classification.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Citation.citedArtifact.classification.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Citation.citedArtifact.classification.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "type": {
+              "path": "Citation.citedArtifact.classification.type",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/cited-artifact-classification-type"
+              }
+            }
+          }
+        },
+        "contributorship": {
+          "path": "Citation.citedArtifact.contributorship",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "complete": {
+              "path": "Citation.citedArtifact.contributorship.complete",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "entry": {
+              "path": "Citation.citedArtifact.contributorship.entry",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "affiliation": {
+                  "path": "Citation.citedArtifact.contributorship.entry.affiliation",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Reference"
+                  ]
+                },
+                "contributionInstance": {
+                  "path": "Citation.citedArtifact.contributorship.entry.contributionInstance",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "BackboneElement"
+                  ],
+                  "elements": {
+                    "extension": {
+                      "path": "Citation.citedArtifact.contributorship.entry.contributionInstance.extension",
+                      "min": 0,
+                      "max": "*",
+                      "array": true,
+                      "type": [
+                        "Extension"
+                      ]
+                    },
+                    "id": {
+                      "path": "Citation.citedArtifact.contributorship.entry.contributionInstance.id",
+                      "min": 0,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "http://hl7.org/fhirpath/System.String"
+                      ]
+                    },
+                    "modifierExtension": {
+                      "path": "Citation.citedArtifact.contributorship.entry.contributionInstance.modifierExtension",
+                      "min": 0,
+                      "max": "*",
+                      "array": true,
+                      "type": [
+                        "Extension"
+                      ]
+                    },
+                    "time": {
+                      "path": "Citation.citedArtifact.contributorship.entry.contributionInstance.time",
+                      "min": 0,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "dateTime"
+                      ]
+                    },
+                    "type": {
+                      "path": "Citation.citedArtifact.contributorship.entry.contributionInstance.type",
+                      "min": 1,
+                      "max": 1,
+                      "array": false,
+                      "type": [
+                        "CodeableConcept"
+                      ],
+                      "binding": {
+                        "strength": "extensible",
+                        "valueSet": "http://hl7.org/fhir/ValueSet/artifact-contribution-instance-type"
+                      }
+                    }
+                  }
+                },
+                "contributionType": {
+                  "path": "Citation.citedArtifact.contributorship.entry.contributionType",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "extensible",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/artifact-contribution-type"
+                  }
+                },
+                "contributor": {
+                  "path": "Citation.citedArtifact.contributorship.entry.contributor",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Reference"
+                  ]
+                },
+                "correspondingContact": {
+                  "path": "Citation.citedArtifact.contributorship.entry.correspondingContact",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "boolean"
+                  ]
+                },
+                "extension": {
+                  "path": "Citation.citedArtifact.contributorship.entry.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "forenameInitials": {
+                  "path": "Citation.citedArtifact.contributorship.entry.forenameInitials",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "id": {
+                  "path": "Citation.citedArtifact.contributorship.entry.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "Citation.citedArtifact.contributorship.entry.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "rankingOrder": {
+                  "path": "Citation.citedArtifact.contributorship.entry.rankingOrder",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "positiveInt"
+                  ]
+                },
+                "role": {
+                  "path": "Citation.citedArtifact.contributorship.entry.role",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "extensible",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/contributor-role"
+                  }
+                }
+              }
+            },
+            "extension": {
+              "path": "Citation.citedArtifact.contributorship.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Citation.citedArtifact.contributorship.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Citation.citedArtifact.contributorship.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "summary": {
+              "path": "Citation.citedArtifact.contributorship.summary",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "extension": {
+                  "path": "Citation.citedArtifact.contributorship.summary.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "Citation.citedArtifact.contributorship.summary.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "Citation.citedArtifact.contributorship.summary.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "source": {
+                  "path": "Citation.citedArtifact.contributorship.summary.source",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "extensible",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/contributor-summary-source"
+                  }
+                },
+                "style": {
+                  "path": "Citation.citedArtifact.contributorship.summary.style",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "extensible",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/contributor-summary-style"
+                  }
+                },
+                "type": {
+                  "path": "Citation.citedArtifact.contributorship.summary.type",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "extensible",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/contributor-summary-type"
+                  }
+                },
+                "value": {
+                  "path": "Citation.citedArtifact.contributorship.summary.value",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "markdown"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "currentState": {
+          "path": "Citation.citedArtifact.currentState",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/cited-artifact-status-type"
+          }
+        },
+        "dateAccessed": {
+          "path": "Citation.citedArtifact.dateAccessed",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "dateTime"
+          ]
+        },
+        "extension": {
+          "path": "Citation.citedArtifact.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Citation.citedArtifact.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "identifier": {
+          "path": "Citation.citedArtifact.identifier",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Citation.citedArtifact.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "note": {
+          "path": "Citation.citedArtifact.note",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Annotation"
+          ]
+        },
+        "part": {
+          "path": "Citation.citedArtifact.part",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "baseCitation": {
+              "path": "Citation.citedArtifact.part.baseCitation",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            },
+            "extension": {
+              "path": "Citation.citedArtifact.part.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Citation.citedArtifact.part.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Citation.citedArtifact.part.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "type": {
+              "path": "Citation.citedArtifact.part.type",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/cited-artifact-part-type"
+              }
+            },
+            "value": {
+              "path": "Citation.citedArtifact.part.value",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "publicationForm": {
+          "path": "Citation.citedArtifact.publicationForm",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "accessionNumber": {
+              "path": "Citation.citedArtifact.publicationForm.accessionNumber",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "articleDate": {
+              "path": "Citation.citedArtifact.publicationForm.articleDate",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "dateTime"
+              ]
+            },
+            "citedMedium": {
+              "path": "Citation.citedArtifact.publicationForm.citedMedium",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/cited-medium"
+              }
+            },
+            "copyright": {
+              "path": "Citation.citedArtifact.publicationForm.copyright",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "markdown"
+              ]
+            },
+            "extension": {
+              "path": "Citation.citedArtifact.publicationForm.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "firstPage": {
+              "path": "Citation.citedArtifact.publicationForm.firstPage",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "id": {
+              "path": "Citation.citedArtifact.publicationForm.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "issue": {
+              "path": "Citation.citedArtifact.publicationForm.issue",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "language": {
+              "path": "Citation.citedArtifact.publicationForm.language",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "preferred",
+                "valueSet": "http://hl7.org/fhir/ValueSet/languages"
+              }
+            },
+            "lastPage": {
+              "path": "Citation.citedArtifact.publicationForm.lastPage",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "lastRevisionDate": {
+              "path": "Citation.citedArtifact.publicationForm.lastRevisionDate",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "dateTime"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Citation.citedArtifact.publicationForm.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "pageCount": {
+              "path": "Citation.citedArtifact.publicationForm.pageCount",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "pageString": {
+              "path": "Citation.citedArtifact.publicationForm.pageString",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "publicationDateSeason": {
+              "path": "Citation.citedArtifact.publicationForm.publicationDateSeason",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "publicationDateText": {
+              "path": "Citation.citedArtifact.publicationForm.publicationDateText",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "publishedIn": {
+              "path": "Citation.citedArtifact.publicationForm.publishedIn",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "extension": {
+                  "path": "Citation.citedArtifact.publicationForm.publishedIn.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "Citation.citedArtifact.publicationForm.publishedIn.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "identifier": {
+                  "path": "Citation.citedArtifact.publicationForm.publishedIn.identifier",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Identifier"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "Citation.citedArtifact.publicationForm.publishedIn.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "publisher": {
+                  "path": "Citation.citedArtifact.publicationForm.publishedIn.publisher",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Reference"
+                  ]
+                },
+                "publisherLocation": {
+                  "path": "Citation.citedArtifact.publicationForm.publishedIn.publisherLocation",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "title": {
+                  "path": "Citation.citedArtifact.publicationForm.publishedIn.title",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "type": {
+                  "path": "Citation.citedArtifact.publicationForm.publishedIn.type",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "CodeableConcept"
+                  ],
+                  "binding": {
+                    "strength": "extensible",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/published-in-type"
+                  }
+                }
+              }
+            },
+            "volume": {
+              "path": "Citation.citedArtifact.publicationForm.volume",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "relatedIdentifier": {
+          "path": "Citation.citedArtifact.relatedIdentifier",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Identifier"
+          ]
+        },
+        "relatesTo": {
+          "path": "Citation.citedArtifact.relatesTo",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "citation": {
+              "path": "Citation.citedArtifact.relatesTo.citation",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "markdown"
+              ]
+            },
+            "classifier": {
+              "path": "Citation.citedArtifact.relatesTo.classifier",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/citation-artifact-classifier"
+              }
+            },
+            "display": {
+              "path": "Citation.citedArtifact.relatesTo.display",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "document": {
+              "path": "Citation.citedArtifact.relatesTo.document",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Attachment"
+              ]
+            },
+            "extension": {
+              "path": "Citation.citedArtifact.relatesTo.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Citation.citedArtifact.relatesTo.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "label": {
+              "path": "Citation.citedArtifact.relatesTo.label",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Citation.citedArtifact.relatesTo.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "resource": {
+              "path": "Citation.citedArtifact.relatesTo.resource",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "canonical"
+              ]
+            },
+            "resourceReference": {
+              "path": "Citation.citedArtifact.relatesTo.resourceReference",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            },
+            "type": {
+              "path": "Citation.citedArtifact.relatesTo.type",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/related-artifact-type-all|5.0.0"
+              }
+            }
+          }
+        },
+        "statusDate": {
+          "path": "Citation.citedArtifact.statusDate",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "activity": {
+              "path": "Citation.citedArtifact.statusDate.activity",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/cited-artifact-status-type"
+              }
+            },
+            "actual": {
+              "path": "Citation.citedArtifact.statusDate.actual",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "extension": {
+              "path": "Citation.citedArtifact.statusDate.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Citation.citedArtifact.statusDate.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Citation.citedArtifact.statusDate.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "period": {
+              "path": "Citation.citedArtifact.statusDate.period",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Period"
+              ]
+            }
+          }
+        },
+        "title": {
+          "path": "Citation.citedArtifact.title",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "Citation.citedArtifact.title.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Citation.citedArtifact.title.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "language": {
+              "path": "Citation.citedArtifact.title.language",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "preferred",
+                "valueSet": "http://hl7.org/fhir/ValueSet/languages"
+              }
+            },
+            "modifierExtension": {
+              "path": "Citation.citedArtifact.title.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "text": {
+              "path": "Citation.citedArtifact.title.text",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "markdown"
+              ]
+            },
+            "type": {
+              "path": "Citation.citedArtifact.title.type",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/title-type"
+              }
+            }
+          }
+        },
+        "version": {
+          "path": "Citation.citedArtifact.version",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "baseCitation": {
+              "path": "Citation.citedArtifact.version.baseCitation",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Reference"
+              ]
+            },
+            "extension": {
+              "path": "Citation.citedArtifact.version.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Citation.citedArtifact.version.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Citation.citedArtifact.version.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "value": {
+              "path": "Citation.citedArtifact.version.value",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "webLocation": {
+          "path": "Citation.citedArtifact.webLocation",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "classifier": {
+              "path": "Citation.citedArtifact.webLocation.classifier",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/artifact-url-classifier"
+              }
+            },
+            "extension": {
+              "path": "Citation.citedArtifact.webLocation.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Citation.citedArtifact.webLocation.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Citation.citedArtifact.webLocation.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "url": {
+              "path": "Citation.citedArtifact.webLocation.url",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "uri"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "classification": {
+      "path": "Citation.classification",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "classifier": {
+          "path": "Citation.classification.classifier",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/citation-artifact-classifier"
+          }
+        },
+        "extension": {
+          "path": "Citation.classification.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Citation.classification.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Citation.classification.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "Citation.classification.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/citation-classification-type"
+          }
+        }
+      }
+    },
+    "contact": {
+      "path": "Citation.contact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "contained": {
+      "path": "Citation.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "copyright": {
+      "path": "Citation.copyright",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "copyrightLabel": {
+      "path": "Citation.copyrightLabel",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "currentState": {
+      "path": "Citation.currentState",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/citation-status-type"
+      }
+    },
+    "date": {
+      "path": "Citation.date",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "description": {
+      "path": "Citation.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "editor": {
+      "path": "Citation.editor",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "effectivePeriod": {
+      "path": "Citation.effectivePeriod",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period"
+      ]
+    },
+    "endorser": {
+      "path": "Citation.endorser",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "experimental": {
+      "path": "Citation.experimental",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "extension": {
+      "path": "Citation.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "Citation.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Citation.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "Citation.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "jurisdiction": {
+      "path": "Citation.jurisdiction",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
+      }
+    },
+    "language": {
+      "path": "Citation.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "lastReviewDate": {
+      "path": "Citation.lastReviewDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "meta": {
+      "path": "Citation.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "Citation.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "Citation.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "note": {
+      "path": "Citation.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "publisher": {
+      "path": "Citation.publisher",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "purpose": {
+      "path": "Citation.purpose",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "relatedArtifact": {
+      "path": "Citation.relatedArtifact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "RelatedArtifact"
+      ]
+    },
+    "reviewer": {
+      "path": "Citation.reviewer",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "status": {
+      "path": "Citation.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+      }
+    },
+    "statusDate": {
+      "path": "Citation.statusDate",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "activity": {
+          "path": "Citation.statusDate.activity",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/citation-status-type"
+          }
+        },
+        "actual": {
+          "path": "Citation.statusDate.actual",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "extension": {
+          "path": "Citation.statusDate.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Citation.statusDate.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Citation.statusDate.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "period": {
+          "path": "Citation.statusDate.period",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Period"
+          ]
+        }
+      }
+    },
+    "summary": {
+      "path": "Citation.summary",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Citation.summary.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Citation.summary.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Citation.summary.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "style": {
+          "path": "Citation.summary.style",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/citation-summary-style"
+          }
+        },
+        "text": {
+          "path": "Citation.summary.text",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        }
+      }
+    },
+    "text": {
+      "path": "Citation.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "title": {
+      "path": "Citation.title",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "url": {
+      "path": "Citation.url",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "useContext": {
+      "path": "Citation.useContext",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "UsageContext"
+      ]
+    },
+    "version": {
+      "path": "Citation.version",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "versionAlgorithm": {
+      "path": "Citation.versionAlgorithm[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string",
+        "Coding"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/version-algorithm"
+      },
+      "choices": [
+        "versionAlgorithmString",
+        "versionAlgorithmCoding"
+      ]
+    }
+  }
+}

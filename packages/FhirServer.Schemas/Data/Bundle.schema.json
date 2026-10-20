@@ -1,0 +1,474 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Bundle",
+  "type": "Bundle",
+  "name": "Bundle",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "type"
+  ],
+  "elements": {
+    "entry": {
+      "path": "Bundle.entry",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Bundle.entry.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "fullUrl": {
+          "path": "Bundle.entry.fullUrl",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "uri"
+          ]
+        },
+        "id": {
+          "path": "Bundle.entry.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "link": {
+          "path": "Bundle.entry.link",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#Bundle.link"
+        },
+        "modifierExtension": {
+          "path": "Bundle.entry.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "request": {
+          "path": "Bundle.entry.request",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "Bundle.entry.request.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Bundle.entry.request.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "ifMatch": {
+              "path": "Bundle.entry.request.ifMatch",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "ifModifiedSince": {
+              "path": "Bundle.entry.request.ifModifiedSince",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "instant"
+              ]
+            },
+            "ifNoneExist": {
+              "path": "Bundle.entry.request.ifNoneExist",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "ifNoneMatch": {
+              "path": "Bundle.entry.request.ifNoneMatch",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "method": {
+              "path": "Bundle.entry.request.method",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/http-verb|5.0.0"
+              }
+            },
+            "modifierExtension": {
+              "path": "Bundle.entry.request.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "url": {
+              "path": "Bundle.entry.request.url",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "uri"
+              ]
+            }
+          }
+        },
+        "resource": {
+          "path": "Bundle.entry.resource",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Resource"
+          ]
+        },
+        "response": {
+          "path": "Bundle.entry.response",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "etag": {
+              "path": "Bundle.entry.response.etag",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            },
+            "extension": {
+              "path": "Bundle.entry.response.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Bundle.entry.response.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "lastModified": {
+              "path": "Bundle.entry.response.lastModified",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "instant"
+              ]
+            },
+            "location": {
+              "path": "Bundle.entry.response.location",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "uri"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Bundle.entry.response.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "outcome": {
+              "path": "Bundle.entry.response.outcome",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Resource"
+              ]
+            },
+            "status": {
+              "path": "Bundle.entry.response.status",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "search": {
+          "path": "Bundle.entry.search",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "extension": {
+              "path": "Bundle.entry.search.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Bundle.entry.search.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "mode": {
+              "path": "Bundle.entry.search.mode",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/search-entry-mode|5.0.0"
+              }
+            },
+            "modifierExtension": {
+              "path": "Bundle.entry.search.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "score": {
+              "path": "Bundle.entry.search.score",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "decimal"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "id": {
+      "path": "Bundle.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Bundle.identifier",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "Bundle.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "issues": {
+      "path": "Bundle.issues",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Resource"
+      ]
+    },
+    "language": {
+      "path": "Bundle.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "link": {
+      "path": "Bundle.link",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "Bundle.link.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Bundle.link.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Bundle.link.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "relation": {
+          "path": "Bundle.link.relation",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/iana-link-relations|5.0.0"
+          }
+        },
+        "url": {
+          "path": "Bundle.link.url",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "uri"
+          ]
+        }
+      }
+    },
+    "meta": {
+      "path": "Bundle.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "signature": {
+      "path": "Bundle.signature",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Signature"
+      ]
+    },
+    "timestamp": {
+      "path": "Bundle.timestamp",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "instant"
+      ]
+    },
+    "total": {
+      "path": "Bundle.total",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "unsignedInt"
+      ]
+    },
+    "type": {
+      "path": "Bundle.type",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/bundle-type|5.0.0"
+      }
+    }
+  }
+}

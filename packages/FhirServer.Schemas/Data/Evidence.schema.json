@@ -1,0 +1,1014 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Evidence",
+  "type": "Evidence",
+  "name": "Evidence",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "status",
+    "variableDefinition"
+  ],
+  "elements": {
+    "approvalDate": {
+      "path": "Evidence.approvalDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "assertion": {
+      "path": "Evidence.assertion",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "author": {
+      "path": "Evidence.author",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "certainty": {
+      "path": "Evidence.certainty",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "description": {
+          "path": "Evidence.certainty.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "extension": {
+          "path": "Evidence.certainty.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Evidence.certainty.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Evidence.certainty.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "note": {
+          "path": "Evidence.certainty.note",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Annotation"
+          ]
+        },
+        "rater": {
+          "path": "Evidence.certainty.rater",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "rating": {
+          "path": "Evidence.certainty.rating",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/certainty-rating"
+          }
+        },
+        "subcomponent": {
+          "path": "Evidence.certainty.subcomponent",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#Evidence.certainty"
+        },
+        "type": {
+          "path": "Evidence.certainty.type",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/certainty-type"
+          }
+        }
+      }
+    },
+    "citeAs": {
+      "path": "Evidence.citeAs[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference",
+        "markdown"
+      ],
+      "choices": [
+        "citeAsReference",
+        "citeAsMarkdown"
+      ]
+    },
+    "contact": {
+      "path": "Evidence.contact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "contained": {
+      "path": "Evidence.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "copyright": {
+      "path": "Evidence.copyright",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "copyrightLabel": {
+      "path": "Evidence.copyrightLabel",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "date": {
+      "path": "Evidence.date",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "description": {
+      "path": "Evidence.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "editor": {
+      "path": "Evidence.editor",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "endorser": {
+      "path": "Evidence.endorser",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "experimental": {
+      "path": "Evidence.experimental",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "extension": {
+      "path": "Evidence.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "Evidence.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "Evidence.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "Evidence.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "Evidence.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "lastReviewDate": {
+      "path": "Evidence.lastReviewDate",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date"
+      ]
+    },
+    "meta": {
+      "path": "Evidence.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "Evidence.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "Evidence.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "note": {
+      "path": "Evidence.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "publisher": {
+      "path": "Evidence.publisher",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "purpose": {
+      "path": "Evidence.purpose",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "relatedArtifact": {
+      "path": "Evidence.relatedArtifact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "RelatedArtifact"
+      ]
+    },
+    "reviewer": {
+      "path": "Evidence.reviewer",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "statistic": {
+      "path": "Evidence.statistic",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "attributeEstimate": {
+          "path": "Evidence.statistic.attributeEstimate",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "attributeEstimate": {
+              "path": "Evidence.statistic.attributeEstimate.attributeEstimate",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [],
+              "contentReference": "#Evidence.statistic.attributeEstimate"
+            },
+            "description": {
+              "path": "Evidence.statistic.attributeEstimate.description",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "markdown"
+              ]
+            },
+            "extension": {
+              "path": "Evidence.statistic.attributeEstimate.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Evidence.statistic.attributeEstimate.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "level": {
+              "path": "Evidence.statistic.attributeEstimate.level",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "decimal"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Evidence.statistic.attributeEstimate.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "note": {
+              "path": "Evidence.statistic.attributeEstimate.note",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Annotation"
+              ]
+            },
+            "quantity": {
+              "path": "Evidence.statistic.attributeEstimate.quantity",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Quantity"
+              ]
+            },
+            "range": {
+              "path": "Evidence.statistic.attributeEstimate.range",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Range"
+              ]
+            },
+            "type": {
+              "path": "Evidence.statistic.attributeEstimate.type",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/attribute-estimate-type"
+              }
+            }
+          }
+        },
+        "category": {
+          "path": "Evidence.statistic.category",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ]
+        },
+        "description": {
+          "path": "Evidence.statistic.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "extension": {
+          "path": "Evidence.statistic.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Evidence.statistic.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modelCharacteristic": {
+          "path": "Evidence.statistic.modelCharacteristic",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "attributeEstimate": {
+              "path": "Evidence.statistic.modelCharacteristic.attributeEstimate",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [],
+              "contentReference": "#Evidence.statistic.attributeEstimate"
+            },
+            "code": {
+              "path": "Evidence.statistic.modelCharacteristic.code",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/statistic-model-code"
+              }
+            },
+            "extension": {
+              "path": "Evidence.statistic.modelCharacteristic.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Evidence.statistic.modelCharacteristic.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Evidence.statistic.modelCharacteristic.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "value": {
+              "path": "Evidence.statistic.modelCharacteristic.value",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Quantity"
+              ]
+            },
+            "variable": {
+              "path": "Evidence.statistic.modelCharacteristic.variable",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "extension": {
+                  "path": "Evidence.statistic.modelCharacteristic.variable.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "handling": {
+                  "path": "Evidence.statistic.modelCharacteristic.variable.handling",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "code"
+                  ],
+                  "binding": {
+                    "strength": "required",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/variable-handling|5.0.0"
+                  }
+                },
+                "id": {
+                  "path": "Evidence.statistic.modelCharacteristic.variable.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "Evidence.statistic.modelCharacteristic.variable.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "valueCategory": {
+                  "path": "Evidence.statistic.modelCharacteristic.variable.valueCategory",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "CodeableConcept"
+                  ]
+                },
+                "valueQuantity": {
+                  "path": "Evidence.statistic.modelCharacteristic.variable.valueQuantity",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Quantity"
+                  ]
+                },
+                "valueRange": {
+                  "path": "Evidence.statistic.modelCharacteristic.variable.valueRange",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Range"
+                  ]
+                },
+                "variableDefinition": {
+                  "path": "Evidence.statistic.modelCharacteristic.variable.variableDefinition",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "Reference"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "modifierExtension": {
+          "path": "Evidence.statistic.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "note": {
+          "path": "Evidence.statistic.note",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Annotation"
+          ]
+        },
+        "numberAffected": {
+          "path": "Evidence.statistic.numberAffected",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "unsignedInt"
+          ]
+        },
+        "numberOfEvents": {
+          "path": "Evidence.statistic.numberOfEvents",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "unsignedInt"
+          ]
+        },
+        "quantity": {
+          "path": "Evidence.statistic.quantity",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity"
+          ]
+        },
+        "sampleSize": {
+          "path": "Evidence.statistic.sampleSize",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "description": {
+              "path": "Evidence.statistic.sampleSize.description",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "markdown"
+              ]
+            },
+            "extension": {
+              "path": "Evidence.statistic.sampleSize.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "Evidence.statistic.sampleSize.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "knownDataCount": {
+              "path": "Evidence.statistic.sampleSize.knownDataCount",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "unsignedInt"
+              ]
+            },
+            "modifierExtension": {
+              "path": "Evidence.statistic.sampleSize.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "note": {
+              "path": "Evidence.statistic.sampleSize.note",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Annotation"
+              ]
+            },
+            "numberOfParticipants": {
+              "path": "Evidence.statistic.sampleSize.numberOfParticipants",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "unsignedInt"
+              ]
+            },
+            "numberOfStudies": {
+              "path": "Evidence.statistic.sampleSize.numberOfStudies",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "unsignedInt"
+              ]
+            }
+          }
+        },
+        "statisticType": {
+          "path": "Evidence.statistic.statisticType",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/statistic-type"
+          }
+        }
+      }
+    },
+    "status": {
+      "path": "Evidence.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+      }
+    },
+    "studyDesign": {
+      "path": "Evidence.studyDesign",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/study-design"
+      }
+    },
+    "synthesisType": {
+      "path": "Evidence.synthesisType",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://terminology.hl7.org/ValueSet/synthesis-type"
+      }
+    },
+    "text": {
+      "path": "Evidence.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "title": {
+      "path": "Evidence.title",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "url": {
+      "path": "Evidence.url",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "useContext": {
+      "path": "Evidence.useContext",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "UsageContext"
+      ]
+    },
+    "variableDefinition": {
+      "path": "Evidence.variableDefinition",
+      "min": 1,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "description": {
+          "path": "Evidence.variableDefinition.description",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "directnessMatch": {
+          "path": "Evidence.variableDefinition.directnessMatch",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://terminology.hl7.org/ValueSet/directness"
+          }
+        },
+        "extension": {
+          "path": "Evidence.variableDefinition.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "Evidence.variableDefinition.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "intended": {
+          "path": "Evidence.variableDefinition.intended",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "modifierExtension": {
+          "path": "Evidence.variableDefinition.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "note": {
+          "path": "Evidence.variableDefinition.note",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Annotation"
+          ]
+        },
+        "observed": {
+          "path": "Evidence.variableDefinition.observed",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "variableRole": {
+          "path": "Evidence.variableDefinition.variableRole",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/variable-role"
+          }
+        }
+      }
+    },
+    "version": {
+      "path": "Evidence.version",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "versionAlgorithm": {
+      "path": "Evidence.versionAlgorithm[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string",
+        "Coding"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/version-algorithm"
+      },
+      "choices": [
+        "versionAlgorithmString",
+        "versionAlgorithmCoding"
+      ]
+    }
+  }
+}

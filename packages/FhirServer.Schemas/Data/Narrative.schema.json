@@ -1,0 +1,54 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/Narrative",
+  "type": "Narrative",
+  "name": "Narrative",
+  "kind": "complex-type",
+  "derivation": "specialization",
+  "required": [
+    "div",
+    "status"
+  ],
+  "elements": {
+    "div": {
+      "path": "Narrative.div",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "xhtml"
+      ]
+    },
+    "extension": {
+      "path": "Narrative.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "Narrative.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "status": {
+      "path": "Narrative.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/narrative-status|5.0.0"
+      }
+    }
+  }
+}

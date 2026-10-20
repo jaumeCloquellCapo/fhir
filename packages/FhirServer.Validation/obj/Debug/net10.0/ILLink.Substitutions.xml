@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<linker>
+  <assembly fullname="FhirServer.Validation">
+    <resource name="FSharpSignatureData.FhirServer.Validation" action="remove"></resource>
+    <resource name="FSharpSignatureCompressedData.FhirServer.Validation" action="remove"></resource>
+    <resource name="FSharpSignatureDataB.FhirServer.Validation" action="remove"></resource>
+    <resource name="FSharpSignatureCompressedDataB.FhirServer.Validation" action="remove"></resource>
+    <resource name="FSharpOptimizationData.FhirServer.Validation" action="remove"></resource>
+    <resource name="FSharpOptimizationCompressedData.FhirServer.Validation" action="remove"></resource>
+    <resource name="FSharpOptimizationDataB.FhirServer.Validation" action="remove"></resource>
+    <resource name="FSharpOptimizationCompressedDataB.FhirServer.Validation" action="remove"></resource>
+    <resource name="FSharpOptimizationInfo.FhirServer.Validation" action="remove"></resource>
+    <resource name="FSharpSignatureInfo.FhirServer.Validation" action="remove"></resource>
+  </assembly>
+</linker>

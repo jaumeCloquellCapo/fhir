@@ -1,0 +1,1340 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/CapabilityStatement",
+  "type": "CapabilityStatement",
+  "name": "CapabilityStatement",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "date",
+    "fhirVersion",
+    "format",
+    "kind",
+    "status"
+  ],
+  "elements": {
+    "acceptLanguage": {
+      "path": "CapabilityStatement.acceptLanguage",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "contact": {
+      "path": "CapabilityStatement.contact",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "ContactDetail"
+      ]
+    },
+    "contained": {
+      "path": "CapabilityStatement.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "copyright": {
+      "path": "CapabilityStatement.copyright",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "copyrightLabel": {
+      "path": "CapabilityStatement.copyrightLabel",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "date": {
+      "path": "CapabilityStatement.date",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "description": {
+      "path": "CapabilityStatement.description",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "document": {
+      "path": "CapabilityStatement.document",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "documentation": {
+          "path": "CapabilityStatement.document.documentation",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "extension": {
+          "path": "CapabilityStatement.document.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "CapabilityStatement.document.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "mode": {
+          "path": "CapabilityStatement.document.mode",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/document-mode|5.0.0"
+          }
+        },
+        "modifierExtension": {
+          "path": "CapabilityStatement.document.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "profile": {
+          "path": "CapabilityStatement.document.profile",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "canonical"
+          ]
+        }
+      }
+    },
+    "experimental": {
+      "path": "CapabilityStatement.experimental",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "extension": {
+      "path": "CapabilityStatement.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "fhirVersion": {
+      "path": "CapabilityStatement.fhirVersion",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/FHIR-version|5.0.0"
+      }
+    },
+    "format": {
+      "path": "CapabilityStatement.format",
+      "min": 1,
+      "max": "*",
+      "array": true,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/mimetypes|5.0.0"
+      }
+    },
+    "id": {
+      "path": "CapabilityStatement.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "CapabilityStatement.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implementation": {
+      "path": "CapabilityStatement.implementation",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "custodian": {
+          "path": "CapabilityStatement.implementation.custodian",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "description": {
+          "path": "CapabilityStatement.implementation.description",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "extension": {
+          "path": "CapabilityStatement.implementation.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "CapabilityStatement.implementation.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "CapabilityStatement.implementation.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "url": {
+          "path": "CapabilityStatement.implementation.url",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "url"
+          ]
+        }
+      }
+    },
+    "implementationGuide": {
+      "path": "CapabilityStatement.implementationGuide",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "canonical"
+      ]
+    },
+    "implicitRules": {
+      "path": "CapabilityStatement.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "imports": {
+      "path": "CapabilityStatement.imports",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "canonical"
+      ]
+    },
+    "instantiates": {
+      "path": "CapabilityStatement.instantiates",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "canonical"
+      ]
+    },
+    "jurisdiction": {
+      "path": "CapabilityStatement.jurisdiction",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
+      }
+    },
+    "kind": {
+      "path": "CapabilityStatement.kind",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/capability-statement-kind|5.0.0"
+      }
+    },
+    "language": {
+      "path": "CapabilityStatement.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "messaging": {
+      "path": "CapabilityStatement.messaging",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "documentation": {
+          "path": "CapabilityStatement.messaging.documentation",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "endpoint": {
+          "path": "CapabilityStatement.messaging.endpoint",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "address": {
+              "path": "CapabilityStatement.messaging.endpoint.address",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "url"
+              ]
+            },
+            "extension": {
+              "path": "CapabilityStatement.messaging.endpoint.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "CapabilityStatement.messaging.endpoint.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "CapabilityStatement.messaging.endpoint.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "protocol": {
+              "path": "CapabilityStatement.messaging.endpoint.protocol",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "Coding"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/message-transport"
+              }
+            }
+          }
+        },
+        "extension": {
+          "path": "CapabilityStatement.messaging.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "CapabilityStatement.messaging.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "CapabilityStatement.messaging.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "reliableCache": {
+          "path": "CapabilityStatement.messaging.reliableCache",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "unsignedInt"
+          ]
+        },
+        "supportedMessage": {
+          "path": "CapabilityStatement.messaging.supportedMessage",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "definition": {
+              "path": "CapabilityStatement.messaging.supportedMessage.definition",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "canonical"
+              ]
+            },
+            "extension": {
+              "path": "CapabilityStatement.messaging.supportedMessage.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "CapabilityStatement.messaging.supportedMessage.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "mode": {
+              "path": "CapabilityStatement.messaging.supportedMessage.mode",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/event-capability-mode|5.0.0"
+              }
+            },
+            "modifierExtension": {
+              "path": "CapabilityStatement.messaging.supportedMessage.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "meta": {
+      "path": "CapabilityStatement.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "CapabilityStatement.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "CapabilityStatement.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "patchFormat": {
+      "path": "CapabilityStatement.patchFormat",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/mimetypes|5.0.0"
+      }
+    },
+    "publisher": {
+      "path": "CapabilityStatement.publisher",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "purpose": {
+      "path": "CapabilityStatement.purpose",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "markdown"
+      ]
+    },
+    "rest": {
+      "path": "CapabilityStatement.rest",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "compartment": {
+          "path": "CapabilityStatement.rest.compartment",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "canonical"
+          ]
+        },
+        "documentation": {
+          "path": "CapabilityStatement.rest.documentation",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "markdown"
+          ]
+        },
+        "extension": {
+          "path": "CapabilityStatement.rest.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "CapabilityStatement.rest.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "interaction": {
+          "path": "CapabilityStatement.rest.interaction",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "code": {
+              "path": "CapabilityStatement.rest.interaction.code",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/system-restful-interaction|5.0.0"
+              }
+            },
+            "documentation": {
+              "path": "CapabilityStatement.rest.interaction.documentation",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "markdown"
+              ]
+            },
+            "extension": {
+              "path": "CapabilityStatement.rest.interaction.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "CapabilityStatement.rest.interaction.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "CapabilityStatement.rest.interaction.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            }
+          }
+        },
+        "mode": {
+          "path": "CapabilityStatement.rest.mode",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "code"
+          ],
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/restful-capability-mode|5.0.0"
+          }
+        },
+        "modifierExtension": {
+          "path": "CapabilityStatement.rest.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "operation": {
+          "path": "CapabilityStatement.rest.operation",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#CapabilityStatement.rest.resource.operation"
+        },
+        "resource": {
+          "path": "CapabilityStatement.rest.resource",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "conditionalCreate": {
+              "path": "CapabilityStatement.rest.resource.conditionalCreate",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "conditionalDelete": {
+              "path": "CapabilityStatement.rest.resource.conditionalDelete",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/conditional-delete-status|5.0.0"
+              }
+            },
+            "conditionalPatch": {
+              "path": "CapabilityStatement.rest.resource.conditionalPatch",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "conditionalRead": {
+              "path": "CapabilityStatement.rest.resource.conditionalRead",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/conditional-read-status|5.0.0"
+              }
+            },
+            "conditionalUpdate": {
+              "path": "CapabilityStatement.rest.resource.conditionalUpdate",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "documentation": {
+              "path": "CapabilityStatement.rest.resource.documentation",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "markdown"
+              ]
+            },
+            "extension": {
+              "path": "CapabilityStatement.rest.resource.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "CapabilityStatement.rest.resource.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "interaction": {
+              "path": "CapabilityStatement.rest.resource.interaction",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "code": {
+                  "path": "CapabilityStatement.rest.resource.interaction.code",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "code"
+                  ],
+                  "binding": {
+                    "strength": "required",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/type-restful-interaction|5.0.0"
+                  }
+                },
+                "documentation": {
+                  "path": "CapabilityStatement.rest.resource.interaction.documentation",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "markdown"
+                  ]
+                },
+                "extension": {
+                  "path": "CapabilityStatement.rest.resource.interaction.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "CapabilityStatement.rest.resource.interaction.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "CapabilityStatement.rest.resource.interaction.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                }
+              }
+            },
+            "modifierExtension": {
+              "path": "CapabilityStatement.rest.resource.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "operation": {
+              "path": "CapabilityStatement.rest.resource.operation",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "definition": {
+                  "path": "CapabilityStatement.rest.resource.operation.definition",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "canonical"
+                  ]
+                },
+                "documentation": {
+                  "path": "CapabilityStatement.rest.resource.operation.documentation",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "markdown"
+                  ]
+                },
+                "extension": {
+                  "path": "CapabilityStatement.rest.resource.operation.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "CapabilityStatement.rest.resource.operation.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "CapabilityStatement.rest.resource.operation.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "name": {
+                  "path": "CapabilityStatement.rest.resource.operation.name",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                }
+              }
+            },
+            "profile": {
+              "path": "CapabilityStatement.rest.resource.profile",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "canonical"
+              ]
+            },
+            "readHistory": {
+              "path": "CapabilityStatement.rest.resource.readHistory",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "referencePolicy": {
+              "path": "CapabilityStatement.rest.resource.referencePolicy",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/reference-handling-policy|5.0.0"
+              }
+            },
+            "searchInclude": {
+              "path": "CapabilityStatement.rest.resource.searchInclude",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "string"
+              ]
+            },
+            "searchParam": {
+              "path": "CapabilityStatement.rest.resource.searchParam",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "BackboneElement"
+              ],
+              "elements": {
+                "definition": {
+                  "path": "CapabilityStatement.rest.resource.searchParam.definition",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "canonical"
+                  ]
+                },
+                "documentation": {
+                  "path": "CapabilityStatement.rest.resource.searchParam.documentation",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "markdown"
+                  ]
+                },
+                "extension": {
+                  "path": "CapabilityStatement.rest.resource.searchParam.extension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "id": {
+                  "path": "CapabilityStatement.rest.resource.searchParam.id",
+                  "min": 0,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "http://hl7.org/fhirpath/System.String"
+                  ]
+                },
+                "modifierExtension": {
+                  "path": "CapabilityStatement.rest.resource.searchParam.modifierExtension",
+                  "min": 0,
+                  "max": "*",
+                  "array": true,
+                  "type": [
+                    "Extension"
+                  ]
+                },
+                "name": {
+                  "path": "CapabilityStatement.rest.resource.searchParam.name",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "string"
+                  ]
+                },
+                "type": {
+                  "path": "CapabilityStatement.rest.resource.searchParam.type",
+                  "min": 1,
+                  "max": 1,
+                  "array": false,
+                  "type": [
+                    "code"
+                  ],
+                  "binding": {
+                    "strength": "required",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/search-param-type|5.0.0"
+                  }
+                }
+              }
+            },
+            "searchRevInclude": {
+              "path": "CapabilityStatement.rest.resource.searchRevInclude",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "string"
+              ]
+            },
+            "supportedProfile": {
+              "path": "CapabilityStatement.rest.resource.supportedProfile",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "canonical"
+              ]
+            },
+            "type": {
+              "path": "CapabilityStatement.rest.resource.type",
+              "min": 1,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/resource-types|5.0.0"
+              }
+            },
+            "updateCreate": {
+              "path": "CapabilityStatement.rest.resource.updateCreate",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "versioning": {
+              "path": "CapabilityStatement.rest.resource.versioning",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "code"
+              ],
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/versioning-policy|5.0.0"
+              }
+            }
+          }
+        },
+        "searchParam": {
+          "path": "CapabilityStatement.rest.searchParam",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [],
+          "contentReference": "#CapabilityStatement.rest.resource.searchParam"
+        },
+        "security": {
+          "path": "CapabilityStatement.rest.security",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "cors": {
+              "path": "CapabilityStatement.rest.security.cors",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "boolean"
+              ]
+            },
+            "description": {
+              "path": "CapabilityStatement.rest.security.description",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "markdown"
+              ]
+            },
+            "extension": {
+              "path": "CapabilityStatement.rest.security.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "CapabilityStatement.rest.security.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "CapabilityStatement.rest.security.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "service": {
+              "path": "CapabilityStatement.rest.security.service",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "CodeableConcept"
+              ],
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/restful-security-service"
+              }
+            }
+          }
+        }
+      }
+    },
+    "software": {
+      "path": "CapabilityStatement.software",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "CapabilityStatement.software.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "CapabilityStatement.software.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "CapabilityStatement.software.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "name": {
+          "path": "CapabilityStatement.software.name",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "releaseDate": {
+          "path": "CapabilityStatement.software.releaseDate",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "dateTime"
+          ]
+        },
+        "version": {
+          "path": "CapabilityStatement.software.version",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        }
+      }
+    },
+    "status": {
+      "path": "CapabilityStatement.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status|5.0.0"
+      }
+    },
+    "text": {
+      "path": "CapabilityStatement.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    },
+    "title": {
+      "path": "CapabilityStatement.title",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "url": {
+      "path": "CapabilityStatement.url",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "useContext": {
+      "path": "CapabilityStatement.useContext",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "UsageContext"
+      ]
+    },
+    "version": {
+      "path": "CapabilityStatement.version",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "versionAlgorithm": {
+      "path": "CapabilityStatement.versionAlgorithm[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string",
+        "Coding"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/version-algorithm"
+      },
+      "choices": [
+        "versionAlgorithmString",
+        "versionAlgorithmCoding"
+      ]
+    }
+  }
+}

@@ -1,0 +1,591 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/CoverageEligibilityRequest",
+  "type": "CoverageEligibilityRequest",
+  "name": "CoverageEligibilityRequest",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "created",
+    "insurer",
+    "patient",
+    "purpose",
+    "status"
+  ],
+  "elements": {
+    "contained": {
+      "path": "CoverageEligibilityRequest.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "created": {
+      "path": "CoverageEligibilityRequest.created",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "enterer": {
+      "path": "CoverageEligibilityRequest.enterer",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "event": {
+      "path": "CoverageEligibilityRequest.event",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "extension": {
+          "path": "CoverageEligibilityRequest.event.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "CoverageEligibilityRequest.event.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "CoverageEligibilityRequest.event.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "type": {
+          "path": "CoverageEligibilityRequest.event.type",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/datestype"
+          }
+        },
+        "when": {
+          "path": "CoverageEligibilityRequest.event.when[x]",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "dateTime",
+            "Period"
+          ],
+          "choices": [
+            "whenDateTime",
+            "whenPeriod"
+          ]
+        }
+      }
+    },
+    "extension": {
+      "path": "CoverageEligibilityRequest.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "facility": {
+      "path": "CoverageEligibilityRequest.facility",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "id": {
+      "path": "CoverageEligibilityRequest.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "CoverageEligibilityRequest.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "CoverageEligibilityRequest.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "insurance": {
+      "path": "CoverageEligibilityRequest.insurance",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "businessArrangement": {
+          "path": "CoverageEligibilityRequest.insurance.businessArrangement",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "string"
+          ]
+        },
+        "coverage": {
+          "path": "CoverageEligibilityRequest.insurance.coverage",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "extension": {
+          "path": "CoverageEligibilityRequest.insurance.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "focal": {
+          "path": "CoverageEligibilityRequest.insurance.focal",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "id": {
+          "path": "CoverageEligibilityRequest.insurance.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "CoverageEligibilityRequest.insurance.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "insurer": {
+      "path": "CoverageEligibilityRequest.insurer",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "item": {
+      "path": "CoverageEligibilityRequest.item",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "category": {
+          "path": "CoverageEligibilityRequest.item.category",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/ex-benefitcategory"
+          }
+        },
+        "detail": {
+          "path": "CoverageEligibilityRequest.item.detail",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Reference"
+          ]
+        },
+        "diagnosis": {
+          "path": "CoverageEligibilityRequest.item.diagnosis",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "BackboneElement"
+          ],
+          "elements": {
+            "diagnosis": {
+              "path": "CoverageEligibilityRequest.item.diagnosis.diagnosis[x]",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "CodeableConcept",
+                "Reference"
+              ],
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/icd-10"
+              },
+              "choices": [
+                "diagnosisCodeableConcept",
+                "diagnosisReference"
+              ]
+            },
+            "extension": {
+              "path": "CoverageEligibilityRequest.item.diagnosis.extension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            },
+            "id": {
+              "path": "CoverageEligibilityRequest.item.diagnosis.id",
+              "min": 0,
+              "max": 1,
+              "array": false,
+              "type": [
+                "http://hl7.org/fhirpath/System.String"
+              ]
+            },
+            "modifierExtension": {
+              "path": "CoverageEligibilityRequest.item.diagnosis.modifierExtension",
+              "min": 0,
+              "max": "*",
+              "array": true,
+              "type": [
+                "Extension"
+              ]
+            }
+          }
+        },
+        "extension": {
+          "path": "CoverageEligibilityRequest.item.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "facility": {
+          "path": "CoverageEligibilityRequest.item.facility",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "id": {
+          "path": "CoverageEligibilityRequest.item.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifier": {
+          "path": "CoverageEligibilityRequest.item.modifier",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/claim-modifiers"
+          }
+        },
+        "modifierExtension": {
+          "path": "CoverageEligibilityRequest.item.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "productOrService": {
+          "path": "CoverageEligibilityRequest.item.productOrService",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/service-uscls"
+          }
+        },
+        "provider": {
+          "path": "CoverageEligibilityRequest.item.provider",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "quantity": {
+          "path": "CoverageEligibilityRequest.item.quantity",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Quantity"
+          ]
+        },
+        "supportingInfoSequence": {
+          "path": "CoverageEligibilityRequest.item.supportingInfoSequence",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "positiveInt"
+          ]
+        },
+        "unitPrice": {
+          "path": "CoverageEligibilityRequest.item.unitPrice",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Money"
+          ]
+        }
+      }
+    },
+    "language": {
+      "path": "CoverageEligibilityRequest.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "CoverageEligibilityRequest.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "CoverageEligibilityRequest.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "patient": {
+      "path": "CoverageEligibilityRequest.patient",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "priority": {
+      "path": "CoverageEligibilityRequest.priority",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/process-priority"
+      }
+    },
+    "provider": {
+      "path": "CoverageEligibilityRequest.provider",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "purpose": {
+      "path": "CoverageEligibilityRequest.purpose",
+      "min": 1,
+      "max": "*",
+      "array": true,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/eligibilityrequest-purpose|5.0.0"
+      }
+    },
+    "serviced": {
+      "path": "CoverageEligibilityRequest.serviced[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "date",
+        "Period"
+      ],
+      "choices": [
+        "servicedDate",
+        "servicedPeriod"
+      ]
+    },
+    "status": {
+      "path": "CoverageEligibilityRequest.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/fm-status|5.0.0"
+      }
+    },
+    "supportingInfo": {
+      "path": "CoverageEligibilityRequest.supportingInfo",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "appliesToAll": {
+          "path": "CoverageEligibilityRequest.supportingInfo.appliesToAll",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "extension": {
+          "path": "CoverageEligibilityRequest.supportingInfo.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "CoverageEligibilityRequest.supportingInfo.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "information": {
+          "path": "CoverageEligibilityRequest.supportingInfo.information",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "modifierExtension": {
+          "path": "CoverageEligibilityRequest.supportingInfo.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "sequence": {
+          "path": "CoverageEligibilityRequest.supportingInfo.sequence",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "positiveInt"
+          ]
+        }
+      }
+    },
+    "text": {
+      "path": "CoverageEligibilityRequest.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}

@@ -1,0 +1,542 @@
+{
+  "fhirVersion": "5.0.0",
+  "url": "http://hl7.org/fhir/StructureDefinition/FamilyMemberHistory",
+  "type": "FamilyMemberHistory",
+  "name": "FamilyMemberHistory",
+  "kind": "resource",
+  "derivation": "specialization",
+  "required": [
+    "patient",
+    "relationship",
+    "status"
+  ],
+  "elements": {
+    "age": {
+      "path": "FamilyMemberHistory.age[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Age",
+        "Range",
+        "string"
+      ],
+      "choices": [
+        "ageAge",
+        "ageRange",
+        "ageString"
+      ]
+    },
+    "born": {
+      "path": "FamilyMemberHistory.born[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Period",
+        "date",
+        "string"
+      ],
+      "choices": [
+        "bornPeriod",
+        "bornDate",
+        "bornString"
+      ]
+    },
+    "condition": {
+      "path": "FamilyMemberHistory.condition",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "code": {
+          "path": "FamilyMemberHistory.condition.code",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/condition-code"
+          }
+        },
+        "contributedToDeath": {
+          "path": "FamilyMemberHistory.condition.contributedToDeath",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "extension": {
+          "path": "FamilyMemberHistory.condition.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "FamilyMemberHistory.condition.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "FamilyMemberHistory.condition.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "note": {
+          "path": "FamilyMemberHistory.condition.note",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Annotation"
+          ]
+        },
+        "onset": {
+          "path": "FamilyMemberHistory.condition.onset[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Age",
+            "Range",
+            "Period",
+            "string"
+          ],
+          "choices": [
+            "onsetAge",
+            "onsetRange",
+            "onsetPeriod",
+            "onsetString"
+          ]
+        },
+        "outcome": {
+          "path": "FamilyMemberHistory.condition.outcome",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/condition-outcome"
+          }
+        }
+      }
+    },
+    "contained": {
+      "path": "FamilyMemberHistory.contained",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Resource"
+      ]
+    },
+    "dataAbsentReason": {
+      "path": "FamilyMemberHistory.dataAbsentReason",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/history-absent-reason"
+      }
+    },
+    "date": {
+      "path": "FamilyMemberHistory.date",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "dateTime"
+      ]
+    },
+    "deceased": {
+      "path": "FamilyMemberHistory.deceased[x]",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean",
+        "Age",
+        "Range",
+        "date",
+        "string"
+      ],
+      "choices": [
+        "deceasedBoolean",
+        "deceasedAge",
+        "deceasedRange",
+        "deceasedDate",
+        "deceasedString"
+      ]
+    },
+    "estimatedAge": {
+      "path": "FamilyMemberHistory.estimatedAge",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "boolean"
+      ]
+    },
+    "extension": {
+      "path": "FamilyMemberHistory.extension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "id": {
+      "path": "FamilyMemberHistory.id",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "http://hl7.org/fhirpath/System.String"
+      ]
+    },
+    "identifier": {
+      "path": "FamilyMemberHistory.identifier",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Identifier"
+      ]
+    },
+    "implicitRules": {
+      "path": "FamilyMemberHistory.implicitRules",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "uri"
+      ]
+    },
+    "instantiatesCanonical": {
+      "path": "FamilyMemberHistory.instantiatesCanonical",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "canonical"
+      ]
+    },
+    "instantiatesUri": {
+      "path": "FamilyMemberHistory.instantiatesUri",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "uri"
+      ]
+    },
+    "language": {
+      "path": "FamilyMemberHistory.language",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/all-languages|5.0.0"
+      }
+    },
+    "meta": {
+      "path": "FamilyMemberHistory.meta",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Meta"
+      ]
+    },
+    "modifierExtension": {
+      "path": "FamilyMemberHistory.modifierExtension",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Extension"
+      ]
+    },
+    "name": {
+      "path": "FamilyMemberHistory.name",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "string"
+      ]
+    },
+    "note": {
+      "path": "FamilyMemberHistory.note",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "Annotation"
+      ]
+    },
+    "participant": {
+      "path": "FamilyMemberHistory.participant",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "actor": {
+          "path": "FamilyMemberHistory.participant.actor",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Reference"
+          ]
+        },
+        "extension": {
+          "path": "FamilyMemberHistory.participant.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "function": {
+          "path": "FamilyMemberHistory.participant.function",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "extensible",
+            "valueSet": "http://hl7.org/fhir/ValueSet/participation-role-type"
+          }
+        },
+        "id": {
+          "path": "FamilyMemberHistory.participant.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "FamilyMemberHistory.participant.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        }
+      }
+    },
+    "patient": {
+      "path": "FamilyMemberHistory.patient",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Reference"
+      ]
+    },
+    "procedure": {
+      "path": "FamilyMemberHistory.procedure",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "BackboneElement"
+      ],
+      "elements": {
+        "code": {
+          "path": "FamilyMemberHistory.procedure.code",
+          "min": 1,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/procedure-code"
+          }
+        },
+        "contributedToDeath": {
+          "path": "FamilyMemberHistory.procedure.contributedToDeath",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "boolean"
+          ]
+        },
+        "extension": {
+          "path": "FamilyMemberHistory.procedure.extension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "id": {
+          "path": "FamilyMemberHistory.procedure.id",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "http://hl7.org/fhirpath/System.String"
+          ]
+        },
+        "modifierExtension": {
+          "path": "FamilyMemberHistory.procedure.modifierExtension",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Extension"
+          ]
+        },
+        "note": {
+          "path": "FamilyMemberHistory.procedure.note",
+          "min": 0,
+          "max": "*",
+          "array": true,
+          "type": [
+            "Annotation"
+          ]
+        },
+        "outcome": {
+          "path": "FamilyMemberHistory.procedure.outcome",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "CodeableConcept"
+          ],
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/clinical-findings"
+          }
+        },
+        "performed": {
+          "path": "FamilyMemberHistory.procedure.performed[x]",
+          "min": 0,
+          "max": 1,
+          "array": false,
+          "type": [
+            "Age",
+            "Range",
+            "Period",
+            "string",
+            "dateTime"
+          ],
+          "choices": [
+            "performedAge",
+            "performedRange",
+            "performedPeriod",
+            "performedString",
+            "performedDateTime"
+          ]
+        }
+      }
+    },
+    "reason": {
+      "path": "FamilyMemberHistory.reason",
+      "min": 0,
+      "max": "*",
+      "array": true,
+      "type": [
+        "CodeableReference"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/clinical-findings"
+      }
+    },
+    "relationship": {
+      "path": "FamilyMemberHistory.relationship",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://terminology.hl7.org/ValueSet/v3-FamilyMember"
+      }
+    },
+    "sex": {
+      "path": "FamilyMemberHistory.sex",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "CodeableConcept"
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/administrative-gender"
+      }
+    },
+    "status": {
+      "path": "FamilyMemberHistory.status",
+      "min": 1,
+      "max": 1,
+      "array": false,
+      "type": [
+        "code"
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/history-status|5.0.0"
+      }
+    },
+    "text": {
+      "path": "FamilyMemberHistory.text",
+      "min": 0,
+      "max": 1,
+      "array": false,
+      "type": [
+        "Narrative"
+      ]
+    }
+  }
+}
