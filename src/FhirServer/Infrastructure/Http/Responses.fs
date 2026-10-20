@@ -93,6 +93,7 @@ module Responses =
             | Gone _ -> StatusCodes.Status410Gone
             | BadRequest _
             | UnsupportedType _ -> StatusCodes.Status400BadRequest
+            | Forbidden _ -> StatusCodes.Status403Forbidden
             | Conflict _ -> StatusCodes.Status409Conflict
             | PreconditionFailed _ -> StatusCodes.Status412PreconditionFailed
             | ValidationFailed _ -> StatusCodes.Status422UnprocessableEntity

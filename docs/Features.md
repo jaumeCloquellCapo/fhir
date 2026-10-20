@@ -85,15 +85,18 @@ Resource-specific search parameters are advertised in `/metadata` where implemen
 
 When `Audit:Enabled=true`, the server records BALP-oriented `AuditEvent` resources for REST operations (skips `/AuditEvent` to avoid loops). See [Configuration.md](Configuration.md).
 
-## SMART on FHIR (MVP)
+## SMART on FHIR
 
 | Method | Path | Notes |
 |--------|------|-------|
-| GET | `/.well-known/smart-configuration` | Discovery document |
-| POST | `/auth/token` | `client_credentials` (Basic or form client_id/secret) |
-| GET | `/auth/authorize` | Stub **501** (use client_credentials) |
+| GET | `/.well-known/smart-configuration` | Discovery (includes `registration_endpoint`) |
+| GET/POST | `/auth/authorize` | `authorization_code` + PKCE S256; `patient=` for standalone launch (else HTML form) |
+| POST | `/auth/token` | `client_credentials` (system scopes only) or `authorization_code` + `code_verifier` |
+| POST | `/auth/register` | Dynamic client registration (in-memory; lost on restart) |
 
-When `Auth:Enabled=true`, API calls accept **Bearer** (SMART token) or **HTTP Basic**. Bearer tokens enforce **system** scopes (`system/*.read`, `system/Patient.write`, …); Basic keeps full access.
+When `Auth:Enabled=true`, API calls accept **Bearer** (SMART token) or **HTTP Basic**. Bearer tokens enforce **patient/**, **user/**, and **system/** scopes with SMART v2 permissions (`c`/`r`/`u`/`d`/`s`; aliases `read`→`rs`, `write`→`cud`). Patient-context tokens filter the Patient compartment on search/read/write. Basic keeps full access.
+
+Clients are configured under `Smart:Clients` (legacy `Smart:ClientId` / `ClientSecret` / `Scopes` still load as one client). Requested scopes are intersected with each client's `AllowedScopes`.
 
 ## Subscriptions (MVP)
 
@@ -111,6 +114,7 @@ Create an active `Subscription` with `channelType.code=rest-hook` and `endpoint`
 
 ## Out of scope (roadmap)
 
-- Full SMART authorize / PKCE / EHR launch UX
+- EHR launch token handshake / JWT access tokens / refresh tokens
+- Persisting dynamically registered clients across restarts
 - External webhook reliability (retries, signing)
 - XML (`application/fhir+xml`) as a first-class format

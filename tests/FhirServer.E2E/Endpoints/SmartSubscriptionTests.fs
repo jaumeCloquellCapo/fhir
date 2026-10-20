@@ -21,8 +21,14 @@ type SmartAuthFactory() =
             .UseSetting("Auth:Enabled", "true")
             .UseSetting("Auth:Username", "fhir")
             .UseSetting("Auth:Password", "secret")
-            .UseSetting("Smart:ClientId", "fhir-client")
-            .UseSetting("Smart:ClientSecret", "smart-secret")
+            .UseSetting("Smart:Clients:0:ClientId", "fhir-client")
+            .UseSetting("Smart:Clients:0:ClientSecret", "smart-secret")
+            .UseSetting(
+                "Smart:Clients:0:AllowedScopes",
+                "system/*.read system/*.write system/*.cruds openid fhirUser"
+            )
+            .UseSetting("Smart:Clients:0:GrantTypes", "client_credentials authorization_code")
+            .UseSetting("Smart:Clients:0:RedirectUris:0", "http://localhost/callback")
         |> ignore
 
 type SmartSubscriptionTests() =

@@ -8,7 +8,7 @@ open System.Text.Json.Nodes
 open Microsoft.Extensions.Configuration
 open FhirServer.Domain
 
-/// SMART App Launch MVP: discovery + client_credentials tokens (opaque).
+/// SMART App Launch: discovery, auth codes + PKCE, opaque access tokens.
 module SmartAuth =
 
     type TokenRecord = {
@@ -16,30 +16,32 @@ module SmartAuth =
         ClientId: string
         Scope: string
         ExpiresAt: DateTimeOffset
+        PatientId: string option
+        FhirUser: string option
+    }
+
+    type AuthCodeRecord = {
+        Code: string
+        ClientId: string
+        RedirectUri: string
+        Scope: string
+        CodeChallenge: string
+        ExpiresAt: DateTimeOffset
+        PatientId: string option
+        FhirUser: string option
     }
 
     let private tokens = ConcurrentDictionary<string, TokenRecord>()
-
-    let private configString (config: IConfiguration) (key: string) (fallback: string) =
-        match config.[key] with
-        | null
-        | "" -> fallback
-        | value -> value
+    let private authCodes = ConcurrentDictionary<string, AuthCodeRecord>()
 
     let isEnabled (config: IConfiguration) =
         config.GetValue<bool>("Smart:Enabled", true)
 
-    let clientId (config: IConfiguration) =
-        configString config "Smart:ClientId" "fhir-client"
-
-    let clientSecret (config: IConfiguration) =
-        configString config "Smart:ClientSecret" "change-me"
-
-    let defaultScope (config: IConfiguration) =
-        configString config "Smart:Scopes" "system/*.read system/*.write openid fhirUser"
-
     let tokenLifetimeMinutes (config: IConfiguration) =
         config.GetValue<int>("Smart:TokenLifetimeMinutes", 60)
+
+    let authCodeLifetimeMinutes (config: IConfiguration) =
+        config.GetValue<int>("Smart:AuthCodeLifetimeMinutes", 5)
 
     let private stringArray (values: string seq) =
         let arr = JsonArray()
@@ -49,57 +51,79 @@ module SmartAuth =
 
         arr
 
+    let private newOpaque () =
+        Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)).TrimEnd('=').Replace('+', '-').Replace('/', '_')
+
+    let s256Challenge (verifier: string) =
+        let hash = SHA256.HashData(Encoding.ASCII.GetBytes(verifier))
+        Convert.ToBase64String(hash).TrimEnd('=').Replace('+', '-').Replace('/', '_')
+
     let wellKnown (baseUrl: string) (config: IConfiguration) =
         let root = baseUrl.TrimEnd('/')
-        let scopes = defaultScope config
+        let scopes = SmartClients.allSupportedScopes config
 
         FhirJson.mkObject [
             "issuer", FhirJson.jStr root
             "authorization_endpoint", FhirJson.jStr $"{root}/auth/authorize"
             "token_endpoint", FhirJson.jStr $"{root}/auth/token"
+            "registration_endpoint", FhirJson.jStr $"{root}/auth/register"
             "capabilities",
             stringArray [
                 "client-confidential-symmetric"
-                "client-public"
-                "sso-openid-connect"
                 "permission-v2"
                 "context-standalone-patient"
                 "launch-standalone"
+                "authorize-post"
             ]
             "grant_types_supported", stringArray [ "client_credentials"; "authorization_code" ]
             "code_challenge_methods_supported", stringArray [ "S256" ]
-            "scopes_supported", stringArray (scopes.Split(' ', StringSplitOptions.RemoveEmptyEntries))
-            "response_types_supported", stringArray [ "code"; "token" ]
+            "scopes_supported", stringArray scopes
+            "response_types_supported", stringArray [ "code" ]
             "token_endpoint_auth_methods_supported", stringArray [ "client_secret_basic"; "client_secret_post" ]
         ]
 
-    let private newToken () =
-        Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)).TrimEnd('=').Replace('+', '-').Replace('/', '_')
+    let private tokenResponse (record: TokenRecord) (expiresInSeconds: int) =
+        let props = [
+            "access_token", FhirJson.jStr record.AccessToken
+            "token_type", FhirJson.jStr "Bearer"
+            "expires_in", FhirJson.jInt expiresInSeconds
+            "scope", FhirJson.jStr record.Scope
+        ]
 
-    let issueToken (config: IConfiguration) (requestedScope: string option) =
-        let scope =
-            match requestedScope with
-            | Some s when not (String.IsNullOrWhiteSpace s) -> s
-            | _ -> defaultScope config
+        let props =
+            match record.PatientId with
+            | Some pid -> props @ [ "patient", FhirJson.jStr pid ]
+            | None -> props
 
-        let token = newToken ()
-        let expires = DateTimeOffset.UtcNow.AddMinutes(float (tokenLifetimeMinutes config))
+        let props =
+            match record.FhirUser with
+            | Some fu -> props @ [ "fhirUser", FhirJson.jStr fu ]
+            | None -> props
+
+        FhirJson.mkObject props
+
+    let issueAccessToken
+        (config: IConfiguration)
+        (clientId: string)
+        (scope: string)
+        (patientId: string option)
+        (fhirUser: string option)
+        =
+        let token = newOpaque ()
+        let minutes = tokenLifetimeMinutes config
+        let expires = DateTimeOffset.UtcNow.AddMinutes(float minutes)
 
         let record = {
             AccessToken = token
-            ClientId = clientId config
+            ClientId = clientId
             Scope = scope
             ExpiresAt = expires
+            PatientId = patientId |> Option.map PatientCompartment.normalizePatientId
+            FhirUser = fhirUser
         }
 
         tokens[token] <- record
-
-        FhirJson.mkObject [
-            "access_token", FhirJson.jStr token
-            "token_type", FhirJson.jStr "Bearer"
-            "expires_in", FhirJson.jInt (tokenLifetimeMinutes config * 60)
-            "scope", FhirJson.jStr scope
-        ]
+        tokenResponse record (minutes * 60)
 
     let tryValidateBearer (accessToken: string) =
         match tokens.TryGetValue accessToken with
@@ -109,62 +133,72 @@ module SmartAuth =
             None
         | _ -> None
 
-    [<RequireQualifiedAccess>]
-    type ScopeAction =
-        | Read
-        | Write
+    let createAuthCode
+        (config: IConfiguration)
+        (clientId: string)
+        (redirectUri: string)
+        (scope: string)
+        (codeChallenge: string)
+        (patientId: string option)
+        (fhirUser: string option)
+        =
+        let code = newOpaque ()
+        let minutes = authCodeLifetimeMinutes config
 
-    /// Parse SMART system scopes (`system/*.read`, `system/Patient.write`, `system/*.rs`, …).
-    let parseSystemScopes (scope: string) =
-        scope.Split([| ' ' |], StringSplitOptions.RemoveEmptyEntries)
-        |> Array.choose (fun raw ->
-            let s = raw.Trim()
+        let record = {
+            Code = code
+            ClientId = clientId
+            RedirectUri = redirectUri
+            Scope = scope
+            CodeChallenge = codeChallenge
+            ExpiresAt = DateTimeOffset.UtcNow.AddMinutes(float minutes)
+            PatientId = patientId |> Option.map PatientCompartment.normalizePatientId
+            FhirUser = fhirUser
+        }
 
-            if not (s.StartsWith("system/", StringComparison.Ordinal)) then
-                None
+        authCodes[code] <- record
+        code
+
+    let private takeAuthCode (code: string) =
+        match authCodes.TryRemove code with
+        | true, record when record.ExpiresAt > DateTimeOffset.UtcNow -> Ok record
+        | true, _ -> Error "invalid_grant"
+        | _ -> Error "invalid_grant"
+
+    let exchangeAuthorizationCode
+        (config: IConfiguration)
+        (client: SmartClients.ClientRecord)
+        (code: string)
+        (redirectUri: string)
+        (codeVerifier: string)
+        =
+        match takeAuthCode code with
+        | Error e -> Error e
+        | Ok record ->
+            if record.ClientId <> client.ClientId then
+                Error "invalid_grant"
+            elif record.RedirectUri <> redirectUri then
+                Error "invalid_grant"
+            elif s256Challenge codeVerifier <> record.CodeChallenge then
+                Error "invalid_grant"
             else
-                let rest = s.Substring("system/".Length)
-                let resourcePart, permPart =
-                    match rest.LastIndexOf('.') with
-                    | -1 -> rest, ""
-                    | i -> rest.Substring(0, i), rest.Substring(i + 1)
+                Ok(issueAccessToken config client.ClientId record.Scope record.PatientId record.FhirUser)
 
-                let read, write =
-                    match permPart.ToLowerInvariant() with
-                    | "read"
-                    | "r"
-                    | "rs" -> true, false
-                    | "write"
-                    | "w" -> false, true
-                    | "cruds"
-                    | "*" -> true, true
-                    | "" when resourcePart = "*" -> true, true
-                    | _ -> false, false
+    let issueClientCredentials
+        (config: IConfiguration)
+        (client: SmartClients.ClientRecord)
+        (requestedScope: string option)
+        =
+        let scope = SmartClients.intersectScopes client requestedScope
 
-                if not read && not write then
-                    None
-                else
-                    Some(resourcePart, read, write))
-        |> Array.toList
-
-    let allowsSystemScope (scope: string) (resourceType: string option) (action: ScopeAction) =
-        let scopes = parseSystemScopes scope
-
-        let matchesResource resourcePart =
-            resourcePart = "*"
-            || (match resourceType with
-                | Some rt -> resourcePart.Equals(rt, StringComparison.OrdinalIgnoreCase)
-                | None -> resourcePart = "*")
-
-        scopes
-        |> List.exists (fun (resourcePart, read, write) ->
-            matchesResource resourcePart
-            && (match action with
-                | ScopeAction.Read -> read
-                | ScopeAction.Write -> write))
-
-    let validateClient (config: IConfiguration) (id: string) (secret: string) =
-        id = clientId config && secret = clientSecret config
+        if String.IsNullOrWhiteSpace scope then
+            Error "invalid_scope"
+        elif SmartScopes.hasPatientOrUserClinicalScopes scope then
+            Error "invalid_scope"
+        elif not (SmartClients.allowsGrant client "client_credentials") then
+            Error "unauthorized_client"
+        else
+            Ok(issueAccessToken config client.ClientId scope None None)
 
     let parseClientCredentials (authorizationHeader: string option) (form: Map<string, string>) =
         let fromBasic =
@@ -189,3 +223,27 @@ module SmartAuth =
             match Map.tryFind "client_id" form, Map.tryFind "client_secret" form with
             | Some id, Some secret -> Some(id, secret)
             | _ -> None
+
+    /// Auth context attached to HttpContext.Items for downstream compartment checks.
+    type AuthContext = {
+        ClientId: string
+        Scope: string
+        PatientId: string option
+        FhirUser: string option
+        CompartmentPatientId: string option
+    }
+
+    [<Literal>]
+    let AuthContextItemKey = "FhirServer.SmartAuthContext"
+
+    let toAuthContext (record: TokenRecord) : AuthContext =
+        let compartment =
+            PatientCompartment.tryCompartmentPatientId record.Scope record.PatientId record.FhirUser
+
+        {
+            ClientId = record.ClientId
+            Scope = record.Scope
+            PatientId = record.PatientId
+            FhirUser = record.FhirUser
+            CompartmentPatientId = compartment
+        }

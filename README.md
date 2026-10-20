@@ -103,9 +103,9 @@ compose.yaml             Postgres for local development
 
 This project is an **MVP**. It is useful for learning, demos, and as a foundation for a custom FHIR service. It is **not** a certified, production-hardened clinical platform out of the box.
 
-**In scope today (see [docs/Features.md](docs/Features.md)):** R5 CRUD + SQL search (incl. modifiers / `_has` / date·quantity), terminology ops, SMART `client_credentials` + system scopes, Subscriptions rest-hook, core profile + constraint validation from `make generate-r5-all`.
+**In scope today (see [docs/Features.md](docs/Features.md)):** R5 CRUD + SQL search (incl. modifiers / `_has` / date·quantity), terminology ops, SMART authorize + PKCE + `client_credentials` with patient/user/system scopes (v2 c/r/u/d/s), multi-client + ephemeral DCR, Subscriptions rest-hook, core profile + constraint validation from `make generate-r5-all`.
 
-**Not yet:** full SMART authorize / PKCE / EHR launch; subscription webhook retries/signing; composites / `_filter` grammar; packaging arbitrary external IGs beyond R5 core profiles.
+**Not yet:** EHR `launch` handshake / JWT access tokens; subscription webhook retries/signing; composites / `_filter` grammar; packaging arbitrary external IGs beyond R5 core profiles.
 
 Contributions that move those areas forward are welcome—see [CONTRIBUTING.md](CONTRIBUTING.md).
 

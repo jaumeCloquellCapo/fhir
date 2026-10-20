@@ -22,6 +22,7 @@ module AuditMiddleware =
             "/.well-known/smart-configuration"
             "/auth/token"
             "/auth/authorize"
+            "/auth/register"
         ]
 
     let private splitPath (path: string) =

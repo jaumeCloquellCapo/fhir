@@ -18,6 +18,9 @@
     <Compile Include="Domain/Ports/IResourceStore.fs" />
 
     <!-- Application (use cases) -->
+    <Compile Include="Application/Smart/SmartScopes.fs" />
+    <Compile Include="Application/Smart/SmartClients.fs" />
+    <Compile Include="Application/Smart/PatientCompartment.fs" />
     <Compile Include="Application/Smart/SmartAuth.fs" />
     <Compile Include="Application/Subscriptions/SubscriptionNotifier.fs" />
     <Compile Include="Application/Terminology/TerminologyOps.fs" />

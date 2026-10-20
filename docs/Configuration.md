@@ -32,11 +32,23 @@ Local Compose defaults (`make db-up`) match the credentials above. **Do not** re
 
 | Key | Default | Description |
 |-----|---------|-------------|
-| `Smart:Enabled` | `true` | Advertise SMART discovery (tokens always available) |
-| `Smart:ClientId` | `fhir-client` | OAuth client id for `client_credentials` |
-| `Smart:ClientSecret` | `change-me` | OAuth client secret — **change in shared environments** |
-| `Smart:Scopes` | `system/*.read system/*.write openid fhirUser` | Default scopes |
+| `Smart:Enabled` | `true` | Advertise SMART discovery |
 | `Smart:TokenLifetimeMinutes` | `60` | Access token lifetime |
+| `Smart:AuthCodeLifetimeMinutes` | `5` | Authorization code lifetime |
+| `Smart:Clients` | (see appsettings) | Array of confidential clients |
+
+Each client entry:
+
+| Key | Description |
+|-----|-------------|
+| `ClientId` / `ClientSecret` | Confidential client credentials — **change in shared environments** |
+| `AllowedScopes` | Space-separated allow-list; token requests are intersected with this set |
+| `GrantTypes` | e.g. `client_credentials`, `authorization_code` |
+| `RedirectUris` | Allowed redirect URIs for authorize |
+
+Legacy single-client keys `Smart:ClientId`, `Smart:ClientSecret`, and `Smart:Scopes` are still accepted when `Smart:Clients` is empty.
+
+`POST /auth/register` can add ephemeral clients (process memory only).
 
 Open-source defaults keep auth off for local demos. Never commit real credentials.
 

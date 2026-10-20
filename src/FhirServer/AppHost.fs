@@ -35,6 +35,22 @@ module AppHost =
         |> Seq.map (fun (key, values) -> key, values |> Seq.collect (fun kv -> kv.Value.ToArray()) |> Seq.toList)
         |> Map.ofSeq
 
+    let private queryMapForType (ctx: HttpContext) (resourceType: string) =
+        Auth.bindCompartmentQuery ctx resourceType (queryMap ctx)
+
+    let private parseForm (body: string) =
+        body.Split('&', StringSplitOptions.RemoveEmptyEntries)
+        |> Array.choose (fun part ->
+            match part.Split('=', 2) with
+            | [| k; v |] -> Some(Uri.UnescapeDataString(k), Uri.UnescapeDataString(v))
+            | _ -> None)
+        |> Map.ofArray
+
+    let private queryOrForm (ctx: HttpContext) (form: Map<string, string>) (name: string) =
+        match ctx.Request.Query.TryGetValue name with
+        | true, v when v.Count > 0 && not (String.IsNullOrWhiteSpace v.[0]) -> Some v.[0]
+        | _ -> Map.tryFind name form
+
     let private header (ctx: HttpContext) name =
         if ctx.Request.Headers.ContainsKey(name) then
             let value = string ctx.Request.Headers.[name]
@@ -116,20 +132,188 @@ module AppHost =
             "SMART App Launch discovery document."
         |> ignore
 
-        app.MapGet(
+        let oauthErrorJson (ctx: HttpContext) (status: int) (error: string) (description: string option) =
+            task {
+                ctx.Response.StatusCode <- status
+                ctx.Response.ContentType <- "application/json"
+
+                let props =
+                    match description with
+                    | Some d -> [ "error", FhirJson.jStr error; "error_description", FhirJson.jStr d ]
+                    | None -> [ "error", FhirJson.jStr error ]
+
+                do! ctx.Response.WriteAsync(FhirJson.toJson (FhirJson.mkObject props))
+            }
+
+        let appendQuery (redirectUri: string) (pairs: (string * string) list) =
+            let sep = if redirectUri.Contains('?') then "&" else "?"
+
+            let encoded =
+                pairs
+                |> List.map (fun (k, v) -> $"{Uri.EscapeDataString k}={Uri.EscapeDataString v}")
+                |> String.concat "&"
+
+            redirectUri + sep + encoded
+
+        let redirectOAuth
+            (ctx: HttpContext)
+            (redirectUri: string)
+            (state: string option)
+            (pairs: (string * string) list)
+            =
+            task {
+                let all =
+                    match state with
+                    | Some s -> pairs @ [ "state", s ]
+                    | None -> pairs
+
+                ctx.Response.Redirect(appendQuery redirectUri all, false)
+            }
+
+        let authorizeHtml (qs: string) (message: string) =
+            $"""<!DOCTYPE html><html><head><meta charset="utf-8"/><title>SMART Authorize</title></head>
+<body>
+<h1>SMART standalone launch</h1>
+<p>{System.Net.WebUtility.HtmlEncode message}</p>
+<form method="post" action="/auth/authorize">
+{qs}
+<label>Patient id <input name="patient" required /></label><br/>
+<label>fhirUser (optional) <input name="fhir_user" placeholder="Practitioner/abc" /></label><br/>
+<button type="submit">Authorize</button>
+</form>
+</body></html>"""
+
+        let hiddenFields (pairs: (string * string) list) =
+            pairs
+            |> List.map (fun (k, v) ->
+                $"""<input type="hidden" name="{System.Net.WebUtility.HtmlEncode k}" value="{System.Net.WebUtility.HtmlEncode v}" />""")
+            |> String.concat "\n"
+
+        let handleAuthorize (ctx: HttpContext) (form: Map<string, string>) =
+            task {
+                let config = ctx.RequestServices.GetRequiredService<IConfiguration>()
+                let get name = queryOrForm ctx form name
+
+                let responseType = get "response_type" |> Option.defaultValue ""
+                let clientId = get "client_id" |> Option.defaultValue ""
+                let redirectUri = get "redirect_uri" |> Option.defaultValue ""
+                let scopeReq = get "scope"
+                let state = get "state"
+                let codeChallenge = get "code_challenge" |> Option.defaultValue ""
+                let challengeMethod = get "code_challenge_method" |> Option.defaultValue ""
+                let patientParam = get "patient"
+                let fhirUserParam = get "fhir_user" |> Option.orElse (get "fhirUser")
+
+                let failRedirect error desc =
+                    if String.IsNullOrWhiteSpace redirectUri then
+                        oauthErrorJson ctx StatusCodes.Status400BadRequest error (Some desc)
+                    else
+                        redirectOAuth ctx redirectUri state [ "error", error; "error_description", desc ]
+
+                let showPatientForm (scope: string) =
+                    task {
+                        let baseFields = [
+                            "response_type", responseType
+                            "client_id", clientId
+                            "redirect_uri", redirectUri
+                            "scope", scope
+                            "code_challenge", codeChallenge
+                            "code_challenge_method", "S256"
+                        ]
+
+                        let withState =
+                            match state with
+                            | Some s when not (String.IsNullOrWhiteSpace s) -> baseFields @ [ "state", s ]
+                            | _ -> baseFields
+
+                        let withUser =
+                            match fhirUserParam with
+                            | Some fu when not (String.IsNullOrWhiteSpace fu) ->
+                                withState @ [ "fhir_user", fu ]
+                            | _ -> withState
+
+                        ctx.Response.ContentType <- "text/html; charset=utf-8"
+                        do! ctx.Response.WriteAsync(authorizeHtml (hiddenFields withUser) "Enter the Patient id for this launch.")
+                    }
+
+                match SmartClients.tryFind config clientId with
+                | None -> return! failRedirect "invalid_client" "Unknown client_id"
+                | Some client when not (SmartClients.allowsGrant client "authorization_code") ->
+                    return! failRedirect "unauthorized_client" "authorization_code not allowed"
+                | Some client when
+                    String.IsNullOrWhiteSpace redirectUri
+                    || not (SmartClients.allowsRedirect client redirectUri)
+                    ->
+                    return!
+                        oauthErrorJson
+                            ctx
+                            StatusCodes.Status400BadRequest
+                            "invalid_request"
+                            (Some "redirect_uri not registered")
+                | Some _ when responseType <> "code" ->
+                    return! failRedirect "unsupported_response_type" "response_type must be code"
+                | Some _ when
+                    String.IsNullOrWhiteSpace codeChallenge
+                    || not (challengeMethod.Equals("S256", StringComparison.OrdinalIgnoreCase))
+                    ->
+                    return! failRedirect "invalid_request" "PKCE S256 code_challenge required"
+                | Some client ->
+                    let scope = SmartClients.intersectScopes client scopeReq
+
+                    if String.IsNullOrWhiteSpace scope then
+                        return! failRedirect "invalid_scope" "No overlapping scopes"
+                    elif
+                        (SmartScopes.needsPatientLaunch scope || SmartScopes.needsFhirUser scope)
+                        && patientParam.IsNone
+                        && HttpMethods.IsGet ctx.Request.Method
+                    then
+                        return! showPatientForm scope
+                    elif SmartScopes.needsPatientLaunch scope && patientParam.IsNone then
+                        return! failRedirect "invalid_request" "patient context required"
+                    elif SmartScopes.needsFhirUser scope && fhirUserParam.IsNone && patientParam.IsNone then
+                        return! failRedirect "invalid_request" "fhirUser required for user/ scopes"
+                    else
+                        let fhirUser =
+                            match fhirUserParam with
+                            | Some fu when not (String.IsNullOrWhiteSpace fu) -> Some fu
+                            | _ when SmartScopes.hasUserClinicalScopes scope && patientParam.IsSome ->
+                                Some($"Patient/{PatientCompartment.normalizePatientId patientParam.Value}")
+                            | _ -> None
+
+                        let code =
+                            SmartAuth.createAuthCode
+                                config
+                                client.ClientId
+                                redirectUri
+                                scope
+                                codeChallenge
+                                patientParam
+                                fhirUser
+
+                        return! redirectOAuth ctx redirectUri state [ "code", code ]
+            }
+
+        app.MapMethods(
             "/auth/authorize",
+            [ HttpMethods.Get; HttpMethods.Post ],
             Func<HttpContext, Task<unit>>(fun ctx ->
                 task {
-                    // MVP: authorization_code UX is out of scope; advertise endpoint for discovery.
-                    ctx.Response.StatusCode <- StatusCodes.Status501NotImplemented
-                    ctx.Response.ContentType <- "application/json"
+                    let! form =
+                        task {
+                            if HttpMethods.IsPost ctx.Request.Method then
+                                let! body = readBody ctx
+                                return parseForm body
+                            else
+                                return Map.empty
+                        }
 
-                    do!
-                        ctx.Response.WriteAsync(
-                            """{"error":"unsupported_response_type","error_description":"Use grant_type=client_credentials against /auth/token"}"""
-                        )
+                    return! handleAuthorize ctx form
                 })
         )
+        |> OpenApiDocs.documentJson
+            [| OpenApiDocs.TagSystem |]
+            "OAuth authorize"
+            "SMART authorization_code + PKCE (S256). Pass patient= for standalone launch; otherwise an HTML form is shown."
         |> ignore
 
         app.MapPost(
@@ -138,44 +322,79 @@ module AppHost =
                 task {
                     let config = ctx.RequestServices.GetRequiredService<IConfiguration>()
                     let! body = readBody ctx
-
-                    let form =
-                        body.Split('&', StringSplitOptions.RemoveEmptyEntries)
-                        |> Array.choose (fun part ->
-                            match part.Split('=', 2) with
-                            | [| k; v |] -> Some(Uri.UnescapeDataString(k), Uri.UnescapeDataString(v))
-                            | _ -> None)
-                        |> Map.ofArray
+                    let form = parseForm body
 
                     let authHeader =
                         let h = ctx.Request.Headers.Authorization.ToString()
                         if String.IsNullOrWhiteSpace h then None else Some h
 
                     match SmartAuth.parseClientCredentials authHeader form with
-                    | None ->
-                        ctx.Response.StatusCode <- StatusCodes.Status401Unauthorized
-                        do! ctx.Response.WriteAsync("""{"error":"invalid_client"}""")
-                    | Some(id, secret) when not (SmartAuth.validateClient config id secret) ->
-                        ctx.Response.StatusCode <- StatusCodes.Status401Unauthorized
-                        do! ctx.Response.WriteAsync("""{"error":"invalid_client"}""")
-                    | Some _ ->
-                        let grant =
-                            form |> Map.tryFind "grant_type" |> Option.defaultValue "client_credentials"
+                    | None -> return! oauthErrorJson ctx StatusCodes.Status401Unauthorized "invalid_client" None
+                    | Some(id, secret) ->
+                        match SmartClients.validate config id secret with
+                        | None -> return! oauthErrorJson ctx StatusCodes.Status401Unauthorized "invalid_client" None
+                        | Some client ->
+                            let grant =
+                                form |> Map.tryFind "grant_type" |> Option.defaultValue "client_credentials"
 
-                        if grant <> "client_credentials" then
-                            ctx.Response.StatusCode <- StatusCodes.Status400BadRequest
-                            do! ctx.Response.WriteAsync("""{"error":"unsupported_grant_type"}""")
-                        else
-                            let tokenDoc = SmartAuth.issueToken config (Map.tryFind "scope" form)
+                            match grant with
+                            | "client_credentials" ->
+                                match SmartAuth.issueClientCredentials config client (Map.tryFind "scope" form) with
+                                | Error e ->
+                                    return! oauthErrorJson ctx StatusCodes.Status400BadRequest e None
+                                | Ok doc ->
+                                    ctx.Response.ContentType <- "application/json"
+                                    do! ctx.Response.WriteAsync(FhirJson.toJson doc)
+                            | "authorization_code" ->
+                                let code = form |> Map.tryFind "code" |> Option.defaultValue ""
+                                let redirectUri = form |> Map.tryFind "redirect_uri" |> Option.defaultValue ""
+                                let verifier = form |> Map.tryFind "code_verifier" |> Option.defaultValue ""
 
-                            ctx.Response.ContentType <- "application/json"
-                            do! ctx.Response.WriteAsync(FhirJson.toJson tokenDoc)
+                                match SmartAuth.exchangeAuthorizationCode config client code redirectUri verifier with
+                                | Error e ->
+                                    return! oauthErrorJson ctx StatusCodes.Status400BadRequest e None
+                                | Ok doc ->
+                                    ctx.Response.ContentType <- "application/json"
+                                    do! ctx.Response.WriteAsync(FhirJson.toJson doc)
+                            | _ ->
+                                return!
+                                    oauthErrorJson
+                                        ctx
+                                        StatusCodes.Status400BadRequest
+                                        "unsupported_grant_type"
+                                        None
                 })
         )
         |> OpenApiDocs.documentJson
             [| OpenApiDocs.TagSystem |]
             "OAuth token"
-            "SMART token endpoint (client_credentials)."
+            "SMART token endpoint: client_credentials (system scopes) and authorization_code + PKCE."
+        |> ignore
+
+        app.MapPost(
+            "/auth/register",
+            Func<HttpContext, Task<unit>>(fun ctx ->
+                task {
+                    let! body = readBody ctx
+
+                    match FhirJson.parse body with
+                    | Error msg ->
+                        return! oauthErrorJson ctx StatusCodes.Status400BadRequest "invalid_client_metadata" (Some msg)
+                    | Ok doc ->
+                        match SmartClients.register doc with
+                        | Error msg ->
+                            return!
+                                oauthErrorJson ctx StatusCodes.Status400BadRequest "invalid_client_metadata" (Some msg)
+                        | Ok created ->
+                            ctx.Response.StatusCode <- StatusCodes.Status201Created
+                            ctx.Response.ContentType <- "application/json"
+                            do! ctx.Response.WriteAsync(FhirJson.toJson created)
+                })
+        )
+        |> OpenApiDocs.documentJson
+            [| OpenApiDocs.TagSystem |]
+            "OAuth register"
+            "Dynamic client registration (RFC 7591-style). Clients are in-memory and lost on restart."
         |> ignore
 
         app.MapPost(
@@ -335,8 +554,13 @@ module AppHost =
             Func<HttpContext, Task<unit>>(fun ctx ->
                 let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
 
-                ResourceHandlers.historyFromQuery store None None (queryMap ctx)
-                |> fun result -> Responses.fromSearch result ctx)
+                // System history: patient compartment tokens are not allowed to browse all types.
+                match Auth.tryGetAuthContext ctx with
+                | Some auth when auth.CompartmentPatientId.IsSome ->
+                    Responses.fromError (Forbidden "System history requires system/ scopes") ctx
+                | _ ->
+                    ResourceHandlers.historyFromQuery store None None (queryMap ctx)
+                    |> fun result -> Responses.fromSearch result ctx)
         )
         |> OpenApiDocs.documentFhirSearch
             [| OpenApiDocs.TagHistory |]
@@ -372,8 +596,11 @@ module AppHost =
             Func<HttpContext, string, Task<unit>>(fun ctx resourceType ->
                 let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
 
-                ResourceHandlers.historyFromQuery store (Some resourceType) None (queryMap ctx)
-                |> fun result -> Responses.fromSearch result ctx)
+                match queryMapForType ctx resourceType with
+                | Error err -> Responses.fromError err ctx
+                | Ok query ->
+                    ResourceHandlers.historyFromQuery store (Some resourceType) None query
+                    |> fun result -> Responses.fromSearch result ctx)
         )
         |> OpenApiDocs.documentFhirSearch
             [| OpenApiDocs.TagHistory |]
@@ -386,8 +613,13 @@ module AppHost =
             Func<HttpContext, string, string, string, Task<unit>>(fun ctx resourceType id vid ->
                 let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
 
-                ResourceHandlers.vread store resourceType id vid
-                |> fun result -> Responses.fromResult result ctx)
+                match Auth.ensurePatientIdAccess ctx resourceType id with
+                | Error err -> Responses.fromError err ctx
+                | Ok() ->
+                    ResourceHandlers.vread store resourceType id vid
+                    |> Result.bind (fun resource ->
+                        Auth.ensureResourceAccess ctx resource |> Result.map (fun () -> resource))
+                    |> fun result -> Responses.fromResult result ctx)
         )
         |> OpenApiDocs.documentFhir
             [| OpenApiDocs.TagHistory |]
@@ -400,8 +632,11 @@ module AppHost =
             Func<HttpContext, string, string, Task<unit>>(fun ctx resourceType id ->
                 let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
 
-                ResourceHandlers.historyFromQuery store (Some resourceType) (Some id) (queryMap ctx)
-                |> fun result -> Responses.fromSearch result ctx)
+                match Auth.ensurePatientIdAccess ctx resourceType id with
+                | Error err -> Responses.fromError err ctx
+                | Ok() ->
+                    ResourceHandlers.historyFromQuery store (Some resourceType) (Some id) (queryMap ctx)
+                    |> fun result -> Responses.fromSearch result ctx)
         )
         |> OpenApiDocs.documentFhirSearch
             [| OpenApiDocs.TagHistory |]
@@ -588,7 +823,10 @@ module AppHost =
                     else
                         let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
 
-                        return! Responses.fromSearch (ResourceHandlers.observationLastN store (queryMap ctx)) ctx
+                        match queryMapForType ctx "Observation" with
+                        | Error err -> return! Responses.fromError err ctx
+                        | Ok query ->
+                            return! Responses.fromSearch (ResourceHandlers.observationLastN store query) ctx
                 })
         )
         |> OpenApiDocs.documentFhirSearch
@@ -604,8 +842,11 @@ module AppHost =
                     if not (resourceType.Equals("Patient", StringComparison.Ordinal)) then
                         return! Responses.fromError (BadRequest "$everything is only supported on Patient.") ctx
                     else
-                        let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
-                        return! Responses.fromSearch (ResourceHandlers.patientEverything store id) ctx
+                        match Auth.ensurePatientIdAccess ctx resourceType id with
+                        | Error err -> return! Responses.fromError err ctx
+                        | Ok() ->
+                            let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
+                            return! Responses.fromSearch (ResourceHandlers.patientEverything store id) ctx
                 })
         )
         |> OpenApiDocs.documentFhirSearch
@@ -621,8 +862,11 @@ module AppHost =
                     if not (resourceType.Equals("Patient", StringComparison.Ordinal)) then
                         return! Responses.fromError (BadRequest "$document is only supported on Patient.") ctx
                     else
-                        let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
-                        return! Responses.fromResult (ResourceHandlers.patientDocument store id) ctx
+                        match Auth.ensurePatientIdAccess ctx resourceType id with
+                        | Error err -> return! Responses.fromError err ctx
+                        | Ok() ->
+                            let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
+                            return! Responses.fromResult (ResourceHandlers.patientDocument store id) ctx
                 })
         )
         |> OpenApiDocs.documentFhir
@@ -636,8 +880,13 @@ module AppHost =
             Func<HttpContext, string, string, Task<unit>>(fun ctx resourceType id ->
                 let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
 
-                ResourceHandlers.read store resourceType id
-                |> fun result -> Responses.fromResult result ctx)
+                match Auth.ensurePatientIdAccess ctx resourceType id with
+                | Error err -> Responses.fromError err ctx
+                | Ok() ->
+                    ResourceHandlers.read store resourceType id
+                    |> Result.bind (fun resource ->
+                        Auth.ensureResourceAccess ctx resource |> Result.map (fun () -> resource))
+                    |> fun result -> Responses.fromResult result ctx)
         )
         |> OpenApiDocs.documentFhir
             [| OpenApiDocs.TagCrud |]
@@ -650,8 +899,11 @@ module AppHost =
             Func<HttpContext, string, Task<unit>>(fun ctx resourceType ->
                 let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
 
-                ResourceHandlers.search store resourceType (queryMap ctx)
-                |> fun result -> Responses.fromSearch result ctx)
+                match queryMapForType ctx resourceType with
+                | Error err -> Responses.fromError err ctx
+                | Ok query ->
+                    ResourceHandlers.search store resourceType query
+                    |> fun result -> Responses.fromSearch result ctx)
         )
         |> OpenApiDocs.documentFhirSearch
             [| OpenApiDocs.TagSearch |]
@@ -684,11 +936,13 @@ module AppHost =
                     let result =
                         Codec.tryDeserialize (requestFormat ctx) body
                         |> Result.bind (fun resource ->
-                            ResourceHandlers.conditionalCreate
-                                store
-                                resourceType
-                                resource
-                                (header ctx "If-None-Exist"))
+                            Auth.ensureResourceAccess ctx resource
+                            |> Result.bind (fun () ->
+                                ResourceHandlers.conditionalCreate
+                                    store
+                                    resourceType
+                                    resource
+                                    (header ctx "If-None-Exist")))
 
                     return! Responses.fromCreated resourceType result ctx
                 })
@@ -709,7 +963,10 @@ module AppHost =
                     let result =
                         Codec.tryDeserialize (requestFormat ctx) body
                         |> Result.bind (fun resource ->
-                            ResourceHandlers.update store resourceType id resource (header ctx "If-Match"))
+                            Auth.ensurePatientIdAccess ctx resourceType id
+                            |> Result.bind (fun () -> Auth.ensureResourceAccess ctx resource)
+                            |> Result.bind (fun () ->
+                                ResourceHandlers.update store resourceType id resource (header ctx "If-Match")))
 
                     return! Responses.fromResult result ctx
                 })
@@ -727,7 +984,18 @@ module AppHost =
                 task {
                     let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
                     let! body = readBody ctx
-                    let result = ResourceHandlers.applyJsonPatch store resourceType id body
+
+                    let result =
+                        match Auth.ensurePatientIdAccess ctx resourceType id with
+                        | Error err -> Error err
+                        | Ok() ->
+                            match ResourceHandlers.read store resourceType id with
+                            | Error err -> Error err
+                            | Ok existing ->
+                                match Auth.ensureResourceAccess ctx existing with
+                                | Error err -> Error err
+                                | Ok() -> ResourceHandlers.applyJsonPatch store resourceType id body
+
                     return! Responses.fromResult result ctx
                 })
         )
@@ -742,8 +1010,17 @@ module AppHost =
             Func<HttpContext, string, string, Task<unit>>(fun ctx resourceType id ->
                 let store = ctx.RequestServices.GetRequiredService<IResourceStore>()
 
-                ResourceHandlers.delete store resourceType id (header ctx "If-Match")
-                |> fun result -> Responses.fromDelete result ctx)
+                match Auth.ensurePatientIdAccess ctx resourceType id with
+                | Error err -> Responses.fromDelete (Error err) ctx
+                | Ok() ->
+                    match ResourceHandlers.read store resourceType id with
+                    | Error err -> Responses.fromDelete (Error err) ctx
+                    | Ok existing ->
+                        match Auth.ensureResourceAccess ctx existing with
+                        | Error err -> Responses.fromDelete (Error err) ctx
+                        | Ok() ->
+                            ResourceHandlers.delete store resourceType id (header ctx "If-Match")
+                            |> fun result -> Responses.fromDelete result ctx)
         )
         |> OpenApiDocs.documentFhirDelete
             [| OpenApiDocs.TagCrud |]

@@ -36,6 +36,7 @@ module Auth =
         || path = "/.well-known/smart-configuration"
         || path = "/auth/token"
         || path = "/auth/authorize"
+        || path = "/auth/register"
         || (path <> null
             && (path.StartsWith("/swagger", StringComparison.OrdinalIgnoreCase)
                 || path.StartsWith("/openapi", StringComparison.OrdinalIgnoreCase)
@@ -65,25 +66,60 @@ module Auth =
             let token = header.Substring(7).Trim()
             SmartAuth.tryValidateBearer token
 
-    let private isWriteMethod (method: string) =
-        method.Equals("POST", StringComparison.OrdinalIgnoreCase)
-        || method.Equals("PUT", StringComparison.OrdinalIgnoreCase)
-        || method.Equals("PATCH", StringComparison.OrdinalIgnoreCase)
-        || method.Equals("DELETE", StringComparison.OrdinalIgnoreCase)
-
-    let private resourceTypeFromPath (path: string) =
-        let parts =
-            path.Trim('/').Split('/', StringSplitOptions.RemoveEmptyEntries)
-
-        match parts with
-        | [||] -> None
-        | parts when parts.[0].StartsWith("$", StringComparison.Ordinal) -> None
-        | parts when parts.[0].Equals("metadata", StringComparison.OrdinalIgnoreCase) -> None
-        | parts when ResourceCatalog.isSupported parts.[0] -> Some parts.[0]
+    let tryGetAuthContext (ctx: HttpContext) : SmartAuth.AuthContext option =
+        match ctx.Items.TryGetValue(SmartAuth.AuthContextItemKey) with
+        | true, (:? SmartAuth.AuthContext as auth) -> Some auth
         | _ -> None
 
+    /// Apply patient-compartment search binding when the token requires it.
+    let bindCompartmentQuery
+        (ctx: HttpContext)
+        (resourceType: string)
+        (query: Map<string, string list>)
+        : Result<Map<string, string list>, FhirError> =
+        match tryGetAuthContext ctx with
+        | Some auth ->
+            match auth.CompartmentPatientId with
+            | Some patientId ->
+                match PatientCompartment.bindSearchQuery patientId resourceType query with
+                | Ok q -> Ok q
+                | Error msg -> Error(Forbidden msg)
+            | None ->
+                if SmartScopes.hasUserClinicalScopes auth.Scope && auth.FhirUser.IsNone then
+                    Error(Forbidden "user/ scopes require fhirUser on the access token")
+                else
+                    Ok query
+        | None -> Ok query
+
+    let ensureResourceAccess (ctx: HttpContext) (resource: FhirResource) : Result<unit, FhirError> =
+        match tryGetAuthContext ctx with
+        | Some auth ->
+            match auth.CompartmentPatientId with
+            | Some patientId when not (PatientCompartment.belongsTo patientId resource) ->
+                Error(Forbidden $"Resource is outside patient compartment Patient/{patientId}")
+            | Some _ -> Ok()
+            | None ->
+                if SmartScopes.hasUserClinicalScopes auth.Scope && auth.FhirUser.IsNone then
+                    Error(Forbidden "user/ scopes require fhirUser on the access token")
+                else
+                    Ok()
+        | None -> Ok()
+
+    let ensurePatientIdAccess (ctx: HttpContext) (resourceType: string) (id: string) : Result<unit, FhirError> =
+        match tryGetAuthContext ctx with
+        | Some auth ->
+            match auth.CompartmentPatientId with
+            | Some patientId when resourceType.Equals("Patient", StringComparison.OrdinalIgnoreCase) ->
+                if PatientCompartment.normalizePatientId id = patientId then
+                    Ok()
+                else
+                    Error(Forbidden $"Resource is outside patient compartment Patient/{patientId}")
+            | Some _ -> Ok() // non-Patient: checked after load
+            | None -> Ok()
+        | None -> Ok()
+
     /// Require Basic and/or SMART Bearer when Auth:Enabled=true.
-    /// Basic = full access. Bearer scopes enforced for system/*.read|write.
+    /// Basic = full access. Bearer scopes enforced per SMART v2 interaction (c/r/u/d/s).
     let useAuth (app: WebApplication) =
         let enabled = app.Configuration.GetValue<bool>("Auth:Enabled", false)
 
@@ -106,29 +142,26 @@ module Auth =
                                 match tryBearerRecord header with
                                 | None -> return! unauthorized ctx "Bearer, Basic realm=\"FhirServer\""
                                 | Some record ->
-                                    let action =
-                                        if isWriteMethod ctx.Request.Method then
-                                            SmartAuth.ScopeAction.Write
-                                        else
-                                            SmartAuth.ScopeAction.Read
+                                    let interaction, resourceType =
+                                        SmartScopes.resolveInteraction ctx.Request.Method path
 
-                                    let resourceType = resourceTypeFromPath path
-
-                                    if SmartAuth.allowsSystemScope record.Scope resourceType action then
-                                        return! next.Invoke(ctx)
-                                    else
-                                        let needed =
-                                            match action with
-                                            | SmartAuth.ScopeAction.Read -> "read"
-                                            | SmartAuth.ScopeAction.Write -> "write"
-
-                                        let target =
-                                            resourceType |> Option.defaultValue "*"
+                                    if SmartScopes.hasUserClinicalScopes record.Scope && record.FhirUser.IsNone then
+                                        return! forbidden ctx "user/ scopes require fhirUser on the access token"
+                                    elif
+                                        SmartScopes.hasPatientClinicalScopes record.Scope
+                                        && record.PatientId.IsNone
+                                    then
+                                        return! forbidden ctx "patient/ scopes require patient context on the access token"
+                                    elif not (SmartScopes.allows record.Scope resourceType interaction) then
+                                        let needed = SmartScopes.describeNeeded resourceType interaction
 
                                         return!
                                             forbidden
                                                 ctx
-                                                $"Missing SMART scope system/{target}.{needed} (token scope: {record.Scope})"
+                                                $"Missing SMART scope for {needed} (token scope: {record.Scope})"
+                                    else
+                                        ctx.Items[SmartAuth.AuthContextItemKey] <- SmartAuth.toAuthContext record
+                                        return! next.Invoke(ctx)
                     })
             )
             |> ignore

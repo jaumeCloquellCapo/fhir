@@ -310,20 +310,33 @@ module OpenApiDocs =
         options.SwaggerDoc("v1", info)
         options.OperationFilter<ResponseDescriptionFilter>()
 
-        let scheme =
+        let basicScheme =
             OpenApiSecurityScheme(
                 Name = "Authorization",
                 Type = SecuritySchemeType.Http,
                 Scheme = "basic",
                 In = ParameterLocation.Header,
-                Description = "HTTP Basic (when Auth:Enabled=true)"
+                Description = "HTTP Basic (when Auth:Enabled=true) — full access bypass"
             )
 
-        options.AddSecurityDefinition("basic", scheme)
+        let bearerScheme =
+            OpenApiSecurityScheme(
+                Name = "Authorization",
+                Type = SecuritySchemeType.Http,
+                Scheme = "bearer",
+                BearerFormat = "opaque",
+                In = ParameterLocation.Header,
+                Description =
+                    "SMART Bearer token from /auth/token. Enforces patient|user|system scopes (v2 c/r/u/d/s) and patient compartment when applicable."
+            )
+
+        options.AddSecurityDefinition("basic", basicScheme)
+        options.AddSecurityDefinition("bearer", bearerScheme)
 
         options.AddSecurityRequirement(fun document ->
             let requirement = OpenApiSecurityRequirement()
             requirement.Add(OpenApiSecuritySchemeReference("basic", document), ResizeArray<string>())
+            requirement.Add(OpenApiSecuritySchemeReference("bearer", document), ResizeArray<string>())
             requirement)
 
         options.MapType<FhirResourceDoc>(fun () -> fhirResourceSchema ())

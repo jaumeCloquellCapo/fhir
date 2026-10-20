@@ -43,6 +43,7 @@ module Codec =
                 "error", "not-found", $"Version {resourceType}/{id}/_history/{vid} was not found."
             ]
         | BadRequest message -> FhirJson.operationOutcome [ "error", "invalid", message ]
+        | Forbidden message -> FhirJson.operationOutcome [ "error", "forbidden", message ]
         | UnsupportedType resourceType ->
             FhirJson.operationOutcome [
                 "error", "not-supported", $"Resource type '{resourceType}' is not supported."

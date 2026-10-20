@@ -18,6 +18,7 @@ module Types =
         | Gone of resourceType: string * id: string * vid: string option
         | VersionNotFound of resourceType: string * id: string * vid: string
         | BadRequest of message: string
+        | Forbidden of message: string
         | UnsupportedType of string
         | Conflict of message: string
         | PreconditionFailed of message: string

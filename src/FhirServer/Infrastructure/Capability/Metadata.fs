@@ -217,7 +217,7 @@ module Metadata =
                 "service", securityServices
                 "description",
                 FhirJson.jStr
-                    "SMART App Launch MVP: /.well-known/smart-configuration and /auth/token (client_credentials). Optional HTTP Basic when Auth:Enabled=true. Subscriptions MVP: rest-hook notifications."
+                    "SMART App Launch: /.well-known/smart-configuration, /auth/authorize (PKCE), /auth/token (client_credentials + authorization_code), /auth/register (ephemeral DCR). Bearer scopes patient|user|system with v2 c/r/u/d/s. Optional HTTP Basic when Auth:Enabled=true."
             ]
 
         let rest =
