@@ -55,7 +55,8 @@ type SearchAdvancedTests() =
             let withId = propString withGender "id" |> Option.defaultValue ""
             let noId = propString noGender "id" |> Option.defaultValue ""
 
-            let! status, body = get client "/Patient?gender%3Amissing=true"            assertStatus HttpStatusCode.OK status
+            let! status, body = get client "/Patient?gender%3Amissing=true"
+            assertStatus HttpStatusCode.OK status
             Assert.Contains(noId, body)
             Assert.DoesNotContain($"\"id\":\"{withId}\"", body)
         }

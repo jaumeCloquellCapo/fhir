@@ -9,7 +9,7 @@ open Microsoft.Extensions.DependencyInjection
 open Microsoft.OpenApi
 open Swashbuckle.AspNetCore.SwaggerGen
 
-/// Marker types so Swagger can emit distinct named schemas (not a blank object).
+/// Marker types so Swagger emits distinct named schemas (not a blank object).
 type FhirResourceDoc() = class end
 
 type OperationOutcomeDoc() = class end
@@ -49,7 +49,6 @@ module OpenApiDocs =
     let private fhirJson = "application/fhir+json"
     let private ndjson = "application/fhir+ndjson"
 
-    /// Which success / error responses to advertise for an endpoint.
     type ResponseProfile =
         | TextPlain
         | JsonOk
@@ -64,27 +63,37 @@ module OpenApiDocs =
         | BulkAccepted
         | NoContent
 
-    let private prop (name: string) (schemaType: JsonSchemaType) (description: string) =
-        let s = OpenApiSchema(Type = schemaType, Description = description)
-        KeyValuePair(name, s :> IOpenApiSchema)
+    let private props (items: (string * IOpenApiSchema) list) =
+        let d = Dictionary<string, IOpenApiSchema>()
+
+        for name, schema in items do
+            d.[name] <- schema
+
+        d
+
+    let private strProp name description =
+        name, OpenApiSchema(Type = JsonSchemaType.String, Description = description) :> IOpenApiSchema
+
+    let private objProp name description =
+        name, OpenApiSchema(Type = JsonSchemaType.Object, Description = description) :> IOpenApiSchema
+
+    let private arrProp name description =
+        name, OpenApiSchema(Type = JsonSchemaType.Array, Description = description) :> IOpenApiSchema
+
+    let private intProp name description =
+        name, OpenApiSchema(Type = JsonSchemaType.Integer, Description = description) :> IOpenApiSchema
 
     let private fhirResourceSchema () =
-        let required = HashSet<string>([ "resourceType" ])
-
-        let properties =
-            Dictionary<string, IOpenApiSchema>(
-                [
-                    prop "resourceType" JsonSchemaType.String "FHIR resource type (e.g. Patient, Observation)"
-                    prop "id" JsonSchemaType.String "Logical id"
-                    prop "meta" JsonSchemaType.Object "Metadata (versionId, lastUpdated, profile, …)"
-                ]
-            )
-
         OpenApiSchema(
             Type = JsonSchemaType.Object,
             Description = "Any FHIR resource (JSON object). Shape depends on resourceType.",
-            Required = required,
-            Properties = properties,
+            Required = HashSet<string>([ "resourceType" ]),
+            Properties =
+                props [
+                    strProp "resourceType" "FHIR resource type (e.g. Patient, Observation)"
+                    strProp "id" "Logical id"
+                    objProp "meta" "Metadata (versionId, lastUpdated, profile, …)"
+                ],
             AdditionalPropertiesAllowed = true,
             Example =
                 JsonNode.Parse(
@@ -93,44 +102,28 @@ module OpenApiDocs =
         )
 
     let private operationOutcomeSchema () =
-        let required = HashSet<string>([ "resourceType" ])
-
-        let issueRequired = HashSet<string>([ "severity"; "code" ])
-
-        let issueProps =
-            Dictionary<string, IOpenApiSchema>(
-                [
-                    prop "severity" JsonSchemaType.String "fatal | error | warning | information"
-                    prop "code" JsonSchemaType.String "Issue type code (e.g. not-found, invalid)"
-                    prop "diagnostics" JsonSchemaType.String "Human-readable diagnostics"
-                ]
-                |> dict
-            )
-
         let issueItem =
             OpenApiSchema(
                 Type = JsonSchemaType.Object,
-                Required = issueRequired,
-                Properties = issueProps,
+                Required = HashSet<string>([ "severity"; "code" ]),
+                Properties =
+                    props [
+                        strProp "severity" "fatal | error | warning | information"
+                        strProp "code" "Issue type code (e.g. not-found, invalid)"
+                        strProp "diagnostics" "Human-readable diagnostics"
+                    ],
                 AdditionalPropertiesAllowed = true
-            )
-
-        let issueArray = OpenApiSchema(Type = JsonSchemaType.Array, Items = issueItem)
-
-        let properties =
-            Dictionary<string, IOpenApiSchema>(
-                [
-                    prop "resourceType" JsonSchemaType.String "Always OperationOutcome"
-                    KeyValuePair("issue", issueArray :> IOpenApiSchema)
-                ]
-                |> dict
             )
 
         OpenApiSchema(
             Type = JsonSchemaType.Object,
             Description = "FHIR OperationOutcome — used for errors and $validate results.",
-            Required = required,
-            Properties = properties,
+            Required = HashSet<string>([ "resourceType" ]),
+            Properties =
+                props [
+                    strProp "resourceType" "Always OperationOutcome"
+                    "issue", OpenApiSchema(Type = JsonSchemaType.Array, Items = issueItem) :> IOpenApiSchema
+                ],
             AdditionalPropertiesAllowed = true,
             Example =
                 JsonNode.Parse(
@@ -139,24 +132,17 @@ module OpenApiDocs =
         )
 
     let private bundleSchema () =
-        let required = HashSet<string>([ "resourceType"; "type" ])
-
-        let properties =
-            Dictionary<string, IOpenApiSchema>(
-                [
-                    prop "resourceType" JsonSchemaType.String "Always Bundle"
-                    prop "type" JsonSchemaType.String "searchset | history | transaction | batch | …"
-                    prop "total" JsonSchemaType.Integer "Total matches (search/history)"
-                    prop "entry" JsonSchemaType.Array "Bundle entries"
-                ]
-                |> dict
-            )
-
         OpenApiSchema(
             Type = JsonSchemaType.Object,
             Description = "FHIR Bundle (searchset, history, transaction response, …).",
-            Required = required,
-            Properties = properties,
+            Required = HashSet<string>([ "resourceType"; "type" ]),
+            Properties =
+                props [
+                    strProp "resourceType" "Always Bundle"
+                    strProp "type" "searchset | history | transaction | batch | …"
+                    intProp "total" "Total matches (search/history)"
+                    arrProp "entry" "Bundle entries"
+                ],
             AdditionalPropertiesAllowed = true,
             Example =
                 JsonNode.Parse(
@@ -248,7 +234,6 @@ module OpenApiDocs =
             StatusCodes.Status422UnprocessableEntity, "Unprocessable Entity (schema validation) — OperationOutcome"
         ]
 
-    /// Adds human descriptions on each documented status code.
     type private ResponseDescriptionFilter() =
         interface IOperationFilter with
             member _.Apply(operation, _context) =
@@ -264,7 +249,6 @@ module OpenApiDocs =
                             | _ -> ()
                         | _ -> ()
 
-    /// Attach tags, summary, description and response/request OpenAPI metadata.
     let document
         (tags: string[])
         (summary: string)
@@ -314,14 +298,13 @@ module OpenApiDocs =
     let documentNoContent tags summary description endpoint =
         document tags summary description NoContent endpoint
 
-    /// SwaggerGen document info + Basic auth + named FHIR schemas with examples.
     let configureSwagger (options: SwaggerGenOptions) =
         let info = OpenApiInfo(Title = "FhirServer API", Version = "v1")
 
         info.Description <-
             "Open-source HL7 FHIR R5 server (F# / ASP.NET Core).\n\n"
             + "Bodies use **application/fhir+json** unless noted (NDJSON for `$dump` / bulk files).\n"
-            + "Success bodies: **FhirResource** / **Bundle**. Errors and `$validate`: **OperationOutcome**.\n"
+            + "Success: **FhirResource** / **Bundle**. Errors and `$validate`: **OperationOutcome**.\n"
             + "Create → **201**; bulk `$export` kickoff → **202**; soft-deleted read → **410**."
 
         options.SwaggerDoc("v1", info)
@@ -346,5 +329,4 @@ module OpenApiDocs =
         options.MapType<FhirResourceDoc>(fun () -> fhirResourceSchema ())
         options.MapType<OperationOutcomeDoc>(fun () -> operationOutcomeSchema ())
         options.MapType<BundleDoc>(fun () -> bundleSchema ())
-        // Legacy JsonObject mappings (if any endpoint still uses it).
         options.MapType<JsonObject>(fun () -> fhirResourceSchema ())
