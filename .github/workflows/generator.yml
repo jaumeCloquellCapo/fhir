@@ -3,21 +3,13 @@ name: Generator
 on:
   push:
     branches: [main]
-    paths:
-      - "generator/**"
-      - "packages/**"
-      - ".github/workflows/generator.yml"
   pull_request:
     branches: [main]
-    paths:
-      - "generator/**"
-      - "packages/**"
-      - ".github/workflows/generator.yml"
   workflow_dispatch:
 
 concurrency:
   group: generator-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   smoke:

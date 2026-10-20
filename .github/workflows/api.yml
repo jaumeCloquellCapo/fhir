@@ -3,25 +3,13 @@ name: API
 on:
   push:
     branches: [main]
-    paths:
-      - "src/**"
-      - "packages/**"
-      - "tests/**"
-      - "FhirServer.slnx"
-      - ".github/workflows/api.yml"
   pull_request:
     branches: [main]
-    paths:
-      - "src/**"
-      - "packages/**"
-      - "tests/**"
-      - "FhirServer.slnx"
-      - ".github/workflows/api.yml"
   workflow_dispatch:
 
 concurrency:
   group: api-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   test:
