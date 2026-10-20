@@ -13,11 +13,6 @@ type SearchAdvancedTests() =
     let factory = new FhirApiFactory()
     let client = factory.CreateClient()
 
-    interface IDisposable with
-        member _.Dispose() =
-            client.Dispose()
-            factory.Dispose()
-
     let mustCreate (path: string) (json: string) =
         task {
             let! status, body, _ = postJson client path json
@@ -64,6 +59,11 @@ type SearchAdvancedTests() =
         )
 
     let enc (s: string) = Uri.EscapeDataString s
+
+    interface IDisposable with
+        member _.Dispose() =
+            client.Dispose()
+            factory.Dispose()
 
     [<Fact>]
     member _.``family:exact matches only exact family``() : Task =
