@@ -8,7 +8,7 @@ An open-source [HL7 FHIR](https://hl7.org/fhir/) backend for healthcare applicat
 | Generator | [![Generator](https://github.com/jaumeCloquellCapo/fhir/actions/workflows/generator.yml/badge.svg)](https://github.com/jaumeCloquellCapo/fhir/actions/workflows/generator.yml) |
 | Local | `make build` · `make test` |
 
-FhirServer is a **FHIR R5 server** you can run locally or embed in your own stack: REST API, PostgreSQL persistence, schema validation from official HL7 packages, search, terminology, SMART auth, and subscriptions—without a Firely / `Hl7.Fhir.*` runtime dependency.
+FhirServer is a **FHIR R5-only server** (`hl7.fhir.r5.core@5.0.0`) you can run locally or embed in your own stack: REST API, PostgreSQL persistence, schema validation from official HL7 packages, search, terminology, SMART auth, and subscriptions—without a Firely / `Hl7.Fhir.*` runtime dependency. Earlier FHIR releases are not supported yet — see [Docs/FhirVersion.md](Docs/FhirVersion.md).
 
 Use it to prototype clinical apps, learn FHIR end-to-end, or as a foundation for a custom FHIR service.
 

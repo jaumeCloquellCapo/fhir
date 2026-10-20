@@ -38,7 +38,7 @@ Offline codegen ([`Generator/`](../Generator/README.md)) turns `hl7.fhir.r5.core
 
 ## FHIR & FhirServer
 
-- **Version:** FHIR R5 (`hl7.fhir.r5.core`).
+- **Version:** **FHIR R5 only** today (`hl7.fhir.r5.core@5.0.0`). See [FhirVersion.md](FhirVersion.md) before introducing R4 or other releases.
 - **Wire format:** `application/fhir+json` (XML is not a first-class format yet).
 - **Storage:** FHIR JSON in PostgreSQL `jsonb` envelopes—not a fully relational column-per-element model.
 - **Validation:** FHIR Schema generated from StructureDefinition snapshots (plus a FHIRPath constraint subset and core constraint profiles).

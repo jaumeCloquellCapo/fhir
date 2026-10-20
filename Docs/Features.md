@@ -1,6 +1,8 @@
 # Features & API
 
-What FhirServer exposes as a FHIR R5 backend. Content type: **`application/fhir+json`**. Base URL (local): `http://localhost:5050`.
+What FhirServer exposes as a **FHIR R5-only** backend (`hl7.fhir.r5.core@5.0.0`). Content type: **`application/fhir+json`**. Base URL (local): `http://localhost:5050`.
+
+Version policy and multi-release notes: [FhirVersion.md](FhirVersion.md).
 
 ### At a glance
 
@@ -137,7 +139,7 @@ Create an active `Subscription` with `channelType.code=rest-hook` and `endpoint`
 - `$validate?profile=` (or `_profile`) forces the same core-profile checks without requiring `meta.profile`.
 - Bindings: **required** → fatal; **extensible** → warning; **preferred** / **example** → information (when the ValueSet is embedded).
 - Relative `Reference.reference` values (`Type/id`) are resolved against the store on `$validate` and on create/update → **warning** if missing (writes are not blocked by dangling refs).
-- **QuestionnaireResponse vs Questionnaire**: resolves `questionnaire` (canonical or `Questionnaire/id`), checks `linkId`, required items when `status` is `completed`/`amended`, answer `value[x]` vs item `type`, **enableWhen** / **enableBehavior** (disabled items skip required; answers on disabled items → fatal when completed), and **answerValueSet** / **answerOption** membership (open-choice free text allowed).
+- **QuestionnaireResponse vs Questionnaire** (**R5**): resolves `questionnaire` (canonical or `Questionnaire/id`), checks `linkId`, required items when `status` is `completed`/`amended`, answer `value[x]` vs item `type` (`coding`, not R4 `choice`), **enableWhen** / **enableBehavior** (disabled items skip required; answers on disabled items → fatal when completed), and **answerValueSet** / **answerOption** membership (`answerConstraint=optionsOrString` for free text).
 - Custom/external IGs beyond the R5 core package are not packaged by default (run the generator against additional packages to add them).
 
 ## Out of scope (roadmap)
@@ -146,6 +148,7 @@ Create an active `Subscription` with `channelType.code=rest-hook` and `endpoint`
 - Persisting dynamically registered clients across restarts
 - External webhook reliability (retries, signing)
 - Full FHIRPath (incl. `%terminologies`, `select`/`implies`, …) and external terminology server
+- Multi-version FHIR (R4 / …) side-by-side — see [FhirVersion.md](FhirVersion.md)
 - Questionnaire enableWhenExpression / answerValueSet via remote terminology; slicing / fixed / pattern
 - Full FHIRPath search extractors / `_filter` embedded chain & `_has`
 - XML (`application/fhir+xml`) as a first-class format

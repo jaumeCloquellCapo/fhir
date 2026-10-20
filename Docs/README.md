@@ -7,6 +7,7 @@ Product-oriented docs for running and extending FhirServer (FHIR API, storage, a
 | Doc | Description |
 |-----|-------------|
 | [GettingStarted.md](GettingStarted.md) | Install, run locally, first API calls |
+| [FhirVersion.md](FhirVersion.md) | **R5-only today** — policy for adding R4 / other releases later |
 | [Features.md](Features.md) | FHIR interactions, search, SMART, subscriptions, roadmap |
 | [Architecture.md](Architecture.md) | Platform components, PostgreSQL model, validation pipeline |
 | [Configuration.md](Configuration.md) | Connection strings, auth, SMART, audit |

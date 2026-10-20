@@ -5,6 +5,7 @@
   * [Prerequisites](GettingStarted.md#prerequisites)
   * [Run with PostgreSQL](GettingStarted.md#run-with-postgresql)
   * [Verify with curl](GettingStarted.md#verify-with-curl)
+* [FHIR version (R5 only)](FhirVersion.md)
 * [Architecture](Architecture.md)
   * [Platform components](Architecture.md#platform-components)
   * [FHIR & FhirServer](Architecture.md#fhir--fhirserver)
@@ -45,6 +46,7 @@
 
 ## FHIR configuration & validation
 
+* [FHIR version — R5 only](FhirVersion.md)
 * [Validation (writes & `$validate`)](Features.md#validation)
 * [Validation depth & profiles](Features.md#validation-depth)
 * [Schema generator](../Generator/README.md)
