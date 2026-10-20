@@ -102,13 +102,25 @@ module SearchIndexQuery =
                 |> List.map (fun (system, code) ->
                     let codePh = addParam (code :> obj)
 
+                    let codePred =
+                        match filter.Match with
+                        | SearchEngine.TokenMatch.Exact -> $"tk.code = {codePh}"
+                        // Ancestor: indexed code is a prefix of the query code.
+                        | SearchEngine.TokenMatch.Above ->
+                            codePh
+                            + " LIKE tk.code || '%' AND LENGTH(tk.code) > 0 AND LENGTH(tk.code) < LENGTH("
+                            + codePh
+                            + ")"
+                        // Descendant: indexed code starts with the query code.
+                        | SearchEngine.TokenMatch.Below -> "tk.code LIKE " + codePh + " || '%'"
+
                     match system with
                     | None ->
-                        $"EXISTS (SELECT 1 FROM search_token tk WHERE tk.resource_type = {rtPh} AND tk.id = t.id AND tk.param = {paramPh} AND tk.code = {codePh})"
+                        $"EXISTS (SELECT 1 FROM search_token tk WHERE tk.resource_type = {rtPh} AND tk.id = t.id AND tk.param = {paramPh} AND {codePred})"
                     | Some sys ->
                         let sysPh = addParam (sys :> obj)
 
-                        $"EXISTS (SELECT 1 FROM search_token tk WHERE tk.resource_type = {rtPh} AND tk.id = t.id AND tk.param = {paramPh} AND tk.code = {codePh} AND tk.system = {sysPh})")
+                        $"EXISTS (SELECT 1 FROM search_token tk WHERE tk.resource_type = {rtPh} AND tk.id = t.id AND tk.param = {paramPh} AND {codePred} AND tk.system = {sysPh})")
                 |> String.concat " OR "
 
             if valueClauses <> "" then
@@ -162,21 +174,19 @@ module SearchIndexQuery =
                     $"EXISTS (SELECT 1 FROM search_date d WHERE d.resource_type = {rtPh} AND d.id = t.id AND d.param = {paramPh} AND d.end_ts > {instantPh})"
                 | SearchEngine.DateComparator.Le ->
                     $"EXISTS (SELECT 1 FROM search_date d WHERE d.resource_type = {rtPh} AND d.id = t.id AND d.param = {paramPh} AND d.start_ts <= {instantPh})"
+                | SearchEngine.DateComparator.Ap ->
+                    let hiPh =
+                        match filter.InstantHi with
+                        | Some hi -> addParam (hi :> obj)
+                        | None -> instantPh
+
+                    $"EXISTS (SELECT 1 FROM search_date d WHERE d.resource_type = {rtPh} AND d.id = t.id AND d.param = {paramPh} AND d.start_ts < {hiPh} AND d.end_ts > {instantPh})"
 
             sb.Append($" AND {clause}") |> ignore
 
         for filter in plan.Quantities do
             let paramPh = addParam (filter.Param :> obj)
             let valuePh = addParam (filter.Value :> obj)
-
-            let op =
-                match filter.Comparator with
-                | SearchEngine.QuantityComparator.Eq -> "="
-                | SearchEngine.QuantityComparator.Ne -> "<>"
-                | SearchEngine.QuantityComparator.Gt -> ">"
-                | SearchEngine.QuantityComparator.Lt -> "<"
-                | SearchEngine.QuantityComparator.Ge -> ">="
-                | SearchEngine.QuantityComparator.Le -> "<="
 
             let systemClause =
                 match filter.System with
@@ -193,10 +203,28 @@ module SearchIndexQuery =
                     $" AND q.code = {codePh}"
 
             let clause =
-                $"EXISTS (SELECT 1 FROM search_quantity q WHERE q.resource_type = {rtPh} AND q.id = t.id AND q.param = {paramPh} AND q.value {op} {valuePh}{systemClause}{codeClause})"
+                match filter.Comparator with
+                | SearchEngine.QuantityComparator.Ap ->
+                    let hiPh =
+                        match filter.ValueHi with
+                        | Some hi -> addParam (hi :> obj)
+                        | None -> valuePh
+
+                    $"EXISTS (SELECT 1 FROM search_quantity q WHERE q.resource_type = {rtPh} AND q.id = t.id AND q.param = {paramPh} AND q.value >= {valuePh} AND q.value <= {hiPh}{systemClause}{codeClause})"
+                | other ->
+                    let op =
+                        match other with
+                        | SearchEngine.QuantityComparator.Eq -> "="
+                        | SearchEngine.QuantityComparator.Ne -> "<>"
+                        | SearchEngine.QuantityComparator.Gt -> ">"
+                        | SearchEngine.QuantityComparator.Lt -> "<"
+                        | SearchEngine.QuantityComparator.Ge -> ">="
+                        | SearchEngine.QuantityComparator.Le -> "<="
+                        | SearchEngine.QuantityComparator.Ap -> "="
+
+                    $"EXISTS (SELECT 1 FROM search_quantity q WHERE q.resource_type = {rtPh} AND q.id = t.id AND q.param = {paramPh} AND q.value {op} {valuePh}{systemClause}{codeClause})"
 
             sb.Append($" AND {clause}") |> ignore
-
         { WhereClause = sb.ToString()
           OrderBy = orderBy plan
           Parameters = List.rev parameters }

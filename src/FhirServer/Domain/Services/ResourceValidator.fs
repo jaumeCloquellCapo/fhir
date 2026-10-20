@@ -41,9 +41,25 @@ module ResourceValidator =
                         :: issues
                     else
                         issues
-                | _ -> issues
-            with _ ->
-                issues
+                | _ ->
+                    {
+                        Diagnostics = "Request body must be a JSON object to check resourceType."
+                        Fatal = true
+                    }
+                    :: issues
+            with
+            | :? System.Text.Json.JsonException as ex ->
+                {
+                    Diagnostics = $"Unable to parse JSON while checking resourceType: {ex.Message}"
+                    Fatal = true
+                }
+                :: issues
+            | ex ->
+                {
+                    Diagnostics = $"Unable to check resourceType against path '{rt}': {ex.Message}"
+                    Fatal = true
+                }
+                :: issues
 
     let validateJson (expectedType: string option) (body: string) : ValidationIssue list =
         SchemaEngine.validateJson body

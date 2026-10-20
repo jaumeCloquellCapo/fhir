@@ -33,6 +33,7 @@ module SearchEngine =
         | Le
         | Sa
         | Eb
+        | Ap
 
     [<RequireQualifiedAccess>]
     type QuantityComparator =
@@ -42,6 +43,15 @@ module SearchEngine =
         | Lt
         | Ge
         | Le
+        | Ap
+
+    [<RequireQualifiedAccess>]
+    type TokenMatch =
+        | Exact
+        /// Best-effort hierarchy: indexed code is a prefix of the query code (ancestor).
+        | Above
+        /// Best-effort hierarchy: indexed code starts with the query code (descendant).
+        | Below
 
     type StringFilter =
         { Param: string
@@ -51,6 +61,7 @@ module SearchEngine =
     type TokenFilter =
         { Param: string
           Negated: bool
+          Match: TokenMatch
           /// (system option, code) — None system matches any system.
           Values: (string option * string) list }
 
@@ -64,15 +75,18 @@ module SearchEngine =
     type DateFilter =
         { Param: string
           Comparator: DateComparator
-          Instant: DateTimeOffset }
+          Instant: DateTimeOffset
+          /// Upper bound for `ap` (exclusive-ish window end).
+          InstantHi: DateTimeOffset option }
 
     type QuantityFilter =
         { Param: string
           Comparator: QuantityComparator
           Value: decimal
+          /// Upper bound for `ap` (±10%).
+          ValueHi: decimal option
           System: string option
           Code: string option }
-
     [<RequireQualifiedAccess>]
     type SortField =
         | IdAsc
@@ -342,7 +356,20 @@ module SearchEngine =
                     let key = $"{FhirJson.resourceType resource}/{FhirJson.id resource}"
                     seen.Add key))
 
-    /// Expand `subject.name=X` / `patient.family=Y` into concrete reference filters.
+    let private targetTypeForRefField (refField: string) =
+        match refField with
+        | "patient"
+        | "subject" -> "Patient"
+        | "organization"
+        | "managingOrganization" -> "Organization"
+        | "encounter" -> "Encounter"
+        | other ->
+            if String.IsNullOrWhiteSpace other then
+                "Patient"
+            else
+                string (Char.ToUpperInvariant other.[0]) + other.Substring(1)
+
+    /// Expand `subject.name=X` / multi-hop `subject.organization.name=Y` (first hop only; nested via `search`).
     let expandChainedQuery
         (search: string * Map<string, string list> -> FhirResource list)
         (query: Map<string, string list>)
@@ -350,7 +377,9 @@ module SearchEngine =
         let chainEntries, plainEntries =
             query
             |> Map.toList
-            |> List.partition (fun (key, _) -> key.Contains('.', StringComparison.Ordinal))
+            |> List.partition (fun (key, _) ->
+                key.Contains('.', StringComparison.Ordinal)
+                && not (key.StartsWith("_has:", StringComparison.Ordinal)))
 
         let plain = Map.ofList plainEntries
 
@@ -359,20 +388,8 @@ module SearchEngine =
             (fun (acc: Map<string, string list>) (key, values) ->
                 match key.Split('.', 2) with
                 | [| refField; nested |] ->
-                    let targetType =
-                        match refField with
-                        | "patient"
-                        | "subject" -> "Patient"
-                        | "organization"
-                        | "managingOrganization" -> "Organization"
-                        | "encounter" -> "Encounter"
-                        | other ->
-                            // Best-effort: capitalize as resource type name.
-                            if String.IsNullOrWhiteSpace other then
-                                "Patient"
-                            else
-                                string (Char.ToUpperInvariant other.[0]) + other.Substring(1)
-
+                    let targetType = targetTypeForRefField refField
+                    // Nested may still contain dots / modifiers — `search` must expand recursively.
                     let targets = search (targetType, Map.ofList [ nested, values ])
 
                     let refs =
@@ -394,6 +411,9 @@ module SearchEngine =
             match param with
             | "patient"
             | "subject" -> [ "subject"; "patient" ]
+            | "organization"
+            | "managingOrganization" -> [ "managingOrganization"; "organization" ]
+            | "encounter" -> [ "encounter" ]
             | other -> [ other ]
 
         fields
@@ -411,7 +431,7 @@ module SearchEngine =
                 | None -> None
             | _ -> None)
 
-    /// Expand `_has:RevType:refParam:nestedParam=value` into `_id` filters on the source type.
+    /// Expand `_has:RevType:refParam:…` including nested `_has:…` (remainder passed to `search`).
     let expandHasQuery
         (search: string * Map<string, string list> -> FhirResource list)
         (query: Map<string, string list>)
@@ -428,11 +448,12 @@ module SearchEngine =
             (fun (acc: Map<string, string list>) (key, values) ->
                 let rest = key.Substring("_has:".Length)
 
-                match rest.Split(':', 3) with
-                | [| revType; refParam; nestedParam |] when
-                    not (String.IsNullOrWhiteSpace revType || String.IsNullOrWhiteSpace nestedParam)
+                // Type:refParam[:remainder] — remainder may be `_has:…` or `param` / `param:modifier`
+                match rest.Split([| ':' |], 3) with
+                | [| revType; refParam; nestedKey |] when
+                    not (String.IsNullOrWhiteSpace revType || String.IsNullOrWhiteSpace nestedKey)
                     ->
-                    let found = search (revType, Map.ofList [ nestedParam, values ])
+                    let found = search (revType, Map.ofList [ nestedKey, values ])
 
                     let ids =
                         if List.isEmpty found then
@@ -445,7 +466,6 @@ module SearchEngine =
                     let existing = acc |> Map.tryFind "_id" |> Option.defaultValue []
                     acc |> Map.add "_id" (existing @ ids)
                 | [| revType; refParam |] when not (String.IsNullOrWhiteSpace revType) ->
-                    // `_has:Observation:patient=Patient/x` → Observations pointing at that patient → inject ids
                     let found = search (revType, Map.ofList [ refParam, values ])
 
                     let ids =
@@ -586,7 +606,7 @@ module SearchEngine =
         | _ -> Some true
 
     let private parseDatePrefix (raw: string) : (DateComparator * string) option =
-        let prefixes = [ "eq"; "ne"; "gt"; "lt"; "ge"; "le"; "sa"; "eb" ]
+        let prefixes = [ "eq"; "ne"; "gt"; "lt"; "ge"; "le"; "sa"; "eb"; "ap" ]
 
         let prefix, rest =
             match prefixes |> List.tryFind (fun p -> raw.StartsWith(p, StringComparison.Ordinal)) with
@@ -602,9 +622,23 @@ module SearchEngine =
             | "le" -> DateComparator.Le
             | "sa" -> DateComparator.Sa
             | "eb" -> DateComparator.Eb
+            | "ap" -> DateComparator.Ap
             | _ -> DateComparator.Eq
 
         Some(cmp, rest)
+
+    let private approximateDateWindow (instant: DateTimeOffset) =
+        let now = DateTimeOffset.UtcNow
+        let span = now - instant
+        let tenth = TimeSpan.FromTicks(int64 (float (abs span.Ticks) * 0.1))
+        // Floor: at least ±12h so day-precision values still match nearby days.
+        let delta =
+            if tenth < TimeSpan.FromHours 12.0 then
+                TimeSpan.FromHours 12.0
+            else
+                tenth
+
+        instant - delta, instant + delta
 
     let private parseQuantityValue (raw: string) : (QuantityComparator * decimal * string option * string option) option =
         let prefix, rest =
@@ -615,7 +649,8 @@ module SearchEngine =
                     || raw.StartsWith("le", StringComparison.Ordinal)
                     || raw.StartsWith("lt", StringComparison.Ordinal)
                     || raw.StartsWith("eq", StringComparison.Ordinal)
-                    || raw.StartsWith("ne", StringComparison.Ordinal))
+                    || raw.StartsWith("ne", StringComparison.Ordinal)
+                    || raw.StartsWith("ap", StringComparison.Ordinal))
             then
                 raw.Substring(0, 2), raw.Substring(2)
             else
@@ -628,6 +663,7 @@ module SearchEngine =
             | "lt" -> QuantityComparator.Lt
             | "ge" -> QuantityComparator.Ge
             | "le" -> QuantityComparator.Le
+            | "ap" -> QuantityComparator.Ap
             | _ -> QuantityComparator.Eq
 
         let parts = rest.Split('|')
@@ -651,6 +687,11 @@ module SearchEngine =
                 "gender", StringMatch.Exact, IndexKind.String
             ]
         | "Observation" -> [ "status", StringMatch.Exact, IndexKind.String ]
+        | "Encounter" -> [ "status", StringMatch.Exact, IndexKind.String ]
+        | "Organization" ->
+            [
+                "name", StringMatch.Contains, IndexKind.String
+            ]
         | _ -> []
 
     let private tokenParamSpecs (resourceType: string) =
@@ -661,7 +702,17 @@ module SearchEngine =
 
     let private refParamSpecs (resourceType: string) =
         match resourceType with
-        | "Observation" -> [ "patient", "subject"; "subject", "subject" ]
+        | "Patient" ->
+            [
+                "organization", "organization"
+                "managingOrganization", "managingOrganization"
+            ]
+        | "Observation" ->
+            [
+                "patient", "subject"
+                "subject", "subject"
+                "encounter", "encounter"
+            ]
         | "Encounter"
         | "Condition"
         | "AllergyIntolerance"
@@ -722,6 +773,21 @@ module SearchEngine =
                     Some {
                         Param = param
                         Negated = true
+                        Match = TokenMatch.Exact
+                        Values = parseTokenValues values
+                    }
+                | Some "above" ->
+                    Some {
+                        Param = param
+                        Negated = false
+                        Match = TokenMatch.Above
+                        Values = parseTokenValues values
+                    }
+                | Some "below" ->
+                    Some {
+                        Param = param
+                        Negated = false
+                        Match = TokenMatch.Below
                         Values = parseTokenValues values
                     }
                 | Some _ -> None
@@ -729,9 +795,9 @@ module SearchEngine =
                     Some {
                         Param = param
                         Negated = false
+                        Match = TokenMatch.Exact
                         Values = parseTokenValues values
                     }))
-
     let private refFilters (resourceType: string) (query: Map<string, string list>) : RefFilter list =
         refParamSpecs resourceType
         |> List.collect (fun (queryParam, indexParam) ->
@@ -783,6 +849,25 @@ module SearchEngine =
                     })
                 | _ -> None))
 
+    let private toDateFilter (param: string) (cmp: DateComparator) (dto: DateTimeOffset) =
+        match cmp with
+        | DateComparator.Ap ->
+            let lo, hi = approximateDateWindow dto
+
+            {
+                Param = param
+                Comparator = DateComparator.Ap
+                Instant = lo
+                InstantHi = Some hi
+            }
+        | _ ->
+            {
+                Param = param
+                Comparator = cmp
+                Instant = dto
+                InstantHi = None
+            }
+
     let private dateFilters (resourceType: string) (query: Map<string, string list>) : DateFilter list =
         dateParamSpecs resourceType
         |> List.collect (fun param ->
@@ -798,27 +883,16 @@ module SearchEngine =
                         | None -> None
                         | Some(cmp, rest) ->
                             match parseInstant rest with
-                            | Some dto ->
-                                Some {
-                                    Param = param
-                                    Comparator = cmp
-                                    Instant = dto
-                                }
+                            | Some dto -> Some(toDateFilter param cmp dto)
                             | None ->
-                                // Allow bare dates like 1990-01-01
                                 match
                                     DateTimeOffset.TryParse(
                                         rest,
                                         CultureInfo.InvariantCulture,
-                                        DateTimeStyles.AssumeUniversal
+                                        DateTimeStyles.AssumeUniversal ||| DateTimeStyles.AdjustToUniversal
                                     )
                                 with
-                                | true, dto ->
-                                    Some {
-                                        Param = param
-                                        Comparator = cmp
-                                        Instant = dto
-                                    }
+                                | true, dto -> Some(toDateFilter param cmp (dto.ToUniversalTime()))
                                 | _ -> None)))
 
     let private quantityFilters (resourceType: string) (query: Map<string, string list>) : QuantityFilter list =
@@ -835,14 +909,28 @@ module SearchEngine =
                         match parseQuantityValue raw with
                         | None -> None
                         | Some(cmp, value, system, code) ->
+                            let valueHi =
+                                match cmp with
+                                | QuantityComparator.Ap ->
+                                    let margin = abs value * 0.1m
+                                    Some(value + margin)
+                                | _ -> None
+
+                            let valueLo =
+                                match cmp with
+                                | QuantityComparator.Ap ->
+                                    let margin = abs value * 0.1m
+                                    value - margin
+                                | _ -> value
+
                             Some {
                                 Param = param
                                 Comparator = cmp
-                                Value = value
+                                Value = valueLo
+                                ValueHi = valueHi
                                 System = system
                                 Code = code
                             })))
-
     /// Build a search plan from a FHIR query map (indexed params only; others ignored).
     let toSearchPlan (resourceType: string) (query: Map<string, string list>) : SearchPlan =
         let offset, count = parsePaging query

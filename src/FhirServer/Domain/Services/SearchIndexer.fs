@@ -247,10 +247,29 @@ module SearchIndexer =
                         | None -> acc)
                     []
 
+            let refs =
+                addRefFromFields
+                    resource
+                    [ "managingOrganization"; "organization" ]
+                    [ "organization"; "managingOrganization" ]
+                    []
+
             { Strings = strings |> List.distinct
               Tokens = tokens |> List.distinct
-              Refs = []
+              Refs = refs |> List.distinct
               Dates = dates |> List.distinct
+              Quantities = [] }
+
+        | "Organization" ->
+            let strings =
+                match FhirJson.propString resource "name" with
+                | Some name -> addString "name" name []
+                | None -> []
+
+            { Strings = strings |> List.distinct
+              Tokens = []
+              Refs = []
+              Dates = []
               Quantities = [] }
 
         | "Observation" ->
@@ -268,7 +287,9 @@ module SearchIndexer =
                         | None -> acc)
                     []
 
-            let refs = addRefFromFields resource [ "subject" ] [ "patient"; "subject" ] []
+            let refs =
+                addRefFromFields resource [ "subject" ] [ "patient"; "subject" ] []
+                |> fun r -> addRefFromFields resource [ "encounter" ] [ "encounter" ] r
 
             { Strings = strings |> List.distinct
               Tokens = tokens |> List.distinct
@@ -276,7 +297,21 @@ module SearchIndexer =
               Dates = observationDates resource |> List.distinct
               Quantities = observationQuantities resource |> List.distinct }
 
-        | "Encounter"
+        | "Encounter" ->
+            let strings =
+                match FhirJson.propString resource "status" with
+                | Some s -> addString "status" s []
+                | None -> []
+
+            let refs =
+                addRefFromFields resource [ "subject"; "patient" ] [ "patient"; "subject" ] []
+
+            { Strings = strings |> List.distinct
+              Tokens = []
+              Refs = refs |> List.distinct
+              Dates = []
+              Quantities = [] }
+
         | "Condition"
         | "AllergyIntolerance"
         | "MedicationRequest"

@@ -61,14 +61,17 @@ Indexed in SQL (`search_string` / `search_token` / `search_ref` / `search_date` 
 | Feature | Examples / notes |
 |---------|------------------|
 | Common | `_id`, `_lastUpdated` (`ge`/`le`/… on envelope `ts`), `_count`, `_sort` |
-| Patient | `family`, `given`, `name`, `gender`, `birthdate`, `identifier` |
-| Observation | `status`, `code`, `patient` / `subject`, `date`, `value-quantity` |
-| Clinical set | `patient` / `subject` (Encounter, Condition, …) |
-| Modifiers | `:exact`, `:contains`, `:missing`, token `:not` |
+| Patient | `family`, `given`, `name`, `gender`, `birthdate`, `identifier`, `organization` |
+| Organization | `name` |
+| Observation | `status`, `code`, `patient` / `subject`, `encounter`, `date`, `value-quantity` |
+| Encounter | `status`, `patient` / `subject` |
+| Clinical set | `patient` / `subject` (Condition, …) |
+| Modifiers | `:exact`, `:contains`, `:missing`, token `:not` / `:above` / `:below` |
+| Date / quantity | prefixes `eq`/`ne`/`gt`/`lt`/`ge`/`le`/`sa`/`eb`/`ap` (±10%, dates ±12h floor) |
 | `_include` | `Observation?_include=Observation:patient` |
 | `_revinclude` | `Patient?_revinclude=Observation:patient` |
-| Chaining | `Observation?subject.name=Garcia`, `patient.family=…` |
-| `_has` | `Patient?_has:Observation:patient:code=…` |
+| Chaining | multi-hop e.g. `Observation?subject.organization.name=…` |
+| `_has` | nested e.g. `Organization?_has:Patient:organization:_has:Observation:patient:code=…` |
 
 Resource-specific search parameters are advertised in `/metadata` where implemented. Composites / full `_filter` grammar remain **out of scope**.
 

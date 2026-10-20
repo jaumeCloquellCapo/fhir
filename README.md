@@ -15,11 +15,13 @@ The goal is a small, readable codebase that developers can run locally, extend, 
 ## Why FhirServer?
 
 - **FHIR R5** resources and `CapabilityStatement` from a generated catalog
-- **REST API** for CRUD, search (`_include` / `_revinclude` / chaining), history, `$validate`, `$everything`, `$document`, `$lastn`, `$dump`, `$export` / `$import`, and Bundle transaction/batch
-- **SMART App Launch MVP** — `/.well-known/smart-configuration` + `/auth/token` (`client_credentials`)
+- **REST API** — CRUD, history, Bundle transaction/batch, `$validate`, `$everything`, `$document`, `$lastn`, `$dump`, `$export` / `$import`
+- **Search (SQL-indexed)** — `_include` / `_revinclude`, multi-hop chaining, nested `_has`, modifiers (`:exact` / `:contains` / `:missing` / `:not` / `:above` / `:below`), date & quantity prefixes (incl. `ap`)
+- **Terminology MVP** — `$expand`, `$lookup`, `$validate-code` over stored `ValueSet` / `CodeSystem`
+- **SMART App Launch MVP** — discovery + `/auth/token` (`client_credentials`); Bearer **system** scopes when `Auth:Enabled=true`
 - **Subscriptions MVP** — rest-hook notifications + local `/_hooks/{id}` capture sink
 - **Envelope persistence** — one current + history table per resource type on PostgreSQL
-- **Schema validation** — cardinality, choice types, bindings, and primitives via `FhirServer.Validation` + embedded schemas
+- **Schema validation** — cardinality, choices, bindings, primitives, FHIRPath constraint subset, and **core constraint profiles** (`meta.profile`) via generated `FhirServer.Validation` + embedded schemas
 - **Optional BALP audit** — persist `AuditEvent` for REST operations when enabled
 - **Swagger UI** — interactive OpenAPI docs at `/swagger` for every endpoint
 - **Developer-friendly** — Docker Compose for Postgres, Makefile targets, Fantomas + FSharpLint, in-process E2E tests
@@ -101,7 +103,9 @@ compose.yaml             Postgres for local development
 
 This project is an **MVP**. It is useful for learning, demos, and as a foundation for a custom FHIR service. It is **not** a certified, production-hardened clinical platform out of the box.
 
-**Not yet in scope:** full SMART authorize/PKCE/EHR launch; subscription webhook retries/signing; packaging arbitrary external IGs beyond R5 core profiles (generator already emits core constraint profiles + FHIRPath constraints).
+**In scope today (see [docs/Features.md](docs/Features.md)):** R5 CRUD + SQL search (incl. modifiers / `_has` / date·quantity), terminology ops, SMART `client_credentials` + system scopes, Subscriptions rest-hook, core profile + constraint validation from `make generate-r5-all`.
+
+**Not yet:** full SMART authorize / PKCE / EHR launch; subscription webhook retries/signing; composites / `_filter` grammar; packaging arbitrary external IGs beyond R5 core profiles.
 
 Contributions that move those areas forward are welcome—see [CONTRIBUTING.md](CONTRIBUTING.md).
 

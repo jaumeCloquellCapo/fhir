@@ -156,3 +156,219 @@ type SearchAdvancedTests() =
             Assert.Contains("HasObs", body)
             Assert.DoesNotContain(otherId, body)
         }
+
+    [<Fact>]
+    member _.``multi-hop subject.organization.name finds observations``() : Task =
+        task {
+            let! _, org, _ =
+                postJson
+                    client
+                    "/Organization"
+                    """{"resourceType":"Organization","name":"AcmeChainClinic"}"""
+
+            let! _, otherOrg, _ =
+                postJson
+                    client
+                    "/Organization"
+                    """{"resourceType":"Organization","name":"OtherClinic"}"""
+
+            let orgId = propString org "id" |> Option.defaultValue ""
+            let otherOrgId = propString otherOrg "id" |> Option.defaultValue ""
+
+            let! _, patient, _ =
+                postJson
+                    client
+                    "/Patient"
+                    $"""{{"resourceType":"Patient","name":[{{"family":"Chain"}}],"managingOrganization":{{"reference":"Organization/{orgId}"}}}}"""
+
+            let! _, otherPatient, _ =
+                postJson
+                    client
+                    "/Patient"
+                    $"""{{"resourceType":"Patient","name":[{{"family":"Other"}}],"managingOrganization":{{"reference":"Organization/{otherOrgId}"}}}}"""
+
+            let patientId = propString patient "id" |> Option.defaultValue ""
+            let otherPatientId = propString otherPatient "id" |> Option.defaultValue ""
+
+            let! _, matchObs, _ =
+                postJson
+                    client
+                    "/Observation"
+                    $"""{{"resourceType":"Observation","status":"final","code":{{"coding":[{{"system":"http://loinc.org","code":"1111-1"}}]}},"subject":{{"reference":"Patient/{patientId}"}}}}"""
+
+            let! _ =
+                postJson
+                    client
+                    "/Observation"
+                    $"""{{"resourceType":"Observation","status":"final","code":{{"coding":[{{"system":"http://loinc.org","code":"1111-2"}}]}},"subject":{{"reference":"Patient/{otherPatientId}"}}}}"""
+
+            let matchId = propString matchObs "id" |> Option.defaultValue ""
+
+            let! status, body = get client "/Observation?subject.organization.name=AcmeChainClinic"
+            assertStatus HttpStatusCode.OK status
+            Assert.Contains(matchId, body)
+            Assert.DoesNotContain("1111-2", body)
+        }
+
+    [<Fact>]
+    member _.``nested _has Organization Patient Observation finds orgs``() : Task =
+        task {
+            let! _, org, _ =
+                postJson
+                    client
+                    "/Organization"
+                    """{"resourceType":"Organization","name":"NestedHasOrg"}"""
+
+            let! _, otherOrg, _ =
+                postJson
+                    client
+                    "/Organization"
+                    """{"resourceType":"Organization","name":"NoNestedHas"}"""
+
+            let orgId = propString org "id" |> Option.defaultValue ""
+            let otherOrgId = propString otherOrg "id" |> Option.defaultValue ""
+
+            let! _, patient, _ =
+                postJson
+                    client
+                    "/Patient"
+                    $"""{{"resourceType":"Patient","name":[{{"family":"NestedHas"}}],"managingOrganization":{{"reference":"Organization/{orgId}"}}}}"""
+
+            let! _, otherPatient, _ =
+                postJson
+                    client
+                    "/Patient"
+                    $"""{{"resourceType":"Patient","name":[{{"family":"NoHas"}}],"managingOrganization":{{"reference":"Organization/{otherOrgId}"}}}}"""
+
+            let patientId = propString patient "id" |> Option.defaultValue ""
+            let otherPatientId = propString otherPatient "id" |> Option.defaultValue ""
+
+            let! _ =
+                postJson
+                    client
+                    "/Observation"
+                    $"""{{"resourceType":"Observation","status":"final","code":{{"coding":[{{"system":"http://loinc.org","code":"7777-7"}}]}},"subject":{{"reference":"Patient/{patientId}"}}}}"""
+
+            let! _ =
+                postJson
+                    client
+                    "/Observation"
+                    $"""{{"resourceType":"Observation","status":"final","code":{{"coding":[{{"system":"http://loinc.org","code":"8888-8"}}]}},"subject":{{"reference":"Patient/{otherPatientId}"}}}}"""
+            let! status, body =
+                get
+                    client
+                    "/Organization?_has:Patient:organization:_has:Observation:patient:code=http://loinc.org|7777-7"
+
+            assertStatus HttpStatusCode.OK status
+            Assert.Contains(orgId, body)
+            Assert.Contains("NestedHasOrg", body)
+            Assert.DoesNotContain(otherOrgId, body)
+        }
+
+    [<Fact>]
+    member _.``birthdate ap matches nearby dates``() : Task =
+        task {
+            let! _, near, _ =
+                postJson
+                    client
+                    "/Patient"
+                    """{"resourceType":"Patient","name":[{"family":"ApNear"}],"birthDate":"1990-01-02"}"""
+
+            let! _, far, _ =
+                postJson
+                    client
+                    "/Patient"
+                    """{"resourceType":"Patient","name":[{"family":"ApFar"}],"birthDate":"2000-01-01"}"""
+
+            let nearId = propString near "id" |> Option.defaultValue ""
+            let farId = propString far "id" |> Option.defaultValue ""
+
+            let! status, body = get client "/Patient?birthdate=ap1990-01-01"
+            assertStatus HttpStatusCode.OK status
+            Assert.Contains(nearId, body)
+            Assert.DoesNotContain(farId, body)
+        }
+
+    [<Fact>]
+    member _.``value-quantity ap matches within ten percent``() : Task =
+        task {
+            let! _, patient, _ =
+                postJson
+                    client
+                    "/Patient"
+                    """{"resourceType":"Patient","name":[{"family":"QtyAp"}]}"""
+
+            let patientId = propString patient "id" |> Option.defaultValue ""
+
+            let! _, near, _ =
+                postJson
+                    client
+                    "/Observation"
+                    $"""{{"resourceType":"Observation","status":"final","code":{{"coding":[{{"system":"http://loinc.org","code":"8867-4"}}]}},"subject":{{"reference":"Patient/{patientId}"}},"valueQuantity":{{"value":105,"system":"http://unitsofmeasure.org","code":"mm[Hg]"}}}}"""
+
+            let! _, far, _ =
+                postJson
+                    client
+                    "/Observation"
+                    $"""{{"resourceType":"Observation","status":"final","code":{{"coding":[{{"system":"http://loinc.org","code":"8867-4"}}]}},"subject":{{"reference":"Patient/{patientId}"}},"valueQuantity":{{"value":50,"system":"http://unitsofmeasure.org","code":"mm[Hg]"}}}}"""
+
+            let nearId = propString near "id" |> Option.defaultValue ""
+            let farId = propString far "id" |> Option.defaultValue ""
+
+            let! status, body =
+                get client "/Observation?value-quantity=ap100|http://unitsofmeasure.org|mm[Hg]"
+
+            assertStatus HttpStatusCode.OK status
+            Assert.Contains(nearId, body)
+            Assert.DoesNotContain(farId, body)
+        }
+
+    [<Fact>]
+    member _.``code below and above use prefix hierarchy``() : Task =
+        task {
+            let! _, patient, _ =
+                postJson
+                    client
+                    "/Patient"
+                    """{"resourceType":"Patient","name":[{"family":"TokHier"}]}"""
+
+            let patientId = propString patient "id" |> Option.defaultValue ""
+
+            let! _, child, _ =
+                postJson
+                    client
+                    "/Observation"
+                    $"""{{"resourceType":"Observation","status":"final","code":{{"coding":[{{"system":"http://example.org/hier","code":"A.B.C"}}]}},"subject":{{"reference":"Patient/{patientId}"}}}}"""
+
+            let! _, parent, _ =
+                postJson
+                    client
+                    "/Observation"
+                    $"""{{"resourceType":"Observation","status":"final","code":{{"coding":[{{"system":"http://example.org/hier","code":"A.B"}}]}},"subject":{{"reference":"Patient/{patientId}"}}}}"""
+
+            let! _, other, _ =
+                postJson
+                    client
+                    "/Observation"
+                    $"""{{"resourceType":"Observation","status":"final","code":{{"coding":[{{"system":"http://example.org/hier","code":"X.Y"}}]}},"subject":{{"reference":"Patient/{patientId}"}}}}"""
+
+            let childId = propString child "id" |> Option.defaultValue ""
+            let parentId = propString parent "id" |> Option.defaultValue ""
+            let otherId = propString other "id" |> Option.defaultValue ""
+
+            let! belowStatus, belowBody =
+                get client "/Observation?code%3Abelow=http://example.org/hier|A.B"
+
+            assertStatus HttpStatusCode.OK belowStatus
+            Assert.Contains(childId, belowBody)
+            Assert.Contains(parentId, belowBody)
+            Assert.DoesNotContain(otherId, belowBody)
+
+            let! aboveStatus, aboveBody =
+                get client "/Observation?code%3Aabove=http://example.org/hier|A.B.C"
+
+            assertStatus HttpStatusCode.OK aboveStatus
+            Assert.Contains(parentId, aboveBody)
+            Assert.DoesNotContain(childId, aboveBody)
+            Assert.DoesNotContain(otherId, aboveBody)
+        }

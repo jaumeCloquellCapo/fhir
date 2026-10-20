@@ -86,7 +86,8 @@ type ValidateTests() =
 
             assertStatus HttpStatusCode.OK status
             assertResourceType "OperationOutcome" body
-            Assert.Contains("subject", body)
+            Assert.Contains("subject: required", body)
+            Assert.Contains("\"severity\":\"fatal\"", body)
         }
 
     [<Fact>]

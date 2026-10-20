@@ -293,11 +293,17 @@ module ResourceHandlers =
             let includeTokens = query |> Map.tryFind "_include" |> Option.defaultValue []
             let revIncludeTokens = query |> Map.tryFind "_revinclude" |> Option.defaultValue []
 
-            let searchList (rt: string, q: Map<string, string list>) =
-                if ResourceCatalog.isSupported rt then
-                    store.Search(rt, q) |> fst
-                else
+            let rec searchList (rt: string, q: Map<string, string list>) =
+                if not (ResourceCatalog.isSupported rt) then
                     []
+                else
+                    let expanded =
+                        q
+                        |> Map.add "_count" [ "10000" ]
+                        |> SearchEngine.expandChainedQuery searchList
+                        |> SearchEngine.expandHasQuery searchList
+
+                    store.Search(rt, expanded) |> fst
 
             let filterQuery =
                 query
@@ -524,16 +530,25 @@ module ResourceHandlers =
                     | _ -> None)
                 |> Option.defaultValue 1
 
+            let rec chainSearch (rt: string, q: Map<string, string list>) =
+                if not (ResourceCatalog.isSupported rt) then
+                    []
+                else
+                    let expanded =
+                        q
+                        |> Map.add "_count" [ "10000" ]
+                        |> SearchEngine.expandChainedQuery chainSearch
+                        |> SearchEngine.expandHasQuery chainSearch
+
+                    store.Search(rt, expanded) |> fst
+
             let filterQuery =
                 query
                 |> Map.remove "max"
                 |> Map.remove "_count"
                 |> Map.remove "_offset"
-                |> SearchEngine.expandChainedQuery (fun (rt, q) ->
-                    if ResourceCatalog.isSupported rt then
-                        store.Search(rt, q) |> fst
-                    else
-                        [])
+                |> SearchEngine.expandChainedQuery chainSearch
+                |> SearchEngine.expandHasQuery chainSearch
 
             let all =
                 store.Search("Observation", filterQuery |> Map.add "_count" [ "10000" ])

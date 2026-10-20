@@ -281,7 +281,12 @@ module GeneratedSchemaValidator =
         let names = asm.GetManifestResourceNames()
 
         let readResource (name: string) =
-            use stream = asm.GetManifestResourceStream(name)
+            let stream = asm.GetManifestResourceStream(name)
+
+            if isNull stream then
+                failwith $"Missing embedded resource '{name}' in {asm.GetName().Name}."
+
+            use stream = stream
             use reader = new StreamReader(stream)
             reader.ReadToEnd()
 
@@ -607,6 +612,7 @@ module GeneratedSchemaValidator =
 
         type private Token =
             | Ident of string
+            | NumberLit of decimal
             | Dot
             | LParen
             | RParen
@@ -616,6 +622,10 @@ module GeneratedSchemaValidator =
             | Ne
             | Gt
             | Lt
+            | Gte
+            | Lte
+            | Plus
+            | Minus
             | Eof
 
         type private Value =
@@ -683,6 +693,26 @@ module GeneratedSchemaValidator =
 
             let mutable ok = true
 
+            let readNumber () =
+                let start = i
+
+                while i < chars.Length && Char.IsDigit chars.[i] do
+                    advance ()
+
+                if i < chars.Length && chars.[i] = '.' then
+                    advance ()
+
+                    while i < chars.Length && Char.IsDigit chars.[i] do
+                        advance ()
+
+                let raw = expr.Substring(start, i - start)
+
+                match Decimal.TryParse(raw, NumberStyles.Number, CultureInfo.InvariantCulture) with
+                | true, n -> NumberLit n
+                | false, _ ->
+                    ok <- false
+                    NumberLit 0m
+
             while ok && i < chars.Length do
                 match peek () with
                 | None -> ()
@@ -696,11 +726,25 @@ module GeneratedSchemaValidator =
                 | Some ')' ->
                     tokens.Add RParen
                     advance ()
+                | Some '+' ->
+                    tokens.Add Plus
+                    advance ()
+                | Some '-' ->
+                    tokens.Add Minus
+                    advance ()
                 | Some '=' ->
                     tokens.Add Eq
                     advance ()
                 | Some '!' when i + 1 < chars.Length && chars.[i + 1] = '=' ->
                     tokens.Add Ne
+                    advance ()
+                    advance ()
+                | Some '>' when i + 1 < chars.Length && chars.[i + 1] = '=' ->
+                    tokens.Add Gte
+                    advance ()
+                    advance ()
+                | Some '<' when i + 1 < chars.Length && chars.[i + 1] = '=' ->
+                    tokens.Add Lte
                     advance ()
                     advance ()
                 | Some '>' ->
@@ -710,6 +754,7 @@ module GeneratedSchemaValidator =
                     tokens.Add Lt
                     advance ()
                 | Some '`' -> tokens.Add(readBacktickIdent ())
+                | Some c when Char.IsDigit c -> tokens.Add(readNumber ())
                 | Some c when Char.IsLetter c || c = '_' -> tokens.Add(readIdent ())
                 | Some _ -> ok <- false
 
@@ -796,6 +841,19 @@ module GeneratedSchemaValidator =
             | "hasvalue", [] -> Boolean(hasValueOf (asCollection target))
             | _ -> Unsupported $"function '{name}'"
 
+        let private primitiveEquals (a: JsonNode) (b: JsonNode) =
+            if isNull a || isNull b then
+                false
+            elif a.GetValueKind() <> b.GetValueKind() then
+                false
+            else
+                match a.GetValueKind() with
+                | JsonValueKind.String -> a.GetValue<string>() = b.GetValue<string>()
+                | JsonValueKind.Number -> a.GetValue<decimal>() = b.GetValue<decimal>()
+                | JsonValueKind.True
+                | JsonValueKind.False -> a.GetValue<bool>() = b.GetValue<bool>()
+                | _ -> false
+
         let private compare (op: Token) (left: Value) (right: Value) : Value =
             match left, right with
             | Unsupported u, _
@@ -811,10 +869,15 @@ module GeneratedSchemaValidator =
                 | Ne -> Boolean(a <> b)
                 | Gt -> Boolean(a > b)
                 | Lt -> Boolean(a < b)
+                | Gte -> Boolean(a >= b)
+                | Lte -> Boolean(a <= b)
                 | _ -> Unsupported "number comparison"
-            | Collection a, Collection b when op = Eq || op = Ne ->
-                let eq = a.Length = b.Length // shallow; enough for rare cases
-                Boolean(if op = Eq then eq else not eq)
+            | Collection leftNodes, Collection rightNodes when op = Eq || op = Ne ->
+                match leftNodes, rightNodes with
+                | [ (:? JsonValue as a) ], [ (:? JsonValue as b) ] ->
+                    let eq = primitiveEquals a b
+                    Boolean(if op = Eq then eq else not eq)
+                | _ -> Unsupported "multi-item collection equality"
             | _ -> Unsupported "comparison operands"
 
         let evaluate (expr: string) (context: JsonNode) : Result<bool, string> =
@@ -880,17 +943,39 @@ module GeneratedSchemaValidator =
                         left
 
                     and parseComparison () =
-                        let mutable left = parseUnary ()
+                        let mutable left = parseAdd ()
 
                         match peekTok () with
                         | Eq
                         | Ne
                         | Gt
-                        | Lt as op ->
+                        | Lt
+                        | Gte
+                        | Lte as op ->
                             nextTok () |> ignore
-                            let right = parseUnary ()
+                            let right = parseAdd ()
                             left <- compare op left right
                         | _ -> ()
+
+                        left
+
+                    and parseAdd () =
+                        let mutable left = parseUnary ()
+
+                        while (match peekTok () with
+                               | Plus
+                               | Minus -> true
+                               | _ -> false) do
+                            let op = nextTok ()
+                            let right = parseUnary ()
+
+                            left <-
+                                match left, right, op with
+                                | Number a, Number b, Plus -> Number(a + b)
+                                | Number a, Number b, Minus -> Number(a - b)
+                                | Unsupported u, _, _
+                                | _, Unsupported u, _ -> Unsupported u
+                                | _ -> Unsupported "additive operands"
 
                         left
 
@@ -898,6 +983,7 @@ module GeneratedSchemaValidator =
 
                     and parsePrimary () =
                         match nextTok () with
+                        | NumberLit n -> Number n
                         | Ident name ->
                             match peekTok () with
                             | LParen ->
@@ -984,14 +1070,23 @@ module GeneratedSchemaValidator =
                     | Ok true -> ()
                     | Ok false -> yield! constraintIssue path c false
                     | Error reason ->
-                        // Surface unevaluable expressions (full FHIRPath not implemented) as warnings.
                         let detail =
                             if String.IsNullOrWhiteSpace c.Human then
                                 $"{path}: constraint {c.Key} could not be evaluated ({reason}): {c.Expression}"
                             else
                                 $"{path}: constraint {c.Key} could not be evaluated ({reason}): {c.Human}"
 
-                        yield warning detail
+                        // Full-language gaps (where/descendants/%/…) stay warnings so writes remain usable.
+                        // Failures inside the claimed subset are fatal for error-severity constraints.
+                        let incompleteEngine =
+                            reason.StartsWith("unsupported FHIRPath", StringComparison.OrdinalIgnoreCase)
+
+                        if incompleteEngine
+                           || c.Severity.Equals("warning", StringComparison.OrdinalIgnoreCase)
+                           || c.Severity.Equals("information", StringComparison.OrdinalIgnoreCase) then
+                            yield warning detail
+                        else
+                            yield fatal detail
         ]
 
     let private codingCodes (obj: JsonObject) =
