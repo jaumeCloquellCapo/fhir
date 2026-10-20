@@ -1,4 +1,4 @@
-namespace FhirServer.Infrastructure.Persistence.Sql
+namespace FhirServer.Infrastructure.Persistence.Postgres
 
 open System
 open Npgsql
@@ -7,7 +7,7 @@ open FhirServer.Domain.Services
 open FhirServer.Domain.Types
 open FhirServer.Infrastructure.Persistence
 
-type SqlEnvelopeSession(connectionString: string) =
+type PostgresEnvelopeSession(connectionString: string) =
     let conn = new NpgsqlConnection(connectionString)
     do conn.Open()
     let mutable tx: NpgsqlTransaction option = None
@@ -320,10 +320,10 @@ type SqlEnvelopeSession(connectionString: string) =
 
             conn.Dispose()
 
-type SqlEnvelopeDialect(connectionString: string) =
+type PostgresEnvelopeDialect(connectionString: string) =
     interface IEnvelopeDialect with
         member _.Migrate() =
-            SqlMigrations.migrate connectionString
+            PostgresMigrations.migrate connectionString
 
         member _.OpenSession() =
-            new SqlEnvelopeSession(connectionString) :> IEnvelopeSession
+            new PostgresEnvelopeSession(connectionString) :> IEnvelopeSession

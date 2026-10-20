@@ -1,11 +1,11 @@
-namespace FhirServer.Infrastructure.Persistence.Sql
+namespace FhirServer.Infrastructure.Persistence.Postgres
 
 open System
 open Npgsql
 open FhirServer.Domain
 open FhirServer.Infrastructure.Persistence
 
-module SqlMigrations =
+module PostgresMigrations =
 
     let private createResourceTables (resourceType: string) =
         let table = ResourceCatalog.tableName resourceType

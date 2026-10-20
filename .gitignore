@@ -24,8 +24,16 @@ TestResults/
 !**/[Pp]ackages/build/
 !/packages/
 !/packages/**
+# Re-ignore build outputs under first-party packages/
+packages/**/[Bb]in/
+packages/**/[Oo]bj/
 *.DotSettings.user
 .nuget/
+
+# Local SQLite / DB files
+*.db
+*.db-shm
+*.db-wal
 
 # Publish / build outputs
 publish/

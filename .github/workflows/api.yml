@@ -27,7 +27,22 @@ jobs:
   test:
     name: Build & E2E
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 25
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: fhir
+          POSTGRES_PASSWORD: fhir
+          POSTGRES_DB: fhir
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U fhir -d fhir"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Checkout
@@ -45,4 +60,6 @@ jobs:
         run: dotnet build src/FhirServer/FhirServer.fsproj --configuration Release --no-restore
 
       - name: Run E2E tests
+        env:
+          FHIR_E2E_ADMIN_CONNECTION: Host=localhost;Port=5432;Database=fhir;Username=fhir;Password=fhir
         run: dotnet test tests/FhirServer.E2E/FhirServer.E2E.fsproj --configuration Release --no-restore --verbosity minimal

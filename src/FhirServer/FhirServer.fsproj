@@ -26,14 +26,14 @@
     <Compile Include="Application/Audit/BalpAuditEventBuilder.fs" />
     <Compile Include="Application/Audit/AuditRecorder.fs" />
 
-    <!-- Infrastructure — persistence (SQL / Postgres) -->
+    <!-- Infrastructure — persistence -->
     <Compile Include="Infrastructure/Persistence/MigrationRunner.fs" />
     <Compile Include="Infrastructure/Persistence/EnvelopeCodec.fs" />
     <Compile Include="Infrastructure/Persistence/EnvelopeDialect.fs" />
     <Compile Include="Infrastructure/Persistence/SearchIndexQuery.fs" />
     <Compile Include="Infrastructure/Persistence/EnvelopeResourceStore.fs" />
-    <Compile Include="Infrastructure/Persistence/Sql/SqlMigrations.fs" />
-    <Compile Include="Infrastructure/Persistence/Sql/SqlEnvelopeSession.fs" />
+    <Compile Include="Infrastructure/Persistence/Postgres/PostgresMigrations.fs" />
+    <Compile Include="Infrastructure/Persistence/Postgres/PostgresEnvelopeSession.fs" />
 
     <!-- Infrastructure — inbound adapters -->
     <Compile Include="Infrastructure/Capability/Metadata.fs" />

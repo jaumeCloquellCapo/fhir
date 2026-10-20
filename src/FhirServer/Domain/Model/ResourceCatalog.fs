@@ -26,12 +26,9 @@ module ResourceCatalog =
 
     let historyTableName (resourceType: string) = $"{tableName resourceType}_history"
 
-    /// Quote SQL identifiers (FHIR types like Group collide with reserved words).
+    /// Quote Postgres identifiers (FHIR types like Group collide with reserved words).
     let quoteIdent (name: string) =
         "\"" + name.Replace("\"", "\"\"") + "\""
-
-    /// Alias kept for SQLite call sites; same quoting as Postgres.
-    let sqlIdent = quoteIdent
 
     /// All concrete R5 resource types from the generator (`make generate-r5-all` / sync-schemas).
     /// Keep migrations in sync via CREATE TABLE IF NOT EXISTS for the full list.
