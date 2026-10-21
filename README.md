@@ -8,7 +8,7 @@ An open-source [HL7 FHIR](https://hl7.org/fhir/) backend for healthcare applicat
 | Generator | [![Generator](https://github.com/jaumeCloquellCapo/fhir/actions/workflows/generator.yml/badge.svg)](https://github.com/jaumeCloquellCapo/fhir/actions/workflows/generator.yml) |
 | Local | `make build` · `make test` |
 
-FhirServer is a **FHIR R5-only server** (`hl7.fhir.r5.core@5.0.0`) you can run locally or embed in your own stack: REST API, PostgreSQL persistence, schema validation from official HL7 packages, search, terminology, SMART auth, and subscriptions—without a Firely / `Hl7.Fhir.*` runtime dependency. Earlier FHIR releases are not supported yet — see [Docs/FhirVersion.md](Docs/FhirVersion.md).
+FhirServer is a **FHIR R5-only server** (`hl7.fhir.r5.core@5.0.0`) you can run locally or embed in your own stack: REST API, PostgreSQL persistence, schema validation from official HL7 packages, search, terminology, SMART auth / authorization, multi-tenant ORGBAC, and subscriptions. Earlier FHIR releases are not supported yet — see [Docs/FhirVersion.md](Docs/FhirVersion.md).
 
 Use it to prototype clinical apps, learn FHIR end-to-end, or as a foundation for a custom FHIR service.
 
@@ -21,7 +21,9 @@ Use it to prototype clinical apps, learn FHIR end-to-end, or as a foundation for
 | **PostgreSQL store** | JSONB envelopes: current + history tables per resource type, txid versioning, side search indexes |
 | **Validation** | FHIR Schema from `hl7.fhir.r5.core` — cardinality, choices, bindings, primitives, FHIRPath constraint subset, core profiles via `meta.profile` |
 | **Terminology** | `$expand`, `$lookup`, `$validate-code` over stored `ValueSet` / `CodeSystem` |
-| **SMART App Launch** | Discovery + authorize (PKCE) + `/auth/token`; Bearer/Basic scopes (patient/user/system, v2 c/r/u/d/s) |
+| **Auth** | Always-on on protected routes: HTTP Basic and/or SMART Bearer; discovery + authorize (PKCE) + `/auth/token`; optional DCR |
+| **Authz** | SMART v2 scopes (`patient` / `user` / `system`, permissions `c`/`r`/`u`/`d`/`s`); patient-compartment filtering; client `AllowedScopes` intersection |
+| **Multi-tenancy (ORGBAC)** | Organization-scoped isolation via Postgres RLS; root API = exact tenant; `/Organization/{orgId}/fhir/...` = hierarchy (`partOf`); `owned` / `shared` / `system-shared` modes |
 | **Subscriptions** | Rest-hook notifications + local `/_hooks/{id}` capture sink |
 | **Audit (optional)** | BALP-oriented `AuditEvent` for REST operations |
 | **Swagger UI** | Interactive OpenAPI at `/swagger` |
@@ -53,16 +55,16 @@ More: [Docs/GettingStarted.md](Docs/GettingStarted.md) · Swagger: [http://local
 ## Platform overview
 
 ```
-┌──────────────────────────────────────────────────────────────┐
-│                     FHIR REST API                            │
-│   CRUD · Search · History · Bundle · $ops · Bulk · Subs      │
-├────────────┬─────────────┬──────────────┬────────────────────┤
-│ Validation │ Terminology │ SMART / Auth │ Audit (optional)   │
-│ FHIR Schema│ ValueSet /  │ scopes ·     │ BALP AuditEvent    │
-│ + profiles │ CodeSystem  │ PKCE · Basic │                    │
-├────────────┴─────────────┴──────────────┴────────────────────┤
-│              PostgreSQL  ·  JSONB envelopes + search indexes │
-└──────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────┐
+│                        FHIR REST API                             │
+│   CRUD · Search · History · Bundle · $ops · Bulk · Subs          │
+├────────────┬─────────────┬────────────────┬──────────────────────┤
+│ Validation │ Terminology │ Auth / Authz   │ Multi-tenancy        │
+│ FHIR Schema│ ValueSet /  │ Basic · SMART  │ ORGBAC · RLS         │
+│ + profiles │ CodeSystem  │ scopes · PKCE  │ org hierarchy        │
+├────────────┴─────────────┴────────────────┴──────────────────────┤
+│  Audit (optional) · PostgreSQL JSONB envelopes + search indexes  │
+└──────────────────────────────────────────────────────────────────┘
 ```
 
 How storage, validation, and request flow fit together: [Docs/Architecture.md](Docs/Architecture.md).
@@ -77,6 +79,8 @@ Schemas and the validator are produced offline by [`Generator/`](Generator/READM
 |-------|-----|
 | Getting started | [Docs/GettingStarted.md](Docs/GettingStarted.md) |
 | Features & API | [Docs/Features.md](Docs/Features.md) |
+| Auth / SMART / scopes | [Docs/Features.md#smart-on-fhir](Docs/Features.md#smart-on-fhir) · [Docs/Configuration.md#auth-basic--smart-bearer](Docs/Configuration.md#auth-basic--smart-bearer) |
+| Multi-tenancy (ORGBAC) | [Docs/Features.md#organization-based-access-orgbac](Docs/Features.md#organization-based-access-orgbac) |
 | Architecture | [Docs/Architecture.md](Docs/Architecture.md) |
 | Configuration | [Docs/Configuration.md](Docs/Configuration.md) |
 | Development | [Docs/Development.md](Docs/Development.md) |
@@ -98,7 +102,7 @@ compose.yaml             Postgres for local development
 
 **MVP** — useful for learning, demos, and as a foundation for a custom FHIR service. Not a certified, production-hardened clinical platform out of the box.
 
-**In scope today:** R5 CRUD + SQL search, terminology ops, SMART authorize + PKCE + `client_credentials` with scopes, multi-client + optional DCR, Subscriptions rest-hook (loopback/`/_hooks` by default), core profile validation from `make generate-r5-all`. Details in [Docs/Features.md](Docs/Features.md).
+**In scope today:** R5 CRUD + SQL search, terminology ops, SMART authorize + PKCE + `client_credentials` with scopes (authz), multi-client + optional DCR, ORGBAC multi-tenancy (exact + hierarchical org APIs, Postgres RLS), Subscriptions rest-hook (loopback/`/_hooks` by default), core profile validation from `make generate-r5-all`. Details in [Docs/Features.md](Docs/Features.md).
 
 **Not yet:** EHR `launch` / JWT access tokens; subscription webhook retries/signing; full FHIRPath search extractors; packaging arbitrary external IGs beyond R5 core profiles.
 
